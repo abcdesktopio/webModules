@@ -1,0 +1,55 @@
+@import "@{global}";
+@import "audio_parts/sound_level.less";
+@import "audio_parts/slider_input.less";
+
+#settings-window #audio-tab #audioHttpBuffer.input { width: 65%; }
+
+#audio-tab #outputSettings div #sliderscheduleBuffersTimeout, #audio-tab #outputSettings div #slideraudioHttpReadBuffer {
+	width: 65%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: -20px;
+	margin-top: 25px;
+}
+
+.audioexplain {
+	width:100%;
+ 	justify-content: space-around;
+    text-align: center;
+	margin-bottom: 1%;
+}
+
+#audio-tab #outputSettings div table { 
+	width:100%; 
+	padding-top: 1%;
+}
+
+#audio-tab #outputSettings div table td { padding-bottom: 1%; }
+
+#audio-tab #outputSettings div table tr:nth-child(1) td:nth-child(2) { vertical-align: bottom; }
+
+#audio-tab #outputSettings div table tr td:nth-child(1) {
+	width: 35.5%;
+	text-align: center;
+}
+
+#audio-tab #outputSettings div table tr td:nth-child(2) { padding-left: 3%; }
+
+#settings-window #audio-tab #audioQuality::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%; 
+	background: @tertiary;
+	cursor: pointer;
+}
+
+#settings-window #audio-tab #audioQuality::-moz-range-thumb {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: @tertiary;
+	cursor: pointer;
+}

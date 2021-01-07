@@ -1,0 +1,358 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+#about-window {
+  position: absolute;
+  top: calc(50% - 250px);
+  left: calc(50% - 325px);
+  font-weight: 400;
+  overflow: hidden;
+  display: none;
+  width: 650px;
+  height: 500px;
+  min-height: 155px;
+}
+#about-window .about-select {
+  border-top: 1px solid @light;
+  padding: 15px;
+}
+#about-window .about-select select {
+  margin-left: 10px;
+}
+#about-window h1 {
+  font-size: 27px;
+  margin: 0;
+  margin-left: 20px;
+  line-height: 110px;
+  text-align: center;
+  float: left;
+}
+#about-window h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 5px;
+  text-align: center;
+}
+#about-window ul {
+  padding: 0;
+  overflow: hidden;
+  margin: 20px 0px 40px;
+  border-bottom: 1px solid @light;
+  margin-bottom: 20px;
+}
+#about-window li {
+  float: left;
+  list-style: none;
+  padding: 0px 0px 20px 10px;
+}
+#about-window li a {
+  padding: 24px 0 24px 59px;
+  display: block;
+  width: 150px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: @secondary;
+}
+#about-window li a:hover {
+  background-color: @light;
+  color: @danger;
+}
+
+#about-window li a.completed {
+  color: @primary;
+  background: url("../../../img/welcome/completed.png") no-repeat 12px 15px !important;
+  background-color: @light !important;
+}
+#about-window li img {
+  float: left;
+  margin-left: -48px;
+  margin-top: -20px;
+}
+
+.about-arbo {
+  height: 350px;
+  display: inline-block;
+  width: 30%;
+  margin-left: 2%;
+  background-color: @light;
+  margin-top: 2%;
+  margin-right: 2%;
+}
+
+#about-window .tab {
+  width: 100%;
+  display: inline-block;
+  position: inherit;
+  padding-bottom: 10px;
+  border-bottom: 1px solid @light;
+  padding-top: 25px;
+}
+
+#about-window .balloon_logo {
+  height: 100px;
+  margin-left: 50px;
+  float: left;
+  width: 100px;
+  background: url(../../../img/cloud_balloon.svg);
+  background-size: contain;
+}
+
+#about-window p.overview {
+  text-align: center;
+  line-height: 25px;
+}
+
+#about-window span.title {
+  color: @dark;
+}
+
+#about-window .about-arbo .line {
+  padding: 8px;
+}
+
+#about-window .about-arbo .selected,
+#about-window .about-arbo .selected:hover {
+  background-color: @dark;
+  color: @light;
+}
+
+/*
+*  Shut Down CSS
+*   author: Anthony Dillon
+*/
+
+#about-window .content img {
+  float: left;
+  margin: 20px 20px 0px 10px;
+}
+
+#about-window .content .message p {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+#about-window .content .message {
+  float: left;
+  width: 275px;
+  height: 100%;
+}
+
+#about-window .content .about-buttons {
+  margin-right: 7px;
+  clear: both;
+}
+
+#about-window .content .about-buttons div {
+  text-align: center;
+  float: right;
+  width: 85px;
+  height: 23px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  border: 1px solid @primary;
+  margin-right: 8px;
+  padding-top: 4px;
+  margin-top: 20px;
+  background: url(../../../img/error/button-fade.png) repeat-x scroll 0 0 @light;
+}
+
+#about-window .content .about-buttons div:hover {
+  background-position: 0px -29px;
+}
+
+#about-window .content .about-buttons div.highlight {
+  background-color: @tertiary;
+  text-shadow: 0px 1px @light;
+}
+
+#about-window .content .about-buttons div.highlight:hover {
+  text-shadow: none;
+  background-position: 0px 0px;
+}
+
+#about-window .notices-content {
+  overflow: auto;
+  height: 85%;
+  margin-top: 10px;
+  background-color: @light;
+  padding-top: 30px;
+  padding-left: 30px;
+  word-wrap: break-word;
+}
+/*
+   scrollbar -> Allow to edit the scrollbar of an element
+   scrollbar-track-piece -> Allow to edit the scrollbar-track-piece of an element
+   scrollbar-thumb -> Allow to edit the scrollbar-thumb of an element
+   scrollbar-corner -> Allow to edit the scrollbar-corner of an element
+*/
+#about-window ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+#about-window::-webkit-scrollbar-track-piece {
+  background: @primary;
+}
+
+#about-window::-webkit-scrollbar-thumb {
+  background: @secondary;
+  border-radius: 2px;
+}
+
+#about-window::-webkit-scrollbar-corner {
+  background: @primary;
+}
+
+#about-window .app {
+  height: 80px;
+  width: 80px;
+  margin-top: 10px;
+  float: left;
+  text-align: center;
+}
+#about-window .app:first-child {
+  margin-left: 0px;
+}
+#about-window .app {
+  margin-left: 10px;
+}
+#about-window .app img {
+  height: 40px;
+  width: 40px;
+}
+
+#about-window .name {
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+#about-window #overview {
+  float: none;
+  clear: both;
+  width: 650px;
+}
+#about-window #overview span {
+  display: block;
+  margin-left: 200px;
+  margin-top: 10px;
+  -webkit-user-select: initial;
+  -khtml-user-select: initial;
+  -moz-user-select: initial;
+  -o-user-select: initial;
+  user-select: initial;
+}
+
+#about-window #aboutTitle {
+  height: 110px;
+}
+
+#about-window #cg {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+#about-window #cg a {
+  margin-left: 20px;
+  color: @primary;
+}
+
+#about-window #cg a:hover {
+  color: @dark;
+}
+@media screen and (max-width: 700px) and (orientation: portrait) {
+  #about-window {
+    width: 300px;
+    height: 430px;
+    left: calc(50% - 150px);
+    top: calc(50% - 215px);
+    min-height: 155px;
+  }
+  #about-window .balloon_logo {
+    height: 50px;
+    width: 50px;
+    margin-left: 20px;
+  }
+  #about-window h1 {
+    height: 10px;
+    font-size: 12px;
+    margin-top: 28px;
+    line-height: 0px;
+  }
+
+  #about-window .right {
+    width: 70%;
+  }
+
+  #about-window .left {
+    width: 25%;
+  }
+
+  .about-arbo {
+    display: none;
+  }
+
+  #about-window #overview span {
+    margin-left: 30px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 700px) and (orientation: landscape) {
+  #about-window {
+    width: 300px;
+    height: 230px;
+    left: calc(50% - 150px);
+    top: calc(50% - 135px);
+    min-height: 155px;
+  }
+  #about-window #aboutTitle {
+    height: 35px;
+  }
+
+  #about-window .right {
+    width: 70%;
+  }
+
+  #about-window .left {
+    width: 25%;
+  }
+
+  .about-arbo {
+    display: none;
+  }
+  #about-window #overview span {
+    display: block;
+    margin-left: 25px;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  #about-window .balloon_logo {
+    height: 30px;
+    width: 30px;
+    float: left;
+    margin-left: 10px;
+  }
+  #about-window h1 {
+    font-size: 16px;
+    float: left;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    text-indent: 30px;
+  }
+}

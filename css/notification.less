@@ -1,0 +1,74 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+.notifyPanel {
+  position: fixed;
+  height: 50%;
+  width: 30%;
+  right: 5px;
+  z-index: 999999;
+  top: 30px;
+  pointer-events: none;
+}
+
+.notification {
+  position: relative;
+  width: 100%;
+  height: 65px;
+  background: @primary;
+  opacity: 0.85;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  -webkit-box-shadow: 0px 0px 5px @dark;
+  box-shadow: 0px 0px 5px @dark;
+  overflow: hidden;
+  z-index: 10;
+  padding-left: 5px;
+  margin-bottom: 5px;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  pointer-events: all;
+}
+
+.notification img {
+  float: left;
+  margin-top: 10px;
+  margin-left: 5px;
+  height: 40px;
+  margin-right: 10px;
+  width: 40px;
+}
+
+.notification p {
+  margin: 0px;
+}
+
+.notification .title {
+  font-weight: bold;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.notification .description {
+  font-size: 11px;
+  margin-top: 5px;
+  margin-right: 5px;
+  word-wrap: break-word;
+}
+
+.close-notification {
+  border-left: solid 1px @secondary;
+  padding: 0 !important;
+}

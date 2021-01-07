@@ -1,0 +1,318 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+#dock {
+  height: 60px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 99;
+  display: flex;
+  flex-direction: row;
+  background: @secondary;
+  border-bottom: 3px solid @tertiary;
+}
+
+#dock ul#docklist {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 80%;
+}
+
+#dock li,
+#dock li.icon {
+  float: left;
+  height: 60px;
+  width: initial;
+  margin: 0;
+  position: relative;
+}
+
+#dock li .appNotif {
+  height: 15px;
+  width: 15px;
+  background: @tertiary;
+  top: 5px;
+  right: -5px;
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  display: none;
+}
+
+#searchBar {
+  width: 20% !important;
+}
+
+@keyframes pulse_animation {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#dock li.pulse {
+  animation-name: pulse_animation;
+  animation-duration: 3000ms;
+  transform-origin: 70% 70%;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  display: block;
+}
+#dock li.only-mobile {
+  display: none;
+}
+
+#dock li .appname {
+  text-align: center;
+  min-width: 50px;
+  position: relative;
+  bottom: -4px;
+  background: @secondary;
+  color: @light;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 3%;
+  white-space: nowrap;
+}
+
+#dock div.menuCaptFooter {
+  width: 100%;
+  height: 40px;
+}
+
+@media screen and (width: 1366px) and (height: 626px) {
+  #dock li .appname {
+    bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+#dock div.appcontainer:first-child {
+  transform: translateX(0) !important;
+}
+
+#dock li .appcontainer {
+  position: absolute;
+  bottom: 17px;
+  min-height: 75px;
+  z-index: -10;
+  display: none;
+}
+
+#dock li:first-child .appname {
+  position: absolute;
+  bottom: 80px;
+  left: -5px;
+  display: none;
+  text-align: center;
+  min-width: 45px;
+  background: @secondary;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+#dock li .appname .arrow {
+  width: 0px;
+  height: 0;
+  border: 5px solid transparent;
+  border-bottom: none;
+  border-top: 6px solid @secondary;
+  position: absolute;
+  bottom: -6px;
+  left: calc(50% - 5px);
+}
+
+#dock .appLoaderDock {
+  position: relative !important;
+  left: 45px !important;
+}
+
+@media screen and (min-width: 721px) {
+  #dock .appLoaderDock {
+    bottom: 50px !important;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  #dock .appLoaderDock {
+    bottom: 50px !important;
+  }
+}
+
+.arrow-dock {
+  width: 0px;
+  height: 0;
+  border: 5px solid transparent;
+  border-bottom: none;
+  border-top: 6px solid @secondary;
+  display: block;
+}
+
+#dock li img {
+  height: 45px;
+  width: 45px;
+}
+
+#dock li div img.appIconDock {
+  margin-top: 5px;
+  padding: 0;
+  -webkit-transition: all 0.3s;
+  -webkit-transform-origin: 50% 100%;
+  -moz-transition: all 0.4s;
+  -moz-transform-origin: 50% 100%;
+  -o-transition: all 0.3s;
+  -o-transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+#dock img.appLoader {
+  margin-top: 5px;
+  margin-left: -45px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.3s;
+}
+
+#dock #appName {
+  width: 300px;
+  height: 18px;
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  margin-left: -150px;
+}
+
+#dock li div.puce {
+  height: 3px;
+  position: relative;
+  top: 6px;
+  margin: 0;
+  padding: 0;
+  background: @light;
+}
+
+#dock input[type="text"] {
+  cursor: text;
+  height: 56px;
+  width: 100%;
+  background: @primary url(../../../img/search1.svg) 5px no-repeat;
+  border: none;
+  font-size: 16px;
+  text-indent: 40px;
+  background-size: 30px;
+  color: @light;
+}
+
+#dock li.placehold {
+  height: 60px;
+  width: 45px;
+  background: url(../../../img/menu/plus.svg) no-repeat 0px 6px;
+  background-size: contain;
+  opacity: 0.4;
+}
+
+#contextmenu {
+  list-style-type: none;
+  background: @secondary;
+  padding: 0px 5px;
+  position: absolute;
+  z-index: 100;
+  font-size: 13px;
+  font-weight: 300;
+  top: 0;
+  display: none;
+  width: auto;
+  min-width: 200px;
+  padding: 0px;
+  border-radius: 8px;
+}
+
+#contextmenu ul {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+#contextmenu li {
+  display: flex;
+  padding: 0px 10px;
+  height: 30px;
+  line-height: 22px;
+  color: @light;
+  font-weight: 600;
+  align-items: center;
+}
+
+#contextmenu li:first-child {
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+#contextmenu li:last-child {
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+#contextmenu li:last-child {
+  display: flex;
+  align-items: center;
+}
+
+#contextmenu li:hover {
+  background: @primary;
+}
+
+#contextmenu li img {
+  height: 20px;
+  float: left;
+  margin-right: 5px;
+}
+
+#contextmenu li div,
+#contextmenu li span {
+  text-indent: 5px;
+}
+
+#contextmenu li div {
+  height: 20px;
+  float: left;
+}

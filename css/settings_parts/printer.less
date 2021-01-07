@@ -1,0 +1,217 @@
+@import "@{global}";
+
+#settings-window #printers-tab { display: none; }
+
+#settings-window #printers-tab #printerlist {
+	width: 100%;
+	height: calc(100% - 30px);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	float: left;
+	overflow: auto;
+}
+
+#settings-window #printers-tab #printer-section-list {
+	height: 100%;
+}
+
+#settings-window #printers-tab #printerlist li {
+	width: 100%;
+	position: relative;
+	cursor: pointer;
+}
+
+#settings-window #printers-tab #printerlist li:hover { background-color: @secondary; }
+
+#settings-window #printers-tab #printerlist li.selected { background:@secondary; }
+
+#settings-window #printers-tab #printerlist li .colorPrinter {
+	height: 25px;
+	position: absolute;
+	bottom: 0px;
+	left: 60px;
+	pointer-events: none;
+}
+
+#settings-window #printers-tab #printerlist li div.container {
+	padding-top: 10px;
+}
+
+#settings-window #printers-tab #printerlist li .printerLogo {
+	height: 50px;
+	margin: 10px;
+	pointer-events: none;
+}
+
+#settings-window #printers-tab #printerlist li span {
+	display: block;
+	font-size: 17px;
+	line-height: 70px;
+	text-indent: 20px;
+	pointer-events: none;
+}
+
+#settings-window #printers-tab .blockButton {
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	font-size: 25px;
+	line-height: 27px;
+	text-align: center;
+	cursor: pointer;
+	bottom: 0px;
+}
+
+#settings-window #printers-tab form {
+	height: 100%;
+	background: @secondary;
+	overflow: auto;
+}
+
+#settings-window #printers-tab fieldset {
+	padding:0 5px 5px 5px;
+	margin: 10px;
+}
+
+#settings-window #printers-tab fieldset legend { 
+	font-weight:bold;
+	font-size: 1rem;
+	color: @tertiary;
+}
+
+#settings-window #printers-tab label {
+	margin-top:10px;
+	display:block;
+}
+
+#settings-window #printers-tab label.inline {
+	display:inline;
+	margin-right:50px;
+}
+
+#settings-window #printers-tab input, textarea, select {
+	padding:3px;
+	border-radius:5px;
+	background: @light;
+}
+
+#settings-window #printers-tab select { margin-top: 10px; }
+
+#settings-window #printers-tab input[type=radio],#settings-window #printers-tab input[type=checkbox] {
+	background-color:transparent;
+	border:none;
+	width:10px;
+	height: 10px;
+	margin-top: 20px;
+}
+
+#settings-window #printers-tab input[type=submit], input[type=reset] {
+	width:100px;
+	cursor:pointer;
+	margin-left: calc(50% - 50px);
+}
+
+#settings-window #printers-tab #morePrinter {
+	background: @tertiary;
+	left: 0px;
+}
+
+#settings-window #printers-tab #removePrinter {
+	background: @light;
+	left: 30px;
+	color: @dark;
+}
+
+#settings-window #printers-tab #searchPrinters {
+	height: calc(100% - 35px);
+	width: 100%;
+	background:@secondary;
+	padding-top: 10px;
+	overflow: auto;
+}
+
+#settings-window #printers-tab #searchPrinters input[type='text'] {
+	height: 30px;
+	margin: 0 auto;
+	text-indent: 35px;
+	box-sizing: border-box;
+	background: url(../../../img/search.svg) no-repeat 5px @light;
+	background-size: 25px;
+	width: 80%;
+}
+
+#settings-window #printers-tab #searchPrinters #buttonBar {
+	height: 50px;
+	width: 100%;
+}
+
+#settings-window #printers-tab #searchPrinters #buttonBar button {
+	height: 30px;
+	width: 80px;
+	margin: 10px;
+	border: none;
+	background: @light;
+	cursor: pointer;
+}
+
+#settings-window #printers-tab #searchPrinters #buttonBar button#addPrinter,#settings-window #printers-tab #searchPrinters #buttonBar button#customPrinter {
+	background:@tertiary;
+	color: @light;
+}
+
+#settings-window #printers-tab #searchPrinters #buttonBar button#addPrinter:disabled,#settings-window #printers-tab #searchPrinters #buttonBar button#customPrinter:disabled {
+	background: @secondary;
+	color: @primary;
+	cursor: not-allowed;
+}
+
+#settings-window #printers-tab #searchPrinters #printerTable {
+	width: 100%;
+	max-height: 250px;
+	overflow: auto;
+	display: block;
+}
+
+#settings-window #printers-tab #searchPrinters #printerTable .printer {
+	height: 120px;
+	width: 20%;
+	cursor: pointer;
+	float: left;
+	position: relative;
+	box-sizing: border-box;
+}
+
+#settings-window #printers-tab #searchPrinters #printerTable .printer.selected {
+	border: 1px solid @tertiary;
+	background:@secondary;
+}
+
+#settings-window #printers-tab #searchPrinters #printerTable .printer:hover {
+	background:@secondary;
+}
+
+#settings-window #printers-tab #searchPrinters #printerTable .printer img.printerLogo {
+	height: 60px;
+	width: 100%;
+	margin: 15px 0px;
+	pointer-events: none;
+}
+
+#settings-window #printers-tab #searchPrinters #printerTable .printer img.colorPrinter {
+	height: 20px;
+	top: 60px;
+	left:100px;
+	position: absolute;
+}
+
+#settings-window #printers-tab #searchPrinters #printerTable .printer span {
+	display: block;
+	width: 100%;
+	pointer-events: none;
+	text-align: center;
+}
+
+#settings-window #printers-tab form#printerSettings #printMediaSupported {
+	width: 100%;
+}

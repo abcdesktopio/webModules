@@ -1,0 +1,42 @@
+@import "@{global}";
+
+#settings-window #localisation-tab { 
+	display: none; 
+	overflow: auto;
+}
+
+#settings-window #localisation-tab h6 {
+	color: @tertiary;
+}
+
+#settings-window #localisation-tab span {
+	display: block;
+	-webkit-user-select: initial;
+	-khtml-user-select: initial;
+	-moz-user-select: initial;
+	-o-user-select: initial;
+	user-select: initial;
+	text-align: left;
+	margin-bottom: 0.5rem;
+}
+#map {
+	height: 420px;
+}
+
+@media screen and (max-height: 1360px) {
+	#map {
+		height: 410px;
+	}	
+}
+
+@media screen and (max-height: 1359px) {
+	#map {
+		height: 285px;
+	}
+}
+
+@media screen and (max-height: 1090px) {
+	#map {
+		height: 135px;
+	}
+}

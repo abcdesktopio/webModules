@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1000"
+   height="1000"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="email.svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="751"
+     inkscape:window-height="480"
+     id="namedview12"
+     showgrid="false"
+     inkscape:zoom="0.236"
+     inkscape:cx="500"
+     inkscape:cy="500"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata4">Created by potrace 1.13, written by Peter Selinger 2001-2015<rdf:RDF>
+  <cc:Work
+     rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+  </cc:Work>
+</rdf:RDF>
+</metadata>
+  <g
+     id="g6"
+     style="fill:#ffffff">
+    <title
+       id="title8">Layer 1</title>
+    <g
+       id="svg_1"
+       fill="#FFFFFF000"
+       transform="translate(0,1000) scale(0.10000000149011612,-0.10000000149011612) "
+       style="fill:#ffffff">
+      <path
+         fill="#444444"
+         id="svg_2"
+         d="m1000,5531c0,-2387 2,-2729 15,-2806c59,-334 301,-597 645,-698l75,-22l3633,-3l3632,-2l-2,2767l-3,2768l-28,90c-53,167 -148,314 -271,416c-85,70 -241,151 -351,182l-80,22l-3632,3l-3633,2l0,-2719zm7250,1276l0,-434l-1207,-1161c-665,-639 -1243,-1189 -1287,-1221c-406,-304 -1038,-321 -1466,-39c-47,30 -112,79 -145,108c-33,29 -585,561 -1228,1182l-1167,1130l0,430l0,430l154,-149c85,-81 520,-506 968,-943c1249,-1222 1548,-1512 1607,-1559c262,-206 699,-212 988,-13c72,51 -93,-108 1451,1390c727,705 1324,1282 1327,1282c3,0 5,-195 5,-433z"
+         style="fill:#ffffff" />
+    </g>
+  </g>
+</svg>

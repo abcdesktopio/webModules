@@ -1,0 +1,77 @@
+@import "@{global}";
+
+#settings-window #speedtest-tab {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+#settings-window #speedtest-tab #startStopBtn {
+	display: inline-block;
+	color: @dark;
+	background-color: @light;
+	border-radius: 0.3em;
+	transition: all 0.3s;
+	box-sizing: border-box;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	margin-top: 5%;
+	cursor: pointer;
+}
+
+#settings-window #speedtest-tab #startStopBtn.running {
+	background-color:@tertiary;
+	border-color:@tertiary;
+	color:@light;
+}
+
+#settings-window #speedtest-tab #startStopBtn:before { content:"Start"; }
+
+#settings-window #speedtest-tab #startStopBtn.running:before { content:"Abort"; }
+
+#settings-window #speedtest-tab #test { padding-top: 2%; }
+
+#settings-window #speedtest-tab div.testArea {
+	display: inline-block;
+	width: 170px;
+	height: 140px;
+	position: relative;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+#settings-window #speedtest-tab div.testName {
+	position:absolute;
+	top:0.1em; left:0;
+	width:100%;
+	font-size:20px;
+	z-index:9;
+}
+
+#settings-window #speedtest-tab div.meterText {
+	position:absolute;
+	bottom:1.55em; left:0;
+	width:100%;
+	font-size:27px;
+	z-index:9;
+}
+
+#settings-window #speedtest-tab div.meterText:empty:before { content:"0.00"; }
+
+#settings-window #speedtest-tab div.unit {
+	position:absolute;
+	bottom:1em; 
+	left:0;
+	width:100%;
+	z-index:9;
+}
+
+#settings-window #speedtest-tab div.testArea canvas {
+	position:absolute;
+	top:10px; left:0; width:100%; height:100%;
+	z-index:1;
+}
+
+#settings-window #speedtest-tab div.testGroup { display:inline-block; }

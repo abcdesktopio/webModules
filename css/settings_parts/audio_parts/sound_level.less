@@ -1,0 +1,38 @@
+@import "@{global}";
+
+#settings-window #audio-tab #outputSettings #sounds_level .sound_level_active { background-color: @tertiary !important; }
+
+#settings-window #audio-tab #outputSettings #sounds_level > div {
+    width:16px;
+    background-color: @secondary; 
+    display: inline-block;
+    border-radius: 5px;
+    border: solid 1px @tertiary; 
+    cursor: pointer;
+}
+
+#settings-window #audio-tab #outputSettings #sounds_level #sound_level1 { height:24px; }
+
+#settings-window #audio-tab #outputSettings #sounds_level #sound_level2 { height: 40px; }
+
+#settings-window #audio-tab #outputSettings #sounds_level #sound_level3 { height:72px; }
+
+#settings-window #audio-tab #outputSettings #sounds_level #sound_level4 { height:100px; }
+
+#settings-window #audio-tab #outputSettings #sound_level_desc {
+    width: 40%;
+    margin: 0;
+    display: inline-block;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    #settings-window #audio-tab #outputSettings #sound_level_test { 
+        width: 60px !important;
+        height: 60px !important;
+    }
+}
+
+#settings-window #audio-tab #outputSettings #sound_level_test { 
+    width: 30px;
+    cursor: pointer;
+}

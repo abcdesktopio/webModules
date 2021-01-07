@@ -1,0 +1,120 @@
+@import "@{global}";
+
+#audio-tab #outputSettings .range-field { position: relative; }
+
+#audio-tab #outputSettings table input[type=range] {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 65%;
+    margin: 15px 0;
+    padding: 0;
+}
+
+#audio-tab #outputSettings table input[type=range]:focus { outline: 1px solid @tertiary; }
+#audio-tab #outputSettings table input[type=range] + .thumb {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    border: none;
+    height: 0;
+    width: 0;
+    border-radius: 50%;
+    background-color: @tertiary;
+    margin-left: 7px;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+#audio-tab #outputSettings table input[type=range] + .thumb .value {
+    display: block;
+    width: 30px;
+    text-align: center;
+    color: @tertiary;
+    font-size: 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#audio-tab #outputSettings table input[type=range] + .thumb.active { border-radius: 50% 50% 50% 0; }
+
+#audio-tab #outputSettings table input[type=range] + .thumb.active .value {
+    color: @light;
+    margin-left: 7%;
+    margin-top: 25%;
+    font-size: 93%;
+}
+
+#audio-tab #outputSettings table input[type=range] { -webkit-appearance: none; }
+
+#audio-tab #outputSettings table input[type=range]::-webkit-slider-runnable-track {
+    height: 3px;
+    background: @primary;
+    border: none;
+}
+
+#audio-tab #outputSettings table input[type=range]::-webkit-slider-thumb {
+    border: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: @tertiary;
+    -webkit-transition: -webkit-box-shadow .3s;
+    transition: -webkit-box-shadow .3s;
+    transition: box-shadow .3s;
+    transition: box-shadow .3s, -webkit-box-shadow .3s;
+    -webkit-appearance: none;
+    background-color: @tertiary;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    margin: -5px 0 0 0;
+}
+
+#audio-tab #outputSettings table input[type=range]::-moz-range-track {
+    height: 3px;
+    background: @primary;
+    border: none;
+}
+
+#audio-tab #outputSettings table input[type=range]::-moz-focus-inner { border: 0; }
+
+#audio-tab #outputSettings table input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: @tertiary;
+    -webkit-transition: -webkit-box-shadow .3s;
+    transition: -webkit-box-shadow .3s;
+    transition: box-shadow .3s;
+    transition: box-shadow .3s, -webkit-box-shadow .3s;
+    margin-top: -5px;
+}
+
+#audio-tab #outputSettings table input[type=range]::-ms-track {
+    height: 3px;
+    background: transparent;
+    border-color: transparent;
+    border-width: 6px 0;
+    /*remove default tick marks*/
+    color: transparent;
+}
+
+#audio-tab #outputSettings table input[type=range]::-ms-fill-lower { background: @secondary; }
+
+#audio-tab #outputSettings table input[type=range]::-ms-fill-upper { background: @primary; }
+
+#audio-tab #outputSettings table input[type=range]::-ms-thumb {
+    border: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: @tertiary;
+    -webkit-transition: -webkit-box-shadow .3s;
+    transition: -webkit-box-shadow .3s;
+    transition: box-shadow .3s;
+    transition: box-shadow .3s, -webkit-box-shadow .3s;
+}

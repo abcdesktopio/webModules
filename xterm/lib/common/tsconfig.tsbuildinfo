@@ -1,0 +1,180 @@
+{
+  "program": {
+    "fileInfos": {
+      "/composer/node/xterm.js/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88",
+        "signature": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88"
+      },
+      "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts": {
+        "version": "86eded1c74fa0670dd4e84d0da361b03e026240016c6a84e51b2d54b0ca828d0",
+        "signature": "86eded1c74fa0670dd4e84d0da361b03e026240016c6a84e51b2d54b0ca828d0"
+      },
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": {
+        "version": "69fe147dfcbfa0b18f412d55a171ec442a489b24586a3c2ad65cf32aa5d74d80",
+        "signature": "937f1b023d87603f24954f5e5fd8e2d1fa834843487bae132f41e3608315a777"
+      },
+      "/composer/node/xterm.js/src/common/Types.ts": {
+        "version": "c6a99150da1a4413692492c1020f4066729c76a25fbc32baf12c220b4888c031",
+        "signature": "ef3478e1bf1a1f357801e0e885e72953fc4ac9e64687a4fd94fc67ed0fe3365b"
+      },
+      "/composer/node/xterm.js/src/common/CircularList.ts": {
+        "version": "290aef94e80e06fddaf5ac4e672b4a201ad4d56ff460bdf4a7bb7299bde9ff4d",
+        "signature": "6951821698cb886e6edfb24998618e91f0fad8e3f7e16c20dcdf325f6d7af9da"
+      },
+      "/composer/node/xterm.js/src/common/CircularList.test.ts": {
+        "version": "2daeade8bdfb51e7915d27d07861c497a5a1cc00571b9bfbd4b1dfb5834300c7",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/composer/node/xterm.js/src/common/Clone.ts": {
+        "version": "05cb835fa8993fadf05d4feeda73033edb2f365827b2b9080a9aeecd5ddcf5ad",
+        "signature": "10e2716089fdc1279b9ec1bf6e94466242f6cac5c3f86125ef0732bfff562ba0"
+      },
+      "/composer/node/xterm.js/src/common/Clone.test.ts": {
+        "version": "2f497828bc86b926638f256dd6e04987f3a8c1b1e936a1393da3318b8099581a",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/composer/node/xterm.js/src/common/Lifecycle.ts": {
+        "version": "3a0261594829c939967a55125094000a04b7d14fa1825e00b7a54d6c120a3760",
+        "signature": "5df683041bba7adf5750533cf89d419e83077c9557479d3410b28196d117bfb1"
+      },
+      "/composer/node/xterm.js/src/common/EventEmitter.ts": {
+        "version": "aa7808a9bfa04a5bf812b19fc3114318f82d00a3ebdb376431d7d09223caec72",
+        "signature": "940b0eed2c25e68615fe010c55e186927a9e55504aa0136af72f8c6ccdf5e84f"
+      },
+      "/composer/node/xterm.js/src/common/EventEmitter.test.ts": {
+        "version": "efae438d6d5dc9c8833ecafd28885ce0a58be043322c24a92c7edaf7697e207b",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/composer/node/xterm.js/src/common/EventEmitter2.test.ts": {
+        "version": "3c84825e20bba50aa58f293e6f4f3657d4c6928372e7d3451555b31602e433f6",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/composer/node/xterm.js/src/common/Lifecycle.test.ts": {
+        "version": "193211438bc551c69d9e97ce694e8772e15394e4e4d3c0753224176cd376ba4d",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/composer/node/xterm.js/src/common/Platform.ts": {
+        "version": "2987b9600184decad237124e5b9f07b02cf6564a560eeee37abb852328e0621d",
+        "signature": "a6174371b9ed905cd8eceb9aa65899e68cc73723e2e75c28869d4c5e514cd267"
+      },
+      "/composer/node/xterm.js/src/common/TypedArrayUtils.ts": {
+        "version": "2821a5c8a38faec1541f1222b8588f1040607182353e1c58c231681f8dc5c330",
+        "signature": "00b7efa0b0f568165ee038cd8ffbdb4149ebee313971051f7bc863ac7a0c5b02"
+      },
+      "/composer/node/xterm.js/src/common/TypedArrayUtils.test.ts": {
+        "version": "029df50bac6868b05abce000c6d0b338a94f5439aa02f48d0bdc5ecc81142f40",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/composer/node/xterm.js/src/common/data/EscapeSequences.ts": {
+        "version": "d983a0f16c3ac853dc31ddce07fdca6e1b205c2e835e45b5b47c2e9c0c55c6b1",
+        "signature": "0269b138d261f232c517785226b9ad9fd7b486de45dc28c669cfb8340259d645"
+      },
+      "/composer/node/xterm.js/node_modules/@types/mocha/index.d.ts": {
+        "version": "d93bdd7313bdc64d926cd1429bdb9a979037240e89995fddbc6817075bbfe502",
+        "signature": "d93bdd7313bdc64d926cd1429bdb9a979037240e89995fddbc6817075bbfe502"
+      }
+    },
+    "options": {
+      "target": 1,
+      "lib": [
+        "lib.es5.d.ts"
+      ],
+      "rootDir": "/composer/node/xterm.js/src",
+      "sourceMap": true,
+      "removeComments": true,
+      "incremental": true,
+      "composite": true,
+      "strict": true,
+      "outDir": "/composer/node/xterm.js/lib",
+      "types": [
+        "../../node_modules/@types/mocha"
+      ],
+      "configFilePath": "/composer/node/xterm.js/src/common/tsconfig.json"
+    },
+    "referencedMap": {
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": [
+        "/composer/node/xterm.js/src/common/Types.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Types.ts": [
+        "/composer/node/xterm.js/src/common/EventEmitter2.ts",
+        "/composer/node/xterm.js/src/common/CircularList.ts"
+      ],
+      "/composer/node/xterm.js/src/common/CircularList.ts": [
+        "/composer/node/xterm.js/src/common/Types.ts",
+        "/composer/node/xterm.js/src/common/EventEmitter2.ts"
+      ],
+      "/composer/node/xterm.js/src/common/CircularList.test.ts": [
+        "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+        "/composer/node/xterm.js/src/common/CircularList.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Clone.test.ts": [
+        "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+        "/composer/node/xterm.js/src/common/Clone.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Lifecycle.ts": [
+        "/composer/node/xterm.js/src/common/Types.ts"
+      ],
+      "/composer/node/xterm.js/src/common/EventEmitter.ts": [
+        "/composer/node/xterm.js/src/common/Types.ts",
+        "/composer/node/xterm.js/src/common/Lifecycle.ts"
+      ],
+      "/composer/node/xterm.js/src/common/EventEmitter.test.ts": [
+        "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+        "/composer/node/xterm.js/src/common/EventEmitter.ts"
+      ],
+      "/composer/node/xterm.js/src/common/EventEmitter2.test.ts": [
+        "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+        "/composer/node/xterm.js/src/common/EventEmitter2.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Lifecycle.test.ts": [
+        "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+        "/composer/node/xterm.js/src/common/Lifecycle.ts"
+      ],
+      "/composer/node/xterm.js/src/common/TypedArrayUtils.test.ts": [
+        "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+        "/composer/node/xterm.js/src/common/TypedArrayUtils.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": [
+        "/composer/node/xterm.js/src/common/Types.ts"
+      ],
+      "/composer/node/xterm.js/src/common/CircularList.ts": [
+        "/composer/node/xterm.js/src/common/EventEmitter2.ts",
+        "/composer/node/xterm.js/src/common/Types.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Types.ts": [
+        "/composer/node/xterm.js/src/common/EventEmitter2.ts",
+        "/composer/node/xterm.js/src/common/CircularList.ts"
+      ],
+      "/composer/node/xterm.js/src/common/EventEmitter.ts": [
+        "/composer/node/xterm.js/src/common/Types.ts",
+        "/composer/node/xterm.js/src/common/Lifecycle.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Lifecycle.ts": [
+        "/composer/node/xterm.js/src/common/Types.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      "/composer/node/xterm.js/node_modules/typescript/lib/lib.es5.d.ts",
+      "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts",
+      "/composer/node/xterm.js/src/common/Types.ts",
+      "/composer/node/xterm.js/src/common/CircularList.ts",
+      "/composer/node/xterm.js/src/common/CircularList.test.ts",
+      "/composer/node/xterm.js/src/common/Clone.ts",
+      "/composer/node/xterm.js/src/common/Clone.test.ts",
+      "/composer/node/xterm.js/src/common/Lifecycle.ts",
+      "/composer/node/xterm.js/src/common/EventEmitter.ts",
+      "/composer/node/xterm.js/src/common/EventEmitter.test.ts",
+      "/composer/node/xterm.js/src/common/EventEmitter2.test.ts",
+      "/composer/node/xterm.js/src/common/Lifecycle.test.ts",
+      "/composer/node/xterm.js/src/common/Platform.ts",
+      "/composer/node/xterm.js/src/common/TypedArrayUtils.ts",
+      "/composer/node/xterm.js/src/common/TypedArrayUtils.test.ts",
+      "/composer/node/xterm.js/src/common/data/EscapeSequences.ts",
+      "/composer/node/xterm.js/node_modules/@types/mocha/index.d.ts"
+    ]
+  },
+  "version": "3.4.5"
+}

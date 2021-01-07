@@ -1,0 +1,67 @@
+@import "@{global}";
+
+/*Settings panel colors*/
+#panel_colors {
+	width:100%;
+	display: block;
+}
+
+#screen-background-tab #modes-screen #panel_colors #color-list {
+	width:100%;
+	height: 100%;
+	overflow: auto;
+}
+
+.colors_blocks {
+	display: inline-block;
+	width: 10%;
+	margin: 2%;
+	height: 75px;
+	border: solid 1px @dark;
+	cursor: pointer;
+}
+
+#screen-background-tab #modes-screen #panel_colors #color-list::-webkit-scrollbar {
+	height:10%;
+	width:2%;
+	border-radius:100%; 
+}
+
+#screen-background-tab #modes-screen #panel_colors #color-list::-webkit-scrollbar-thumb {
+	height:10%;
+	background: @primary;
+}
+
+#show_color {
+	border: solid 1px @dark;
+	height: 20%;
+	width: 13%;
+	background: @light;
+	margin-bottom: 20%;
+	display: inline-block;
+	transform: rotate(90deg);
+	border-radius: 100%;
+}
+
+#screen-background-tab #modes-screen #panel_colors #color_input { display:none; }
+
+#screen-background-tab #modes-screen #panel_colors #color-list #div_img_show_picker_color { border: none !important; }
+
+#screen-background-tab #modes-screen #panel_colors #color-list #div_img_show_picker_color #img_show_picker_color {
+	display: block;
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#img_show_picker_color {
+	-webkit-user-drag: none;
+}
+
+#img_color { margin-left:5%; }

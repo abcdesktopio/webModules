@@ -1,0 +1,421 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+#welcome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  font-weight: 400;
+  background: url(../../../img/black-bg-60.png);
+  background: @dark;
+  overflow: hidden;
+  display: none;
+}
+
+#welcome .control {
+  background: @tertiary;
+}
+
+#welcome .control .window-title {
+  color: @light;
+}
+
+#welcome #cookies {
+  background: @secondary;
+  font-size: 13px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 50px;
+}
+
+#welcome #cookies #hide {
+  height: 35px;
+  width: 45px;
+  float: left;
+  margin-top: -10px;
+  background: url("../../../img/close.svg") no-repeat center;
+  background-size: 30px;
+  cursor: pointer;
+}
+
+#welcome-screen,
+#welcome-screen-shared,
+#welcome-ad {
+  left: 50%;
+  right: 15%;
+  top: 50%;
+  width: 600px;
+  margin-left: -300px;
+  margin-top: -250px;
+  -webkit-box-shadow: 0 0 10px @dark;
+  box-shadow: 0 0 10px @dark;
+  position: absolute;
+  color: @light;
+  display: none;
+  padding: 0px 0 20px;
+  z-index: 2;
+  background: @secondary;
+}
+
+#welcome .welcome-header {
+  background: url(../../../img/welcome/orange_icon.svg) 20px 20px no-repeat
+    @primary;
+  background-size: 100px;
+  min-height: 140px;
+  padding: 7px 0px 0 140px;
+}
+
+#welcome .welcome-select {
+  border-top: 1px solid @light;
+  padding: 15px;
+}
+
+#welcome .welcome-select select {
+  margin-left: 10px;
+}
+
+#welcome h1 {
+  font-size: 25px;
+  line-height: 1.3;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 20px;
+}
+
+#welcome h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+#welcome ul {
+  padding: 0;
+  overflow: hidden;
+  margin: 0px 0px 40px;
+  margin-bottom: 20px;
+}
+
+#welcome li {
+  float: left;
+  display: none;
+  list-style: none;
+  height: 75px;
+  width: 50%;
+  overflow: hidden;
+}
+
+#welcome .comingsoon {
+  background: @secondary;
+  width: 220px;
+  height: 75px;
+  position: fixed;
+  line-height: 120px;
+  text-indent: 100px;
+  color: @tertiary;
+  font-size: 13px;
+  margin-left: 190px;
+}
+
+#welcome li a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  height: 75px;
+  text-indent: 60px;
+  line-height: 75px;
+  text-decoration: none;
+  cursor: pointer;
+  margin: auto;
+  font-size: 15px;
+  color: @light;
+  font-weight: bold;
+}
+
+#welcome li a.completed {
+  color: @primary;
+  background: url("../../../img/welcome/completed.png") no-repeat 12px 15px !important;
+  background-color: @light !important;
+}
+#welcome li img {
+  float: left;
+  margin-left: -48px;
+  margin-top: -20px;
+}
+
+#welcome #login-facebook {
+  background: url("../../../img/welcome/facebook_icon.svg") no-repeat 10px
+    center @info;
+  background-size: 40px;
+}
+
+#welcome #login-google {
+  background: url("../../../img/welcome/google_icon.svg") no-repeat 10px center
+    @danger;
+  background-size: 40px;
+}
+
+#welcome #login-orange {
+  background: url("../../../img/welcome/orange_icon.svg") no-repeat 10px center
+    @dark;
+  background-size: 40px;
+}
+
+#welcome #login-mobileorange {
+  background: url("../../../img/welcome/mobileconnect_icon.svg") no-repeat 10px
+    center @tertiary;
+  background-size: 40px;
+}
+
+#welcome #login-activedirectory {
+  background: url("../../../img/welcome/activedirectory_icon.svg") no-repeat
+    10px center;
+  background-size: 40px;
+}
+
+#welcome #login-anonymous {
+  background: url("../../../img/welcome/anonymous_icon.svg") no-repeat 100px
+    center @light;
+  background-size: 40px;
+  color: @dark;
+}
+
+#welcome #anonymousBtn {
+  width: 100%;
+}
+
+#welcome .browse-files {
+  background: url("../../../img/welcome/browse-files.png") no-repeat 10px center;
+}
+
+#welcome .shared-mode {
+  width: 130px;
+  height: 30px;
+  position: relative;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: 30px;
+  left: 50%;
+  margin-left: -65px;
+}
+
+#welcome .language-mode {
+  height: 35px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  display: block;
+  float: right;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 20px;
+  color: @secondary;
+  overflow: hidden;
+  background: @tertiary;
+}
+
+#welcome .language-mode a {
+  padding: 11px;
+  color: @light;
+}
+
+#welcome .primary {
+  background: @tertiary;
+  color: @light;
+}
+
+#welcome .language-mode span {
+  background: @light;
+  color: @dark;
+  padding: 12px 9px;
+  line-height: 35px;
+}
+
+#welcome #logmail {
+  height: 70px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid @light;
+  line-height: 70px;
+  text-align: center;
+}
+
+#welcome #logmail input {
+  height: 25px;
+  text-indent: 35px;
+  width: 200px;
+  background: url("../../../img/top/email_inverted.svg") no-repeat 0px 0px;
+  background-size: 30px;
+  cursor: text;
+  margin-left: 10px;
+  color: @light;
+}
+
+#welcome #info {
+  display: inline-block;
+  background: @tertiary;
+  height: 20px;
+  width: 20px;
+  border-radius: 30px;
+  color: @light;
+  cursor: help;
+  text-align: center;
+  font-size: 15px;
+  line-height: 20px;
+  margin-left: 10px;
+}
+
+#welcome #android {
+  position: absolute;
+  right: 10px;
+  top: 135px;
+  width: 125px;
+  display: none;
+}
+
+#welcome #android img {
+  height: 40px;
+  pointer-events: none;
+}
+
+#welcome-ad form {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
+
+#welcome-ad form input {
+  height: 30px;
+  width: 230px;
+  position: relative;
+  margin-bottom: 20px;
+  text-indent: 5px;
+  cursor: text;
+  border: none;
+}
+
+#welcome-ad .button {
+  background: @tertiary;
+  color: @light;
+  display: block;
+  font-size: 13px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
+  margin: auto;
+  text-indent: 0px;
+}
+
+#welcome-ad #law {
+  font-size: 10px;
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 10px;
+  border-top: 1px solid @light;
+}
+
+#welcome-ad h2 {
+  font-size: 12px;
+}
+
+#welcome #welcome-ad #anonymousBtnAd {
+  height: 50px;
+  width: 100%;
+  background: url("../../../img/welcome/anonymous_icon.svg") no-repeat 40px
+    center @light;
+  background-size: 40px;
+  display: none;
+  margin: auto;
+  margin-top: 10px;
+}
+
+#welcome #welcome-ad #anonymousBtnAd a {
+  height: 100%;
+  width: 100%;
+  display: block;
+  line-height: 50px;
+  text-align: center;
+  color: @dark;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 700px) and (orientation: portrait) {
+  #welcome-screen,
+  #welcome-screen-shared,
+  #welcome-ad {
+    margin: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    -webkit-border-radius: 8px;
+    -khtml-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 0 10px @dark;
+    box-shadow: 0 0 10px @dark;
+    position: absolute;
+    color: @light;
+  }
+
+  #welcome #login-anonymous {
+    background: url("../../../img/welcome/anonymous_icon.svg") no-repeat 10px
+      center @light;
+    background-size: 30px;
+    color: @dark;
+    text-align: center;
+  }
+
+  #welcome #login-facebook {
+    background: url("../../../img/welcome/facebook_icon.svg") no-repeat 10px
+      center @info;
+    background-size: 30px;
+  }
+
+  #welcome #login-google {
+    background: url("../../../img/welcome/google_icon.svg") no-repeat 10px
+      center @danger;
+    background-size: 30px;
+  }
+
+  #welcome #login-orange {
+    background: url("../../../img/welcome/orange_icon.svg") no-repeat 10px
+      center @dark;
+    background-size: 30px;
+  }
+
+  #welcome #login-mobileorange {
+    background: url("../../../img/welcome/mobileconnect_icon.svg") no-repeat
+      10px center @tertiary;
+    background-size: 30px;
+  }
+
+  #welcome #login-activedirectory {
+    background: url("../../../img/welcome/activedirectory_icon.svg") no-repeat
+      10px center;
+    background-size: 30px;
+  }
+
+  #welcome-screen li a,
+  #welcome-screen-shared li a {
+    font-size: 12px;
+    text-indent: 50px;
+    text-align: left;
+  }
+}

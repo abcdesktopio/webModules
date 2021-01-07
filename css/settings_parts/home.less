@@ -1,0 +1,43 @@
+@import "@{global}";
+
+#settings-window #panel-settings .tab-header {
+  height: 150px;
+  width: 20%;
+  float: left;
+  text-align: center;
+  font-size: 15px;
+  color: @light;
+  font-weight: bold;
+}
+
+#settings-window #panel-settings .tab-header:hover {
+  background: @secondary;
+}
+
+#settings-window #panel-settings .tab-header:hover span:nth-child(3) {
+  opacity: 1;
+}
+
+#settings-window #panel-settings .tab-header div {
+  cursor: pointer;
+}
+
+#settings-window #panel-settings .tab-header div img {
+  height: 50px;
+  width: 100%;
+  margin-bottom: 5px;
+  pointer-events: none;
+}
+
+#settings-window #panel-settings .tab-header span {
+  font-size: 12px;
+}
+
+#settings-window #panel-settings .tab-header span:nth-child(3) {
+  font-size: 13px;
+  color: @tertiary;
+  font-weight: 100;
+  opacity: 0;
+  pointer-events: none;
+  width: 100%;
+}

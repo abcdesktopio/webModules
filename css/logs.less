@@ -1,0 +1,119 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+#logs {
+  display: none;
+  width: 500px;
+  height: 300px;
+  left: calc(50% - 250px);
+  top: calc(30% - 150px);
+}
+
+#logs #logList {
+  width: 100%;
+  height: calc(100% - 35px);
+  overflow: auto;
+  font-family: monospace;
+  background: @dark;
+}
+
+#logs #logTable {
+  width: 100%;
+}
+
+#logs td {
+  font-family: monospace;
+  color: @tertiary;
+}
+
+#logs thead td {
+  color: @light;
+}
+
+#logs .logDate {
+  width: 100px;
+}
+
+#logs .logCode {
+  width: 150px;
+}
+
+#logs pre {
+  margin: 0;
+}
+
+.renderjson {
+  font-family: monospace;
+}
+
+.renderjson a {
+  text-decoration: none;
+  color: @light;
+  font-family: monospace;
+}
+
+.renderjson .disclosure {
+  color: @tertiary;
+  font-size: 130%;
+  font-family: monospace;
+}
+
+.renderjson .disclosure.green {
+  color: @success;
+}
+
+.renderjson .disclosure.red {
+  color: @danger;
+}
+
+.renderjson .syntax {
+  color: @light;
+  font-family: monospace;
+}
+
+.renderjson .string {
+  color: @info;
+  font-family: monospace;
+}
+
+.renderjson .number {
+  color: @info;
+  font-family: monospace;
+}
+
+.renderjson .boolean {
+  color: @danger;
+  font-family: monospace;
+}
+
+.renderjson .key {
+  color: @info;
+  font-family: monospace;
+}
+
+.renderjson .keyword {
+  color: @warning;
+  font-family: monospace;
+}
+
+.renderjson .object.syntax {
+  color: @tertiary;
+  font-family: monospace;
+}
+
+.renderjson .array.syntax {
+  color: @warning;
+  font-family: monospace;
+}

@@ -1,0 +1,365 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+.emoticon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  text-indent: -10000px;
+  overflow: hidden;
+  cursor: text;
+  background: url("../../../img/emoticons.png") no-repeat;
+  text-align: left;
+}
+.emoticon-smile {
+  background-position: -3px -2px;
+}
+.emoticon-sad-smile {
+  background-position: -28px -2px;
+}
+.emoticon-big-smile {
+  background-position: -54px -2px;
+}
+.emoticon-cool {
+  background-position: -80px -2px;
+}
+.emoticon-surprised {
+  background-position: -107px -2px;
+}
+.emoticon-wink {
+  background-position: -132px -2px;
+}
+.emoticon-crying {
+  background-position: -158px -2px;
+}
+.emoticon-sweating {
+  background-position: -184px -2px;
+}
+.emoticon-speechless {
+  background-position: -210px -2px;
+}
+.emoticon-kiss {
+  background-position: -236px -2px;
+}
+
+.emoticon-tongue-out {
+  background-position: -3px -28px;
+}
+.emoticon-blush {
+  background-position: -28px -28px;
+}
+.emoticon-wondering {
+  background-position: -54px -28px;
+}
+.emoticon-sleepy {
+  background-position: -80px -28px;
+}
+.emoticon-dull {
+  background-position: -107px -28px;
+}
+.emoticon-in-love {
+  background-position: -132px -28px;
+}
+.emoticon-evil-grin {
+  background-position: -158px -28px;
+}
+.emoticon-yawn {
+  background-position: -184px -28px;
+}
+.emoticon-puke {
+  background-position: -210px -28px;
+}
+.emoticon-doh {
+  background-position: -236px -28px;
+}
+
+.emoticon-angry {
+  background-position: -3px -54px;
+}
+.emoticon-it-wasnt-me {
+  background-position: -28px -54px;
+}
+.emoticon-party {
+  background-position: -54px -54px;
+}
+.emoticon-worried {
+  background-position: -81px -54px;
+}
+.emoticon-mmm {
+  background-position: -107px -54px;
+}
+.emoticon-nerd {
+  background-position: -132px -54px;
+}
+.emoticon-lips-sealed {
+  background-position: -158px -54px;
+}
+.emoticon-devil {
+  background-position: -184px -54px;
+}
+.emoticon-angel {
+  background-position: -210px -54px;
+}
+.emoticon-envy {
+  background-position: -236px -54px;
+}
+
+.emoticon-make-up {
+  background-position: -3px -80px;
+}
+.emoticon-thinking {
+  background-position: -28px -80px;
+}
+.emoticon-rofl {
+  background-position: -54px -80px;
+}
+.emoticon-happy {
+  background-position: -81px -80px;
+}
+.emoticon-snide {
+  background-position: -107px -80px;
+}
+.emoticon-nodding {
+  background-position: -132px -80px;
+}
+.emoticon-shaking {
+  background-position: -158px -80px;
+}
+.emoticon-waiting {
+  background-position: -184px -80px;
+}
+.emoticon-emo {
+  background-position: -210px -80px;
+}
+.emoticon-yn {
+  background-position: -236px -80px;
+}
+
+.emoticon-hi {
+  background-position: -3px -107px;
+}
+.emoticon-facepalm {
+  background-position: -28px -107px;
+}
+.emoticon-wait {
+  background-position: -54px -107px;
+}
+.emoticon-covered-laugh {
+  background-position: -81px -107px;
+}
+.emoticon-clapping-hands {
+  background-position: -107px -107px;
+}
+.emoticon-whew {
+  background-position: -132px -107px;
+}
+.emoticon-highfive {
+  background-position: -158px -107px;
+}
+.emoticon-tmi {
+  background-position: -184px -107px;
+}
+.emoticon-call {
+  background-position: -210px -107px;
+}
+.emoticon-headbang {
+  background-position: -236px -107px;
+}
+
+.emoticon-eureka {
+  background-position: -3px -132px;
+}
+.emoticon-lalala {
+  background-position: -28px -132px;
+}
+.emoticon-punch {
+  background-position: -54px -132px;
+}
+.emoticon-rock {
+  background-position: -81px -132px;
+}
+.emoticon-swearing {
+  background-position: -107px -132px;
+}
+.emoticon-talking {
+  background-position: -132px -132px;
+}
+.emoticon-talktohand {
+  background-position: -158px -132px;
+}
+.emoticon-bandit {
+  background-position: -184px -132px;
+}
+.emoticon-heart {
+  background-position: -210px -132px;
+}
+.emoticon-broken-heart {
+  background-position: -236px -132px;
+}
+
+.emoticon-yes {
+  background-position: -3px -158px;
+}
+.emoticon-no {
+  background-position: -28px -158px;
+}
+.emoticon-handshake {
+  background-position: -54px -158px;
+}
+.emoticon-muscle {
+  background-position: -81px -158px;
+}
+.emoticon-man {
+  background-position: -107px -158px;
+}
+.emoticon-woman {
+  background-position: -132px -158px;
+}
+.emoticon-bow {
+  background-position: -158px -158px;
+}
+.emoticon-gottarun {
+  background-position: -184px -158px;
+}
+.emoticon-stop {
+  background-position: -210px -158px;
+}
+.emoticon-dance {
+  background-position: -236px -158px;
+}
+
+.emoticon-bartlett {
+  background-position: -3px -184px;
+}
+.emoticon-bike {
+  background-position: -28px -184px;
+}
+.emoticon-ninja {
+  background-position: -54px -184px;
+}
+.emoticon-cat {
+  background-position: -81px -184px;
+}
+.emoticon-dog {
+  background-position: -107px -184px;
+}
+.emoticon-bear {
+  background-position: -132px -184px;
+}
+.emoticon-heidy {
+  background-position: -158px -184px;
+}
+.emoticon-snail {
+  background-position: -184px -184px;
+}
+.emoticon-flower {
+  background-position: -210px -184px;
+}
+.emoticon-luck {
+  background-position: -236px -184px;
+}
+
+.emoticon-sun {
+  background-position: -3px -210px;
+}
+.emoticon-island {
+  background-position: -28px -210px;
+}
+.emoticon-rain {
+  background-position: -54px -210px;
+}
+.emoticon-umbrella {
+  background-position: -81px -210px;
+}
+.emoticon-rainbow {
+  background-position: -107px -210px;
+}
+.emoticon-star {
+  background-position: -132px -210px;
+}
+.emoticon-tumbleweed {
+  background-position: -158px -210px;
+}
+.emoticon-pizza {
+  background-position: -184px -210px;
+}
+.emoticon-cake {
+  background-position: -210px -210px;
+}
+.emoticon-coffee {
+  background-position: -236px -210px;
+}
+
+.emoticon-beer {
+  background-position: -3px -236px;
+}
+.emoticon-drink {
+  background-position: -28px -236px;
+}
+.emoticon-canyoutalk {
+  background-position: -54px -236px;
+}
+.emoticon-camera {
+  background-position: -81px -236px;
+}
+.emoticon-plane {
+  background-position: -107px -236px;
+}
+.emoticon-car {
+  background-position: -132px -236px;
+}
+.emoticon-computer {
+  background-position: -158px -236px;
+}
+.emoticon-wfh {
+  background-position: -184px -236px;
+}
+.emoticon-games {
+  background-position: -210px -236px;
+}
+.emoticon-mphone {
+  background-position: -236px -236px;
+}
+
+.emoticon-gift {
+  background-position: -3px -263px;
+}
+.emoticon-holdon {
+  background-position: -28px -263px;
+}
+.emoticon-letsmeet {
+  background-position: -54px -263px;
+}
+.emoticon-message {
+  background-position: -81px -263px;
+}
+.emoticon-confidential {
+  background-position: -107px -263px;
+}
+.emoticon-cash {
+  background-position: -132px -263px;
+}
+.emoticon-movie {
+  background-position: -158px -263px;
+}
+.emoticon-music {
+  background-position: -184px -263px;
+}
+.emoticon-hour {
+  background-position: -210px -263px;
+}
+.emoticon-whatsgoingon {
+  background-position: -236px -263px;
+}

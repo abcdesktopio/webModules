@@ -1,0 +1,278 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+.error-window {
+  left: 50%;
+  width: 600px;
+  top: 50%;
+  margin-top: -150px;
+  margin-left: -300px;
+  display: none;
+  position: absolute;
+}
+
+.error-window .error-container {
+  padding: 63px 20px 20px 20px;
+  background: url("../../../img/error/background-download.png") no-repeat 0 -20px;
+  background-color: @light;
+  color: @primary;
+}
+
+.error-window h1 {
+  color: @light;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.error-window h2 {
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 50px;
+}
+
+.error-window .download:active {
+  position: relative;
+  top: 1px;
+}
+#support-window {
+  width: 349px;
+  min-height: 170px;
+  top: 100px;
+  left: 400px;
+  display: none;
+  z-index: 99;
+}
+
+#anonymous-error {
+  height: 180px;
+  top: 50%;
+  left: 50%;
+  margin-top: -180px;
+  margin-left: -195px;
+  display: none;
+}
+
+#anonymous-error .content img {
+  float: left;
+  margin: 15px 10px 0px 10px;
+  height: 50px;
+}
+
+#anonymous-error .content .message p {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+#anonymous-error .content .message {
+  float: left;
+  width: 320px;
+  height: 100%;
+}
+
+#anonymous-error .content .logoff-buttons {
+  margin-right: 7px;
+  clear: both;
+}
+
+#anonymous-error .content .logoff-buttons div:hover {
+  background-position: 0px -29px;
+  cursor: pointer;
+}
+
+#anonymous-error .content .logoff-buttons div.highlight {
+  background: @tertiary;
+  color: @light;
+}
+
+#anonymous-error .content .logoff-buttons div.highlight:hover {
+  text-shadow: none;
+  background-position: 0px 0px;
+}
+
+#fullbcg {
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  z-index: 1000;
+}
+#navMessage,
+#IEMessage {
+  width: 700px;
+  left: 50%;
+  margin-left: -350px;
+  margin-top: 10%;
+  padding: 10px;
+  box-sizing: border-box;
+  display: none;
+}
+
+#navMessage #btnIgnore,
+#IEMessage #btnIgnore {
+  background: @tertiary;
+  color: @light;
+  padding: 10px;
+  float: right;
+  cursor: pointer;
+  text-indent: 10px;
+  line-height: 30px;
+}
+#navMessage #btnIgnore img {
+  height: 30px;
+  width: 30px;
+  float: left;
+}
+#navMessage #btnIgnore img:last-child,
+#IEMessage #btnIgnore img:last-child {
+  float: right;
+}
+
+#navMessage .navs {
+  width: 150px;
+  text-align: center;
+  float: left;
+  margin-bottom: 15px;
+  margin-left: 50px;
+}
+#IEMessage .navs {
+  width: 150px;
+  text-align: center;
+  float: left;
+  margin-bottom: 15px;
+  margin-left: 115px;
+}
+
+#navMessage .navs p,
+#IEMessage .navs p {
+  margin: 0;
+}
+
+#navMessage p,
+#IEMessage p {
+  clear: both;
+}
+
+#navMessage img {
+  height: 50px;
+  width: 50px;
+}
+
+#windowMessage {
+  width: 500px;
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  background: @light;
+  padding: 10px;
+  margin-left: -250px;
+  display: none;
+  z-index: 1001;
+}
+#windowMessage span {
+  font-size: 20px;
+  line-height: 65px;
+  color: @primary;
+  margin-left: 20px;
+  float: left;
+}
+#windowMessage img {
+  height: 50px;
+  margin-top: 8px;
+  float: left;
+  margin-bottom: 20px;
+}
+
+#windowMessage #to {
+  height: 30px;
+  padding-top: 10px;
+}
+#windowMessage #old {
+  margin-left: 15px;
+}
+#windowMessage #content {
+  clear: both;
+  padding: 5px 5% 0px 5%;
+  border-top: 1px solid @light;
+}
+
+#windowMessage .btn {
+  margin-right: 7px;
+  clear: both;
+}
+
+#windowMessage .btn div:hover {
+  background-position: 0px -29px;
+  cursor: pointer;
+}
+
+#windowMessage .btn div.highlight {
+  background: @tertiary;
+  color: @light;
+}
+
+#windowMessage .btn div.highlight:hover {
+  text-shadow: none;
+  background-position: 0px 0px;
+}
+
+@media screen and (max-width: 700px) {
+  .error-window {
+    left: 50%;
+    width: 300px;
+    height: 200px;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -100px;
+  }
+  .error-window .error-container {
+    background-size: contain;
+    padding: 1px 10px 0px 10px;
+  }
+  .error-window h2 {
+    font-size: 15px;
+    margin-top: 20px;
+  }
+
+  #navMessage,
+  #IEMessage {
+    width: 100%;
+    left: 0;
+    margin-left: 0px;
+    margin-top: 10%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  #navMessage,
+  #IEMessage .navs {
+    width: 100px;
+    margin-left: 40px;
+  }
+  #windowMessage {
+    width: 260px;
+    margin-left: -140px;
+  }
+  #windowMessage span {
+    width: 100%;
+    text-align: center;
+    margin-left: 0px;
+  }
+
+  #windowMessage #old {
+    margin-left: 40px;
+  }
+}

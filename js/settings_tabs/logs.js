@@ -1,0 +1,56 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+import * as system from '../system.js';
+import * as launcher from '../launcher.js';
+
+import { settingsEvents } from '../settingsevents.js';
+
+let firstAppear = true;
+
+export function init(home, logs) {
+  system.hide(home);
+
+  if (!firstAppear) {
+    system.show(logs);
+    return;
+  }
+  firstAppear = false;
+
+  launcher.getLogs((data) => {
+    const logsTab = system.removeAllChilds(document.getElementById('logs-tab'));
+    if (!logsTab) {
+      return;
+    }
+
+    const div = document.createElement('div');
+    div.className = 'container-logs';
+    data.result.split('\n')
+      .map((row) => {
+        const p = document.createElement('p');
+        p.innerText = row;
+        p.style.margin = 0;
+        return p;
+      })
+      .reduce((div, p) => {
+        div.appendChild(p);
+        return div;
+      }, div);
+    logsTab.appendChild(div);
+  });
+  system.show(logs);
+}
+
+settingsEvents.addEventListener('close', () => {
+  firstAppear = true;
+});

@@ -1,0 +1,37 @@
+{
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "commonjs": true
+    },
+    "extends": ["airbnb-base"],
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "globals": {
+      "$":true,
+      "bootbox":true,
+      "close": true
+    },
+    "rules": {
+      "no-plusplus": "off",
+      "no-console": "off",
+      "no-await-in-loop": "off",
+      "no-restricted-syntax": "off",
+      "no-async-promise-executor": "off",
+      "no-param-reassign": "off",
+      "import/extensions": "off",
+      "no-loop-func":"off",
+      "func-names":"off",
+      "import/no-cycle":"off",
+      "no-continue":"off",
+      "no-use-before-define":"off",
+      "no-shadow":"off",
+      "no-cond-assign":"off",
+      "import/prefer-default-export": "off",
+      "no-undef": "off",
+      "no-restricted-globals":"off"
+    }
+  }
+  

@@ -1,0 +1,76 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+#shareWindow {
+  display: none;
+  width: 450px;
+  text-align: center;
+  left: calc(50% - 225px);
+  top: 30%;
+}
+
+#shareWindow #title {
+  height: 80px;
+}
+
+#shareWindow #title img {
+  height: 50px;
+  float: left;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+#shareWindow #title span {
+  font-size: 15px;
+  display: block;
+  padding-top: 25px;
+}
+
+#shareWindow input {
+  display: block;
+  margin: auto;
+  width: 250px;
+  text-indent: 35px;
+  height: 25px;
+  margin-top: 10px;
+  cursor: text;
+  font-size: 15px;
+  background: url("../../../img/top/email.svg") no-repeat 0px 0px;
+  background-size: 30px;
+}
+
+#shareWindow .button {
+  text-align: center;
+  width: 85px;
+  height: 23px;
+  padding-top: 6px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+#shareWindow #fullAccess {
+  background: @tertiary;
+  color: @light;
+  margin-right: 120px;
+  float: right;
+}
+
+#shareWindow #viewOnly {
+  color: @dark;
+  float: left;
+  background: @light;
+  margin-left: 120px;
+}

@@ -1,0 +1,124 @@
+@import "@{global}";
+
+#settings-window #system-tab {
+  display: none;
+}
+
+.line-spacing {
+  margin-bottom: 0.5rem;
+}
+
+#system-tab img.logo-animation {
+  position: relative;
+  cursor: pointer;
+}
+
+#system-tab img.icon {
+  width: 100px;
+}
+
+#system-tab div.system-container-views {
+  width: 420px;
+}
+
+#settings-window #system-tab .settings-server h6 {
+  color: @tertiary;
+}
+
+#settings-window #system-tab .settings-server p {
+  font-size: 14px;
+  white-space: nowrap;
+  margin-bottom: 0.5rem;
+}
+
+#settings-window #system-tab #overview span {
+  display: block;
+  padding-top: 5px;
+  -webkit-user-select: initial;
+  -khtml-user-select: initial;
+  -moz-user-select: initial;
+  -o-user-select: initial;
+  white-space: nowrap;
+}
+
+#settings-window #system-tab #system-user-container {
+  display: none;
+}
+
+/*system-display*/
+
+#settings-window #system-tab #system-display {
+  display: none;
+}
+
+span#user-agent {
+  white-space: nowrap;
+}
+
+#settings-window #system-tab #system-display .grid-screen-details {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 75%;
+}
+
+#settings-window #system-tab #system-display .grid-screen-details div {
+  width: 30%;
+}
+
+#settings-window
+  #system-tab
+  #system-display
+  .grid-screen-details
+  div
+  span.info {
+  width: 100%;
+  padding-top: 5px;
+  display: block;
+}
+
+#settings-window #system-tab .active-system-view {
+  display: flex;
+}
+
+#settings-window #system-tab h6,
+#settings-window #system-tab span.value {
+  color: @tertiary;
+}
+
+#settings-window #system-tab #system-display span {
+  white-space: nowrap;
+  padding-top: 5px;
+}
+
+@media screen and (max-height: 795px) {
+  .display-line-spacing {
+    display: none;
+  }
+}
+
+/*system-storage*/
+
+/*system-support*/
+
+#settings-window #system-tab #settings-system-view-support div ul {
+  list-style: none;
+  padding: 0;
+}
+
+#settings-window #system-tab #settings-system-view-support div p {
+  font-size: 20px;
+}
+
+#settings-window #system-tab #settings-system-view-support div ul li {
+  margin-bottom: 5px;
+}
+
+#settings-window #system-tab #settings-system-view-support div ul li img {
+  height: 30px;
+}
+
+#settings-window #system-tab #settings-system-view-support img.logo-abcdesktop {
+  height: 120px;
+}

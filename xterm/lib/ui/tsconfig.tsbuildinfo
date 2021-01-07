@@ -1,0 +1,127 @@
+{
+  "program": {
+    "fileInfos": {
+      "/composer/node/xterm.js/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88",
+        "signature": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88"
+      },
+      "/composer/node/xterm.js/node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "6994c583b66862deca24d7bbf77297d95b9d3da8160dbd9beef6b847cf7c1376",
+        "signature": "6994c583b66862deca24d7bbf77297d95b9d3da8160dbd9beef6b847cf7c1376"
+      },
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": {
+        "version": "937f1b023d87603f24954f5e5fd8e2d1fa834843487bae132f41e3608315a777",
+        "signature": "937f1b023d87603f24954f5e5fd8e2d1fa834843487bae132f41e3608315a777"
+      },
+      "/composer/node/xterm.js/src/common/CircularList.ts": {
+        "version": "6951821698cb886e6edfb24998618e91f0fad8e3f7e16c20dcdf325f6d7af9da",
+        "signature": "6951821698cb886e6edfb24998618e91f0fad8e3f7e16c20dcdf325f6d7af9da"
+      },
+      "/composer/node/xterm.js/src/common/Types.ts": {
+        "version": "ef3478e1bf1a1f357801e0e885e72953fc4ac9e64687a4fd94fc67ed0fe3365b",
+        "signature": "ef3478e1bf1a1f357801e0e885e72953fc4ac9e64687a4fd94fc67ed0fe3365b"
+      },
+      "/composer/node/xterm.js/src/ui/Lifecycle.ts": {
+        "version": "309be0295eed6d081a0dd624397454b13104c487ed463ae00078cac2278961b9",
+        "signature": "fe2a8f47c2aa4151173f567b8f0395d0c2fdda7813d8ce5a4f2988302812c2b0"
+      },
+      "/composer/node/xterm.js/src/ui/RenderDebouncer.ts": {
+        "version": "8ed986fb47eddb0145bd04de5917dd54e251441a89dc9ecce741abc8952e5ee6",
+        "signature": "1671d5177916be0a6641b112c4da60382c228e011a10b6d0802e8b46fafeb9f3"
+      },
+      "/composer/node/xterm.js/src/common/Lifecycle.ts": {
+        "version": "5df683041bba7adf5750533cf89d419e83077c9557479d3410b28196d117bfb1",
+        "signature": "5df683041bba7adf5750533cf89d419e83077c9557479d3410b28196d117bfb1"
+      },
+      "/composer/node/xterm.js/src/ui/ScreenDprMonitor.ts": {
+        "version": "1c5563b8afe9d0257074a6b12d11aa66448760355797bd1d0e78b063ae2f6293",
+        "signature": "b84a3c29541100008c217e79db02f0bc5c31c147718aad903b179e6050d7ebe3"
+      },
+      "/composer/node/xterm.js/node_modules/@types/mocha/index.d.ts": {
+        "version": "d93bdd7313bdc64d926cd1429bdb9a979037240e89995fddbc6817075bbfe502",
+        "signature": "d93bdd7313bdc64d926cd1429bdb9a979037240e89995fddbc6817075bbfe502"
+      }
+    },
+    "options": {
+      "target": 1,
+      "lib": [
+        "lib.dom.d.ts",
+        "lib.es5.d.ts"
+      ],
+      "rootDir": "/composer/node/xterm.js/src",
+      "sourceMap": true,
+      "removeComments": true,
+      "incremental": true,
+      "composite": true,
+      "strict": true,
+      "outDir": "/composer/node/xterm.js/lib",
+      "types": [
+        "../../node_modules/@types/mocha"
+      ],
+      "configFilePath": "/composer/node/xterm.js/src/ui/tsconfig.json"
+    },
+    "referencedMap": {
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/CircularList.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts",
+        "/composer/node/xterm.js/lib/common/EventEmitter2.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Types.ts": [
+        "/composer/node/xterm.js/lib/common/EventEmitter2.d.ts",
+        "/composer/node/xterm.js/lib/common/CircularList.d.ts"
+      ],
+      "/composer/node/xterm.js/src/ui/Lifecycle.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/ui/RenderDebouncer.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Lifecycle.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/ui/ScreenDprMonitor.ts": [
+        "/composer/node/xterm.js/lib/common/Lifecycle.d.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Types.ts": [
+        "/composer/node/xterm.js/lib/common/EventEmitter2.d.ts",
+        "/composer/node/xterm.js/lib/common/CircularList.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Lifecycle.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/ui/ScreenDprMonitor.ts": [
+        "/composer/node/xterm.js/lib/common/Lifecycle.d.ts"
+      ],
+      "/composer/node/xterm.js/src/ui/RenderDebouncer.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/ui/Lifecycle.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/CircularList.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts",
+        "/composer/node/xterm.js/lib/common/EventEmitter2.d.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      "/composer/node/xterm.js/node_modules/typescript/lib/lib.es5.d.ts",
+      "/composer/node/xterm.js/node_modules/typescript/lib/lib.dom.d.ts",
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts",
+      "/composer/node/xterm.js/src/common/CircularList.ts",
+      "/composer/node/xterm.js/src/common/Types.ts",
+      "/composer/node/xterm.js/src/ui/Lifecycle.ts",
+      "/composer/node/xterm.js/src/ui/RenderDebouncer.ts",
+      "/composer/node/xterm.js/src/common/Lifecycle.ts",
+      "/composer/node/xterm.js/src/ui/ScreenDprMonitor.ts",
+      "/composer/node/xterm.js/node_modules/@types/mocha/index.d.ts"
+    ]
+  },
+  "version": "3.4.5"
+}

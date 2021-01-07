@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html class="wf-ubuntu-n4-active wf-ubuntu-n7-active wf-active" dir="ltr" lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>{{ projectName }}</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="description" content="{{ projectName }}">
+    <meta name="keywords" content="{{ projectName }}">
+    <!-- <meta name="viewport" content="width=1280, user-scalable=no, initial-scale=0"> -->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=0.5">
+    <link rel="stylesheet" href="css/css-dist/error.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/base.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/welcome.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/about.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/login-orange.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/loginScreen.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/restart.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/notification.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/loaders.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/upload.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/circle.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/search.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/music.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/video.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/share.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/bottomBar.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/mailSystem.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/chatLync.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/emoticons.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/logs.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/screenRecord.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery.json-viewer.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="css/store.css" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="css/dock-container.css" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="css/appfinder.css" type="text/css"/> -->
+    <!-- <link rel="stylesheet" href="css/support.css" type="text/css"/> -->
+    <!-- <link rel="stylesheet" href="css/nav.css" type="text/css"/> -->
+    <link rel="stylesheet" href="xterm/xterm.css" />
+    <style>
+        .closeNotif {
+            display: none !important;
+        }
+    </style>
+    <!--[if IE 8]>
+    <link rel="stylesheet" href="../css/iefix.css" type="text/css" />
+    <![endif]-->
+    <!-- third party -->
+    <!-- <script type="text/javascript" src="mylogic.js"></script> -->
+    <!-- promise polyfills promises for IE11 -->
+    <script src="vendor/promise.js"></script>
+    <!-- ES2015/ES6 modules polyfill -->
+    <script type="module">
+        window._noVNC_has_module_support = true;
+    </script>
+    <script>
+        window.addEventListener("load", function () {
+            if (window._noVNC_has_module_support) return;
+            var loader = document.createElement("script");
+            loader.src = "vendor/browser-es-module-loader/dist/browser-es-module-loader.js";
+            document.head.appendChild(loader);
+        });
+    </script>
+    <!-- <script type="module" crossorigin="anonymous" src="js/module.js"></script> -->
+</head>
+<body>
+    <!-- Note that Google Chrome on Android doesn't respect any of these,
+    html attributes which attempt to disable text suggestions on the
+    on-screen keyboard. Let's hope Chrome implements the ime-mode
+    style for example -->
+    <textarea id="noVNC_keyboardinput" autocapitalize="off"
+              autocorrect="off" autocomplete="off" spellcheck="false"
+              mozactionhint="Enter" tabindex="-1"></textarea>
+    <div style="display: none;" id="loader">
+        <div id="dot-container">
+            <noscript>
+                <p>
+                    {{ projectName }} uses JavaScript. Either your browser doesn't support JavaScript, or it's currently switched off.
+                    <br />
+                </p>
+            </noscript>
+        </div>
+    </div>
+    <div id="overScreen">
+            <p id="overScreenMessage">
+            Your {{ projectName }} session has expired.<br>Please <a href="javascript:window.location.reload(false);" >reload</a> this page.
+            </p>
+    </div>
+    <div id="loginScreen">
+        <div id="content">
+            <h1>{{ projectName }}</h1>
+            <p id="statusText"></p>
+            <div id="activeDirectory">
+                <form>
+                    <!--
+                    The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) is limited to 256 characters in the Active Directory schema.
+                    However, for backward compatibility the limit is 20 characters.
+                    -->
+                    <input id="cuid" placeholder="CUID" type="text" maxlength="20"><br>
+                    <!--
+                    The userPassword attribute has maximum length 128 and format UTF-8.
+                    -->
+                    <input id="ADpassword" placeholder="Password" type="password" maxlength="127" autocomplete="current-password"><br>
+                    <input type="submit" class="button" value="Sign in" id="connectAD">
+                    <a href="https://mpa.itn.ftgroup/QPM/User/Identification" target="_blank">I can't open my session</a>
+                </form>
+                <p>To access to this service you need to be identified. If you use {{ projectName }} from a personal computer which does not belong to the company, remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.</p>
+                <p>Article 323-1 and following of the Cral Code (French Law). The act of accessing or remaining, fraudulently, in all or part of the automated data processing system is punishable by two years of prison and a €60,000 fine (€150,000 for legal persons).</p>
+            </div>
+            <div id="connectGP">
+                <ul>
+                    <li id="login-facebook">
+                        <a href="#">Connect with Facebook</a>
+                    </li>
+                    <li id="login-google">
+                        <a href="#">Connect with Google</a>
+                    </li>
+                    <li id="login-orange">
+                        <a href="#">Connect with Orange</a>
+                    </li>
+                    <li id="login-mobileorange">
+                        <a href="#">Connect with Mobile Connect</a>
+                    </li>
+                    <li id="login-anonymous">
+                        <a href="#">Connect with Anonymous access, have a look</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="connectShare">
+                <p>Connect now with your email address to work with your copartner</p>
+                <form>
+                    <input id="sharemail" placeholder="Your mail address" type="mail"><br>
+                    <input type="submit" class="button" value="Start sharing" id="startSharing">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="window" id="videoPlayer">
+        <div class="control">
+            <div id="logo"></div>
+            <div class="window-title">Video Player</div>
+            <div class="close"></div>
+        </div>
+        <video controls></video>
+    </div>
+    <audio id="connectSound" src="/sound/connexion.mp3"> </audio>
+    <div class="removeapp">
+        <img src="img/menu/minus.svg" alt="">
+    </div>
+    <div id="connectloader">
+        <div id="c100" class="p0">
+            <img id="waiting" src="img/wait.svg">
+            <span>0</span><span id="percent">%</span>
+            <span id="loadstatus"></span>
+            <img id="reconnect" src="img/reconnection.svg" alt="">
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+    <div id="appSelector">
+	<div id="appContainer"></div>
+    </div>
+
+    <!--
+    <div class="window" id="filemanager">
+        <div class="control">
+            <div id="logo"></div>
+            <div class="window-title">File manager</div>
+            <div class="close"></div>
+        </div>
+        <div class="scroll-wrapper">
+            <iframe sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
+        </div>
+    </div>
+    -->
+
+    <div class="window" id="logs">
+        <div class="control">
+            <div class="window-title">Console logs</div>
+            <div class="close"></div>
+        </div>
+        <div id="logList">
+            <table id="logTable">
+                <thead><tr><td>Time</td><td>Method</td><td>Response</td></tr></thead>
+            </table>
+        </div>
+    </div>
+
+    <!--
+    <div class="window" id="mailFrame">
+        <div class="control">
+            <div id="logo"></div>
+            <div class="window-title">Mail</div>
+            <div class="close"></div>
+        </div>
+        <iframe sandbox="allow-scripts allow-same-origin allow-popups" src=""></iframe>
+    </div>
+    -->
+
+    <div id="fullbcg">
+        <div class="window" id="navMessage">
+            <p>Oops, your web browser <span id="currentNav"></span> is no longer supported. Please upgrade to a modern, fully supported browser.</p>
+            <p>Find the lastest versions of our supported browsers below.</p>
+            <div class="navs"><img src="img/google-chrome.svg"><p>Google Chrome 41</p><a target="_blank" href="https://www.google.fr/chrome/browser/desktop/">Download</a></div>
+            <div class="navs"><img src="img/firefox-icons.svg"><p>Mozilla Firefox 36</p><a target="_blank" href="https://www.mozilla.org/fr/firefox/new/">Download</a></div>
+            <div class="navs"><img src="img/IE.svg"><p>Internet Explorer 11</p><a target="_blank" href="http://windows.microsoft.com/fr-fr/internet-explorer/download-ie">Download</a></div>
+            <p>Our developers are using Google Chrome and you recommend this browser for these performances.</p>
+            <div id="btnIgnore"><img src="img/error/bug.svg" alt="">Ignore and accept the eventual bugs<img src="img/error/arrow.svg" alt=""></div>
+        </div>
+        <div class="window" id="IEMessage">
+            <img style="position: relative;left: 50%;margin-left: -128px" src="img/error/stop.png">
+            <p><b>Oops</b>, your Internet Explorer is running in Compatibility Mode emulating IE <span id='version'></span>. Please turn off Compatibility mode or use supported browser.</p>
+            <p>Our developers are using Google Chrome and you recommend this browser for these performances.</p>
+        </div>
+    </div>
+    <div id="previews"></div>
+    <div class="notifyPanel">
+    </div>
+    <div id="top" class="dropShadow">
+        <div id="top-left">
+            <div id="control-buttons">
+                <div id="close"></div>
+                <div id=""></div>
+                <div id="max"></div>
+            </div>
+            <div id="size" style="display:none;height:24px; width:100px;position: absolute;top: 2px;pointer-events: none;left:0px;color:rgba(68, 68, 68, 0.5);">
+                <div style="float:left;" id="width"></div>
+                <div style="float:left;">x</div>
+                <div style="float:left;" id="height"></div>
+            </div>
+
+            <div id="userMenu" title="User">
+                <span id="username">User</span>
+            </div>
+        </div>
+        <div id="top-center">
+            <div id="time">
+                <p>10:25</p>
+            </div>
+            <div id='noVNC_fallback_errormsg'>
+            </div>
+            <div id='noVNC_fallback_error'>
+            </div>
+        </div>
+        <div id="top-right">
+            <div class="loader-inner ball-clip-rotate" title="Connecting…" style="height: 23px;width: 23px;display:none;"><div></div></div>
+            <div id="connection" class="disconnected">
+            </div>
+            <div id="topScreenRecord" class="keep" title="Screen Recorder">
+                <img src="../img/top/record.svg" alt="" />
+            </div>
+            <div id="shell" class="keep" title="Shell">
+                <img src="../img/top/shell.svg" alt="" />
+            </div>
+            <div id="upload" class="keep" title="Upload">
+                <img src="../img/top/upload.svg" alt="" />
+                <ul class="drop-down"></ul>
+            </div>
+            <div id="printer" title="Printer">
+                <img src="../img/top/printer_inverted.svg" alt="" />
+                <ul class="drop-down"></ul>
+            </div>
+
+	    <!--
+            <div id="dropbox" class="disconnected" title="Dropbox">
+                <ul class="drop-down">
+                    <li id="menudropboxstatus">
+                        Start Dropbox
+                    </li>
+                    <li class="divider"></li>
+                    <li id="viewfiles" class="disabled">
+                        View files
+                    </li>
+                </ul>
+            </div>
+	    -->
+
+            <!--
+            <div id="topMail" class="keep" title="Mail">
+                <img id="ico" src="../img/top/mail.svg" alt="" />
+            </div>
+	    -->
+
+            <div id="copypaste" class="keep" title="Copy / Paste">
+                <img id="ico" src="../img/top/copypaste.svg" alt="" />
+                <ul class="drop-down">
+                    <textarea placeholder="Clipboard"></textarea>
+                    <button id="send"><img src="../img/top/send.svg"></button>
+                </ul>
+            </div>
+
+	    <!--
+            <div id="share" class="keep" title="Share your desktop">
+                <img src="../img/top/video-meeting_inverted.png" alt="" />
+                <div id="nb">0</div>
+            </div>
+	    -->
+
+            <div id="support" title="Quick support">
+                <img src="../img/wrench.svg" alt="" />
+            </div>
+            <div id="music" class="keep" title="Music">
+                <audio id="audioplayer" type="audio/mp3" codecs="mp3"></audio>
+                <img src="../img/top/music.svg" alt="" />
+                <ul class="drop-down">
+                    <div id="ctrl">
+                        <div id=musicBack></div>
+                        <div id=playpause class="play"></div>
+                        <div id=musicNext></div>
+                    </div>
+                    <div id="audioName"></div>
+                    <input id="progressBar" type="range"="0" value="0" step="0.1">
+                </ul>
+            </div>
+            <div id="speakers" class="keep" title="Sound">
+                <img src="../img/top/Volume_None.svg" class="speakers-logo" alt="" />
+                <ul class="drop-down">
+                    <input id="volume_level" type="range" orient="vertical"="0" max="1" step="0.01">
+                </ul>
+            </div>
+            <div id="fullscreen" title="Fullscreen" state="false">
+                <img src="img/top/increase_inverted.svg" alt="">
+            </div>
+
+	    <!--
+            <div class="img_top" id="name">
+                <img src="img/top/menu.svg" title="Settings" alt="">
+                <ul class="drop-down">
+                    <li><div class="state" id='settings'></div><p class="placestate">Settings</p></li>
+                    <li><div class="state" id='appstore'></div><p class="placestate">Applications</p></li>
+                    <li class="divider"></li>
+                    <li><div class="state" id='record'></div><p class="placestate">Screen record</p></li>
+                    <li><div class="state" id='screenshot'></div><p class="placestate">Screenshot</p></li>
+                    <li class="divider"></li>
+                    <li><div class="state" id='logout'></div><p class="placestate">Log Off</p></li>
+                </ul>
+            </div>
+            -->
+
+        </div>
+    </div>
+    <div id="tooltip">
+        <div class="shadow-arrow"></div>
+        <div class="arrow-right"></div>
+        <div id="tooltip-text"></div>
+    </div>
+    <div id="shareWindow" class="window">
+        <div class="control">
+            <div class="close"></div>
+            <div class="window-title">
+                Share
+            </div>
+        </div>
+        <form action="javascript:void(0);">
+            <div id="title"><img src="img/top/share.svg"><span>Share your desktop with your contact just by email address</span></div>
+            <input id="email" placeholder="target@email.com" type="mail">
+            <div class="button" id="viewOnly">View Only</div>
+            <div class="button" id="fullAccess">Full Access</div>
+        </form>
+    </div>
+    <div class="window" id="windowMessage">
+        <img id="old" src="img/error/o-bug.svg">
+        <img id="to" src="img/error/to.svg">
+        <img id="new" src="img/error/o-bug.svg">
+        <span id="title">Error Message</span>
+        <div id="content">
+            <p class="message" id="message">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim adim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat.
+            </p>
+        </div>
+        <div class="btn">
+            <div id="reload" class="reload highlight">
+                Continue
+            </div>
+            <div id="cancel" class="cancel">
+                Cancel
+            </div>
+        </div>
+    </div>
+    <div class="window" id="anonymous-error">
+        <div class="control">
+            <div class="close"></div>
+        </div>
+        <div class="content">
+            <img src="img/error/shape.svg" alt="">
+            <div class="message">
+                <p>
+                    Anonymous users cannot acces to this feature<br> Please authenticate with your account.
+                </p>
+            </div>
+            <div class="logoff-buttons">
+                <div id="connect" class="logoff highlight">
+                    Connect
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="error-window window">
+        <div class="control">
+            <div class="close"></div>
+        </div>
+        <div class="error-container">
+            <h1>{{ projectName }}</h1>
+            <h2>
+                Thanks for exploring {{ projectName }}<br>
+                Remember, this is still in progress
+            </h2>
+        </div>
+    </div>
+    <div id="supportWindow" class="window">
+        <div class="control">
+            <div class="close"></div>
+            <div class="window-title">
+                Quick support
+            </div>
+        </div>
+        <div class="content">
+            <p>Do you want to contact support now ?</p>
+            <div class="button" id="yes">Yes</div>
+            <div class="button" id="cancel">Cancel</div>
+        </div>
+    </div>
+
+    <div id="support-window" class="window">
+        <div class="control">
+            <div class="close"></div>
+            <div class="window-title">
+                Support
+            </div>
+        </div>
+        <div class="content">
+            <img src="img/top/support.svg" alt="">
+            <div class="message">
+                <p>
+                    Are you sure you want to contact the support?
+                </p>
+            </div>
+            <div class="buttons">
+                <div id="confirm" class="highlight">
+                    Confirm
+                </div>
+                <div class="cancel">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <div id="chatWindow" class="window">
+        <div class="control">
+            <div class="close"></div>
+            <div class="window-title">
+                Skype Entreprise
+            </div>
+        </div>
+        <div class="content">
+            <div class="left">
+                <div class="top">
+                    <div class="tab active" id="contactTab">Contacts</div>
+                    <div class="tab" id="chatTab">Conversations</div>
+                    <input type="text" placeholder="Search contact by name..." id="contactSearch" name="">
+                </div>
+                <ul id="contactList"></ul>
+                <ul id="searchList"></ul>
+                <ul id="chatList"></ul>
+            </div>
+            <div class="right">
+                <div id="emoticonPanel"></div>
+                <div class="write">
+                    <a href="javascript:;" class="write-link attach"></a>
+                    <input type="text">
+                    <a href="javascript:;" class="write-link smiley"></a>
+                    <a href="javascript:;" class="write-link send"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
+
+    <!-- ScreenColor tab end-->
+    <div style="display: none;" id="about-window" class="window">
+        <div class="control">
+            <div class="close"></div>
+            <div class="window-title">About</div>
+        </div>
+        <div class="about-overview">
+            <div id="aboutTitle">
+                <div class="balloon_logo"></div>
+                <h1>{{ projectName }} v1.0</h1>
+            </div>
+            <div id="overview">
+            </div>
+        </div>
+        <div id="cg">
+            <a target="_blank" href="#">Privacy</a>
+            <a target="_blank" href="#">Terms & Policies</a>
+            <a target="_blank" href="#">Cookies</a>
+        </div>
+    </div>
+    <div id="imgViewer" class="window">
+
+    </div>
+    <div id="webshell" class="window">
+        <div class="control">
+            <div class="close"></div>
+            <div class="reduce"></div>
+            <div class="window-title">Webshell</div>
+        </div>
+        <div id="teal-container"></div>
+        <div class="grab"></div>
+    </div>
+    <iframe style="display:none;" id="framePDF" src="" frameborder="0"></iframe>
+    <ul id="contextmenu"></ul>
+
+    <!--
+    <div id="dock">
+        <div class="base"></div>
+        <ul id="docklist">
+            <li launch="keyboard" class="only-mobile" id="keyboard"><img src="img/kb.svg" /></li>
+        </ul>
+        <div launch="placement" id="placement">
+            <img src="img/placement.svg" />
+        </div>
+        <div id ="divSearchBar">
+            <input type="text" id="searchBar" name="searchBar">
+        </div>
+    </div>
+    <div id="searchZone">
+        <div id="closeZone"></div>
+        <ul id="fileZone">
+            <p>Files</p>
+        </ul>
+        <ul id="appZone">
+            <p>Applications</p>
+        </ul>
+    </div>
+    -->
+   
+    <!-- Library -->
+    <!-- this is included as a normal file in order to catch script-loading errors as well -->
+    {{ #scripts }}
+    <script {{{defer}}} type="text/javascript" src="{{{src}}}"></script>
+    {{ /scripts }}
+
+    <!-- Modules START HERE -->
+    <!-- DO NOT REMOVE THE LINE bellow begin scripts         -->
+    <!-- Transfor HTML user const start_marker begin scripts -->
+    <!-- begin scripts -->
+    {{ #modules }}
+    <script type="module" src="{{{.}}}"></script>
+    {{ /modules }}
+    <!-- DO NOT REMOVE THE LINE bellow begin scripts       -->
+    <!-- Transfor HTML user const end_marker begin scripts -->
+    <!-- end scripts -->
+</body>
+</html>

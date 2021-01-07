@@ -1,0 +1,118 @@
+{
+  "modules": [
+    "js/broadcastevent.js",
+    "js/skypeEmoticonsList.js",
+    "js/system.js",
+    "js/ocuaparser.js",
+    "js/connectloader.js",
+    "js/welcomesystem.js",
+    "js/systemmenu.js",
+    "js/errormessage.js",
+    "js/appstore.js",
+    "js/soundSystem.js",
+    "js/notificationsystem.js",
+    "js/broadway-vnc.js",
+    "js/quickSupport.js",
+    "js/launcher.js",
+    "js/logmein.js",
+    "js/shareSystem.js",
+    "js/broadcastsystem.js",
+    "js/clipboard.js",
+    "js/upload.js",
+    "js/search.js",
+    "js/mailSystem.js",
+    "js/printSystem.js",
+    "js/printer.js",
+    "js/music.js",
+    "js/video.js",
+    "js/windowMessage.js",
+    "js/webshell.js",
+    "js/appSelector.js",
+    "js/which-browser.js",
+    "js/speaker.js",
+    "js/screenRecord.js",
+    "js/settings.js",
+    "js/menu.js",
+    "js/languages.js",
+    "js/scripts.js",
+    "js/issue.js"
+  ],
+  "scripts": [
+    {
+      "src": "app/error-handler.js",
+      "defer": false
+    },
+    {
+      "src": "js/jquery-3.5.1.min.js",
+      "defer": false
+    },
+    {
+      "src": "js/jquery-ui.min.js",
+      "defer": false
+    },
+    {
+      "src": "js/bootstrap-table.min.js",
+      "defer": false
+    },
+    {
+      "src": "js/bootstrap.min.js",
+      "defer": false
+    },
+    {
+      "src": "js/bootstrap-slider.min.js",
+      "defer": false
+    },
+    {
+      "src": "js/popper.min.js",
+      "defer": false
+    },
+    {
+      "src": "js/bootbox.min.js",
+      "defer": false
+    },
+    {
+      "src": "js/farbtastic.js",
+      "defer": false
+    },
+    {
+      "src": "js/renderjson.js",
+      "defer": false
+    },
+    {
+      "src": "js/js.cookie.js",
+      "defer": false
+    },
+    {
+      "src": "js/emoticons.js",
+      "defer": false
+    },
+    {
+      "src": "js/dropzone.js",
+      "defer": false
+    },
+    {
+      "src": "js/download.js",
+      "defer": false
+    },
+    {
+      "src": "js/ua-parser.js",
+      "defer": false
+    },
+    {
+      "src": "janus-sdk//janus.js",
+      "defer": false
+    },
+    {
+      "src": "js/event-target.min.js",
+      "defer": false
+    },
+    {
+      "src": "js/url.js",
+      "defer": false
+    },
+    {
+      "src": "xterm/dist/client-bundle.js",
+      "defer": true
+    }
+  ]
+}

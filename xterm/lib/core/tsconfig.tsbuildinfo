@@ -1,0 +1,142 @@
+{
+  "program": {
+    "fileInfos": {
+      "/composer/node/xterm.js/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88",
+        "signature": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88"
+      },
+      "/composer/node/xterm.js/src/core/Types.ts": {
+        "version": "3b98c774209dac1cbe855feab7d8f7c11a7ae2b3fa37417ce8f1d53f57f59b47",
+        "signature": "3329afcaa3b12661a27dd302a5a5c735d7fa1d699e8c64262a66e61e4ff46cf6"
+      },
+      "/composer/node/xterm.js/src/core/data/Charsets.ts": {
+        "version": "fec8089760512b4396895cf9923a160d4ce4f20b5435e71d6279fd888925314a",
+        "signature": "a744e3123c0777c67ee6e17fc70d3fad49036c95c92ed0645be7c1bb575f73ee"
+      },
+      "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts": {
+        "version": "86eded1c74fa0670dd4e84d0da361b03e026240016c6a84e51b2d54b0ca828d0",
+        "signature": "86eded1c74fa0670dd4e84d0da361b03e026240016c6a84e51b2d54b0ca828d0"
+      },
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": {
+        "version": "937f1b023d87603f24954f5e5fd8e2d1fa834843487bae132f41e3608315a777",
+        "signature": "937f1b023d87603f24954f5e5fd8e2d1fa834843487bae132f41e3608315a777"
+      },
+      "/composer/node/xterm.js/src/common/CircularList.ts": {
+        "version": "6951821698cb886e6edfb24998618e91f0fad8e3f7e16c20dcdf325f6d7af9da",
+        "signature": "6951821698cb886e6edfb24998618e91f0fad8e3f7e16c20dcdf325f6d7af9da"
+      },
+      "/composer/node/xterm.js/src/common/Types.ts": {
+        "version": "ef3478e1bf1a1f357801e0e885e72953fc4ac9e64687a4fd94fc67ed0fe3365b",
+        "signature": "ef3478e1bf1a1f357801e0e885e72953fc4ac9e64687a4fd94fc67ed0fe3365b"
+      },
+      "/composer/node/xterm.js/src/common/data/EscapeSequences.ts": {
+        "version": "0269b138d261f232c517785226b9ad9fd7b486de45dc28c669cfb8340259d645",
+        "signature": "0269b138d261f232c517785226b9ad9fd7b486de45dc28c669cfb8340259d645"
+      },
+      "/composer/node/xterm.js/src/core/input/Keyboard.ts": {
+        "version": "3a66951367cf3263c63b22ccdbd62a773ede5480c43933c33bb65fb55f7466ea",
+        "signature": "3092ca891b1e0d98b475e6fe676f33c8f35819f84e91a4b5b39a72c8d5792d15"
+      },
+      "/composer/node/xterm.js/src/core/input/Keyboard.test.ts": {
+        "version": "170bcf8a491dfb6df3d86726a8240191ec973f9cf0d64497fc9a53b85166b910",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/composer/node/xterm.js/src/core/input/TextDecoder.ts": {
+        "version": "d52e8831ccaa18d2aa0dc189c1d9794a040a1cc2f859e447b41d390ab0ebaa9d",
+        "signature": "da9409ee8b959a848ae2d71ef459b96028de0fbc8cb00b52819c5d17b4181029"
+      },
+      "/composer/node/xterm.js/src/core/input/TextDecoder.test.ts": {
+        "version": "49947840cd7ac7a64b37c54e3c13a82ecc121bb7d88489b2d5764f07f65879f1",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/composer/node/xterm.js/node_modules/@types/mocha/index.d.ts": {
+        "version": "d93bdd7313bdc64d926cd1429bdb9a979037240e89995fddbc6817075bbfe502",
+        "signature": "d93bdd7313bdc64d926cd1429bdb9a979037240e89995fddbc6817075bbfe502"
+      }
+    },
+    "options": {
+      "target": 1,
+      "lib": [
+        "lib.es5.d.ts"
+      ],
+      "rootDir": "/composer/node/xterm.js/src",
+      "sourceMap": true,
+      "removeComments": true,
+      "incremental": true,
+      "composite": true,
+      "strict": true,
+      "outDir": "/composer/node/xterm.js/lib",
+      "types": [
+        "../../node_modules/@types/mocha"
+      ],
+      "configFilePath": "/composer/node/xterm.js/src/core/tsconfig.json"
+    },
+    "referencedMap": {
+      "/composer/node/xterm.js/src/core/data/Charsets.ts": [
+        "/composer/node/xterm.js/src/core/Types.ts"
+      ],
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/CircularList.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts",
+        "/composer/node/xterm.js/lib/common/EventEmitter2.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Types.ts": [
+        "/composer/node/xterm.js/lib/common/EventEmitter2.d.ts",
+        "/composer/node/xterm.js/lib/common/CircularList.d.ts"
+      ],
+      "/composer/node/xterm.js/src/core/input/Keyboard.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts",
+        "/composer/node/xterm.js/src/core/Types.ts",
+        "/composer/node/xterm.js/lib/common/data/EscapeSequences.d.ts"
+      ],
+      "/composer/node/xterm.js/src/core/input/Keyboard.test.ts": [
+        "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+        "/composer/node/xterm.js/src/core/input/Keyboard.ts",
+        "/composer/node/xterm.js/src/core/Types.ts",
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/core/input/TextDecoder.test.ts": [
+        "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+        "/composer/node/xterm.js/src/core/input/TextDecoder.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "/composer/node/xterm.js/src/core/input/Keyboard.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts",
+        "/composer/node/xterm.js/src/core/Types.ts"
+      ],
+      "/composer/node/xterm.js/src/core/data/Charsets.ts": [
+        "/composer/node/xterm.js/src/core/Types.ts"
+      ],
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/Types.ts": [
+        "/composer/node/xterm.js/lib/common/EventEmitter2.d.ts",
+        "/composer/node/xterm.js/lib/common/CircularList.d.ts"
+      ],
+      "/composer/node/xterm.js/src/common/CircularList.ts": [
+        "/composer/node/xterm.js/lib/common/Types.d.ts",
+        "/composer/node/xterm.js/lib/common/EventEmitter2.d.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      "/composer/node/xterm.js/node_modules/typescript/lib/lib.es5.d.ts",
+      "/composer/node/xterm.js/src/core/Types.ts",
+      "/composer/node/xterm.js/src/core/data/Charsets.ts",
+      "/composer/node/xterm.js/node_modules/@types/chai/index.d.ts",
+      "/composer/node/xterm.js/src/common/EventEmitter2.ts",
+      "/composer/node/xterm.js/src/common/CircularList.ts",
+      "/composer/node/xterm.js/src/common/Types.ts",
+      "/composer/node/xterm.js/src/common/data/EscapeSequences.ts",
+      "/composer/node/xterm.js/src/core/input/Keyboard.ts",
+      "/composer/node/xterm.js/src/core/input/Keyboard.test.ts",
+      "/composer/node/xterm.js/src/core/input/TextDecoder.ts",
+      "/composer/node/xterm.js/src/core/input/TextDecoder.test.ts",
+      "/composer/node/xterm.js/node_modules/@types/mocha/index.d.ts"
+    ]
+  },
+  "version": "3.4.5"
+}

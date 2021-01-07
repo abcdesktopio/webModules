@@ -1,0 +1,328 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+#loginScreen {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  overflow: hidden;
+  overflow-y: auto;
+  background: @secondary;
+}
+
+@-webkit-keyframes moveout {
+  0% {
+    -webkit-transform: translateX(0);
+  }
+  30% {
+    -webkit-transform: translateX(-10%) scale(1);
+  }
+  100% {
+    -webkit-transform: translateX(150%) scale(1);
+  }
+}
+
+@-moz-keyframes moveout {
+  0% {
+    -moz-transform: translateX(0);
+  }
+  30% {
+    -moz-transform: translateX(-10%) scale(1);
+  }
+  100% {
+    -moz-transform: translateX(150%) scale(1);
+  }
+}
+
+@keyframes moveout {
+  0% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(-10%) scale(1);
+  }
+  100% {
+    transform: translateX(150%) scale(1);
+  }
+}
+
+#loginScreen.hide {
+  -webkit-animation: moveout 1.5s 0.2s ease forwards;
+  -moz-animation: moveout 1.5s 0.2s ease forwards;
+  animation: moveout 1.5s 0.2s ease forwards;
+}
+
+#loginScreen #content {
+  position: absolute;
+  left: 10%;
+  bottom: 20px;
+  max-width: 80%;
+  height: 80%;
+  margin: 0 auto;
+  color: @light;
+}
+
+#loginScreen h1 {
+  display: inline;
+  font-size: 70px;
+  padding: 0;
+  margin: 0;
+  font-weight: normal;
+}
+
+#loginScreen p {
+  font-size: 20px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#loginScreen p.error {
+  color: @danger;
+}
+
+#loginScreen p img {
+  height: 25px;
+  margin-right: 10px;
+}
+
+#loginScreen p span {
+  vertical-align: bottom;
+}
+
+#loginScreen #cuid {
+  background: url(../../../img/welcome/account.svg) no-repeat 350px;
+  background-size: 25px;
+}
+
+#loginScreen #ADpassword {
+  background: url(../../../img/welcome/key.svg) no-repeat 350px;
+  background-size: 25px;
+}
+
+#loginScreen input[type="text"],
+#loginScreen input[type="password"],
+#loginScreen input[type="mail"] {
+  cursor: text;
+  background: none;
+  border: none;
+  border-bottom: 1px solid @light;
+  max-width: 380px;
+  width: 100%;
+  height: 35px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  color: @light;
+  font-size: 16px;
+  outline: none;
+}
+
+#loginScreen input[type="text"]:focus,
+#loginScreen input[type="password"]:focus,
+#loginScreen input[type="mail"]:focus {
+  border-bottom: 1px solid @tertiary;
+}
+
+#loginScreen input[type="submit"] {
+  width: 100px;
+  height: 30px;
+  background: @tertiary;
+  border: none;
+  color: @light;
+  font-size: 16px;
+  cursor: pointer;
+  float: left;
+}
+
+#loginScreen ::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: @light;
+  font-size: 16px;
+}
+#loginScreen :-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: @light;
+  font-size: 16px;
+  opacity: 1;
+}
+#loginScreen ::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: @light;
+  font-size: 16px;
+  opacity: 1;
+}
+#loginScreen :-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: @light;
+  font-size: 16px;
+}
+#loginScreen :-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px @primary inset;
+  -webkit-text-fill-color: @light !important;
+}
+
+#loginScreen #activeDirectory,
+#loginScreen #connectGP,
+#loginScreen #connectShare {
+  display: none;
+  margin-top: 30px;
+}
+
+#loginScreen #activeDirectory p {
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: justify;
+  max-width: 600px;
+}
+
+#loginScreen #activeDirectory a {
+  color: @light;
+  text-decoration: underline;
+  float: left;
+  line-height: 40px;
+  margin-left: 10px;
+}
+
+#loginScreen #activeDirectory form {
+  margin-bottom: 70px;
+  min-width: 380px;
+}
+
+#loginScreen #connectGP ul {
+  padding: 0;
+  overflow: hidden;
+  max-width: 450px;
+}
+
+#loginScreen #connectGP li {
+  float: left;
+  display: none;
+  list-style: none;
+  height: 50px;
+  width: 100%;
+  max-width: 450px;
+  overflow: hidden;
+  margin: 10px 0px;
+  background-color: black;
+}
+
+#loginScreen #connectGP li a {
+  display: block;
+  width: 100%;
+  height: 50px;
+  text-indent: 60px;
+  line-height: 50px;
+  text-decoration: none;
+  cursor: pointer;
+  margin: auto;
+  font-size: 15px;
+  color: @light;
+  font-weight: bold;
+}
+
+#loginScreen #connectShare form {
+  margin-top: 40px;
+  min-width: 380px;
+}
+
+#loginScreen #connectGP #login-facebook {
+  background: url("../../../img/welcome/facebook_icon.svg") no-repeat 10px
+    center @info;
+  background-size: 30px;
+}
+#loginScreen #connectGP #login-google {
+  background: url("../../../img/welcome/google_icon.svg") no-repeat 10px center
+    @danger;
+  background-size: 30px;
+}
+#loginScreen #connectGP #login-orange {
+  background: url("../../../img/welcome/orange_icon.svg") no-repeat 10px center
+    @dark;
+  background-size: 30px;
+}
+#loginScreen #connectGP #login-mobileorange {
+  background: url("../../../img/welcome/mobileconnect_icon.svg") no-repeat 10px
+    center @tertiary;
+  background-size: 30px;
+}
+#loginScreen #connectGP #login-activedirectory {
+  background: url("../../../img/welcome/activedirectory_icon.svg") no-repeat
+    10px center;
+  background-size: 30px;
+}
+#loginScreen #connectGP #login-anonymous {
+  background: url("../../../img/welcome/anonymous_icon.svg") no-repeat 10px
+    center @light;
+  background-size: 30px;
+  color: @dark;
+}
+
+#loginScreen #connectGP #login-anonymous a {
+  color: @dark;
+}
+
+div#overScreen {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  opacity: 0.8;
+  background: @primary;
+  display: none;
+}
+
+p#overScreenMessage {
+  position: fixed;
+  top: 30%;
+  text-align: center;
+  width: 100%;
+  font-size: larger;
+  color: @light;
+}
+
+p#overScreenMessage a {
+  color: @tertiary;
+}
+
+@media screen and (max-width: 750px) and (max-height: 900px) {
+  #loginScreen #content {
+    left: 5%;
+    max-width: 90%;
+    height: 90%;
+  }
+}
+
+@media screen and (max-width: 560px) and (min-width: 401px) {
+  #loginScreen h1 {
+    font-size: 50px;
+  }
+
+  #loginScreen p {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #loginScreen h1 {
+    font-size: 45px;
+  }
+
+  #loginScreen #connectGP li a {
+    font-size: 12px;
+  }
+}

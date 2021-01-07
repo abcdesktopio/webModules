@@ -1,0 +1,66 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+#logoff-window {
+  width: 350px;
+  min-height: 170px;
+  display: none;
+  z-index: 99;
+}
+
+#logoff-window .content img {
+  float: left;
+  margin: 15px 10px 0px 10px;
+  height: 50px;
+}
+
+#logoff-window .content .message p {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+#logoff-window .content .message {
+  float: left;
+  width: 275px;
+  height: 100%;
+  color: @secondary;
+}
+
+#logoff-window .content .logoff-buttons {
+  margin-right: 7px;
+  clear: both;
+}
+
+.logoff-img-window {
+  float: left;
+  margin: 15px 10px 0px 10px;
+  height: 50px;
+}
+
+#logoff-window .content .logoff-buttons div:hover {
+  background-position: 0px -29px;
+  cursor: pointer;
+}
+
+#logoff-window .content .logoff-buttons div.highlight {
+  background: @tertiary;
+  color: @light;
+  line-height: 0.75;
+}
+
+#logoff-window .content .logoff-buttons div.highlight:hover {
+  text-shadow: none;
+  background-position: 0px 0px;
+}

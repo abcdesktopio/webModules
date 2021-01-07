@@ -1,0 +1,166 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+.modal-open .modal {
+  overflow-y: hidden !important;
+}
+
+div.appstore-window .modal-body {
+  padding: 0 !important;
+}
+
+div.appstore-window .modal-dialog .modal-content {
+  width: 100%;
+  height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: unset !important;
+}
+
+div.appstore-window div.content-apps {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - 35px);
+}
+
+div.appstore-window div.content-apps div#nav {
+  display: flex;
+  flex-direction: row;
+  height: 15%;
+}
+
+div.appstore-window div.content-apps div#nav .button {
+  display: block;
+  width: 17%;
+  height: 100%;
+  float: left;
+  color: @light;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+div.appstore-window div.content-apps div#nav .button:hover {
+  opacity: 0.9;
+}
+
+div.appstore-window div.content-apps div#nav .button:hover > img {
+  width: 30px;
+  margin-left: 8px;
+  margin-top: 10px;
+}
+
+div.appstore-window div.content-apps div#nav div.button div {
+  margin: auto;
+}
+
+div.appstore-window div.content-apps div#nav div.button {
+  display: flex;
+  overflow: hidden;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+div.appstore-window div.content-apps div#nav div.button img {
+  height: 45px;
+  width: 45px;
+  pointer-events: none;
+}
+
+div.appstore-window div.content-apps div#nav div.button p {
+  margin: 0;
+  font-size: 15px;
+}
+
+div.appstore-window div.content-apps ul#appstore-applist {
+  height: 350px;
+  overflow: auto;
+  padding: 0;
+  padding-top: 1%;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.appstore-item {
+  width: 10%;
+  float: left;
+  text-align: center;
+  list-style: none;
+  cursor: pointer;
+  padding-bottom: 1.5%;
+  padding-top: 1.5%;
+}
+
+div.appstore-window div.content-apps ul#appstore-applist li:hover {
+  background: @secondary;
+}
+
+div.appstore-window div.content-apps ul#appstore-applist li div {
+  margin: auto;
+  padding: 2%;
+  cursor: pointer !important;
+}
+
+div.appstore-window div.content-apps ul#appstore-applist li p {
+  vertical-align: middle;
+  text-align: center;
+  pointer-events: none;
+  margin: 0;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+div.appstore-window div.content-apps ul#appstore-applist li div img {
+  height: 45px;
+  width: 45px;
+  pointer-events: none;
+}
+
+div.appstore-window
+  div.content-apps
+  ul#appstore-applist
+  li
+  div.container-app-loader {
+  height: 0;
+  width: 0;
+  padding: 0;
+}
+
+div.appstore-window div.content-apps ul#appstore-applist li div img.appLoader {
+  position: relative;
+  top: -65px;
+  right: 25px;
+}
+
+div.appstore-window div.content-apps div#nav div#office {
+  background: @purple;
+}
+div.appstore-window div.content-apps div#nav div#games {
+  background: @danger;
+}
+div.appstore-window div.content-apps div#nav div#graphics {
+  background: @pink;
+}
+div.appstore-window div.content-apps div#nav div#utilities {
+  background: @tertiary;
+}
+div.appstore-window div.content-apps div#nav div#development {
+  background: @success;
+}
+div.appstore-window div.content-apps div#nav div#education {
+  background: @purple;
+}

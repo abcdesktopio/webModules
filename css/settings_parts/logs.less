@@ -1,0 +1,36 @@
+@import "@{global}";
+
+#settings-window #logs-tab { display: none; }
+
+#settings-window #logs-tab #logTable { width: 100%; }
+
+#settings-window #logs-tab td { font-family: monospace; color:@tertiary; }
+#settings-window #logs-tab thead td { color:@light; }
+#settings-window #logs-tab .logDate { width: 100px; }
+
+#settings-window #logs-tab .logCode { width: 150px; }
+
+#settings-window #logs-tab pre { margin: 0; }
+
+#settings-window #logs-tab .container-logs {
+    width: 100%;
+    height: 100%;
+    font-family: monospace;
+    color: @success;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.renderjson { font-family: monospace; }
+.renderjson a              { text-decoration: none; color: @light;font-family: monospace;}
+.renderjson .disclosure    { color: @tertiary;font-size: 130%; font-family: monospace;}
+.renderjson .disclosure.green  { color: @success;}
+.renderjson .disclosure.red  { color: @danger;}
+.renderjson .syntax        { color: @light; font-family: monospace;}
+.renderjson .string        { color: @info; font-family: monospace;}
+.renderjson .number        { color: @info; font-family: monospace;}
+.renderjson .boolean       { color: @danger; font-family: monospace;}
+.renderjson .key           { color: @info; font-family: monospace;}
+.renderjson .keyword       { color: @warning; font-family: monospace;}
+.renderjson .object.syntax { color: @tertiary; font-family: monospace;}
+.renderjson .array.syntax  { color: @tertiary; font-family: monospace;}

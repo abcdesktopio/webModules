@@ -1,0 +1,145 @@
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
+@import "@{global}";
+
+#top #top-right #music {
+  padding-right: 8px;
+  display: none;
+}
+
+#top #top-right #music .drop-down:after,
+#top #top-right #music .drop-down:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+#top #top-right #music .drop-down:after {
+  border-color: @dark;
+  border-bottom-color: @light;
+  border-width: 9px;
+  margin-left: -9px;
+}
+
+#top #top-right #music .drop-down:before {
+  border-color: @dark;
+  border-bottom-color: @primary;
+  border-width: 8px;
+  margin-left: -8px;
+}
+
+#top #top-right #music #ctrl {
+  float: none;
+  margin: auto;
+  width: 99px;
+}
+
+#top #top-right #music #ctrl div {
+  width: 25px;
+  height: 25px;
+  float: left;
+}
+
+.play {
+  background: url("../../../img/top/play.svg") no-repeat center;
+}
+
+.pause {
+  background: url("../../../img/top/pause.svg") no-repeat center;
+}
+
+#musicBack {
+  background: url("../../../img/top/back.svg") no-repeat center;
+}
+
+#musicNext {
+  background: url("../../../img/top/next.svg") no-repeat center;
+}
+
+#top #top-right #music #progressBar {
+  width: 230px;
+  height: 5px;
+  margin: 10px;
+  padding: 0;
+}
+
+#top #top-right #audioName {
+  width: 100%;
+  color: @dark;
+  text-align: center;
+}
+
+#top #top-right #music input[type="range"] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+#top #top-right #music input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+#top #top-right #music input[type="range"]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+#top #top-right #music input[type="range"]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+/* Special styling for WebKit/Blink */
+#top #top-right #music input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid @dark;
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+  background: @light;
+  cursor: pointer;
+  margin-top: -2px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px @dark, 0px 0px 1px @secondary; /* Add cool effects to your sliders! */
+}
+
+/* All the same stuff for Firefox */
+#top #top-right #music input[type="range"]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px @dark, 0px 0px 1px @secondary;
+  border: 1px solid @dark;
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+  background: @light;
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+#top #top-right #music input[type="range"]::-ms-thumb {
+  box-shadow: 1px 1px 1px @dark, 0 0 1px @secondary;
+  border: 1px solid @dark;
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+  background: @light;
+  cursor: pointer;
+}
