@@ -22,6 +22,6 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.TOKEN_DISPATCH }}
           repository: abcdesktopio/oc.nginx
           event-type: dispatch-from-webModules
