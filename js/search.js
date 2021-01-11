@@ -186,7 +186,8 @@ export const init = function () {
               }
             })
             .catch((e) => {
-              if (e.message !== 'The user aborted a request.') {
+              if (e.message
+                && e.message !== 'The user aborted a request.') {
                 console.error(e);
               }
             });

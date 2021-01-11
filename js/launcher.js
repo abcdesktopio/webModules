@@ -395,7 +395,6 @@ export function share_login(email, token) {
                 notificationSystem.displayNotification('Share access', 'access failed', 'error');
                 return;
             }
-
             var message = (result.result.share == 'rw') ? "full access" : "view only";
             welcomeSystem.close();
             notificationSystem.displayNotification('Shared access', 'Shared access mode is ' + message, 'info');
@@ -463,7 +462,6 @@ export function support(callback) {
                 callback('error', 'Email can not be send - error: ' + error);
             });
     }
-
     return apicall;
     */
 }
@@ -1279,7 +1277,20 @@ export function filesearch(keywords, abortController = new AbortController()) {
     },
   };
 
-  return fetch(window.od.net.urlrewrite(url), options).then((res) => res.json());
+  return fetch(window.od.net.urlrewrite(url), options)
+    .then(async (res) => {
+      if (res.status !== 200) {
+        let error;
+        try {
+          error = await res.json();
+        } catch (e) {
+          error = await res.text();
+        }
+        throw error;
+      }
+
+      return res.json();
+    });
 }
 
 /**
