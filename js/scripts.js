@@ -388,6 +388,9 @@ function isCompatibleBrowser() {
     case 'Chrome':
       if (version < 41) return false;
       break;
+    case 'Chromium':
+      if (version < 41) return false;
+      break;
     case 'Firefox':
       if (version < 32) return false;
       break;
