@@ -99,10 +99,6 @@
       "defer": false
     },
     {
-      "src": "janus-sdk//janus.js",
-      "defer": false
-    },
-    {
       "src": "js/event-target.min.js",
       "defer": false
     },
