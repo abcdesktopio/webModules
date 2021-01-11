@@ -14,6 +14,7 @@
 import * as languages from './languages.js';
 import * as whichBrowser from './which-browser.js';
 import * as launcher from './launcher.js';
+import * as notificationSystem from './notificationsystem.js';
 
 /**
  * @desc Send the issue
@@ -21,13 +22,14 @@ import * as launcher from './launcher.js';
 async function postIssue(issue) {
   const headers = new Headers();
   headers.append('Authorization', `Bearer ${window.od.currentUser.authorization}`);
+  headers.append('Content-Type', 'application/json');
 
   const options = {
     method: 'POST',
     body: JSON.stringify(issue),
     headers,
   };
-  const url = '/API/Jira/rest/api/2/issue';
+  const url = '/API/tracker/issue';
   return fetch(url, options);
 }
 
@@ -36,52 +38,55 @@ function catchingCallback(error) {
   return null;
 }
 
-export function init() {
-  $('#top-issue')
-    .click(async () => {
-      const titleWindowBug = languages.getTranslate('');
-      const cancelButton = languages.getTranslate('');
-      const sendButton = languages.getTranslate('');
+export async function init() {
+  const { id } = await launcher.getkeyinfo('tracker');
 
-      const {
-        cn,
-        givenName,
-        mail,
-        provider,
-        providertype,
-        pulseaudiotcpport,
-        sessionid,
-        target_ip: targetIp,
-      } = window.od.currentUser;
+  if (id) {
+    $('#top-issue-container').css('display', 'block');
+    $('#top-issue')
+      .click(async () => {
+        const titleWindowBug = languages.getTranslate('');
+        const cancelButton = languages.getTranslate('');
+        const sendButton = languages.getTranslate('');
 
-      const awaitingSpawnerVersion = launcher.getSpawnerVersion()
-        .catch(catchingCallback);
+        const {
+          cn,
+          givenName,
+          mail,
+          provider,
+          providertype,
+          pulseaudiotcpport,
+          sessionid,
+          target_ip: targetIp,
+        } = window.od.currentUser;
 
-      const awaitingPyosVersion = launcher.getPyosVersion()
-        .catch(catchingCallback);
+        const awaitingSpawnerVersion = launcher.getSpawnerVersion()
+          .catch(catchingCallback);
 
-      const awaitingWebModulesVersion = launcher.getWebModulesVersion()
-        .catch(catchingCallback);
+        const awaitingPyosVersion = launcher.getPyosVersion()
+          .catch(catchingCallback);
 
-      const awaitingUserContainerInfos = launcher.about()
-        .catch(catchingCallback);
+        const awaitingWebModulesVersion = launcher.getWebModulesVersion()
+          .catch(catchingCallback);
 
-      const [
-        spawnerVersion,
-        pyosVersion,
-        webModulesVersion,
-        userContainerInfos,
-      ] = await Promise.all([
-        awaitingSpawnerVersion,
-        awaitingPyosVersion,
-        awaitingWebModulesVersion,
-        awaitingUserContainerInfos,
-      ]);
+        const awaitingUserContainerInfos = launcher.about()
+          .catch(catchingCallback);
 
-      const issue = {
-        fields: {
-          issuetype: {
-            name: 'authentication',
+        const [
+          spawnerVersion,
+          pyosVersion,
+          webModulesVersion,
+          userContainerInfos,
+        ] = await Promise.all([
+          awaitingSpawnerVersion,
+          awaitingPyosVersion,
+          awaitingWebModulesVersion,
+          awaitingUserContainerInfos,
+        ]);
+
+        const issue = {
+          issue: {
+            name: 'Bug',
           },
           summary: '',
           description: '',
@@ -100,61 +105,51 @@ export function init() {
           pyosVersion,
           webModulesVersion,
           ...userContainerInfos,
-        },
-      };
+        };
 
-      bootbox.dialog({
-        title: titleWindowBug || 'Issue',
-        message: `
-        <h3 class="text-center">Sumbit a new issue</h3>
-        <div class="container w-100 h-75 d-flex justify-content-center flex-column">  
-          <div class="form-group">
-            <label for="issue-type">Issue type</label>
-            <select class="form-control" id="issue-type">
-              <option value="authentication">Authentication</option>
-              <option value="settings">Settings</option>
-              <option value="applications">Applications</option>
-              <option value="screen-shot">Screen-shot</option>
-              <option value="screen-record">Screen-record</option>
-              <option value="log-out">Log out</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <input id="issue-summary" placeholder="Summary" />
-          <textarea id="issue-description" class="h-50" placeholder="Your report"></textarea>
-        </div>
-      `,
-        className: 'window-dialog',
-        onEscape: true,
-        backdrop: true,
-        buttons: {
-          cancel: {
-            label: cancelButton || 'Cancel',
-          },
-          send: {
-            label: sendButton || 'Send',
-            className: 'window-button',
-            callback: () => {
-              postIssue(issue);
+        bootbox.dialog({
+          title: titleWindowBug || 'Issue',
+          message: `
+            <h3 class="text-center">Sumbit a new issue</h3>
+            <div class="container w-100 h-75 d-flex justify-content-center flex-column">  
+              <input id="issue-summary" placeholder="Summary" />
+              <textarea id="issue-description" class="h-50" placeholder="Your report"></textarea>
+            </div>
+          `,
+          className: 'window-dialog',
+          onEscape: true,
+          backdrop: true,
+          buttons: {
+            cancel: {
+              label: cancelButton || 'Cancel',
+            },
+            send: {
+              label: sendButton || 'Send',
+              className: 'window-button',
+              callback: () => {
+                postIssue(issue)
+                  .then(() => {
+                    notificationSystem.displayNotification('Issue', 'Your issue hase been posted', 'info');
+                  })
+                  .catch((error) => {
+                    notificationSystem.displayNotification('Issue', error, 'error');
+                    console.error(error);
+                  });
+              },
             },
           },
-        },
-        animate: false,
+          animate: false,
+        });
+
+        $('#issue-summary')
+          .on('input', function () {
+            issue.summary = this.value;
+          });
+
+        $('#issue-description')
+          .on('input', function () {
+            issue.description = this.value;
+          });
       });
-
-      $('#issue-type')
-        .on('change', function () {
-          issue.fields.issuetype.name = this.value;
-        });
-
-      $('#issue-summary')
-        .on('input', function () {
-          issue.fields.summary = this.value;
-        });
-
-      $('#issue-description')
-        .on('input', function () {
-          issue.fields.description = this.value;
-        });
-    });
+  }
 }
