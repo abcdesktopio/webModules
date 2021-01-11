@@ -207,7 +207,7 @@ export function init(home, speedtest) {
 
   applyColors('#6EC6F0');
   if (firstAppear) {
-    fetch('/transpile/conf.json')
+    fetch('/transpile/ui.json')
       .then(system.checkError)
       .then((res) => res.json())
       .then((conf) => {
