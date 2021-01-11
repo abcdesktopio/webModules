@@ -197,6 +197,7 @@ async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile) {
     modules: modulesConf.modules,
     scripts: modulesConf.scripts,
     projectName: uiConf.name,
+    urlcannotopensession: uiConf.urlcannotopensession,
   };
 
   await fs.promises.writeFile(pathHtmlFile, Mustache.render(mustacheFile, view));
