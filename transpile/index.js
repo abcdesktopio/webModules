@@ -101,17 +101,19 @@ async function buildSvg(colors = []) {
     currentSvgColor: newSvgColor,
   };
 
+  const awaitingUpdateSvgs = [];
   for await (const svgImage of getSvgImages(pathImg)) {
-    try {
-      const svgContent = await fs.promises.readFile(svgImage, 'utf8');
-      if (svgContent.includes(currentSvgColor)) {
-        const newContent = svgContent.replace(new RegExp(currentSvgColor, 'g'), newSvgColor);
-        await fs.promises.writeFile(svgImage, newContent);
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    const awaiting = fs.promises.readFile(svgImage, 'utf8')
+      .then((svgContent) => {
+        if (svgContent.includes(currentSvgColor)) {
+          const newContent = svgContent.replace(new RegExp(currentSvgColor, 'g'), newSvgColor);
+          return fs.promises.writeFile(svgImage, newContent);
+        }
+        return null;
+      }).catch(console.error);
+    awaitingUpdateSvgs.push(awaiting);
   }
+  await Promise.all(awaitingUpdateSvgs);
 
   await fs.promises.writeFile(pathCache, JSON.stringify(newCache, null, '\n\t'));
   console.timeEnd('Build svg');
