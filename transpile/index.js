@@ -49,31 +49,30 @@ const pathIndexMustacheHtmlFile = path.resolve(path.join('..', 'index.mustache.h
 const pathImg = path.resolve(path.join('..', 'img'));
 
 // #region svg
-/**
- *
- * @param {string} root
- */
-function getChildsReducer(root = '') {
-  return (accumulation, current) => {
-    const filename = `${root}/${current.name}`;
-    if (current.isDirectory()) {
-      accumulation.directories.push(filename);
-    } else if (path.extname(filename) === '.svg') {
-      accumulation.files.push(filename);
-    }
-    return accumulation;
-  };
-}
 
 /**
  *
  * @param {string} root
  */
 async function* getSvgImages(root = '') {
-  const childs = await fs.promises.readdir(root, { withFileTypes: true });
+  const dirents = await fs.promises.readdir(root, { withFileTypes: true });
+  const files = [];
+  const directories = [];
 
-  const initialValue = { files: [], directories: [] };
-  const { files, directories } = childs.reduce(getChildsReducer(root), initialValue);
+  for (const dirent of dirents) {
+    if (dirent.isSymbolicLink()) {
+      continue;
+    }
+
+    const filename = `${root}/${dirent.name}`;
+
+    if (dirent.isDirectory()) {
+      directories.push(filename);
+    } else if (dirent.isFile()
+      && path.extname(filename) === '.svg') {
+      files.push(filename);
+    }
+  }
 
   yield* files;
 
