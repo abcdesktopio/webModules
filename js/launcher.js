@@ -1004,7 +1004,7 @@ export async function getPyosVersion() {
   return window.od.currentUser.pyosVersion;
 }
 
-export function get_stream() {
+export function getStream() {
   return odApiClient.webrtc
     .get_stream()
     .done((result) => {
@@ -1025,7 +1025,7 @@ export function get_stream() {
     });
 }
 
-export function destroy_stream() {
+export function destroyStream() {
   return odApiClient.webrtc
     .destroy_stream()
     .done((result) => {
