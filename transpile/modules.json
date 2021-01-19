@@ -35,9 +35,14 @@
     "js/menu.js",
     "js/languages.js",
     "js/scripts.js",
-    "js/issue.js"
+    "js/issue.js",
+    "js/janusaudio.js"
   ],
   "scripts": [
+    {
+      "src": "js/adapter.min.js",
+      "defer": false
+    },
     {
       "src": "app/error-handler.js",
       "defer": false
@@ -109,6 +114,10 @@
     {
       "src": "xterm/dist/client-bundle.js",
       "defer": true
+    },
+    {
+      "src": "js/janus.js",
+      "defer": false
     }
   ]
 }
