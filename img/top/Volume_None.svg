@@ -18,7 +18,7 @@
   <defs
      id="defs14" />
   <sodipodi:namedview
-     pagecolor="#ffffff"
+     pagecolor="#FFFFFF"
      bordercolor="#666666"
      borderopacity="1"
      objecttolerance="10"
@@ -50,23 +50,23 @@
 </metadata>
   <g
      id="g6"
-     style="fill:#FFFFFF000">
+     style="fill:#FFFFFF">
     <title
        id="title8">Layer 1</title>
     <g
        id="svg_1"
-       fill="#FFFFFF000"
+       fill="#FFFFFF"
        transform="translate(0,1000) scale(0.10000000149011612,-0.10000000149011612) "
-       style="fill:#FFFFFF000">
+       style="fill:#FFFFFF">
       <path
-         fill="#ffffff"
+         fill="#FFFFFF"
          id="svg_2"
          d="m4375,7750l-1120,-998l-1152,-1c-800,-1 -1168,-4 -1205,-12c-187,-39 -348,-200 -387,-387c-16,-75 -16,-2629 0,-2704c39,-187 200,-348 387,-387c37,-8 402,-11 1203,-11l1149,0l1125,-1000l1125,-1000l0,3750c0,2062 -1,3750 -2,3749c-2,0 -507,-450 -1123,-999z"
-         style="fill:#ffffff" />
+         style="fill:#FFFFFF" />
     </g>
   </g>
   <path
-     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+     style="fill:#FFFFFF;fill-opacity:1;stroke:none;stroke-opacity:1"
      d="m 613.77157,667.47777 -37.62826,-38.10154 61.93724,-62.22554 61.93724,-62.22554 -62.01792,-62.3066 -62.01792,-62.30661 38.05511,-38.05509 38.0551,-38.0551 62.02502,62.31372 62.02501,62.31372 62.58277,-62.32255 62.58276,-62.32254 39.58316,40.00055 39.5832,40.00054 -62.2476,61.95917 -62.24759,61.95916 60.35542,60.63635 60.35537,60.63636 -37.67753,38.15147 -37.67757,38.15149 -60.72926,-60.44788 -60.72926,-60.44789 -60.67908,60.39794 c -33.37349,33.21888 -62.28065,60.39796 -64.23812,60.39796 -1.95746,0 -20.49176,-17.1457 -41.18729,-38.10155 z"
      id="path4154"
      inkscape:connector-curvature="0" />
