@@ -1372,8 +1372,8 @@ export function getSettings() {
   return requestSpawnerAPI('getSettings', null, 'GET');
 }
 
-export function configurePulse() {
-  return requestSpawnerAPI('configurePulse', null, 'PUT');
+export function configurePulse(destinationIp, port) {
+  return requestSpawnerAPI('configurePulse', { destinationIp, port }, 'PUT');
 }
 
 export async function getWebModulesVersion() {
