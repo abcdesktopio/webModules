@@ -17,6 +17,7 @@ import * as notificationSystem from './notificationsystem.js';
 import * as wavify from './wavify.js';
 import * as launcher from './launcher.js';
 import * as soundSystem from './soundSystem.js';
+import * as janusaudio from './janusaudio.js';
 
 /**
  * @name speaker
