@@ -17,7 +17,13 @@ import * as webrtcProtocol from './webrtcProtocol/main.js';
 export const init = () => {
   document.addEventListener('broadway.connected', () => {
     if (webrtcProtocol.janusSupported()) {
-      webrtcProtocol.init();
+      webrtcProtocol.init()
+        .then(() => {
+          const audio = document.getElementById('audioplayer');
+          if (!audio.paused) {
+            updateIconVolumLevel();
+          }
+        });
     } else {
       httpProtocol.init();
     }
