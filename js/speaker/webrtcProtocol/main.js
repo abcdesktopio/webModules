@@ -45,8 +45,8 @@ export const init = async () => {
 
     await launcher.configurePulse(hostip, audioport);
     const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`);
-    await janusSession.attachElt(audio, pin);
-    await janusSession.startStream(id);
+    await janusSession.attachElt(audio);
+    await janusSession.watchStream(id, pin);
   } catch (e) {
     console.error(e);
   }
