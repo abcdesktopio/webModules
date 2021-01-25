@@ -34,11 +34,10 @@ export class JanusAbcDesktop extends Janus {
   /**
   * @desc Allow to get a new Janus session
   */
-  static createSession(server, pin) {
+  static createSession(server) {
     return new Promise((resolve, reject) => {
       const optionsJanus = {
         server,
-        pin,
         success: successSession,
         error: errorSession,
       };
