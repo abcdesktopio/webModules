@@ -26,7 +26,6 @@ import * as logmein from './logmein.js';
 import * as searchSystem from './search.js';
 import * as upload from './upload.js';
 import * as errorMessage from './errormessage.js';
-import * as notificationSystem from './notificationsystem.js';
 import * as printer from './printer.js';
 import * as windowMessage from './windowMessage.js';
 import * as ocuaparser from './ocuaparser.js';
@@ -124,9 +123,6 @@ function setupbeforeuserloginin() {
 
   // init error message
   errorMessage.init();
-
-  // Initialize default variable for notification system module
-  notificationSystem.init();
 
   // Init a dropzone on document.documentElement with Dropzone lib
   // upload.init();
