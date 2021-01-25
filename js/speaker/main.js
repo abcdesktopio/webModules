@@ -23,3 +23,18 @@ export const init = () => {
     }
   });
 };
+
+export const updateIconVolumLevel = () => {
+  const volumeLevel = document.getElementById('volume_level');
+  let srcImg = '';
+  if (volumeLevel.value > 0.66) {
+    srcImg = '../img/top/Volume_High.svg';
+  } else if (volumeLevel.value > 0.33) {
+    srcImg = '../img/top/Volume_Mid.svg';
+  } else if (volumeLevel.value > 0) {
+    srcImg = '../img/top/Volume_Low.svg';
+  } else {
+    srcImg = '../img/top/Volume_None.svg';
+  }
+  $('#speakers-logo').attr('src', srcImg);
+};
