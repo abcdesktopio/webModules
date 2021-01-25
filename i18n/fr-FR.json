@@ -124,5 +124,6 @@
     "ADpassword": "Mot de passe",
     "login-auth-requirement": "Pour accéder à ce service, vous devez être identifié. Si vous utilisez abcdesktop.io depuis un ordinateur personnel qui n'appartient pas à l'entreprise, n'oubliez pas de fermer votre navigateur et de supprimer les pièces jointes enregistrées sur le disque dur lorsque vous avez terminé. En cas de problème, appelez votre support habituel.",
     "connectAD": "Se connecter",
-    "link-open-session": "Je ne peux pas ouvrir ma session"
+    "link-open-session": "Je ne peux pas ouvrir ma session",
+    "over-screen-message-data": "Votre session abcDesktop.io à été fermé."
 }

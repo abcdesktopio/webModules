@@ -19,6 +19,7 @@
 import welcomeSystem from './welcomesystem.js';
 import * as ocuaparser from './ocuaparser.js';
 import * as system from './system.js';
+import { getTranslate } from './languages.js';
 
 let circle;
 export var statusText;
@@ -107,17 +108,18 @@ export const editStatus = function (status) {
   }
 
   if (status === 'Disconnected') {
-	    /*
-        document.querySelector('#reconnect').style.display = 'block';
-        document.querySelector('#connectloader').style.display = 'block';
-        document.querySelector('#waiting').style.display = 'none';
-        circle.querySelector('#percent').style.display = 'none';
-        circle.querySelector('span').style.display = 'none';
-	     */
+    /*
+      document.querySelector('#reconnect').style.display = 'block';
+      document.querySelector('#connectloader').style.display = 'block';
+      document.querySelector('#waiting').style.display = 'none';
+      circle.querySelector('#percent').style.display = 'none';
+      circle.querySelector('span').style.display = 'none';
+      */
+
     const overScreenMessage = document.getElementById('overScreenMessageData');
-    if (overScreenMessage) { overScreenMessage.textContent = 'Your AbcDesktop.io session has been disconnected.'; }
+    if (overScreenMessage) { overScreenMessage.textContent = getTranslate('over-screen-message-data'); }
     const overScreen = document.getElementById('overScreen');
-    	if (overScreen) { system.show(overScreen); }
+    if (overScreen) { system.show(overScreen); }
   }
 
   if (status === 'Disconnect') {
