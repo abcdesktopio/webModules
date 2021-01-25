@@ -19,12 +19,7 @@ import { JanusAbcDesktop } from './JanusAbcDesktop.js';
  * Initialise Janus
  */
 export const init = async () => {
-  const audio = document.createElement('audio');
-  audio.id = 'janusStream';
-  audio.autoplay = true;
-  audio.style = 'width: 100%; height: 100%;';
-
-  document.body.appendChild(audio);
+  const audio = document.getElementById('audioplayer');
 
   /**
    * @desc
