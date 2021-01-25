@@ -31,7 +31,8 @@
       "no-cond-assign":"off",
       "import/prefer-default-export": "off",
       "no-undef": "off",
-      "no-restricted-globals":"off"
+      "no-restricted-globals":"off",
+      "no-underscore-dangle": "off"
     }
   }
   
