@@ -650,20 +650,15 @@ function setupTopMenu() {
     }
   });
 
-  $('#top #top-right #speakers .slider').slider({
-    min: 0,
-    max: 100,
-    step: 1,
-    value: 30,
-    slide() {
-      const currentPercent = $(this).slider('option', 'value');
-      _this.sliderUpdate(currentPercent);
-    },
-    stop() {
-      const currentPercent = $(this).slider('option', 'value');
-      _this.sliderUpdate(currentPercent);
-    },
-  });
+  const audioplayer = document.getElementById('audioplayer');
+  $('#top #top-right #speakers #volume_level')
+    .on('input', function () {
+      if (audioplayer.paused) {
+        audioplayer.play();
+      }
+      audioplayer.volume = this.value;
+      speaker.updateIconVolumLevel();
+    });
 
   $('#placement').click(() => {
     launcher.placeAllWindows();
