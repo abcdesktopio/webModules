@@ -11,17 +11,19 @@
 * Software description: cloud native desktop service
 */
 
-import { concat, concat_swap } from './concat.js';
+import { concat, concatSwap } from './concat.js';
 
 /*
-The standard format codes for waveform data are given below. The references above give more format codes for compressed data, a good fraction of which are now obsolete.
+The standard format codes for waveform data are given below.
+The references above give more format codes for compressed data,
+a good fraction of which are now obsolete.
 
-Format Code	PreProcessor Symbol	Data
-0x0001	WAVE_FORMAT_PCM	PCM
-0x0003	WAVE_FORMAT_IEEE_FLOAT	IEEE float
-0x0006	WAVE_FORMAT_ALAW	8-bit ITU-T G.711 A-law
-0x0007	WAVE_FORMAT_MULAW	8-bit ITU-T G.711 Âµ-law
-0xFFFE	WAVE_FORMAT_EXTENSIBLE	Determined by SubFormat
+Format Code PreProcessor Symbol Data
+0x0001 WAVE_FORMAT_PCM PCM
+0x0003 WAVE_FORMAT_IEEE_FLOAT IEEE float
+0x0006 WAVE_FORMAT_ALAW 8-bit ITU-T G.711 A-law
+0x0007 WAVE_FORMAT_MULAW 8-bit ITU-T G.711 Âµ-law
+0xFFFE WAVE_FORMAT_EXTENSIBLE Determined by SubFormat
 */
 
 export const WAVE_FORMAT_PCM = 1;
@@ -37,16 +39,16 @@ source Julien Bouquillon https://github.com/revolunet/webaudio-wav-stream-player
 // Write a proper WAVE header for the given buffer.
 // format ULAW or ALAW
 // Offset is hardcoded
-function wavify_law(data, numberOfChannels, sampleRate, bitsPerSample, format) {
+function wavifyLaw(data, numberOfChannels, sampleRate, bitsPerSample, format) {
   // // total header : 4 + 26 + 12 + 8 = 50
   // // and the data and size: 50 + 8 ( data + 32 bits for the size )
-  const header_length = 58; // 4 + 26 + 12 + 8 + 8 = 58
-  const total_length = header_length + data.byteLength;
+  const headerLength = 58; // 4 + 26 + 12 + 8 + 8 = 58
+  const totalLength = headerLength + data.byteLength;
 
   // bitsPerSample MUST BE  8 bits
 
   // The default byte ordering assumed for WAVE data files is little-endian.
-  const header = new ArrayBuffer(header_length); // + 4 for the
+  const header = new ArrayBuffer(headerLength); // + 4 for the
   const d = new DataView(header);
 
   d.setUint8(0, 'R'.charCodeAt(0));
@@ -56,12 +58,12 @@ function wavify_law(data, numberOfChannels, sampleRate, bitsPerSample, format) {
 
   // All integers MUST be set in bigEndian format
   // Wave chunks containing format information and sampled data
-  // cksize	4	Chunk size: 4+n
+  // cksize 4 Chunk size: 4+n
   // 4: for sizeof( 'WAVE' ) + n
   // n: Wave chunks containing format information and sampled data
   // var data_length = d.setUint32(4, data.byteLength / 2 + 44, true);
   // bitsPerSample data.byteLength + 8+16+12
-  d.setUint32(4, total_length, true);
+  d.setUint32(4, totalLength, true);
 
   // write 4 bytes
   d.setUint8(8, 'W'.charCodeAt(0));
@@ -85,7 +87,7 @@ function wavify_law(data, numberOfChannels, sampleRate, bitsPerSample, format) {
   // The size of the rest of this subchunk.
   // All integers MUST be set in bigEndian format
   // d.setUint32(16, 16, true);
-  // cksize	4	Chunk size: 16, 18 or 40
+  // cksize 4 Chunk size: 16, 18 or 40
   const chunksize = 18;
   d.setUint32(16, chunksize, true);
 
@@ -106,12 +108,12 @@ function wavify_law(data, numberOfChannels, sampleRate, bitsPerSample, format) {
 
   // byteRate == SampleRate * NumChannels * BitsPerSample/8
   // All integers MUST be set in bigEndian format
-  const byteRate = sampleRate * numberOfChannels * bitsPerSample / 8;
+  const byteRate = (sampleRate * numberOfChannels * bitsPerSample) / 8;
   d.setUint32(28, byteRate, true);
 
   // blockAlign       == NumChannels * BitsPerSample/8
   // The number of bytes for one sample including all channels.
-  const blockAlign = numberOfChannels * bitsPerSample / 8;
+  const blockAlign = (numberOfChannels * bitsPerSample) / 8;
   // All integers MUST be set in bigEndian format
   d.setUint16(32, blockAlign, true);
 
@@ -152,12 +154,12 @@ function wavify_law(data, numberOfChannels, sampleRate, bitsPerSample, format) {
 // format PCM
 // Swap bytes if 16 bytes
 // Offset is hardcoded
-function wavify_pcm(data, numberOfChannels, sampleRate, bitsPerSample) {
-  const header_length = 44;
-  const total_length = header_length + data.byteLength;
+function wavifyPcm(data, numberOfChannels, sampleRate, bitsPerSample) {
+  const headerLength = 44;
+  const totalLength = headerLength + data.byteLength;
 
   // The default byte ordering assumed for WAVE data files is little-endian.
-  const header = new ArrayBuffer(header_length);
+  const header = new ArrayBuffer(headerLength);
   const d = new DataView(header);
 
   d.setUint8(0, 'R'.charCodeAt(0));
@@ -167,10 +169,10 @@ function wavify_pcm(data, numberOfChannels, sampleRate, bitsPerSample) {
 
   // All integers MUST be set in bigEndian format
   // Wave chunks containing format information and sampled data
-  // cksize	4	Chunk size: 4+n
+  // cksize 4 Chunk size: 4+n
   // 4: for sizeof( 'WAVE' ) + n
   // n: Wave chunks containing format information and sampled data
-  d.setUint32(4, total_length, true);
+  d.setUint32(4, totalLength, true);
 
   // write 4 bytes
   d.setUint8(8, 'W'.charCodeAt(0));
@@ -194,7 +196,7 @@ function wavify_pcm(data, numberOfChannels, sampleRate, bitsPerSample) {
   // The size of the rest of this subchunk.
   // All integers MUST be set in bigEndian format
   // d.setUint32(16, 16, true);
-  // cksize	4	Chunk size: 16, 18 or 40
+  // cksize 4 Chunk size: 16, 18 or 40
   const chunksize = 16;
   d.setUint32(16, chunksize, true);
 
@@ -215,12 +217,12 @@ function wavify_pcm(data, numberOfChannels, sampleRate, bitsPerSample) {
 
   // byteRate == SampleRate * NumChannels * BitsPerSample/8
   // All integers MUST be set in bigEndian format
-  const byteRate = sampleRate * numberOfChannels * bitsPerSample / 8;
+  const byteRate = (sampleRate * numberOfChannels * bitsPerSample) / 8;
   d.setUint32(28, byteRate, true);
 
   // blockAlign       == NumChannels * BitsPerSample/8
   // The number of bytes for one sample including all channels.
-  const blockAlign = numberOfChannels * bitsPerSample / 8;
+  const blockAlign = (numberOfChannels * bitsPerSample) / 8;
   // All integers MUST be set in bigEndian format
   d.setUint16(32, blockAlign, true);
 
@@ -235,14 +237,20 @@ function wavify_pcm(data, numberOfChannels, sampleRate, bitsPerSample) {
 
   d.setUint32(40, data.byteLength, true);
 
-  if (bitsPerSample == 16)
   // data must pad byte 0 or 1 if n is odd
-  { return concat_swap(header, data); }
+  if (bitsPerSample === 16) { return concatSwap(header, data); }
   return concat(header, data);
 }
 
 // Write a proper WAVE header for the given buffer.
 export function wavify(data, numberOfChannels, sampleRate, bitsPerSample, format) {
-  if (format == WAVE_FORMAT_PCM) { return wavify_pcm(data, numberOfChannels, sampleRate, bitsPerSample); }
-  if (format == WAVE_FORMAT_ULAW || format == WAVE_FORMAT_ALAW) { return wavify_law(data, numberOfChannels, sampleRate, bitsPerSample, format); }
+  if (format === WAVE_FORMAT_PCM) {
+    return wavifyPcm(data, numberOfChannels, sampleRate, bitsPerSample);
+  }
+
+  if (format === WAVE_FORMAT_ULAW || format === WAVE_FORMAT_ALAW) {
+    return wavifyLaw(data, numberOfChannels, sampleRate, bitsPerSample, format);
+  }
+
+  return new Uint8Array();
 }

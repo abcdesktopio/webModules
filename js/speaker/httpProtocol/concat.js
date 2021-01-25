@@ -1,15 +1,25 @@
-// Concat two ArrayBuffers
+/**
+ *
+ * @param {Uint8Array} buffer1
+ * @param {Uint8Array} buffer2
+ * @returns {Uint8Array}
+ * @desc Concat two ArrayBuffers
+ */
 export function concat(buffer1, buffer2) {
   const tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
 
   tmp.set(new Uint8Array(buffer1), 0);
   tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
-
   return tmp.buffer;
 }
 
-// Concat two ArrayBuffers
-// add swap all Uint8 from buffer2 to littleendian
+/**
+ *
+ * @param {Uint8Array} buffer1
+ * @param {Uint8Array} buffer2
+ * @returns {Uint8Array}
+ * @desc Concat two ArrayBuffers, add swap all Uint8 from buffer2 to littleendian
+ */
 export function concatSwap(buffer1, buffer2) {
   const tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
 
