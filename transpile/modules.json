@@ -9,7 +9,6 @@
     "js/systemmenu.js",
     "js/errormessage.js",
     "js/appstore.js",
-    "js/soundSystem.js",
     "js/notificationsystem.js",
     "js/broadway-vnc.js",
     "js/quickSupport.js",
@@ -23,20 +22,17 @@
     "js/mailSystem.js",
     "js/printSystem.js",
     "js/printer.js",
-    "js/music.js",
     "js/video.js",
     "js/windowMessage.js",
     "js/webshell.js",
     "js/appSelector.js",
     "js/which-browser.js",
-    "js/speaker.js",
+    "js/speaker/main.js",
     "js/screenRecord.js",
     "js/settings.js",
-    "js/menu.js",
     "js/languages.js",
     "js/scripts.js",
-    "js/issue.js",
-    "js/janusaudio.js"
+    "js/issue.js"
   ],
   "scripts": [
     {

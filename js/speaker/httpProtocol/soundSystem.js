@@ -16,8 +16,8 @@
  * @module
  */
 
+import * as notificationSystem from '../../notificationsystem.js';
 import * as music from './music.js';
-import * as notificationSystem from './notificationsystem.js';
 
 let volumelvl;
 let icon;
@@ -35,7 +35,7 @@ export const getIcon = function (level) {
     src = window.od.net.urlrewrite('../img/top/Volume_Low.svg');
   } else if (volumelvl.value <= 0.7) src = window.od.net.urlrewrite('../img/top/Volume_Mid.svg');
   else src = window.od.net.urlrewrite('../img/top/Volume_High.svg');
-  if (level == 0) { src = window.od.net.urlrewrite('../img/top/Volume_None.svg'); }
+  if (level === 0) { src = window.od.net.urlrewrite('../img/top/Volume_None.svg'); }
   return src;
 };
 
@@ -46,6 +46,7 @@ export const getIcon = function (level) {
  *
  */
 export const init = function () {
+  music.init();
   volumelvl = document.getElementById('volume_level');
   if (volumelvl) {
     volumelvl.value = 0;
@@ -62,12 +63,12 @@ export const init = function () {
           }
           if (this.value > 0 && window.myplayer.state() !== 'running') {
             if (window.myplayer && typeof window.myplayer.play === 'function') { window.myplayer.play(); } else {
-			    const innerHTML = 'Your web browser does not handle all audio API to process real time sound streaming';
+              const innerHTML = 'Your web browser does not handle all audio API to process real time sound streaming';
               if (notificationSystem) { notificationSystem.displayNotification('Real time audio API unsupported', innerHTML, 'info', null, null, 3000); }
             }
           }
           icon.src = getIcon(this.value);
-          if (this.value == 0) {
+          if (this.value === 0) {
             window.myplayer.stop();
           }
           music.setVolume(this.value);

@@ -12,7 +12,7 @@
 */
 
 import * as system from '../system.js';
-import * as speaker from '../speaker.js';
+import * as speaker from '../speaker/main.js';
 
 import { settingsEvents } from '../settingsevents.js';
 
@@ -54,7 +54,7 @@ export function init(home, audio) {
   $('div[id^=sound_level]')
     .each(function () {
       this.addEventListener('click', function () {
-        if (playTestIsrunning) { return false; }
+        if (playTestIsrunning) { return; }
         const { children } = this.parentElement;
         let i = children.length - 1;
 

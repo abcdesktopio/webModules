@@ -26,15 +26,13 @@ import * as logmein from './logmein.js';
 import * as searchSystem from './search.js';
 import * as upload from './upload.js';
 import * as errorMessage from './errormessage.js';
-import * as soundSystem from './soundSystem.js';
 import * as notificationSystem from './notificationsystem.js';
 import * as printer from './printer.js';
-import * as music from './music.js';
 import * as windowMessage from './windowMessage.js';
 import * as ocuaparser from './ocuaparser.js';
 import * as webshell from './webshell.js';
 import * as appSelector from './appSelector.js';
-import * as speaker from './speaker.js';
+import * as speaker from './speaker/main.js';
 import * as whichBrowser from './which-browser.js';
 import * as screenRecord from './screenRecord.js';
 import * as menu from './menu.js';
@@ -168,10 +166,6 @@ window.od.setupafteruserloginin = function () {
   launcher.initUserApplist()
     .done(initApplist_callback);
 
-  // Init events and variables to manage sound volume.
-  // need desktop token
-  soundSystem.init();
-
   // Add event listener for buttons share window.
   shareSystem.init();
 
@@ -187,9 +181,6 @@ window.od.setupafteruserloginin = function () {
 
   quickSupport.init();
   printer.init();
-
-  // Init music player events.
-  music.init();
 
   // Set url inside iframe & make windows resizable
   // Init a dropzone on document.documentElement with Dropzone lib

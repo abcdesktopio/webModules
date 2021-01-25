@@ -11,27 +11,26 @@
 * Software description: cloud native desktop service
 */
 
-import * as whichBrowser from './which-browser.js';
+import * as notificationSystem from '../../notificationsystem.js';
+import * as launcher from '../../launcher.js';
+
 import * as wavplayer from './wavplayer.js';
-import * as notificationSystem from './notificationsystem.js';
 import * as wavify from './wavify.js';
-import * as launcher from './launcher.js';
 import * as soundSystem from './soundSystem.js';
-import * as janusaudio from './janusaudio.js';
 
 /**
  * @name speaker
  * @module
  */
 
-const compatibility = false;
 const numberOfChannels = 1;
-let bitsPerSample	 = 8; // 16;
-let sampleRate 	 = 8000; // 8000; //44100;
-let lowwatermark	 = 512;
-let latency		 = 0.2;
-let format		 = wavify.WAVE_FORMAT_ULAW;
-export var sink		 = 'default sink';
+let bitsPerSample = 8; // 16;
+let sampleRate = 8000; // 8000; //44100;
+let lowwatermark = 512;
+let latency = 0.2;
+let format = wavify.WAVE_FORMAT_ULAW;
+let sink = 'default sink';
+
 let scheduleBuffersTimeout = 50;
 const bandwithSettings = [
   { sampleRate: 8000, format: wavify.WAVE_FORMAT_ULAW, bitsPerSample: 8 },
@@ -40,18 +39,24 @@ const bandwithSettings = [
   { sampleRate: 44100, format: wavify.WAVE_FORMAT_PCM, bitsPerSample: 16 },
 ];
 
-// document.getElementById("volume_level").disabled = true;
 export const init = function (callback) {
+  soundSystem.init();
   if (checkBrowser()) {
-    // self.sink = "u8_1_11025";
     sink = wavplayer.mkWavPlayerSink(numberOfChannels, bitsPerSample, sampleRate, format);
     launcher.setAudioQuality(sink)
       .then(() => {
         document.getElementById('volume_level').disabled = false;
-        //  _numberOfChannels, _bitsPerSample, _sampleRate, _lowwatermark
-        // window.myplayer = WavPlayer(1, 8, 11025, 512, 0.2);
-        window.myplayer = wavplayer.WavPlayer(numberOfChannels, bitsPerSample, sampleRate, lowwatermark, latency, format, scheduleBuffersTimeout);
-        // window.myplayer.play();
+
+        window.myplayer = wavplayer.WavPlayer(
+          numberOfChannels,
+          bitsPerSample,
+          sampleRate,
+          lowwatermark,
+          latency,
+          format,
+          scheduleBuffersTimeout,
+        );
+
         if (callback) { callback(null, 'done'); }
       });
   } else {
@@ -67,7 +72,7 @@ export const init = function (callback) {
  */
 export const setlowwatermark = function (_lowwatermark) {
   lowwatermark = _lowwatermark;
-  if (window.myplayer && window.myplayer.state() == 'running') { window.myplayer.setlowwatermark(lowwatermark); }
+  if (window.myplayer && window.myplayer.state() === 'running') { window.myplayer.setlowwatermark(lowwatermark); }
 };
 
 export const getlowwatermark = function () {
@@ -115,7 +120,7 @@ export const setBandWidth = function (index) {
   bitsPerSample = bandwithSettings[index].bitsPerSample;
 
   // Stop the current stream
-  if (window.myplayer && oldState == 'running') { window.myplayer.stop(); }
+  if (window.myplayer && oldState === 'running') { window.myplayer.stop(); }
 
   // Build the new url stream to the pulse sink
   sink = wavplayer.mkWavPlayerSink(numberOfChannels, bitsPerSample, sampleRate, format);
@@ -123,8 +128,16 @@ export const setBandWidth = function (index) {
   // New WavPlayer
   launcher.setAudioQuality(sink)
     .then(() => {
-      window.myplayer = wavplayer.WavPlayer(numberOfChannels, bitsPerSample, sampleRate, lowwatermark, latency, format, scheduleBuffersTimeout);
-      if (oldState == 'running') { window.myplayer.play(); }
+      window.myplayer = wavplayer.WavPlayer(
+        numberOfChannels,
+        bitsPerSample,
+        sampleRate,
+        lowwatermark,
+        latency,
+        format,
+        scheduleBuffersTimeout,
+      );
+      if (oldState === 'running') { window.myplayer.play(); }
     });
 };
 
@@ -132,9 +145,10 @@ export const setBandWidth = function (index) {
  * @function getBandWidth
  * @returns {string}
  */
-export const getBandWidth = function () {
-  if (format == wavify.WAVE_FORMAT_PCM) { return 'hight'; }
-  if (format == wavify.WAVE_FORMAT_ULAW || format == wavify.WAVE_FORMAT_ALAW) { return 'low'; }
+export const getBandWidth = () => {
+  if (format === wavify.WAVE_FORMAT_PCM) { return 'hight'; }
+  if (format === wavify.WAVE_FORMAT_ULAW || format === wavify.WAVE_FORMAT_ALAW) { return 'low'; }
+  return '';
 };
 
 /**
@@ -142,9 +156,9 @@ export const getBandWidth = function () {
  * @returns {string}
  */
 export const getTextFormat = function () {
-  if (format == wavify.WAVE_FORMAT_PCM) { return `Wave PCM  ${bitsPerSample} bits per sample, ${sampleRate}bits/s mono`; }
-  if (format == wavify.WAVE_FORMAT_ULAW) { return `ULaw G711 ${bitsPerSample} bits per sample, ${sampleRate}bits/s mono`; }
-  if (format == wavify.WAVE_FORMAT_ALAW) { return `ALaw G711 ${bitsPerSample} bits pre sample, ${sampleRate}bits/s mono`; }
+  if (format === wavify.WAVE_FORMAT_PCM) { return `Wave PCM  ${bitsPerSample} bits per sample, ${sampleRate}bits/s mono`; }
+  if (format === wavify.WAVE_FORMAT_ULAW) { return `ULaw G711 ${bitsPerSample} bits per sample, ${sampleRate}bits/s mono`; }
+  if (format === wavify.WAVE_FORMAT_ALAW) { return `ALaw G711 ${bitsPerSample} bits pre sample, ${sampleRate}bits/s mono`; }
   return 'Unkonw format, not supported';
 };
 
@@ -165,7 +179,7 @@ export const playTest = function (callback) {
   function doPlayTestSound(err) {
     if (err || !window.myplayer) { return; }
 
-    if (window.myplayer.state() != 'running') {
+    if (window.myplayer.state() !== 'running') {
       soundSystem.setSoundLevel(0.5); // Update UI
       window.myplayer.play();
     }
@@ -183,8 +197,8 @@ export const playTest = function (callback) {
  */
 function checkBrowser() {
   const myAudioContext = window.AudioContext // Default
-    			|| window.webkitAudioContext // Safari and old versions of Chrome
-    			|| false;
+    || window.webkitAudioContext // Safari and old versions of Chrome
+    || false;
   const copyFromChannel = AudioBuffer.prototype.copyFromChannel || false;
   return (myAudioContext && copyFromChannel);
 }
