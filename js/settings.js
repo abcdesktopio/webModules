@@ -197,6 +197,9 @@ document.addEventListener('broadway.connected', () => {
       if (res.code === 200) {
         config.enabledTabsHeaders = res.data;
         printer.handlerSettingsConfig(config);
+        if (config.enabledTabsHeaders.includes('audio')) {
+          $('#speakers').css('display', 'block');
+        }
       }
     });
 });
