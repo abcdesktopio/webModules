@@ -171,24 +171,25 @@ export function init(home, tab) {
           continue;
         }
         const wrapper = document.createElement('div');
-        wrapper.className = 'row';
         const spanKey = document.createElement('span');
-        // spanKey.className = 'd-xl-block d-lg-block d-md-block d-sm-none d-none';
-        spanKey.className = 'col-xl-6 col-lg-6 col-md-6 col-12';
         const spanValue = document.createElement('span');
-        spanValue.className = 'col-xl-6 col-lg-6 col-md-6 col-12';
         let keyName = key.toLocaleLowerCase().replace(/_/g, ' ');
+
+        wrapper.className = 'row';
+        spanKey.className = 'col-xl-3 col-lg-3 col-md-6 col-8';
+        spanValue.className = 'col-xl-9 col-lg-9 col-md-6 col-4';
+
         if (keyName.includes(' ')) {
           keyName = keyName.split(' ')
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .reduce((prev, cur) => `${prev} ${cur}`, '');
           spanKey.textContent = `${keyName} : `;
           spanValue.textContent = `${msg[key] ? msg[key] : null}`;
-          wrapper.appendChild(spanKey);
         } else {
           spanKey.textContent = `${keyName.charAt(0).toUpperCase() + key.slice(1)} : `;
           spanValue.textContent = `${msg[key] ? msg[key] : null}`;
         }
+        wrapper.appendChild(spanKey);
         wrapper.appendChild(spanValue);
         fragment.appendChild(wrapper);
       }
