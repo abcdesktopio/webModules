@@ -62,7 +62,7 @@ prod:checkTranspile version
 	&& cp ../build/index.html .. \
 	&& cp -r ../build/app.js ../app.js
 
-dev:checkTranspile
+dev:checkTranspile version
 	if [ ! -d "./xterm/dist" ]; then \
 		$(MAKE) -B xterm; \
 	fi
