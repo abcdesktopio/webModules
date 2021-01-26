@@ -116,7 +116,7 @@ function transformHtml(legacyScripts, onlyLegacy) {
     });
 }
 
-function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
+async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
   if (!importFormat) {
     throw new Error('you must specify an import format to generate compiled noVNC libraries');
   } else if (!SUPPORTED_FORMATS.has(importFormat)) {
@@ -242,66 +242,65 @@ function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
         });
     });
 
-  Promise.resolve()
-    .then(() => {
-      const handler = handleDir.bind(null, true, false, inPath || paths.main);
-      const filter = (filename, stats) => !noCopyFiles.has(filename);
-      return walkDir(paths.vendor, handler, filter);
-    })
-    .then(() => {
-      const handler = handleDir.bind(null, true, !inPath, inPath || paths.core);
-      const filter = (filename, stats) => !noCopyFiles.has(filename);
-      return walkDir(paths.core, handler, filter);
-    })
-    .then(() => {
-      if (!withAppDir) return;
-      const handler = handleDir.bind(null, false, false, inPath);
-      const filter = (filename, stats) => !noCopyFiles.has(filename);
-      return walkDir(paths.app, handler, filter);
-    })
-    .then(() => {
-      const handler = handleDir.bind(null, true, false, inPath || paths.js);
-      const filter = (filename, stats) => !noCopyFiles.has(filename);
-      return walkDir(paths.js, handler, filter);
-    })
-    .then(() => {
-      if (!withAppDir) return;
+  {
+    const handler = handleDir.bind(null, true, false, inPath || paths.main);
+    const filter = (filename) => !noCopyFiles.has(filename);
+    await walkDir(paths.vendor, handler, filter);
+  }
 
-      if (!helper || !helper.appWriter) {
-        throw new Error(`Unable to generate app for the ${importFormat} format!`);
-      }
+  {
+    const handler = handleDir.bind(null, true, !inPath, inPath || paths.core);
+    const filter = (filename) => !noCopyFiles.has(filename);
+    await walkDir(paths.core, handler, filter);
+  }
 
-      const outAppPath = path.join(legacyPathBase, 'app.js');
-      console.log(`Writing ${outAppPath}`);
-      return helper.appWriter(outPathBase, legacyPathBase, outAppPath)
-        .then((extraScripts) => {
-          let legacyScripts = [];
+  if (withAppDir) {
+    const handler = handleDir.bind(null, false, false, inPath);
+    const filter = (filename) => !noCopyFiles.has(filename);
+    await walkDir(paths.app, handler, filter);
+  }
 
-          legacyFiles.forEach((file) => {
-            const relFilePath = path.relative(outPathBase, file);
-            legacyScripts.push(relFilePath);
-          });
+  if (withAppDir) {
+    const handler = handleDir.bind(null, false, false, inPath);
+    const filter = (filename) => !noCopyFiles.has(filename);
+    await walkDir(paths.app, handler, filter);
+  }
 
-          legacyScripts = legacyScripts.concat(extraScripts);
+  {
+    const handler = handleDir.bind(null, true, false, inPath || paths.js);
+    const filter = (filename) => !noCopyFiles.has(filename);
+    await walkDir(paths.js, handler, filter);
+  }
 
-          const relAppPath = path.relative(outPathBase, outAppPath);
-          legacyScripts.push(relAppPath);
+  if (withAppDir) {
+    if (!helper || !helper.appWriter) {
+      throw new Error(`Unable to generate app for the ${importFormat} format!`);
+    }
 
-          transformHtml(legacyScripts, onlyLegacy);
-        })
-        .then(() => {
-          if (!helper.removeModules) return;
-          console.log('Cleaning up temporary files...');
-          return Promise.all(outFiles.map((filepath) => {
-            fs.promises.unlink(filepath)
-              .then(() => fs.promises.rmdir(path.dirname(filepath), { recursive: true }));
-          }));
-        });
-    })
-    .catch((err) => {
-      console.error(`Failure converting modules: ${err}`);
-      process.exit(1);
+    const outAppPath = path.join(legacyPathBase, 'app.js');
+    console.log(`Writing ${outAppPath}`);
+    const extraScripts = await helper.appWriter(outPathBase, legacyPathBase, outAppPath);
+    let legacyScripts = [];
+
+    legacyFiles.forEach((file) => {
+      const relFilePath = path.relative(outPathBase, file);
+      legacyScripts.push(relFilePath);
     });
+
+    legacyScripts = legacyScripts.concat(extraScripts);
+
+    const relAppPath = path.relative(outPathBase, outAppPath);
+    legacyScripts.push(relAppPath);
+
+    await transformHtml(legacyScripts, onlyLegacy);
+    if (helper.removeModules) {
+      console.log('Cleaning up temporary files...');
+      await Promise.allSettled(
+        outFiles.map((filepath) => fs.promises.unlink(filepath)
+          .then(fs.promises.rmdir(path.dirname(filepath), { recursive: true }))),
+      );
+    }
+  }
 }
 
 if (program.clean) {
@@ -312,4 +311,8 @@ if (program.clean) {
   fse.removeSync(paths.outDirBase);
 }
 
-makeLibFiles(program.as, program.withSourceMaps, program.withApp, program.onlyLegacy);
+makeLibFiles(program.as, program.withSourceMaps, program.withApp, program.onlyLegacy)
+  .catch((err) => {
+    console.error(`Failure converting modules: ${err}`);
+    process.exit(1);
+  });
