@@ -13,18 +13,14 @@
 
 import * as launcher from '../../launcher.js';
 import { JanusAbcDesktop } from './JanusAbcDesktop.js';
+import * as notificationSystem from '../../notificationsystem.js';
 
 /**
  * @desc Create a stream element wich will be bind with remote's stream afteward.
  * Initialise Janus
  */
 export const init = async () => {
-  const audio = document.createElement('audio');
-  audio.id = 'janusStream';
-  audio.autoplay = true;
-  audio.style = 'width: 100%; height: 100%;';
-
-  document.body.appendChild(audio);
+  const audio = document.getElementById('audioplayer');
 
   /**
    * @desc
@@ -44,9 +40,20 @@ export const init = async () => {
     } = await launcher.getStream();
 
     await launcher.configurePulse(hostip, audioport);
-    const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`, pin);
-    await janusSession.attachElt(audio, pin);
-    await janusSession.startStream(id);
+    const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`);
+    await janusSession.attachElt(audio);
+    await janusSession.watchStream(id, pin);
+    if (audio.paused) {
+      // In this case the user did not make any interaction.
+      // Thus we print a notification for asking the user to activate the song.
+      const title = 'Sound disabled';
+      const desc = 'Please click on icon to hear the sound';
+      const type = 'info';
+      const img = '';
+      const url = '';
+      const duration = 5000;
+      notificationSystem.displayNotification(title, desc, type, img, url, duration);
+    }
   } catch (e) {
     console.error(e);
   }

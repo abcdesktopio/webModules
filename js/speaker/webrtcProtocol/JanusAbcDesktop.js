@@ -34,11 +34,10 @@ export class JanusAbcDesktop extends Janus {
   /**
   * @desc Allow to get a new Janus session
   */
-  static createSession(server, pin) {
+  static createSession(server) {
     return new Promise((resolve, reject) => {
       const optionsJanus = {
         server,
-        pin,
         success: successSession,
         error: errorSession,
       };
@@ -118,6 +117,7 @@ export class JanusAbcDesktop extends Janus {
           },
           onremotestream: (stream) => {
             JanusAbcDesktop.attachMediaStream(eltStream, stream);
+            this.eltStream = eltStream;
           },
           ondata: (data) => {
             JanusAbcDesktop.debug('We got data from the DataChannel!', data);
@@ -135,10 +135,23 @@ export class JanusAbcDesktop extends Janus {
 
   /**
    * @desc Allow  to start the stream
+   * @param {number} id
+   * @param {string?} pin
    */
-  async startStream(id) {
-    const body = { request: 'watch', id };
-    this.streaming.send({ message: body });
+  watchStream(id, pin = '') {
+    return new Promise((resolve, reject) => {
+      const body = { request: 'watch', id };
+
+      if (pin !== '') {
+        body.pin = pin;
+      }
+
+      this.streaming.send({
+        message: body,
+        success: resolve,
+        error: reject,
+      });
+    });
   }
 
   /**

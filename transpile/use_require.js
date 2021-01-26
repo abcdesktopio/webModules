@@ -70,26 +70,19 @@ function promisify(original) {
   };
 }
 
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
-
-const readdir = promisify(fs.readdir);
-const lstat = promisify(fs.lstat);
+const ensureDir = promisify(fse.ensureDir);
 
 const copy = promisify(fse.copy);
-const unlink = promisify(fse.unlink);
-const ensureDir = promisify(fse.ensureDir);
-const rmdir = promisify(fse.rmdir);
 
 const babelTransformFile = promisify(babel.transformFile);
 
 // walkDir *recursively* walks directories trees,
 // calling the callback for all normal files found.
 function walkDir(basePath, cb, filter) {
-  return readdir(basePath)
+  return fs.promises.readdir(basePath)
     .then((files) => {
       const paths = files.map((filename) => path.join(basePath, filename));
-      return Promise.all(paths.map((filepath) => lstat(filepath)
+      return Promise.all(paths.map((filepath) => fs.promises.lstat(filepath)
         .then((stats) => {
           if (filter !== undefined && !filter(filepath, stats)) return;
 
@@ -102,7 +95,7 @@ function walkDir(basePath, cb, filter) {
 
 function transformHtml(legacyScripts, onlyLegacy) {
   // write out the modified vnc.html file that works with the bundle
-  return readFile(srcHtmlPath)
+  return fs.promises.readFile(srcHtmlPath)
     .then((contentsRaw) => {
       let contents = contentsRaw.toString();
 
@@ -133,7 +126,7 @@ function transformHtml(legacyScripts, onlyLegacy) {
     })
     .then((contents) => {
       console.log(`Writing ${outHtmlPath}`);
-      return writeFile(outHtmlPath, contents);
+      return fs.promises.writeFile(outHtmlPath, contents);
     });
 }
 
@@ -251,12 +244,12 @@ function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
                 code += `\n//# sourceMappingURL=${path.basename(legacyPath)}.map\n`;
               }
               outFiles.push(`${legacyPath}`);
-              return writeFile(legacyPath, code)
+              return fs.promises.writeFile(legacyPath, code)
                 .then(() => {
                   if (sourceMaps === true || sourceMaps === 'both') {
                     console.log(`  and ${legacyPath}.map`);
                     outFiles.push(`${legacyPath}.map`);
-                    return writeFile(`${legacyPath}.map`, JSON.stringify(map));
+                    return fs.promises.writeFile(`${legacyPath}.map`, JSON.stringify(map));
                   }
                 });
             });
@@ -314,17 +307,8 @@ function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
           if (!helper.removeModules) return;
           console.log('Cleaning up temporary files...');
           return Promise.all(outFiles.map((filepath) => {
-            unlink(filepath)
-              .then(() => {
-                // Try to clean up any empty directories if
-                // this was the last file in there
-                const rmdirR = (dir) => rmdir(dir)
-                  .then(() => rmdirR(path.dirname(dir)))
-                  .catch(() => {
-                    // Assume the error was ENOTEMPTY and ignore it
-                  });
-                return rmdirR(path.dirname(filepath));
-              });
+            fs.promises.unlink(filepath)
+              .then(() => fs.promises.rmdir(path.dirname(filepath), { recursive: true }));
           }));
         });
     })

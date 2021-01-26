@@ -12,7 +12,8 @@
 */
 
 /*
- * Notif creation pattern => notificationSystem.displayNotification('Title','Message',['Type'],['Icon']);
+ * Notif creation pattern =>
+  notificationSystem.displayNotification('Title','Message',['Type'],['Icon']);
  * 3 predefined type with predefined icon : error , warning , info
  *
  */
@@ -25,23 +26,7 @@
 import { broadcastEvent } from './broadcastevent.js';
 import * as languages from './languages.js';
 
-export var displaying;
-export var messageArray;
-export var notificationTimeout;
 let currentNotif = 0;
-let notif;
-
-/**
- * @function init
- * @returns {void}
- * @desc Set default variable.
- *
- */
-export const init = function () {
-  displaying = false;
-  messageArray = new Array();
-  notificationTimeout = null;
-};
 
 /**
  * @function displayNotification
@@ -49,23 +34,26 @@ export const init = function () {
  * @desc Create and display a notification
  * @param  {string} title Title
  * @param  {string} desc  Description
- * @param  {string} typ   Type for predefined notification
+ * @param  {string} type   Type for predefined notification
  * @param  {url} img   Custom icon
  * @param  {url} url   Link on click
- * @example notificationSystem.displayNotification('Title','Message','error'); // Predifined type and icon, there is 4 predefined type with predefined icon : error , warning , info, place
- * @example notificationSystem.displayNotification('Title','Message','','myicon.png'); // Personnal icon
+ * @example notificationSystem.displayNotification('Title','Message','error');
+ * Predifined type and icon, there is 4 predefined type with predefined icon :
+ * error , warning , info, place
+ * @example notificationSystem.displayNotification('Title','Message','','myicon.png');
+ * // Personnal icon
  */
-export const displayNotification = function (title, desc, typ, img, url, duration) {
+export const displayNotification = function (title, desc, type, img, url, duration) {
   const mydelay = (duration) || 3000;
   if (currentNotif >= 6) {
     currentNotif = 0;
   }
   for (let i = 1; i <= 6; i++) {
-    if ($(`#notification${i}`).attr('style') == 'display: none;') {
+    if ($(`#notification${i}`).attr('style') === 'display: none;') {
       $(`#notification${i}`).remove();
     }
   }
-  switch (typ) {
+  switch (type) {
     case 'error':
       img = '../img/error/error.svg';
       break;
@@ -81,20 +69,24 @@ export const displayNotification = function (title, desc, typ, img, url, duratio
     case 'place':
       img = '../img/top/place-available.svg';
       break;
+    default:
+      break;
   }
 
   img = window.od.net.urlrewrite(img);
   if (url) { url = window.od.net.urlrewrite(url); }
   currentNotif++;
-  notif = {
+
+  const notif = {
     img,
     title,
     desc,
-    typ,
+    type,
     url,
     delay: mydelay,
   };
-  showNotification();
+
+  showNotification(notif);
 };
 
 /**
@@ -103,8 +95,7 @@ export const displayNotification = function (title, desc, typ, img, url, duratio
  * @desc Show the last created notification.
  *
  */
-export const showNotification = function () {
-  displaying = true;
+export const showNotification = function (notif) {
   const closeNotifBtn = languages.getTranslate('notification-close-notif-btn');
   const myNotif = document.createElement('div');
   myNotif.style.display = 'none';

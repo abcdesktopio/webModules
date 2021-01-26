@@ -26,7 +26,6 @@ import * as logmein from './logmein.js';
 import * as searchSystem from './search.js';
 import * as upload from './upload.js';
 import * as errorMessage from './errormessage.js';
-import * as notificationSystem from './notificationsystem.js';
 import * as printer from './printer.js';
 import * as windowMessage from './windowMessage.js';
 import * as ocuaparser from './ocuaparser.js';
@@ -124,9 +123,6 @@ function setupbeforeuserloginin() {
 
   // init error message
   errorMessage.init();
-
-  // Initialize default variable for notification system module
-  notificationSystem.init();
 
   // Init a dropzone on document.documentElement with Dropzone lib
   // upload.init();
@@ -654,20 +650,15 @@ function setupTopMenu() {
     }
   });
 
-  $('#top #top-right #speakers .slider').slider({
-    min: 0,
-    max: 100,
-    step: 1,
-    value: 30,
-    slide() {
-      const currentPercent = $(this).slider('option', 'value');
-      _this.sliderUpdate(currentPercent);
-    },
-    stop() {
-      const currentPercent = $(this).slider('option', 'value');
-      _this.sliderUpdate(currentPercent);
-    },
-  });
+  const audioplayer = document.getElementById('audioplayer');
+  $('#top #top-right #speakers #volume_level')
+    .on('input', function () {
+      if (audioplayer.paused) {
+        audioplayer.play();
+      }
+      audioplayer.volume = this.value;
+      speaker.updateIconVolumLevel();
+    });
 
   $('#placement').click(() => {
     launcher.placeAllWindows();

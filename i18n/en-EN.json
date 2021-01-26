@@ -124,5 +124,6 @@
     "notification-close-notif-btn": "Close",
     "login-auth-requirement": "To access to this service you need to be identified. If you use abcdesktop.io from a personal computer which does not belong to the company, remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.",
     "connectAD": "Sign in",
-    "link-open-session": "I can't open my session"
+    "link-open-session": "I can't open my session",
+    "over-screen-message-data": "Your abcDesktop.io session has been disconnected."
 }
