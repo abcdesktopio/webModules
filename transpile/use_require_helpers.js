@@ -3,21 +3,9 @@
 // writes helpers require for vnc.html (they should output app.js)
 
 import fs from 'fs/promises';
+import util from 'util';
 import path from 'path';
 import browserify from 'browserify';
-
-// util.promisify requires Node.js 8.x, so we have our own
-function promisify(original) {
-  return function promiseWrap() {
-    const args = Array.prototype.slice.call(arguments);
-    return new Promise((resolve, reject) => {
-      original.apply(this, args.concat((err, value) => {
-        if (err) return reject(err);
-        resolve(value);
-      }));
-    });
-  };
-}
 
 export default {
   amd: {
@@ -37,7 +25,7 @@ export default {
   commonjs: {
     appWriter: (baseOutPath, scriptBasePath, outPath) => {
       const b = browserify(path.join(scriptBasePath, 'js/scripts.js'));
-      return promisify(b.bundle).call(b)
+      return util.promisify(b.bundle).call(b)
         .then((buf) => fs.writeFile(outPath, buf))
         .then(() => []);
     },

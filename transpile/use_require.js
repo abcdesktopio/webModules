@@ -7,6 +7,7 @@
 import { createRequire } from 'module';
 import fs from 'fs';
 import path from 'path';
+import util from 'util';
 import fse from 'fs-extra';
 import babel from '@babel/core';
 import helpers from './use_require_helpers.js';
@@ -57,24 +58,9 @@ const noTransformFiles = new Set([
 
 noCopyFiles.forEach((file) => noTransformFiles.add(file));
 
-// util.promisify requires Node.js 8.x, so we have our own
-function promisify(original) {
-  return function promiseWrap() {
-    const args = Array.prototype.slice.call(arguments);
-    return new Promise((resolve, reject) => {
-      original.apply(this, args.concat((err, value) => {
-        if (err) return reject(err);
-        resolve(value);
-      }));
-    });
-  };
-}
-
-const ensureDir = promisify(fse.ensureDir);
-
-const copy = promisify(fse.copy);
-
-const babelTransformFile = promisify(babel.transformFile);
+const ensureDir = util.promisify(fse.ensureDir);
+const copy = util.promisify(fse.copy);
+const babelTransformFile = util.promisify(babel.transformFile);
 
 // walkDir *recursively* walks directories trees,
 // calling the callback for all normal files found.
