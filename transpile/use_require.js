@@ -64,19 +64,19 @@ const babelTransformFile = util.promisify(babel.transformFile);
 
 // walkDir *recursively* walks directories trees,
 // calling the callback for all normal files found.
-function walkDir(basePath, cb, filter) {
-  return fs.promises.readdir(basePath)
-    .then((files) => {
-      const paths = files.map((filename) => path.join(basePath, filename));
-      return Promise.all(paths.map((filepath) => fs.promises.lstat(filepath)
-        .then((stats) => {
-          if (filter !== undefined && !filter(filepath, stats)) return;
+async function walkDir(basePath, cb, filter) {
+  const dirents = await fs.promises.readdir(basePath, { withFileTypes: true });
 
-          if (stats.isSymbolicLink()) return;
-          if (stats.isFile()) return cb(filepath);
-          if (stats.isDirectory()) return walkDir(filepath, cb, filter);
-        })));
-    });
+  return Promise.all(
+    dirents.map((dirent) => {
+      const filepath = path.join(basePath, dirent.name);
+      if (filter !== undefined && !filter(filepath)) return Promise.resolve();
+
+      if (dirent.isSymbolicLink()) return Promise.resolve();
+      if (dirent.isFile()) return cb(filepath);
+      if (dirent.isDirectory()) return walkDir(filepath, cb, filter);
+    }),
+  );
 }
 
 function transformHtml(legacyScripts, onlyLegacy) {
