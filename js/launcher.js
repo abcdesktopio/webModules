@@ -804,6 +804,13 @@ export function docker_logoff() {
   });
 }
 
+export function disconnect() {
+  return odApiClient.auth.disconnect()
+    .always(() => {
+      window.od.logoff();
+    });
+}
+
 /**
  * @function getContainerLocation
  * @global
