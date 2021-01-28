@@ -4,7 +4,7 @@
     "connect-with-orange": "Sign-in with Orange account",
     "connect-with-mobile-connect": "Sign-in with Mobile Connect account",
     "connect-with-anonymous": "Sign-in Anonymously",
-    "connect-share-message": "Connectez-vous avec votre adresse email et travailez avec un colaborateur",
+    "connect-share-message": "Connect with your email address and access to the shared display",
     "connect-identified": "To access to this service you need to be identified. If you use this service from a personal computer which does not belong to the company, remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.",
     "available": "Available",
     "away": "Away",
@@ -17,7 +17,7 @@
     "screen-record-name": "Screen record",
     "log-out-name": "Log out",
     "share-window-name": "Share",
-    "share-window-title-text": "Partagez votre bureau avec un contact avec son adresse email",
+    "share-window-title-text": "Share your abcdesktop with an email contact",
     "viewOnly": "Read only",
     "fullAccess": "Read write",
     "error-container-message-first-part": "Thank you for using abcdesktop",
@@ -125,5 +125,5 @@
     "login-auth-requirement": "To access to this service you need to be identified. If you use abcdesktop.io from a personal computer which does not belong to the company, remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.",
     "connectAD": "Sign in",
     "link-open-session": "I can't open my session",
-    "over-screen-message-data": "Your abcDesktop.io session has been disconnected."
+    "over-screen-message-data": "Your abcdesktop session has been disconnected."
 }
