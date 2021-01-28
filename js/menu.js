@@ -14,6 +14,8 @@
 import * as launcher from './launcher.js';
 import * as languages from './languages.js';
 
+let menuconfig;
+
 /**
  * @function logoffClicked
  * @returns {void}
@@ -45,6 +47,25 @@ export const logoffOpen = function () {
   const logOffBtn = languages.getTranslate('log-off-logOff-btn');
   const disconnectBtn = languages.getTranslate('log-off-disconnect-btn');
 
+  const buttons = {
+    cancel: {
+      label: logOffCancelBtn || 'Cancel',
+    },
+    logOff: {
+      label: logOffBtn || 'Logoff',
+      className: 'button-log-off',
+      callback: logoffClicked,
+    },
+  };
+
+  if (menuconfig.disconnect && window.od.currentUser.providertype !== 'anonymous') {
+    buttons.disconnect = {
+      label: disconnectBtn || 'Just disconnect',
+      className: 'window-button',
+      callback: disconnectClicked,
+    };
+  }
+
   bootbox.dialog({
     title: logOffTitle || 'Logoff',
     message: `
@@ -62,21 +83,7 @@ export const logoffOpen = function () {
     className: 'window-dialog-small',
     onEscape: true,
     backdrop: true,
-    buttons: {
-      cancel: {
-        label: logOffCancelBtn || 'Cancel',
-      },
-      logOff: {
-        label: logOffBtn || 'Logoff',
-        className: 'button-log-off',
-        callback: logoffClicked,
-      },
-      disconnect: {
-        label: disconnectBtn || 'Just disconnect',
-        className: 'window-button',
-        callback: disconnectClicked,
-      },
-    },
+    buttons,
     animate: false,
   });
 };
@@ -85,8 +92,9 @@ export const init = function () {
   launcher.getkeyinfo('menuconfig')
     .done((ret) => {
       if (ret.id) {
-        for (const key in ret.id) {
-          if (ret.id[key]) {
+        menuconfig = ret.id;
+        for (const key in menuconfig) {
+          if (menuconfig[key]) {
             const elt = document.getElementById(key);
             if (elt) {
               const li = elt.parentElement;
