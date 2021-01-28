@@ -17,11 +17,20 @@ import * as languages from './languages.js';
 /**
  * @function logoffClicked
  * @returns {void}
- * @desc Disconnect the user from the session.
+ * @desc Disconnect the user, and remove his session.
  *
  */
 export const logoffClicked = function () {
   launcher.docker_logoff();
+};
+
+/**
+ * @function disconnectClicked
+ * @returns {void}
+ * @desc Disconnect the use from the session
+ */
+export const disconnectClicked = function () {
+  launcher.disconnect();
 };
 
 /**
@@ -34,6 +43,7 @@ export const logoffOpen = function () {
   const logOffWarningQuestion = languages.getTranslate('log-off-warning-question');
   const logOffCancelBtn = languages.getTranslate('log-off-cancel-btn');
   const logOffBtn = languages.getTranslate('log-off-logOff-btn');
+  const disconnectBtn = languages.getTranslate('log-off-disconnect-btn');
 
   bootbox.dialog({
     title: logOffTitle || 'Log off',
@@ -58,8 +68,13 @@ export const logoffOpen = function () {
       },
       logOff: {
         label: logOffBtn || 'Log off',
-        className: 'window-button',
+        className: 'button-log-off',
         callback: logoffClicked,
+      },
+      disconnect: {
+        label: disconnectBtn || 'Disconnect',
+        className: 'window-button',
+        callback: disconnectClicked,
       },
     },
     animate: false,
