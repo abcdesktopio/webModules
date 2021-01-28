@@ -46,7 +46,7 @@ export const logoffOpen = function () {
   const disconnectBtn = languages.getTranslate('log-off-disconnect-btn');
 
   bootbox.dialog({
-    title: logOffTitle || 'Log off',
+    title: logOffTitle || 'Logoff',
     message: `
             <div class=" container w-100">
                 <div class="row">
@@ -67,7 +67,7 @@ export const logoffOpen = function () {
         label: logOffCancelBtn || 'Cancel',
       },
       logOff: {
-        label: logOffBtn || 'Log off',
+        label: logOffBtn || 'Logoff',
         className: 'button-log-off',
         callback: logoffClicked,
       },
