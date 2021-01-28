@@ -121,7 +121,7 @@
     "log-off-warning-question": "Are you sure you want to logoff ?",
     "log-off-cancel-btn": "Cancel",
     "log-off-logOff-btn": "Logoff",
-    "log-off-disconnect-btn": "Disconnect",
+    "log-off-disconnect-btn": "Just disconnect",
     "notification-close-notif-btn": "Close",
     "login-auth-requirement": "To access to this service you need to be identified. If you use abcdesktop.io from a personal computer which does not belong to the company, remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.",
     "connectAD": "Sign in",

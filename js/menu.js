@@ -72,7 +72,7 @@ export const logoffOpen = function () {
         callback: logoffClicked,
       },
       disconnect: {
-        label: disconnectBtn || 'Disconnect',
+        label: disconnectBtn || 'Just disconnect',
         className: 'window-button',
         callback: disconnectClicked,
       },
