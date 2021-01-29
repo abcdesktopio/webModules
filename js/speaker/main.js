@@ -13,10 +13,16 @@
 
 import * as httpProtocol from './httpProtocol/main.js';
 import * as webrtcProtocol from './webrtcProtocol/main.js';
+import * as launcher from '../launcher.js';
+
+const webrtcEnabled = async () => {
+  const { id } = await launcher.getkeyinfo('webrtc');
+  return id;
+};
 
 export const init = () => {
-  document.addEventListener('broadway.connected', () => {
-    if (webrtcProtocol.janusSupported()) {
+  document.addEventListener('broadway.connected', async () => {
+    if (webrtcProtocol.janusSupported() && await webrtcEnabled()) {
       webrtcProtocol.init()
         .then(() => {
           const audio = document.getElementById('audioplayer');
