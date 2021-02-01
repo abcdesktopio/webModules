@@ -69,9 +69,9 @@
     "settings-system-view-display-misc": "Divers:",
     "settings-system-view-display-root-font-size": "Taille de police d'origine",
     "settings-system-view-display-orientation": "Orientation",
-    "settings-system-view-display-help": "Aide abcdesktop",
+    "settings-system-view-display-help": "Aide desktop",
     "settings-system-view-display-user-manual": "Manuel utilisateur",
-    "settings-system-view-display-support": "Support abcdesktop",
+    "settings-system-view-display-support": "Support desktop",
     "settings-user-current-session-btn": "Votre session",
     "settings-user-connection-history": "Historique de connexions",
     "settings-user-connection-history-date": "Date",
@@ -118,7 +118,7 @@
     "log-off-title": "Déconnexion",
     "log-off-warning-question": "Êtes vous sûr de vouloir vous déconnecter ?",
     "log-off-cancel-btn": "Annuler",
-    "log-off-logOff-btn": "Supprimé la session",
+    "log-off-logOff-btn": "Supprimer la session",
     "log-off-disconnect-btn": "Déconnexion",
     "notification-close-notif-btn": "Fermer",
     "cuid": "S'identifier",
@@ -126,5 +126,5 @@
     "login-auth-requirement": "Pour accéder à ce service, vous devez être identifié. Si vous utilisez abcdesktop.io depuis un ordinateur personnel qui n'appartient pas à l'entreprise, n'oubliez pas de fermer votre navigateur et de supprimer les pièces jointes enregistrées sur le disque dur lorsque vous avez terminé. En cas de problème, appelez votre support habituel.",
     "connectAD": "Se connecter",
     "link-open-session": "Je ne peux pas ouvrir ma session",
-    "over-screen-message-data": "Votre session abcDesktop.io à été fermé."
+    "over-screen-message-data": "Votre desktop est fermé."
 }
