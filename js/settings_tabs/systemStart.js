@@ -167,7 +167,7 @@ export function init(home, tab) {
       const overview = tab.querySelector('#overview');
       const fragment = document.createDocumentFragment();
       for (const key in msg) {
-        if (!(key in msg)) {
+        if (!(key in msg) || msg[key] === null) {
           continue;
         }
         const wrapper = document.createElement('div');
