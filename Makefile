@@ -77,6 +77,6 @@ clean:
 	rm -rf xterm/dist | true
 	rm -rf css/css-dist | true
 	rm -rf build | true
-	rm app.html | true
-	rm app.js | true
-	rm index.html | true
+	rm -f app.html | true
+	rm -f app.js | true
+	rm -f index.html | true
