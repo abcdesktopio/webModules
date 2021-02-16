@@ -57,8 +57,7 @@ prod:checkTranspile version
 	fi
 
 	cd ./transpile \
-	&& node index.js --svg --css --user-interface \
-	&& node use_require.js --only-legacy --as commonjs --with-app --clean \
+	&& node index.js --svg --css --user-interface --prod --only-legacy \
 	&& cp ../build/index.html .. \
 	&& cp -r ../build/app.js ../app.js
 

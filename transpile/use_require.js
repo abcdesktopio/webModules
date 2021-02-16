@@ -4,7 +4,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 
-import { createRequire } from 'module';
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
@@ -12,18 +11,8 @@ import fse from 'fs-extra';
 import babel from '@babel/core';
 import helpers from './use_require_helpers.js';
 
-const program = createRequire(import.meta.url)('commander');
-
 const dirname = path.resolve();
-const SUPPORTED_FORMATS = new Set(['amd', 'commonjs', 'systemjs', 'umd']);
-
-program
-  .option('--as [format]', `output files using various import formats instead of ES6 import and export.  Supports ${Array.from(SUPPORTED_FORMATS)}.`)
-  .option('-m, --with-source-maps [type]', 'output source maps when not generating a bundled app (type may be empty for external source maps, inline for inline source maps, or both) ')
-  .option('--with-app', 'process app files as well as core files')
-  .option('--only-legacy', 'only output legacy files (no ES6 modules) for the app')
-  .option('--clean', 'clear the lib folder before building')
-  .parse(process.argv);
+export const SUPPORTED_FORMATS = new Set(['amd', 'commonjs', 'systemjs', 'umd']);
 
 // the various important paths
 const paths = {
@@ -113,7 +102,7 @@ function transformHtml(legacyScripts, onlyLegacy) {
     });
 }
 
-async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
+export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
   if (!importFormat) {
     throw new Error('you must specify an import format to generate compiled noVNC libraries');
   } else if (!SUPPORTED_FORMATS.has(importFormat)) {
@@ -276,17 +265,20 @@ async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
     }
   }
 }
+export async function clean() {
+  const removeLibDirBase = `remove lib dir base ${paths.libDirBase}`;
+  const removeOutDirBase = `remove out dir base ${paths.outDirBase}`;
+  console.time(removeLibDirBase);
+  console.time(removeOutDirBase);
 
-if (program.clean) {
-  console.log(`Removing ${paths.libDirBase}`);
-  fse.removeSync(paths.libDirBase);
-
-  console.log(`Removing ${paths.outDirBase}`);
-  fse.removeSync(paths.outDirBase);
+  await Promise.all([
+    fse.remove(paths.libDirBase)
+      .then(() => {
+        console.timeEnd(removeLibDirBase);
+      }),
+    fse.remove(paths.outDirBase)
+      .then(() => {
+        console.timeEnd(removeOutDirBase);
+      }),
+  ]);
 }
-
-makeLibFiles(program.as, program.withSourceMaps, program.withApp, program.onlyLegacy)
-  .catch((err) => {
-    console.error(`Failure converting modules: ${err}`);
-    process.exit(1);
-  });

@@ -20,9 +20,13 @@ import minify from '@node-minify/core';
 import htmlMinifier from '@node-minify/html-minifier';
 import Mustache from 'mustache';
 
-const require = createRequire(import.meta.url);
+import {
+  clean,
+  makeLibFiles,
+  SUPPORTED_FORMATS,
+} from './use_require.js';
 
-const { program } = require('commander');
+const { program } = createRequire(import.meta.url)('commander');
 
 const exec = promisify(childProcess.exec);
 
@@ -33,7 +37,13 @@ program
   .option('-c, --css', 'Transpile less code to css')
   .option('-o, --oneCss', 'Use one file css minified')
   .option('-ui, --user-interface', 'Apply user interface\'s configuration')
-  .option('-mhtml, --minify-html', 'Use minify html');
+  .option('-mhtml, --minify-html', 'Use minify html')
+  .option('--prod', 'Use for indicate to build app.js production file')
+  .option('--as [format]', `output files using various import formats instead of ES6 import and export.  Supports ${Array.from(SUPPORTED_FORMATS)}.`)
+  .option('-m, --with-source-maps [type]', 'output source maps when not generating a bundled app (type may be empty for external source maps, inline for inline source maps, or both) ')
+  .option('--with-app', 'process app files as well as core files')
+  .option('--only-legacy', 'only output legacy files (no ES6 modules) for the app')
+  .option('--clean', 'clear the lib folder before building');
 
 program.parse(process.argv);
 
@@ -235,6 +245,17 @@ async function run() {
 
   if (program.minifyHtml) {
     await minifyHtml(); // Prevent of access index.html at the same time
+  }
+
+  if (program.prod) {
+    await makeLibFiles('commonjs', false, true, true)
+      .catch((err) => {
+        console.error(`Failure converting modules: ${err}`);
+      });
+  }
+
+  if (program.prod || program.clean) {
+    await clean();
   }
 
   await Promise.all(promises);
