@@ -248,14 +248,17 @@ async function run() {
   }
 
   if (program.prod) {
-    await makeLibFiles('commonjs', false, true, true)
+    const awaitingMakeLibrary = makeLibFiles('commonjs', false, true, true)
+      .then(() => {
+        if (program.clean) {
+          return clean();
+        }
+        return null;
+      })
       .catch((err) => {
         console.error(`Failure converting modules: ${err}`);
       });
-  }
-
-  if (program.prod || program.clean) {
-    await clean();
+    promises.push(awaitingMakeLibrary);
   }
 
   await Promise.all(promises);
