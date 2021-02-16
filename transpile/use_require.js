@@ -61,21 +61,20 @@ const ensureDir = util.promisify(fse.ensureDir);
 const copy = util.promisify(fse.copy);
 const babelTransformFile = util.promisify(babel.transformFile);
 
-// walkDir *recursively* walks directories trees,
-// calling the callback for all normal files found.
-async function walkDir(basePath, cb, filter) {
+async function* walkDir(basePath) {
   const dirents = await fs.promises.readdir(basePath, { withFileTypes: true });
+  const mapper = (dirent) => path.join(basePath, dirent.name);
+  const files = dirents.filter((dirent) => dirent.isFile() && !dirent.isSymbolicLink())
+    .map(mapper);
 
-  return Promise.all(
-    dirents.map((dirent) => {
-      const filepath = path.join(basePath, dirent.name);
-      if (filter !== undefined && !filter(filepath)) return Promise.resolve();
+  const directories = dirents.filter((dirent) => dirent.isDirectory() && !dirent.isSymbolicLink())
+    .map(mapper);
 
-      if (dirent.isSymbolicLink()) return Promise.resolve();
-      if (dirent.isFile()) return cb(filepath);
-      if (dirent.isDirectory()) return walkDir(filepath, cb, filter);
-    }),
-  );
+  yield* files;
+
+  for (const directory of directories) {
+    yield* walkDir(directory);
+  }
 }
 
 function transformHtml(legacyScripts, onlyLegacy) {
@@ -244,7 +243,12 @@ async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
   {
     const handler = handleDir.bind(null, true, false, inPath || paths.js);
     const filter = (filename) => !noCopyFiles.has(filename);
-    await walkDir(paths.js, handler, filter);
+    for await (const filename of walkDir(paths.js, handler, filter)) {
+      if (!filter(filename)) {
+        continue;
+      }
+      handler(filename);
+    }
   }
 
   if (withAppDir) {
