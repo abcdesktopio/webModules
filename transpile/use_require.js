@@ -29,7 +29,6 @@ program
 // the various important paths
 const paths = {
   main: path.resolve(dirname, '..'),
-  // core: path.resolve(dirname, '..', 'noVNC/core'),
   app: path.resolve(dirname, '..', 'js/noVNC/app'),
   vendor: path.resolve(dirname, '..', 'js/noVNC/vendor'),
   js: path.resolve(dirname, '..', 'js'),
@@ -241,30 +240,6 @@ async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
             });
         });
     });
-
-  // {
-  //   const handler = handleDir.bind(null, true, false, inPath || paths.main);
-  //   const filter = (filename) => !noCopyFiles.has(filename);
-  //   await walkDir(paths.vendor, handler, filter);
-  // }
-
-  // {
-  //   const handler = handleDir.bind(null, true, !inPath, inPath || paths.core);
-  //   const filter = (filename) => !noCopyFiles.has(filename);
-  //   await walkDir(paths.core, handler, filter);
-  // }
-
-  // if (withAppDir) {
-  //   const handler = handleDir.bind(null, false, false, inPath);
-  //   const filter = (filename) => !noCopyFiles.has(filename);
-  //   await walkDir(paths.app, handler, filter);
-  // }
-
-  // if (withAppDir) {
-  //   const handler = handleDir.bind(null, false, false, inPath);
-  //   const filter = (filename) => !noCopyFiles.has(filename);
-  //   await walkDir(paths.app, handler, filter);
-  // }
 
   {
     const handler = handleDir.bind(null, true, false, inPath || paths.js);
