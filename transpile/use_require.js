@@ -240,15 +240,11 @@ async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
         });
     });
 
-  {
-    const handler = handleDir.bind(null, true, false, inPath || paths.js);
-    const filter = (filename) => !noCopyFiles.has(filename);
-    for await (const filename of walkDir(paths.js, handler, filter)) {
-      if (!filter(filename)) {
-        continue;
-      }
-      handler(filename);
+  for await (const filename of walkDir(paths.js)) {
+    if (noCopyFiles.has(filename)) {
+      continue;
     }
+    handleDir(true, false, inPath || paths.js, filename);
   }
 
   if (withAppDir) {
