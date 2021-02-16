@@ -40,7 +40,7 @@
       "defer": false
     },
     {
-      "src": "app/error-handler.js",
+      "src": "js/noVNC/app/error-handler.js",
       "defer": false
     },
     {

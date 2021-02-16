@@ -8,11 +8,11 @@ import {
   clipboardsync,
   getTopAndDockHeight,
 } from './launcher.js';
-import * as WebUtil from '../app/webutil.js';
-import KeyTable from '../core/input/keysym.js';
-import RFB from '../core/rfb.js';
-import keysyms from '../core/input/keysymdef.js';
-import Keyboard from '../core/input/keyboard.js';
+import * as WebUtil from './noVNC/app/webutil.js';
+import KeyTable from './noVNC/core/input/keysym.js';
+import RFB from './noVNC/core/rfb.js';
+import keysyms from './noVNC/core/input/keysymdef.js';
+import Keyboard from './noVNC/core/input/keyboard.js';
 import * as clipboard from './clipboard.js';
 
 function readyStateToMsg(readyState) {
