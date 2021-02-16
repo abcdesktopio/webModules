@@ -31,13 +31,13 @@ help:
 
 checkTranspile:
 	if [ ! -d "./transpile/node_modules" ]; then \
-		cd ./transpile && npm i; \
+		cd ./transpile && yarn install; \
 	fi
 
 xterm:
 	echo "Build xterm..."
 	if [ ! -d "./xterm/node_modules" ]; then \
-		cd ./xterm && npm i && node build.js; \
+		cd ./xterm && yarn install && node build.js; \
 	else \
 		cd ./xterm && node build.js; \
 	fi
