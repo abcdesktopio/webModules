@@ -75,13 +75,8 @@ clean:
 	rm -rf xterm/node_modules | true
 	rm -rf ./utils/node_modules | true
 	rm -rf xterm/dist | true
-	rm -rf js/js-dist | true
 	rm -rf css/css-dist | true
-	rm ./app/*.min.js | true
-	rm ./core/*.min.js | true
-	rm ./core/decoders/*.min.js | true
-	rm ./core/input/*.min.js | true
-	rm ./core/util/*.min.js | true
-	rm ./vendor/*.min.js | true
-	rm ./vendor/pako/lib/utils/*.min.js | true
-	rm ./vendor/pako/lib/zlib/*.min.js | true
+	rm -rf build | true
+	rm app.html | true
+	rm app.js | true
+	rm index.html | true
