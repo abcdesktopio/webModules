@@ -12,8 +12,7 @@ import fse from 'fs-extra';
 import babel from '@babel/core';
 import helpers from './use_require_helpers.js';
 
-const require = createRequire(import.meta.url);
-const program = require('commander');
+const program = createRequire(import.meta.url)('commander');
 
 const dirname = path.resolve();
 const SUPPORTED_FORMATS = new Set(['amd', 'commonjs', 'systemjs', 'umd']);
