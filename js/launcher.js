@@ -1216,6 +1216,10 @@ export function getlocation() {
   });
 }
 
+export function getLabels() {
+  return odApiClient.auth.getLabels();
+}
+
 export function requestFileAPI(method, file) {
   let params = '';
   let body = null;
