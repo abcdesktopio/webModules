@@ -40,6 +40,10 @@ const odApiClient = new (class ODApiClient {
       refreshtoken() {
         return client.sendRequest('auth/refreshtoken');
       }
+
+      getLabels() {
+        return client.sendRequest('auth/labels');
+      }
     })();
 
     this.user = new (class userClient {
@@ -223,8 +227,8 @@ const odApiClient = new (class ODApiClient {
           deferred.reject(xhr.status, 'API call failed', result);
         } else {
           if (!result.status) {
-                  result.status = 200;
-                }
+            result.status = 200;
+          }
           deferred.resolve(result);
         }
         return deferred.promise();
@@ -232,12 +236,12 @@ const odApiClient = new (class ODApiClient {
 
       (xhr, status, error) => {
         const deferred = $.Deferred();
-            const status_ex = (xhr && xhr.status) ? xhr.status : status;
-            const status_dict = { status: xhr.status, error };
-            if (xhr.responseJSON) {
-              if (xhr.responseJSON.message) { status_dict.message = xhr.responseJSON.message; }
-              if (xhr.responseJSON.status_message) { status_dict.status_message = xhr.responseJSON.status_message; }
-            }
+        const status_ex = (xhr && xhr.status) ? xhr.status : status;
+        const status_dict = { status: xhr.status, error };
+        if (xhr.responseJSON) {
+          if (xhr.responseJSON.message) { status_dict.message = xhr.responseJSON.message; }
+          if (xhr.responseJSON.status_message) { status_dict.status_message = xhr.responseJSON.status_message; }
+        }
         deferred.reject(xhr.status, error, status_dict);
         return deferred.promise();
       },
