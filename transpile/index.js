@@ -26,6 +26,8 @@ import {
   SUPPORTED_FORMATS,
 } from './use_require.js';
 
+import { callReplaceWorker } from './utils.js';
+
 const { program } = createRequire(import.meta.url)('commander');
 
 const exec = promisify(childProcess.exec);
@@ -113,14 +115,7 @@ async function buildSvg(colors = []) {
 
   const awaitingUpdateSvgs = [];
   for await (const svgImage of getSvgImages(pathImg)) {
-    const awaiting = fs.promises.readFile(svgImage, 'utf8')
-      .then((svgContent) => {
-        if (svgContent.includes(currentSvgColor)) {
-          const newContent = svgContent.replace(new RegExp(currentSvgColor, 'g'), newSvgColor);
-          return fs.promises.writeFile(svgImage, newContent);
-        }
-        return null;
-      }).catch(console.error);
+    const awaiting = callReplaceWorker(svgImage, currentSvgColor, newSvgColor);
     awaitingUpdateSvgs.push(awaiting);
   }
   await Promise.all(awaitingUpdateSvgs);
@@ -248,8 +243,10 @@ async function run() {
   }
 
   if (program.prod) {
+    console.time('Build app.js file');
     const awaitingMakeLibrary = makeLibFiles('commonjs', false, true, true)
       .then(() => {
+        console.timeEnd('Build app.js file');
         if (program.clean) {
           return clean();
         }
