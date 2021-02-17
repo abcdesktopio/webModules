@@ -96,7 +96,7 @@ function setProvider() {
  * @returns {void}
  * @desc Display user's name, picture and userID inside the window.
  */
-function setName() {
+async function setName() {
   let url;
   const { name } = window.od.currentUser;
   const { userid } = window.od.currentUser;
@@ -117,37 +117,65 @@ function setName() {
   url = window.od.net.urlrewrite(url);
 
   const fragment = document.createDocumentFragment();
-  const wrapperImage = document.createElement('div');
-  wrapperImage.className = 'col-6 d-md-block d-sm-block d-none';
-  const wrapperText = document.createElement('div');
-  wrapperText.className = 'd-flex col-6 align-items-center row';
+  const wrapperUserImage = getWrapperUserImage();
+  const wrapperUserInfos = await getWrapperUserInfos();
 
-  const img = document.createElement('img');
-  const spanName = document.createElement('span');
-  const spanId = document.createElement('span');
-
-  img.src = url;
-  img.style = 'float:right;';
-  spanName.id = 'name';
-  spanName.innerText = name;
-
-  spanId.id = 'userID';
-  spanId.innerText = ` ID : ${userid}`;
-
-  wrapperImage.appendChild(img);
-  wrapperText.appendChild(getSpanContainer(spanName, 'col-xl-3 col-lg-4 col-md-12 col-xs-12 align-items-center'));
-  wrapperText.appendChild(getSpanContainer(spanId, 'col-xl-9 col-lg-8 d-xl-block d-lg-block d-none  align-items-center'));
-  fragment.appendChild(wrapperImage);
-  fragment.appendChild(wrapperText);
+  fragment.appendChild(wrapperUserImage);
+  fragment.appendChild(wrapperUserInfos);
 
   system.removeAllChilds(document.querySelector('#settings-user-name'))
     .appendChild(fragment);
 
-  function getSpanContainer(span, className) {
-    const spanContainer = document.createElement('div');
-    spanContainer.className = className;
-    spanContainer.appendChild(span);
-    return spanContainer;
+  function getWrapperUserImage() {
+    const wrapperUserImage = document.createElement('div');
+    wrapperUserImage.className = 'col-6 d-md-block d-sm-block d-none';
+    const img = document.createElement('img');
+    img.src = url;
+    img.style = 'float:right;';
+
+    wrapperUserImage.appendChild(img);
+
+    return wrapperUserImage;
+  }
+
+  async function getWrapperUserInfos() {
+    const wrapperUserInfos = document.createElement('div');
+    const wrapperText = document.createElement('div');
+    const wrapperLabels = document.createElement('div');
+    const spanName = document.createElement('span');
+    const spanId = document.createElement('span');
+
+    wrapperUserInfos.className = 'd-flex col-6 align-items-center row';
+    wrapperText.className = 'd-flex col-12 align-items-center row';
+    wrapperLabels.className = 'd-flex col-12 align-items-center row';
+
+    spanName.id = 'name';
+    spanName.innerText = name;
+
+    spanId.id = 'userID';
+    spanId.innerText = ` ID : ${userid}`;
+
+    wrapperText.appendChild(getSpanContainer(spanName, 'col-xl-3 col-lg-4 col-md-12 col-xs-12 align-items-center'));
+    wrapperText.appendChild(getSpanContainer(spanId, 'col-xl-3 col-lg-4 col-md-12 col-xs-12 align-items-center'));
+
+    const labels = await launcher.getLabels();
+    for (const label of labels) {
+      const spanLabel = document.createElement('span');
+      spanLabel.className = 'badge badge-light';
+      spanLabel.innerText = label;
+      wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-xl-3 col-lg-4 col-md-12 col-xs-12 align-items-center'));
+    }
+
+    wrapperUserInfos.appendChild(wrapperText);
+    wrapperUserInfos.appendChild(wrapperLabels);
+    return wrapperUserInfos;
+
+    function getSpanContainer(span, className) {
+      const spanContainer = document.createElement('div');
+      spanContainer.className = className;
+      spanContainer.appendChild(span);
+      return spanContainer;
+    }
   }
 }
 
