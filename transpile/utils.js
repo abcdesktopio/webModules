@@ -1,9 +1,8 @@
 import { Worker } from 'worker_threads';
 import path from 'path';
 
-const moduleURL = new URL(import.meta.url);
-const __dirname = path.dirname(moduleURL.pathname);
-const pathWorker = path.join(__dirname, 'replaceWorker.js');
+const dirname = path.resolve();
+const pathWorker = path.join(dirname, 'replaceWorker.js');
 
 /**
  *
