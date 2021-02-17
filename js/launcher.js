@@ -1217,7 +1217,8 @@ export function getlocation() {
 }
 
 export function getLabels() {
-  return odApiClient.auth.getLabels();
+  return odApiClient.auth.getLabels()
+    .then((res) => res.result);
 }
 
 export function requestFileAPI(method, file) {
