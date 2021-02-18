@@ -751,45 +751,50 @@
         <!-- User tab start -->
         <div class="tab" id="user-tab">
             <br>
-            <div id="buttons-screen-user" class="d-flex justify-content-center btn-group btn-group-toggle">
-                <label class="btn btn-settings btn-settings-active" data-view="user-current-session">
-                    <input type="radio" name="options" checked>
-                    <span id="settings-user-current-session-btn">Current session</span>
-                </label>
-                <label class="btn btn-settings" data-view="user-connection-history">
-                    <input type="radio" name="options">
-                    <span id="settings-user-connection-history">Connection history</span>
-                </label>
-            </div>
-            <br>
-            <div id="views-user">
-                <div id="user-current-session">
-                    <div id="settings-user-name" class="row col-12"></div>
-                    <div class="d-xl-none d-lg-none d-xs-block d-md-block divider"></div>
-                    <div id="settings-user-provider" class="row col-12"></div>
-                    <div class="d-xl-none d-lg-none d-xs-block d-md-block divider"></div>
-                    <div id="settings-user-browser" class="row col-12"></div>
-                    <div class="d-xl-none d-lg-none d-xs-block d-md-block divider"></div>
-                    <div id="settings-user-os" class="row col-12"></div>
-                </div>
-                <div id="user-connection-history" class="d-none max-size">
-                    <div id="historyblock" class="d-flex justify-content-center max-size">
-                        <table id="history" class="table table-striped table-dark">
-                            <thead>
-                                <tr>
-                                    <th id="settings-user-connection-history-date" scope="col" data-field="date"
-                                        data-sortable="true">Date</th>
-                                    <th id="settings-user-connection-history-ip" scope="col" data-field="ipaddr"
-                                        data-sortable="true">Ip Address</th>
-                                    <th id="settings-user-connection-history-node" scope="col" data-field="node"
-                                        data-sortable="true">Node</th>
-                                    <th id="settings-user-connection-history-browser" scope="col" data-field="useragent"
-                                        data-sortable="true">Browser</th>
-                                    <th id="settings-user-connection-history-os" scope="col" data-field="os"
-                                        data-sortable="true">OS</th>
-                                </tr>
-                            </thead>
-                        </table>
+            <div class="row">
+                <div class="col-xl-5 col-lg-4 col-md-3 col-2"></div>
+                <div class="col-xl-7 col-lg-8 col-md-9 col-10">
+                    <div id="buttons-screen-user" class="d-flex btn-group btn-group-toggle">
+                        <label class="btn btn-settings btn-settings-active" data-view="user-current-session">
+                            <input type="radio" name="options" checked>
+                            <span id="settings-user-current-session-btn">Current session</span>
+                        </label>
+                        <label class="btn btn-settings" data-view="user-connection-history">
+                            <input type="radio" name="options">
+                            <span id="settings-user-connection-history">Connection history</span>
+                        </label>
+                    </div>
+                    <br>
+                    <div id="views-user">
+                        <div id="user-current-session">
+                            <div id="settings-user-name" class="row col-12"></div>
+                            <div class="d-xl-none d-lg-none d-xs-block d-md-block divider"></div>
+                            <div id="settings-user-provider" class="row col-12"></div>
+                            <div class="d-xl-none d-lg-none d-xs-block d-md-block divider"></div>
+                            <div id="settings-user-browser" class="row col-12"></div>
+                            <div class="d-xl-none d-lg-none d-xs-block d-md-block divider"></div>
+                            <div id="settings-user-os" class="row col-12"></div>
+                        </div>
+                        <div id="user-connection-history" class="d-none max-size">
+                            <div id="historyblock" class="d-flex justify-content-center max-size">
+                                <table id="history" class="table table-striped table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th id="settings-user-connection-history-date" scope="col" data-field="date"
+                                                data-sortable="true">Date</th>
+                                            <th id="settings-user-connection-history-ip" scope="col" data-field="ipaddr"
+                                                data-sortable="true">Ip Address</th>
+                                            <th id="settings-user-connection-history-node" scope="col" data-field="node"
+                                                data-sortable="true">Node</th>
+                                            <th id="settings-user-connection-history-browser" scope="col" data-field="useragent"
+                                                data-sortable="true">Browser</th>
+                                            <th id="settings-user-connection-history-os" scope="col" data-field="os"
+                                                data-sortable="true">OS</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

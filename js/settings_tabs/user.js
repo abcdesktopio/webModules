@@ -73,7 +73,7 @@ function setProvider() {
 
   const fragment = document.createDocumentFragment();
   const wrapperImage = document.createElement('div');
-  wrapperImage.className = 'col-6 d-md-block d-sm-block d-none';
+  wrapperImage.className = 'd-md-block d-sm-block d-none';
   const wrapperText = document.createElement('div');
   wrapperText.className = 'd-flex col-6 align-items-center';
 
@@ -128,7 +128,7 @@ async function setName() {
 
   function getWrapperUserImage() {
     const wrapperUserImage = document.createElement('div');
-    wrapperUserImage.className = 'col-6 d-md-block d-sm-block d-none';
+    wrapperUserImage.className = 'd-md-block d-sm-block d-none';
     const img = document.createElement('img');
     img.src = url;
     img.style = 'float:right;';
@@ -200,7 +200,7 @@ function setOS(ua) {
   const osElt = system.removeAllChilds(document.querySelector('#settings-user-os'));
   const fragment = document.createDocumentFragment();
   const wrapperImage = document.createElement('div');
-  wrapperImage.className = 'col-6 d-md-block d-sm-block d-none align-items-center';
+  wrapperImage.className = 'd-md-block d-sm-block d-none';
   const wrapperText = document.createElement('div');
   wrapperText.className = 'd-flex col-6 align-items-center';
 
@@ -242,7 +242,7 @@ function setBrowser(ua) {
   const browserElt = system.removeAllChilds(document.querySelector('#settings-user-browser'));
   const fragment = document.createDocumentFragment();
   const wrapperImage = document.createElement('div');
-  wrapperImage.className = 'col-6 d-md-block d-sm-block d-none';
+  wrapperImage.className = 'd-md-block d-sm-block d-none';
   const wrapperText = document.createElement('div');
   wrapperText.className = 'd-flex col-6 align-items-center';
 
