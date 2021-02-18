@@ -161,9 +161,9 @@ async function setName() {
     const labels = await launcher.getLabels();
     for (const label of labels) {
       const spanLabel = document.createElement('span');
-      spanLabel.className = 'badge badge-light';
+      spanLabel.className = 'badge badge-pill badge-light';
       spanLabel.innerText = label;
-      wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-xl-3 col-lg-4 col-md-12 col-xs-12 align-items-center'));
+      wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-auto'));
     }
 
     wrapperUserInfos.appendChild(wrapperText);
