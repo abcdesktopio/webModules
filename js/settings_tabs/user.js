@@ -145,7 +145,7 @@ async function setName() {
     const spanName = document.createElement('span');
     const spanId = document.createElement('span');
 
-    wrapperUserInfos.className = 'd-flex col-6 align-items-center row';
+    wrapperUserInfos.className = 'd-flex col-10 align-items-center row';
     wrapperText.className = 'd-flex col-12 align-items-center row';
     wrapperLabels.className = 'd-flex col-12 align-items-center row';
 
@@ -155,8 +155,8 @@ async function setName() {
     spanId.id = 'userID';
     spanId.innerText = ` ID : ${userid}`;
 
-    wrapperText.appendChild(getSpanContainer(spanName, 'col-xl-3 col-lg-4 col-md-12 col-xs-12 align-items-center'));
-    wrapperText.appendChild(getSpanContainer(spanId, 'col-xl-3 col-lg-4 col-md-12 col-xs-12 align-items-center'));
+    wrapperText.appendChild(getSpanContainer(spanName, 'col-xl-6 col-lg-4 col-md-12 col-xs-12 align-items-center'));
+    wrapperText.appendChild(getSpanContainer(spanId, 'col-xl-6 col-lg-4 col-md-12 col-xs-12 align-items-center'));
 
     const labels = await launcher.getLabels();
     for (const label of labels) {
