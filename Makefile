@@ -58,7 +58,6 @@ prod:checkTranspile version
 
 	cd ./transpile \
 	&& node index.js --svg --css --user-interface --prod --only-legacy \
-	&& cp -r ../build/app.js ../app.js
 
 dev:checkTranspile version
 	if [ ! -d "./xterm/dist" ]; then \
