@@ -46,40 +46,33 @@ async function* walkDir(basePath) {
   }
 }
 
-function transformHtml(legacyScripts, onlyLegacy) {
+async function transformHtml(legacyScripts, onlyLegacy) {
   // write out the modified vnc.html file that works with the bundle
-  return fs.promises.readFile(srcHtmlPath, 'utf-8')
-    .then((contents) => {
+  let contents = await fs.promises.readFile(srcHtmlPath, 'utf-8');
+  const startMarker = '<!-- begin scripts -->\n';
+  const endMarker = '<!-- end scripts -->';
+  const startInd = contents.indexOf(startMarker) + startMarker.length;
+  const endInd = contents.indexOf(endMarker, startInd);
 
-      const startMarker = '<!-- begin scripts -->\n';
-      const endMarker = '<!-- end scripts -->';
-      const startInd = contents.indexOf(startMarker) + startMarker.length;
-      const endInd = contents.indexOf(endMarker, startInd);
+  let newScript = '';
+  newScript += '    <script src="js/runtime.js"></script>\n';
 
-      let newScript = '';
-      newScript += '    <script src="js/runtime.js"></script>\n';
+  if (onlyLegacy) {
+    // Only legacy version, so include things directly
+    for (let i = 0; i < legacyScripts.length; i++) {
+      newScript += `    <script src="${legacyScripts[i]}"></script>\n`;
+    }
+  } else {
+    // Otherwise include both modules and legacy fallbacks
+    newScript += '    <script type="module" crossorigin="anonymous" src="legacy/app.js"></script>\n';
+    for (let i = 0; i < legacyScripts.length; i++) {
+      newScript += `    <script nomodule src="${legacyScripts[i]}"></script>\n`;
+    }
+  }
 
-      if (onlyLegacy) {
-        // Only legacy version, so include things directly
-        for (let i = 0; i < legacyScripts.length; i++) {
-          newScript += `    <script src="${legacyScripts[i]}"></script>\n`;
-        }
-      } else {
-        // Otherwise include both modules and legacy fallbacks
-        newScript += '    <script type="module" crossorigin="anonymous" src="legacy/app.js"></script>\n';
-        for (let i = 0; i < legacyScripts.length; i++) {
-          newScript += `    <script nomodule src="${legacyScripts[i]}"></script>\n`;
-        }
-      }
-
-      contents = `${contents.slice(0, startInd)}${newScript}\n${contents.slice(endInd)}`;
-
-      return contents;
-    })
-    .then((contents) => {
-      console.log(`Writing ${outHtmlPath}`);
-      return fs.promises.writeFile(outHtmlPath, contents);
-    });
+  contents = `${contents.slice(0, startInd)}${newScript}\n${contents.slice(endInd)}`;
+  console.log(`Writing ${outHtmlPath}`);
+  return fs.promises.writeFile(outHtmlPath, contents);
 }
 
 export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
