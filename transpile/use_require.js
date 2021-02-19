@@ -48,9 +48,8 @@ async function* walkDir(basePath) {
 
 function transformHtml(legacyScripts, onlyLegacy) {
   // write out the modified vnc.html file that works with the bundle
-  return fs.promises.readFile(srcHtmlPath)
-    .then((contentsRaw) => {
-      let contents = contentsRaw.toString();
+  return fs.promises.readFile(srcHtmlPath, 'utf-8')
+    .then((contents) => {
 
       const startMarker = '<!-- begin scripts -->\n';
       const endMarker = '<!-- end scripts -->';
