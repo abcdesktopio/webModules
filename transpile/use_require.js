@@ -54,7 +54,7 @@ async function* walkDir(basePath) {
   }
 }
 
-async function transformHtml(htmlFileSourceAndOut, legacyScripts) {
+async function transformHtml(htmlFileSourceAndOut) {
   const { srcHtmlPath, outHtmlPath } = htmlFileSourceAndOut;
   const contents = await fs.promises.readFile(srcHtmlPath, 'utf-8');
   const startMarker = '<!-- begin scripts -->\n';
@@ -62,12 +62,10 @@ async function transformHtml(htmlFileSourceAndOut, legacyScripts) {
   const startInd = contents.indexOf(startMarker) + startMarker.length;
   const endInd = contents.indexOf(endMarker, startInd);
 
-  let newScript = '';
-  newScript += '    <script src="js/runtime.js"></script>\n';
-  newScript += '    <script type="module" crossorigin="anonymous" src="legacy/app.js"></script>\n';
-  for (const legacyScript of legacyScripts) {
-    newScript += `    <script nomodule src="${legacyScript}"></script>\n`;
-  }
+  const newScript = `
+    <script src="js/runtime.js"></script>
+    <script crossorigin="anonymous" src="app.js"></script>
+  `;
 
   const newContents = `${contents.slice(0, startInd)}${newScript}\n${contents.slice(endInd)}`;
   const timeId = `Writing ${outHtmlPath}`;
@@ -105,7 +103,6 @@ export async function makeLibFiles() {
   const helper = helpers['commonjs'];
 
   const outFiles = [];
-  const legacyFiles = [];
 
   const handleDir = (jsOnly, vendorRewrite, inPathBase, filename) => Promise.resolve()
     .then(() => {
@@ -161,23 +158,12 @@ export async function makeLibFiles() {
 
   const outAppPath = path.join(legacyPathBase, 'app.js');
   console.log(`Writing ${outAppPath}`);
-  const extraScripts = await helper.appWriter(outPathBase, legacyPathBase, outAppPath);
-  let legacyScripts = [];
-
-  legacyFiles.forEach((file) => {
-    const relFilePath = path.relative(outPathBase, file);
-    legacyScripts.push(relFilePath);
-  });
-
-  legacyScripts = legacyScripts.concat(extraScripts);
-
-  const relAppPath = path.relative(outPathBase, outAppPath);
-  legacyScripts.push(relAppPath);
+  await helper.appWriter(outPathBase, legacyPathBase, outAppPath);
 
   // Create html files in build directories
   await Promise.all(
     htmlFilesSourceAndOut.map(
-      (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut, legacyScripts)
+      (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut)
     )
   );
 
