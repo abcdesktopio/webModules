@@ -18,7 +18,6 @@ export const SUPPORTED_FORMATS = new Set(['amd', 'commonjs', 'systemjs', 'umd'])
 const paths = {
   main: path.resolve(dirname, '..'),
   app: path.resolve(dirname, '..', 'js/noVNC/app'),
-  vendor: path.resolve(dirname, '..', 'js/noVNC/vendor'),
   js: path.resolve(dirname, '..', 'js'),
   outDirBase: path.resolve(dirname, '..', 'build'),
   libDirBase: path.resolve(dirname, '..', 'lib'),
@@ -26,24 +25,6 @@ const paths = {
 
 const srcHtmlPath = path.resolve(dirname, '..', 'index.html');
 const outHtmlPath = path.resolve(paths.outDirBase, 'index.html');
-
-const noCopyFiles = new Set([
-  // skip these -- they don't belong in the processed application
-  path.join(paths.vendor, 'sinon.js'),
-  path.join(paths.vendor, 'browser-es-module-loader'),
-  path.join(paths.app, 'images', 'icons', 'Makefile'),
-]);
-
-const onlyLegacyScripts = new Set([
-  path.join(paths.vendor, 'promise.js'),
-]);
-
-const noTransformFiles = new Set([
-  // don't transform this -- we want it imported as-is to properly catch loading errors
-  path.join(paths.app, 'error-handler.js'),
-]);
-
-noCopyFiles.forEach((file) => noTransformFiles.add(file));
 
 const ensureDir = util.promisify(fse.ensureDir);
 const copy = util.promisify(fse.copy);
@@ -162,23 +143,6 @@ export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLeg
         return; // skip non-javascript files
       }
 
-      if (noTransformFiles.has(filename)) {
-        return ensureDir(path.dirname(outPath))
-          .then(() => {
-            console.log(`Writing ${outPath}`);
-            return copy(filename, outPath);
-          });
-      }
-
-      if (onlyLegacyScripts.has(filename)) {
-        legacyFiles.push(legacyPath);
-        return ensureDir(path.dirname(legacyPath))
-          .then(() => {
-            console.log(`Writing ${legacyPath}`);
-            return copy(filename, legacyPath);
-          });
-      }
-
       return Promise.resolve()
         .then(() => {
           if (onlyLegacy) {
@@ -229,9 +193,6 @@ export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLeg
     });
 
   for await (const filename of walkDir(paths.js)) {
-    if (noCopyFiles.has(filename)) {
-      continue;
-    }
     handleDir(true, false, inPath || paths.js, filename);
   }
 
