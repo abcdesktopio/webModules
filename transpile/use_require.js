@@ -54,7 +54,7 @@ async function* walkDir(basePath) {
   }
 }
 
-async function transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy) {
+async function transformHtml(htmlFileSourceAndOut, legacyScripts) {
   const { srcHtmlPath, outHtmlPath } = htmlFileSourceAndOut;
   const contents = await fs.promises.readFile(srcHtmlPath, 'utf-8');
   const startMarker = '<!-- begin scripts -->\n';
@@ -64,18 +64,9 @@ async function transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy) {
 
   let newScript = '';
   newScript += '    <script src="js/runtime.js"></script>\n';
-
-  if (onlyLegacy) {
-    // Only legacy version, so include things directly
-    for (const legacyScript of legacyScripts) {
-      newScript += `    <script src="${legacyScript}"></script>\n`;
-    }
-  } else {
-    // Otherwise include both modules and legacy fallbacks
-    newScript += '    <script type="module" crossorigin="anonymous" src="legacy/app.js"></script>\n';
-    for (const legacyScript of legacyScripts) {
-      newScript += `    <script nomodule src="${legacyScript}"></script>\n`;
-    }
+  newScript += '    <script type="module" crossorigin="anonymous" src="legacy/app.js"></script>\n';
+  for (const legacyScript of legacyScripts) {
+    newScript += `    <script nomodule src="${legacyScript}"></script>\n`;
   }
 
   const newContents = `${contents.slice(0, startInd)}${newScript}\n${contents.slice(endInd)}`;
@@ -83,7 +74,6 @@ async function transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy) {
   console.time(timeId);
   await fs.promises.writeFile(outHtmlPath, newContents);
   console.timeEnd(timeId);
-  return 
 }
 
 export async function makeLibFiles() {
@@ -105,12 +95,10 @@ export async function makeLibFiles() {
     sourceMaps: false,
   });
 
-  const onlyLegacy = false;
-
   const inPath = paths.main;
   const outPathBase = paths.outDirBase;
 
-  const legacyPathBase = onlyLegacy ? outPathBase : path.join(outPathBase, 'legacy');
+  const legacyPathBase = path.join(outPathBase, 'legacy');
 
   await fse.ensureDir(outPathBase);
 
@@ -134,9 +122,6 @@ export async function makeLibFiles() {
 
       return Promise.resolve()
         .then(() => {
-          if (onlyLegacy) {
-            return;
-          }
           return ensureDir(path.dirname(outPath))
             .then(() => {
               console.log(`Writing ${outPath}`);
@@ -192,7 +177,7 @@ export async function makeLibFiles() {
   // Create html files in build directories
   await Promise.all(
     htmlFilesSourceAndOut.map(
-      (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy)
+      (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut, legacyScripts)
     )
   );
 
