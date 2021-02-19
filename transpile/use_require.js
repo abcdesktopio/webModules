@@ -48,7 +48,7 @@ async function* walkDir(basePath) {
 
 async function transformHtml(legacyScripts, onlyLegacy) {
   // write out the modified vnc.html file that works with the bundle
-  let contents = await fs.promises.readFile(srcHtmlPath, 'utf-8');
+  const contents = await fs.promises.readFile(srcHtmlPath, 'utf-8');
   const startMarker = '<!-- begin scripts -->\n';
   const endMarker = '<!-- end scripts -->';
   const startInd = contents.indexOf(startMarker) + startMarker.length;
@@ -59,20 +59,20 @@ async function transformHtml(legacyScripts, onlyLegacy) {
 
   if (onlyLegacy) {
     // Only legacy version, so include things directly
-    for (let i = 0; i < legacyScripts.length; i++) {
-      newScript += `    <script src="${legacyScripts[i]}"></script>\n`;
+    for (const legacyScript of legacyScripts) {
+      newScript += `    <script src="${legacyScript}"></script>\n`;
     }
   } else {
     // Otherwise include both modules and legacy fallbacks
     newScript += '    <script type="module" crossorigin="anonymous" src="legacy/app.js"></script>\n';
-    for (let i = 0; i < legacyScripts.length; i++) {
-      newScript += `    <script nomodule src="${legacyScripts[i]}"></script>\n`;
+    for (const legacyScript of legacyScripts) {
+      newScript += `    <script nomodule src="${legacyScript}"></script>\n`;
     }
   }
 
-  contents = `${contents.slice(0, startInd)}${newScript}\n${contents.slice(endInd)}`;
+  const newContents = `${contents.slice(0, startInd)}${newScript}\n${contents.slice(endInd)}`;
   console.log(`Writing ${outHtmlPath}`);
-  return fs.promises.writeFile(outHtmlPath, contents);
+  return fs.promises.writeFile(outHtmlPath, newContents);
 }
 
 export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
