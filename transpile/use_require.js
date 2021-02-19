@@ -9,7 +9,7 @@ import path from 'path';
 import util from 'util';
 import fse from 'fs-extra';
 import babel from '@babel/core';
-import helpers from './use_require_helpers.js';
+import { writeAppJSFile } from './helper.js';
 
 const dirname = path.resolve();
 export const SUPPORTED_FORMATS = new Set(['amd', 'commonjs', 'systemjs', 'umd']);
@@ -93,20 +93,15 @@ export async function makeLibFiles() {
     sourceMaps: false,
   });
 
-  const inPath = paths.main;
-  const outPathBase = paths.outDirBase;
+  const legacyPathBase = path.join(paths.outDirBase, 'legacy');
 
-  const legacyPathBase = path.join(outPathBase, 'legacy');
-
-  await fse.ensureDir(outPathBase);
-
-  const helper = helpers['commonjs'];
+  await fse.ensureDir(paths.outDirBase);
 
   const outFiles = [];
 
   const handleDir = (jsOnly, vendorRewrite, inPathBase, filename) => Promise.resolve()
     .then(() => {
-      const outPath = path.join(outPathBase, path.relative(inPathBase, filename));
+      const outPath = path.join(paths.outDirBase, path.relative(inPathBase, filename));
       const legacyPath = path.join(legacyPathBase, path.relative(inPathBase, filename));
 
       if (path.extname(filename) !== '.js') {
@@ -128,9 +123,6 @@ export async function makeLibFiles() {
         .then(() => ensureDir(path.dirname(legacyPath)))
         .then(() => {
           const opts = babelOpts();
-          if (helper && helpers.optionsOverride) {
-            helper.optionsOverride(opts);
-          }
           // Adjust for the fact that we move the core files relative
           // to the vendor directory
           if (vendorRewrite) {
@@ -153,12 +145,12 @@ export async function makeLibFiles() {
     });
 
   for await (const filename of walkDir(paths.js)) {
-    handleDir(true, false, inPath, filename);
+    handleDir(true, false, paths.main, filename);
   }
 
-  const outAppPath = path.join(legacyPathBase, 'app.js');
+  const outAppPath = path.join(paths.main, 'app.js');
   console.log(`Writing ${outAppPath}`);
-  await helper.appWriter(outPathBase, legacyPathBase, outAppPath);
+  await writeAppJSFile(legacyPathBase, outAppPath);
 
   // Create html files in build directories
   await Promise.all(
@@ -167,7 +159,7 @@ export async function makeLibFiles() {
     )
   );
 
-  if (helper.removeModules) {
+  if (false) {
     console.log('Cleaning up temporary files...');
     await Promise.allSettled(
       outFiles.map((filepath) => fs.promises.unlink(filepath)
