@@ -26,12 +26,12 @@ const paths = {
 const htmlFilesSourceAndOut = [
   {
     srcHtmlPath: path.resolve(dirname, '..', 'index.html'),
-    outHtmlPath: path.resolve(paths.outDirBase, 'index.html'),
+    outHtmlPath: path.resolve('..', 'index.html'),
   },
-  {
+  /*{
     srcHtmlPath: path.resolve(dirname, '..', 'app.html'),
-    outHtmlPath: path.resolve(paths.outDirBase, 'app.html'),
-  },
+    outHtmlPath: path.resolve('..', 'app.html'),
+  },*/
 ];
 
 const ensureDir = util.promisify(fse.ensureDir);
@@ -79,17 +79,14 @@ async function transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy) {
   }
 
   const newContents = `${contents.slice(0, startInd)}${newScript}\n${contents.slice(endInd)}`;
-  console.log(`Writing ${outHtmlPath}`);
-  return fs.promises.writeFile(outHtmlPath, newContents);
+  const timeId = `Writing ${outHtmlPath}`;
+  console.time(timeId);
+  await fs.promises.writeFile(outHtmlPath, newContents);
+  console.timeEnd(timeId);
+  return 
 }
 
-export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLegacy) {
-  if (!importFormat) {
-    throw new Error('you must specify an import format to generate compiled noVNC libraries');
-  } else if (!SUPPORTED_FORMATS.has(importFormat)) {
-    throw new Error(`unsupported output format "${importFormat}" for import/export -- only ${Array.from(SUPPORTED_FORMATS)} are supported`);
-  }
-
+export async function makeLibFiles() {
   // NB: we need to make a copy of babelOpts, since babel sets some defaults on it
   const babelOpts = () => ({
     plugins: [
@@ -100,32 +97,24 @@ export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLeg
         '@babel/preset-env',
         {
           targets: 'ie >= 9',
-          modules: importFormat,
+          modules: 'commonjs',
         },
       ],
     ],
     ast: false,
-    sourceMaps,
+    sourceMaps: false,
   });
 
-  // No point in duplicate files without the app, so force only converted files
-  if (!withAppDir) {
-    onlyLegacy = true;
-  }
+  const onlyLegacy = false;
 
-  let inPath;
-  let outPathBase;
-  if (withAppDir) {
-    outPathBase = paths.outDirBase;
-    inPath = paths.main;
-  } else {
-    outPathBase = paths.libDirBase;
-  }
+  const inPath = paths.main;
+  const outPathBase = paths.outDirBase;
+
   const legacyPathBase = onlyLegacy ? outPathBase : path.join(outPathBase, 'legacy');
 
   await fse.ensureDir(outPathBase);
 
-  const helper = helpers[importFormat];
+  const helper = helpers['commonjs'];
 
   const outFiles = [];
   const legacyFiles = [];
@@ -173,63 +162,46 @@ export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLeg
           return babelTransformFile(filename, opts)
             .then((res) => {
               console.log(`Writing ${legacyPath}`);
-              const { map } = res;
-              let { code } = res;
-              if (sourceMaps === true) {
-                // append URL for external source map
-                code += `\n//# sourceMappingURL=${path.basename(legacyPath)}.map\n`;
-              }
+              const { code } = res;
+
               outFiles.push(`${legacyPath}`);
-              return fs.promises.writeFile(legacyPath, code)
-                .then(() => {
-                  if (sourceMaps === true || sourceMaps === 'both') {
-                    console.log(`  and ${legacyPath}.map`);
-                    outFiles.push(`${legacyPath}.map`);
-                    return fs.promises.writeFile(`${legacyPath}.map`, JSON.stringify(map));
-                  }
-                });
+              return fs.promises.writeFile(legacyPath, code);
             });
         });
     });
 
   for await (const filename of walkDir(paths.js)) {
-    handleDir(true, false, inPath || paths.js, filename);
+    handleDir(true, false, inPath, filename);
   }
 
-  if (withAppDir) {
-    if (!helper || !helper.appWriter) {
-      throw new Error(`Unable to generate app for the ${importFormat} format!`);
-    }
+  const outAppPath = path.join(legacyPathBase, 'app.js');
+  console.log(`Writing ${outAppPath}`);
+  const extraScripts = await helper.appWriter(outPathBase, legacyPathBase, outAppPath);
+  let legacyScripts = [];
 
-    const outAppPath = path.join(legacyPathBase, 'app.js');
-    console.log(`Writing ${outAppPath}`);
-    const extraScripts = await helper.appWriter(outPathBase, legacyPathBase, outAppPath);
-    let legacyScripts = [];
+  legacyFiles.forEach((file) => {
+    const relFilePath = path.relative(outPathBase, file);
+    legacyScripts.push(relFilePath);
+  });
 
-    legacyFiles.forEach((file) => {
-      const relFilePath = path.relative(outPathBase, file);
-      legacyScripts.push(relFilePath);
-    });
+  legacyScripts = legacyScripts.concat(extraScripts);
 
-    legacyScripts = legacyScripts.concat(extraScripts);
+  const relAppPath = path.relative(outPathBase, outAppPath);
+  legacyScripts.push(relAppPath);
 
-    const relAppPath = path.relative(outPathBase, outAppPath);
-    legacyScripts.push(relAppPath);
+  // Create html files in build directories
+  await Promise.all(
+    htmlFilesSourceAndOut.map(
+      (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy)
+    )
+  );
 
-    // Create html files in build directories
-    await Promise.all(
-      htmlFilesSourceAndOut.map(
-        (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy)
-      )
+  if (helper.removeModules) {
+    console.log('Cleaning up temporary files...');
+    await Promise.allSettled(
+      outFiles.map((filepath) => fs.promises.unlink(filepath)
+        .then(fs.promises.rmdir(path.dirname(filepath), { recursive: true }))),
     );
-
-    if (helper.removeModules) {
-      console.log('Cleaning up temporary files...');
-      await Promise.allSettled(
-        outFiles.map((filepath) => fs.promises.unlink(filepath)
-          .then(fs.promises.rmdir(path.dirname(filepath), { recursive: true }))),
-      );
-    }
   }
 }
 export async function clean() {

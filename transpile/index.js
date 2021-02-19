@@ -244,7 +244,7 @@ async function run() {
 
   if (program.prod) {
     console.time('Build app.js file');
-    const awaitingMakeLibrary = makeLibFiles('commonjs', false, true, true)
+    const awaitingMakeLibrary = makeLibFiles()
       .then(() => {
         console.timeEnd('Build app.js file');
         if (program.clean) {
