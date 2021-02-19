@@ -23,8 +23,16 @@ const paths = {
   libDirBase: path.resolve(dirname, '..', 'lib'),
 };
 
-const srcHtmlPath = path.resolve(dirname, '..', 'index.html');
-const outHtmlPath = path.resolve(paths.outDirBase, 'index.html');
+const htmlFilesSourceAndOut = [
+  {
+    srcHtmlPath: path.resolve(dirname, '..', 'index.html'),
+    outHtmlPath: path.resolve(paths.outDirBase, 'index.html'),
+  },
+  {
+    srcHtmlPath: path.resolve(dirname, '..', 'app.html'),
+    outHtmlPath: path.resolve(paths.outDirBase, 'app.html'),
+  },
+];
 
 const ensureDir = util.promisify(fse.ensureDir);
 const copy = util.promisify(fse.copy);
@@ -46,8 +54,8 @@ async function* walkDir(basePath) {
   }
 }
 
-async function transformHtml(legacyScripts, onlyLegacy) {
-  // write out the modified vnc.html file that works with the bundle
+async function transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy) {
+  const { srcHtmlPath, outHtmlPath } = htmlFileSourceAndOut;
   const contents = await fs.promises.readFile(srcHtmlPath, 'utf-8');
   const startMarker = '<!-- begin scripts -->\n';
   const endMarker = '<!-- end scripts -->';
@@ -208,7 +216,12 @@ export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLeg
     const relAppPath = path.relative(outPathBase, outAppPath);
     legacyScripts.push(relAppPath);
 
-    await transformHtml(legacyScripts, onlyLegacy);
+    await Promise.all(
+      htmlFilesSourceAndOut.map(
+        (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy)
+      )
+    );
+
     if (helper.removeModules) {
       console.log('Cleaning up temporary files...');
       await Promise.allSettled(
