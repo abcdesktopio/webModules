@@ -123,7 +123,7 @@ export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLeg
   }
   const legacyPathBase = onlyLegacy ? outPathBase : path.join(outPathBase, 'legacy');
 
-  fse.ensureDirSync(outPathBase);
+  await fse.ensureDir(outPathBase);
 
   const helper = helpers[importFormat];
 
@@ -216,6 +216,7 @@ export async function makeLibFiles(importFormat, sourceMaps, withAppDir, onlyLeg
     const relAppPath = path.relative(outPathBase, outAppPath);
     legacyScripts.push(relAppPath);
 
+    // Create html files in build directories
     await Promise.all(
       htmlFilesSourceAndOut.map(
         (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut, legacyScripts, onlyLegacy)
