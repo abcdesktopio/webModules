@@ -58,7 +58,6 @@ prod:checkTranspile version
 
 	cd ./transpile \
 	&& node index.js --svg --css --user-interface --prod --only-legacy \
-	&& cp ../build/index.html .. \
 	&& cp -r ../build/app.js ../app.js
 
 dev:checkTranspile version
