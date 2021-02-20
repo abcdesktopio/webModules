@@ -74,6 +74,15 @@ async function transformHtml(htmlFileSourceAndOut) {
   console.timeEnd(timeId);
 }
 
+async function transformAndCopyJSFile(legacyPath, opts, filename) {
+  const timerLabel = `\t${legacyPath}`;
+  console.time(timerLabel);
+  await ensureDir(path.dirname(legacyPath));
+  const { code } = await babelTransformFile(filename, opts);
+  await fs.promises.writeFile(legacyPath, code);
+  console.timeEnd(timerLabel);
+}
+
 export async function makeLibFiles() {
   // NB: we need to make a copy of babelOpts, since babel sets some defaults on it
   const babelOpts = () => ({
@@ -97,21 +106,24 @@ export async function makeLibFiles() {
 
   await fse.ensureDir(paths.outDirBase);
 
-  const outFiles = [];
   const opts = babelOpts();
+  const outFiles = [];
+  const awaitings = [];
+  const copyFilesLabel = 'Total duration copy and transform';
+
+  console.log('Transform and copy js files:');
+  console.time(copyFilesLabel);
   for await (const filename of walkDir(paths.js)) {
     if (path.extname(filename) !== '.js') {
       continue;
       // skip non-javascript files
     }
-
     const legacyPath = path.join(legacyPathBase, path.relative(paths.main, filename));
-    await ensureDir(path.dirname(legacyPath));
-    const { code } = await babelTransformFile(filename, opts);
-    console.log(`Writing ${legacyPath}`);
     outFiles.push(`${legacyPath}`);
-    await fs.promises.writeFile(legacyPath, code);
+    awaitings.push(transformAndCopyJSFile(legacyPath, opts, filename));
   }
+  await Promise.all(awaitings);
+  console.timeEnd(copyFilesLabel);
 
   const outAppPath = path.join(paths.main, 'app.js');
   console.log(`Writing ${outAppPath}`);
