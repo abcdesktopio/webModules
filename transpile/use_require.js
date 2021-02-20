@@ -135,15 +135,8 @@ export async function makeLibFiles() {
       (htmlFileSourceAndOut) => transformHtml(htmlFileSourceAndOut)
     )
   );
-
-  if (false) {
-    console.log('Cleaning up temporary files...');
-    await Promise.allSettled(
-      outFiles.map((filepath) => fs.promises.unlink(filepath)
-        .then(fs.promises.rmdir(path.dirname(filepath), { recursive: true }))),
-    );
-  }
 }
+
 export async function clean() {
   const removeLibDirBase = `remove lib dir base ${paths.libDirBase}`;
   const removeOutDirBase = `remove out dir base ${paths.outDirBase}`;
