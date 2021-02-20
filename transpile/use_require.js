@@ -114,7 +114,7 @@ export async function makeLibFiles() {
   console.log('Transform and copy js files:');
   console.time(copyFilesLabel);
   for await (const filename of walkDir(paths.js)) {
-    if (path.extname(filename) !== '.js') {
+    if (path.extname(filename) !== '.js' || /\.min\.js$/.test(filename)) {
       continue;
       // skip non-javascript files
     }
