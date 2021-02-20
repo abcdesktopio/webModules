@@ -35,7 +35,6 @@ const htmlFilesSourceAndOut = [
 ];
 
 const ensureDir = util.promisify(fse.ensureDir);
-const copy = util.promisify(fse.copy);
 const babelTransformFile = util.promisify(babel.transformFile);
 
 async function* walkDir(basePath) {
