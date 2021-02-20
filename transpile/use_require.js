@@ -98,54 +98,23 @@ export async function makeLibFiles() {
   await fse.ensureDir(paths.outDirBase);
 
   const outFiles = [];
-
-  const handleDir = (jsOnly, vendorRewrite, inPathBase, filename) => Promise.resolve()
-    .then(() => {
-      const outPath = path.join(paths.outDirBase, path.relative(inPathBase, filename));
-      const legacyPath = path.join(legacyPathBase, path.relative(inPathBase, filename));
-
-      if (path.extname(filename) !== '.js') {
-        if (!jsOnly) {
-          console.log(`Writing ${outPath}`);
-          return copy(filename, outPath);
-        }
-        return; // skip non-javascript files
-      }
-
-      return Promise.resolve()
-        .then(() => {
-          return ensureDir(path.dirname(outPath))
-            .then(() => {
-              console.log(`Writing ${outPath}`);
-              return copy(filename, outPath);
-            });
-        })
-        .then(() => ensureDir(path.dirname(legacyPath)))
-        .then(() => {
-          const opts = babelOpts();
-          // Adjust for the fact that we move the core files relative
-          // to the vendor directory
-          if (vendorRewrite) {
-            opts.plugins.push(['import-redirect',
-              {
-                root: legacyPathBase,
-                redirect: { 'vendor/(.+)': './vendor/$1' },
-              }]);
-          }
-
-          return babelTransformFile(filename, opts)
-            .then((res) => {
-              console.log(`Writing ${legacyPath}`);
-              const { code } = res;
-
-              outFiles.push(`${legacyPath}`);
-              return fs.promises.writeFile(legacyPath, code);
-            });
-        });
-    });
-
+  const opts = babelOpts();
   for await (const filename of walkDir(paths.js)) {
-    handleDir(true, false, paths.main, filename);
+    if (path.extname(filename) !== '.js') {
+      continue;
+      // skip non-javascript files
+    }
+
+    const outPath = path.join(paths.outDirBase, path.relative(paths.main, filename));
+    const legacyPath = path.join(legacyPathBase, path.relative(paths.main, filename));
+    await ensureDir(path.dirname(outPath))
+    console.log(`Writing ${outPath}`);
+    await copy(filename, outPath);
+    await ensureDir(path.dirname(legacyPath));
+    const { code } = await babelTransformFile(filename, opts);
+    console.log(`Writing ${legacyPath}`);
+    outFiles.push(`${legacyPath}`);
+    await fs.promises.writeFile(legacyPath, code);
   }
 
   const outAppPath = path.join(paths.main, 'app.js');
