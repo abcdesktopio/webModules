@@ -105,11 +105,7 @@ export async function makeLibFiles() {
       // skip non-javascript files
     }
 
-    const outPath = path.join(paths.outDirBase, path.relative(paths.main, filename));
     const legacyPath = path.join(legacyPathBase, path.relative(paths.main, filename));
-    await ensureDir(path.dirname(outPath))
-    console.log(`Writing ${outPath}`);
-    await copy(filename, outPath);
     await ensureDir(path.dirname(legacyPath));
     const { code } = await babelTransformFile(filename, opts);
     console.log(`Writing ${legacyPath}`);
