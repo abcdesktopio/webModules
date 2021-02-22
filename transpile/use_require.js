@@ -60,7 +60,7 @@ async function* walkDir(basePath) {
 
 /**
  * @function transformHtml
- * @param {stirng} htmlFileSourceAndOut 
+ * @param {Object} htmlFileSourceAndOut 
  * @returns {Promise<void>}
  * @desc Allow to replace modules by app.js in a provided html file
  */
