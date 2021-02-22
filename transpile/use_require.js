@@ -58,6 +58,12 @@ async function* walkDir(basePath) {
   }
 }
 
+/**
+ * @function transformHtml
+ * @param {stirng} htmlFileSourceAndOut 
+ * @returns {Promise<void>}
+ * @desc Allow to replace modules by app.js in a provided html file
+ */
 async function transformHtml(htmlFileSourceAndOut) {
   const { srcHtmlPath, outHtmlPath } = htmlFileSourceAndOut;
   const contents = await fs.promises.readFile(srcHtmlPath, 'utf-8');
