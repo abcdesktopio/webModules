@@ -23,7 +23,7 @@ import Mustache from 'mustache';
 import {
   clean,
   makeLibFiles,
-} from './use_require.js';
+} from './production-transformer.js';
 
 import { callReplaceWorker } from './helper.js';
 
