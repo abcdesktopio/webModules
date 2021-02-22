@@ -101,6 +101,10 @@ async function transformAndCopyJSFile(legacyPath, opts, filename) {
   console.timeEnd(timerLabel);
 }
 
+/**
+ * @returns {Promise<void>}
+ * @desc Allow to build app.js file and then change the script imports in all html files 
+ */
 export async function makeLibFiles() {
   // NB: we need to make a copy of babelOpts, since babel sets some defaults on it
   const babelOpts = () => ({
