@@ -240,16 +240,14 @@ async function run() {
   if (program.prod) {
     console.time('Build app.js file');
     const awaitingMakeLibrary = makeLibFiles()
-      .then(() => {
-        console.timeEnd('Build app.js file');
-        if (program.clean) {
-          return clean();
-        }
-        return null;
-      })
       .catch((err) => {
         console.error(`Failure converting modules: ${err}`);
+      })
+      .finally(() => {
+        console.timeEnd('Build app.js file');
+        return clean();
       });
+
     promises.push(awaitingMakeLibrary);
   }
 
