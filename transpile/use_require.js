@@ -36,6 +36,12 @@ const htmlFilesSourceAndOut = [
 const ensureDir = util.promisify(fse.ensureDir);
 const babelTransformFile = util.promisify(babel.transformFile);
 
+/**
+ * @function walkDir
+ * @param {string} basePath
+ * @return {AsyncIterator<string>}
+ * @desc Getting all files recurcivly of a given directory through an AsyncIterator  
+ */
 async function* walkDir(basePath) {
   const dirents = await fs.promises.readdir(basePath, { withFileTypes: true });
   const mapper = (dirent) => path.join(basePath, dirent.name);
