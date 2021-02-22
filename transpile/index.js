@@ -64,8 +64,10 @@ const pathImg = path.resolve(path.join('..', 'img'));
 /**
  *
  * @param {string} root
+ * @desc Walk through a given directory and provide an AsyncIterator.
+ * Each item is the path of a svg file
  */
-async function* getSvgImages(root = '') {
+async function* walkSvgImages(root = '') {
   const dirents = await fs.promises.readdir(root, { withFileTypes: true });
   const files = [];
   const directories = [];
@@ -88,7 +90,7 @@ async function* getSvgImages(root = '') {
   yield* files;
 
   for (const directory of directories) {
-    yield* getSvgImages(directory);
+    yield* walkSvgImages(directory);
   }
 }
 
@@ -113,7 +115,7 @@ async function buildSvg(colors = []) {
   };
 
   const awaitingUpdateSvgs = [];
-  for await (const svgImage of getSvgImages(pathImg)) {
+  for await (const svgImage of walkSvgImages(pathImg)) {
     const awaiting = callReplaceWorker(svgImage, currentSvgColor, newSvgColor);
     awaitingUpdateSvgs.push(awaiting);
   }
