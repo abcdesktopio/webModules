@@ -20,8 +20,6 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/runtime": "^7.11.2",
     "@node-minify/clean-css": "^6.0.0",
-    "@node-minify/core": "^6.0.0",
-    "@node-minify/html-minifier": "^6.0.0",
     "@node-minify/uglify-js": "^6.0.0",
     "babel-plugin-transform-es2015-classes": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",

@@ -16,8 +16,6 @@ import childProcess from 'child_process';
 import fs from 'fs';
 import { promisify } from 'util';
 import path from 'path';
-import minify from '@node-minify/core';
-import htmlMinifier from '@node-minify/html-minifier';
 import Mustache from 'mustache';
 
 import {
@@ -160,18 +158,6 @@ async function buildCss(colors = []) {
 }
 // #endregion css
 
-// #region html
-/**
- * @returns {Promise<void>}
- * @desc Minify html files
- */
-async function minifyHtml() {
-  const content = await fs.promises.readFile(pathMustacheHtmlFile, 'utf8');
-  const newContentHtml = await minify({ compressor: htmlMinifier, content });
-  await fs.promises.writeFile(pathMustacheHtmlFile, newContentHtml);
-}
-// #endregion html
-
 // #region userInterface
 async function userInterface() {
   console.time('Apply userInterface conf');
@@ -245,10 +231,6 @@ async function run() {
 
   if (program.userInterface) {
     await userInterface(); // Prevent of access index.html at the same time
-  }
-
-  if (program.minifyHtml) {
-    await minifyHtml(); // Prevent of access index.html at the same time
   }
 
   if (program.prod) {
