@@ -161,6 +161,10 @@ async function buildCss(colors = []) {
 // #endregion css
 
 // #region html
+/**
+ * @returns {Promise<void>}
+ * @desc Minify html files
+ */
 async function minifyHtml() {
   const content = await fs.promises.readFile(pathMustacheHtmlFile, 'utf8');
   const newContentHtml = await minify({ compressor: htmlMinifier, content });
