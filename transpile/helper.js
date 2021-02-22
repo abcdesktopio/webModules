@@ -44,6 +44,8 @@ export async function writeAppJSFile(scriptBasePath, outPath) {
  * @param {string} str
  * @param {string} searchValue
  * @param {string} replaceValue
+ * @returns {Promise<void>}
+ * @desc Allow to create a worker which will replace a provided searched value by an other provided replace value in a given file
  */
 export function callReplaceWorker(filename, searchValue, replaceValue) {
   return new Promise((resolve, reject) => {
