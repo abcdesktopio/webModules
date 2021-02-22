@@ -44,11 +44,15 @@ program
 
 program.parse(process.argv);
 
+const configPath = path.resolve('config');
+
 const cssPath = path.resolve(path.join('..', 'css'));
 const cssDistPath = path.resolve(path.join(cssPath, 'css-dist'));
-const pathCache = path.resolve('.cache.json');
-const pathUIConf = path.resolve('ui.json');
-const pathModules = path.resolve('modules.json');
+
+const pathCache = path.join(configPath, '.cache.json');
+const pathUIConf = path.join(configPath, 'ui.json');
+const pathModules = path.join(configPath, 'modules.json');
+
 const pathIndexHtmlFile = path.resolve(path.join('..', 'index.html'));
 const pathAppHtmlFile = path.resolve(path.join('..', 'app.html'));
 const pathAppMustacheHtmlFile = path.resolve(path.join('..', 'app.mustache.html'));
