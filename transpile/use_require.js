@@ -27,10 +27,10 @@ const htmlFilesSourceAndOut = [
     srcHtmlPath: path.resolve(dirname, '..', 'index.html'),
     outHtmlPath: path.resolve('..', 'index.html'),
   },
-  /*{
+  {
     srcHtmlPath: path.resolve(dirname, '..', 'app.html'),
     outHtmlPath: path.resolve('..', 'app.html'),
-  },*/
+  }
 ];
 
 const ensureDir = util.promisify(fse.ensureDir);
