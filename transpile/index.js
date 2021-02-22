@@ -23,7 +23,6 @@ import Mustache from 'mustache';
 import {
   clean,
   makeLibFiles,
-  SUPPORTED_FORMATS,
 } from './use_require.js';
 
 import { callReplaceWorker } from './utils.js';
@@ -41,10 +40,6 @@ program
   .option('-ui, --user-interface', 'Apply user interface\'s configuration')
   .option('-mhtml, --minify-html', 'Use minify html')
   .option('--prod', 'Use for indicate to build app.js production file')
-  .option('--as [format]', `output files using various import formats instead of ES6 import and export.  Supports ${Array.from(SUPPORTED_FORMATS)}.`)
-  .option('-m, --with-source-maps [type]', 'output source maps when not generating a bundled app (type may be empty for external source maps, inline for inline source maps, or both) ')
-  .option('--with-app', 'process app files as well as core files')
-  .option('--only-legacy', 'only output legacy files (no ES6 modules) for the app')
   .option('--clean', 'clear the lib folder before building');
 
 program.parse(process.argv);
