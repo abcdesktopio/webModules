@@ -167,10 +167,6 @@ export async function clean() {
   const removeOutDirBase = `remove out dir base ${paths.outDirBase}`;
   console.time(removeOutDirBase);
 
-  await Promise.all([
-    fse.remove(paths.outDirBase)
-      .then(() => {
-        console.timeEnd(removeOutDirBase);
-      }),
-  ]);
+  await fse.remove(paths.outDirBase);
+  console.timeEnd(removeOutDirBase);
 }
