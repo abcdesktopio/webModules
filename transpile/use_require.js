@@ -84,6 +84,14 @@ async function transformHtml(htmlFileSourceAndOut) {
   console.timeEnd(timeId);
 }
 
+/**
+ * 
+ * @param {string} legacyPath 
+ * @param {Object} opts 
+ * @param {string} filename
+ * @returns {Promise<void>}
+ * @desc Allow to transform a module js file in a es5 compatible file, and then copy it in an other folder 
+ */
 async function transformAndCopyJSFile(legacyPath, opts, filename) {
   const timerLabel = `\t${legacyPath}`;
   console.time(timerLabel);
