@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint-disable prefer-rest-params */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
