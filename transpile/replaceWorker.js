@@ -14,6 +14,13 @@
 import { workerData } from 'worker_threads';
 import fs from 'fs';
 
+/**
+ * @returns {Promise<void>}
+ * @desc A function allowing to bootstrap async/await inside this worker.
+ * This function will extract the filename, the searchValue, and the replaceValue provided by the main thread.
+ * Thus it will read the content the file, check if it includes the searchValue
+ * and in this case it will replace the both values and apply this modification to the file.
+ */
 async function bootstrap() {
   const { filename, searchValue, replaceValue } = workerData;
   const svgContent = await fs.promises.readFile(filename, 'utf8');
