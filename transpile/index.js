@@ -25,7 +25,7 @@ import {
   makeLibFiles,
 } from './use_require.js';
 
-import { callReplaceWorker } from './utils.js';
+import { callReplaceWorker } from './helper.js';
 
 const { program } = createRequire(import.meta.url)('commander');
 
