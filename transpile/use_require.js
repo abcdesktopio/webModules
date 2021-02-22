@@ -159,6 +159,10 @@ export async function makeLibFiles() {
   );
 }
 
+/**
+ * @returns {Promise<void>}
+ * @desc Remove files and directories builded by transpiles
+ */
 export async function clean() {
   const removeOutDirBase = `remove out dir base ${paths.outDirBase}`;
   console.time(removeOutDirBase);
