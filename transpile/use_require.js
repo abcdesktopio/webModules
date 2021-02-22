@@ -136,16 +136,10 @@ export async function makeLibFiles() {
 }
 
 export async function clean() {
-  const removeLibDirBase = `remove lib dir base ${paths.libDirBase}`;
   const removeOutDirBase = `remove out dir base ${paths.outDirBase}`;
-  console.time(removeLibDirBase);
   console.time(removeOutDirBase);
 
   await Promise.all([
-    fse.remove(paths.libDirBase)
-      .then(() => {
-        console.timeEnd(removeLibDirBase);
-      }),
     fse.remove(paths.outDirBase)
       .then(() => {
         console.timeEnd(removeOutDirBase);
