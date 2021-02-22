@@ -12,7 +12,6 @@ import babel from '@babel/core';
 import { writeAppJSFile } from './helper.js';
 
 const dirname = path.resolve();
-export const SUPPORTED_FORMATS = new Set(['amd', 'commonjs', 'systemjs', 'umd']);
 
 // the various important paths
 const paths = {
