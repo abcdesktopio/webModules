@@ -25,6 +25,13 @@ import browserify from 'browserify';
 const dirname = path.resolve();
 const pathWorker = path.join(dirname, 'replaceWorker.js');
 
+/**
+ * 
+ * @param {string} scriptBasePath 
+ * @param {string} outPath 
+ * @returns {Promise<void>}
+ * @desc Combine all js es5 js files to one app.js
+ */
 export async function writeAppJSFile(scriptBasePath, outPath) {
   const pathScriptEntryPoint = path.join(scriptBasePath, 'js/scripts.js');
   const b = browserify(pathScriptEntryPoint);
