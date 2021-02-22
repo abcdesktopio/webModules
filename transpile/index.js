@@ -97,6 +97,8 @@ async function* walkSvgImages(root = '') {
 /**
  *
  * @param {string[]} colors
+ * @returns {Promise<void>}
+ * @desc Replace colors in all svg files
  */
 async function buildSvg(colors = []) {
   console.time('Build svg');
@@ -128,6 +130,8 @@ async function buildSvg(colors = []) {
 
 // #region css
 /**
+ * @param {string[]} colors
+ * @returns {Promise<void>}
  * @desc Transpile less files to css and if prod flag specified create .min.css
  */
 async function buildCss(colors = []) {
