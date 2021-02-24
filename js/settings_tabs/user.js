@@ -155,8 +155,8 @@ async function setName() {
     spanId.id = 'userID';
     spanId.innerText = ` ID : ${userid}`;
 
-    wrapperText.appendChild(getSpanContainer(spanName, 'col-xl-6 col-lg-4 col-md-12 col-xs-12 align-items-center'));
-    wrapperText.appendChild(getSpanContainer(spanId, 'col-xl-6 col-lg-4 col-md-12 col-xs-12 align-items-center'));
+    wrapperText.appendChild(getSpanContainer(spanName, 'col-12 align-items-center'));
+    wrapperText.appendChild(getSpanContainer(spanId, 'col-12 align-items-center'));
 
     const labels = await launcher.getLabels();
     for (const label of labels) {
