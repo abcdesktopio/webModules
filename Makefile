@@ -48,6 +48,9 @@ svg:
 css:checkTranspile
 	cd ./transpile && node index.js --css
 
+ui:
+	cd ./transpile && node index.js --user-interface
+
 oneCss:checkTranspile
 	cd ./transpile && node index.js --oneCss
 
