@@ -36,7 +36,6 @@ program
   .option('-c, --css', 'Transpile less code to css')
   .option('-o, --oneCss', 'Use one file css minified')
   .option('-ui, --user-interface', 'Apply user interface\'s configuration')
-  .option('-mhtml, --minify-html', 'Use minify html')
   .option('--prod', 'Use for indicate to build app.js production file')
   .option('--clean', 'clear the lib folder before building');
 
