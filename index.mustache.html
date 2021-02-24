@@ -587,33 +587,32 @@
         <div class="tab" id="system-tab">
             <br>
             <div class="row">
-                <div class="col-xl-5 col-lg-4 col-md-3 col-2"></div>
-                <div class="col-xl-7 col-lg-8 col-md-9 col-10">
-                    <div class="row">
-                        <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle">
-                            <label class="btn btn-settings btn-settings-active"
-                                data-view="settings-system-view-infos-system"
-                                style="margin-left: 15px;"
-                            >
-                                <input type="radio" name="options" checked>
-                                <span id="settings-system-btn-system">System</span>
-                            </label>
-                            <label class="btn btn-settings" data-view="settings-system-view-user-container">
-                                <input type="radio" name="options">
-                                <span id="settings-system-btn-user-container">User Container</span>
-                            </label>
-                            <label class="btn btn-settings d-none d-sm-block" data-view="settings-system-view-display">
-                                <input type="radio" name="options">
-                                <span id="settings-system-btn-view-infos">Display</span>
-                            </label>
-                            <label class="btn btn-settings" data-view="settings-system-view-support">
-                                <input type="radio" name="options">
-                                <span id="settings-system-btn-support">Support</span>
-                            </label>
-                        </div>
+                <div id="system-tab-switch-buttons" class="d-flex justify-content-center max-size">
+                    <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle">
+                        <label class="btn btn-settings btn-settings-active"
+                            data-view="settings-system-view-infos-system"
+                            style="margin-left: 15px;"
+                        >
+                            <input type="radio" name="options" checked>
+                            <span id="settings-system-btn-system">System</span>
+                        </label>
+                        <label class="btn btn-settings" data-view="settings-system-view-user-container">
+                            <input type="radio" name="options">
+                            <span id="settings-system-btn-user-container">User Container</span>
+                        </label>
+                        <label class="btn btn-settings d-none d-sm-block" data-view="settings-system-view-display">
+                            <input type="radio" name="options">
+                            <span id="settings-system-btn-view-infos">Display</span>
+                        </label>
+                        <label class="btn btn-settings" data-view="settings-system-view-support">
+                            <input type="radio" name="options">
+                            <span id="settings-system-btn-support">Support</span>
+                        </label>
                     </div>
-                    <br>
-                    <div class="row" id="settings-system-view-infos-system">
+                </div>
+                <br>
+                <div class="container" id="settings-system-view-infos-system">
+                    <div class="row">
                         <div class="col-xl-2 col-lg-2 col-md-3 col-1 d-xl-block d-lg-block d-md-block d-sm-none d-none">
                             <img draggable="false" class="logo-animation icon" src="img/logo.svg">
                         </div>
@@ -633,7 +632,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row d-none" id="settings-system-view-user-container">
+                </div>
+                <div class="d-none container" id="settings-system-view-user-container">
+                    <div class="row">
                         <div class="col-xl-2 col-lg-2 col-md-3 col-1 d-xl-block d-lg-block d-md-block d-sm-none d-none">
                             <img class="img-fluid icon" src="img/settings/container.svg" />
                         </div>
@@ -641,7 +642,9 @@
                             <div id="overview"></div>
                         </div>
                     </div>
-                    <div class="row d-none" id="settings-system-view-display">
+                </div>
+                <div class="d-none container" id="settings-system-view-display">
+                    <div class="row">
                         <div class="col-xl-2 col-lg-2 col-md-3 col-1 d-xl-block d-lg-block d-md-block d-sm-none d-none">
                             <img class="img-fluid icon" src="img/settings/television.svg" />
                         </div>
@@ -720,7 +723,9 @@
                             </table>
                         </div>
                     </div>
-                    <div class="row d-none" id="settings-system-view-support">
+                </div>
+                <div class="d-none container" id="settings-system-view-support">
+                    <div class="row">
                         <div class="col-xl-2 col-lg-2 col-md-3 col-1 d-xl-block d-lg-block d-md-block d-sm-none d-none">
                             <img draggable="false" class="logo-animation icon" src="img/logo.svg">
                         </div>
