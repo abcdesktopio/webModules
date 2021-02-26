@@ -161,8 +161,8 @@ async function buildCss(colors = []) {
 async function userInterface() {
   console.time('Apply userInterface conf');
   await Promise.all([
-    applyConfToMustacheFile(pathAppMustacheHtmlFile, pathAppHtmlFile),
-    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathIndexHtmlFile),
+    applyConfToMustacheFile(pathAppMustacheHtmlFile, pathAppHtmlFile, false),
+    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathIndexHtmlFile, true),
   ]);
   console.timeEnd('Apply userInterface conf');
 }
@@ -170,8 +170,9 @@ async function userInterface() {
 /**
  * @param {string} pathMustacheFile
  * @param {string} pathHtmlFile
+ * @param {boolean} indexPage
  */
-async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile) {
+async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, indexPage) {
   const awaitingUIConf = fs.promises.readFile(pathUIConf, 'utf8').then((jsonFile) => JSON.parse(jsonFile));
   const awaitingModulesConf = fs.promises.readFile(pathModules, 'utf8').then((jsonFile) => {
     const json = JSON.parse(jsonFile);
@@ -198,6 +199,7 @@ async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile) {
     scripts: modulesConf.scripts,
     projectName: uiConf.name,
     urlcannotopensession: uiConf.urlcannotopensession,
+    indexPage,
   };
 
   await fs.promises.writeFile(pathHtmlFile, Mustache.render(mustacheFile, view));
