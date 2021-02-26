@@ -52,7 +52,6 @@ const pathModules = path.join(configPath, 'modules.json');
 
 const pathIndexHtmlFile = path.resolve(path.join('..', 'index.html'));
 const pathAppHtmlFile = path.resolve(path.join('..', 'app.html'));
-const pathAppMustacheHtmlFile = path.resolve(path.join('..', 'app.mustache.html'));
 const pathIndexMustacheHtmlFile = path.resolve(path.join('..', 'index.mustache.html'));
 const pathImg = path.resolve(path.join('..', 'img'));
 
@@ -161,7 +160,7 @@ async function buildCss(colors = []) {
 async function userInterface() {
   console.time('Apply userInterface conf');
   await Promise.all([
-    applyConfToMustacheFile(pathAppMustacheHtmlFile, pathAppHtmlFile, false),
+    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathAppHtmlFile, false),
     applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathIndexHtmlFile, true),
   ]);
   console.timeEnd('Apply userInterface conf');
