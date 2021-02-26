@@ -170,9 +170,9 @@ async function userInterface() {
 /**
  * @param {string} pathMustacheFile
  * @param {string} pathHtmlFile
- * @param {boolean} indexPage
+ * @param {boolean} isIndexPage
  */
-async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, indexPage) {
+async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, isIndexPage) {
   const awaitingUIConf = fs.promises.readFile(pathUIConf, 'utf8').then((jsonFile) => JSON.parse(jsonFile));
   const awaitingModulesConf = fs.promises.readFile(pathModules, 'utf8').then((jsonFile) => {
     const json = JSON.parse(jsonFile);
@@ -184,7 +184,7 @@ async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, indexPage
     return {
       ...json,
       scripts: json.scripts.filter(
-        (script) => (script.indexPageOnly ? indexPage : true),
+        (script) => (script.indexPageOnly ? isIndexPage : true),
       ).map(mapper),
     };
   });
@@ -201,7 +201,7 @@ async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, indexPage
     scripts: modulesConf.scripts,
     projectName: uiConf.name,
     urlcannotopensession: uiConf.urlcannotopensession,
-    indexPage,
+    isIndexPage,
   };
 
   await fs.promises.writeFile(pathHtmlFile, Mustache.render(mustacheFile, view));
