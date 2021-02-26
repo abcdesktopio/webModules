@@ -37,78 +37,97 @@
   "scripts": [
     {
       "src": "js/adapter.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/jquery-3.5.1.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/jquery-ui.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/bootstrap-table.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/bootstrap.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/bootstrap-slider.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/popper.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/bootbox.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/farbtastic.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/renderjson.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/js.cookie.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/emoticons.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/dropzone.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/download.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/ua-parser.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/event-target.min.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "js/url.js",
+      "indexPage": false,
       "defer": false
     },
     {
       "src": "xterm/dist/client-bundle.js",
+      "indexPage": true,
       "defer": true
     },
     {
       "src": "js/janus.js",
+      "indexPage": false,
       "defer": false
     }
   ]
