@@ -52,7 +52,7 @@
     },
     {
       "src": "js/bootstrap-table.min.js",
-      "indexPageOnly": false,
+      "indexPageOnly": true,
       "defer": false
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "src": "js/bootstrap-slider.min.js",
-      "indexPageOnly": false,
+      "indexPageOnly": true,
       "defer": false
     },
     {
