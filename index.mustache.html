@@ -35,12 +35,12 @@
     <link rel="icon" href="/img/abcdesktop128x128.ico" sizes="128x128">
     <link rel="icon" href="/img/abcdesktop256x256.ico" sizes="256x256">
 
-    {{#if isIndexPage}}
+    {{#isIndexPage}}
         <link rel="stylesheet" href="css/css-dist/settings.css" type="text/css" />
         <link rel="stylesheet" href="css/css-dist/screenRecord.css" type="text/css" />
         <link rel="stylesheet" href="xterm/xterm.css" />
         <link rel="stylesheet" href="css/css-dist/appstore.css" type="text/css" />
-    {{/if isIndexPage}}
+    {{/isIndexPage}}
 
     <link rel="stylesheet" href="css/css-dist/bottomBar.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/error.css" type="text/css" />
@@ -274,7 +274,7 @@
             </div>
             <div id="connection" class="disconnected">
             </div>
-            {{#if isIndexPage}}
+            {{#isIndexPage}}
                 <div id="topScreenRecord" class="keep" title="Screen Recorder">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
                         id="Capa_1" x="0px" y="0px" viewBox="0 0 491.858 491.858"
@@ -293,7 +293,7 @@
                 <div id="shell" class="keep" title="Shell">
                     <img src="../img/top/shell.svg" alt="" />
                 </div>
-            {{/if isIndexPage}}
+            {{/isIndexPage}}
             <div id="upload" class="keep" title="Upload">
                 <img src="../img/top/upload.svg" alt="" />
                 <ul class="drop-down"></ul>
@@ -305,7 +305,7 @@
             <div id="topMail" class="keep" title="Mail">
                 <img id="ico" src="../img/top/mail.svg" alt="" />
             </div>
-            {{#if isIndexPage}}
+            {{#isIndexPage}}
                 <div id="top-issue-container" class="keep" title="Issue">
                     <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" />
                 </div>
@@ -313,7 +313,7 @@
                 <div class="keep" title="Placement">
                     <img draggable="false" launch="placement" id="placement" src="img/top/placement.svg" />
                 </div>
-            {{/if isIndexPage}}
+            {{/isIndexPage}}
             <div id="copypaste" class="keep" title="Copy / Paste">
                 <img id="ico" src="../img/top/copypaste.svg" alt="" />
                 <ul class="drop-down">
@@ -350,7 +350,7 @@
             <div id="fullscreen" title="Fullscreen" state="false">
                 <img src="img/top/fullscreen.svg" alt="">
             </div>
-            {{#if isIndexPage}}
+            {{#isIndexPage}}
                 <div class="img_top" id="name">
                     <img src="img/top/menu.svg" title="Settings" alt="">
                     <ul class="drop-down">
@@ -384,7 +384,7 @@
                         </li>
                     </ul>
                 </div>
-            {{/if isIndexPage}}
+            {{/isIndexPage}}
         </div>
     </div>
     <div id="tooltip">
@@ -525,7 +525,7 @@
             </div>
         </div>
     </div>
-    {{ #indexPage }}
+    {{#isIndexPage}}
         <template id="settings-window-template" class="window">
             <div class="tab" id="panel-settings">
                 <div class="tab-header" tab="system-tab">
@@ -1093,7 +1093,7 @@
                 <ul id='appstore-applist'></ul>
             </div>
         </template>
-    {{ /indexPage }}
+    {{/isIndexPage}}
     <div style="display: none;" id="about-window" class="window">
         <div class="control">
             <div class="close"></div>
@@ -1143,7 +1143,7 @@
     <iframe style="display:none;" id="framePDF" src="" frameborder="0"></iframe>
     <ul id="contextmenu"></ul>
 
-    {{#if isIndexPage}}
+    {{#isIndexPage}}
         <div id="dock">
             <ul id="docklist">
                 <!-- <li launch="resolution" class="only-mobile" id="resolution"><img src="img/res.svg"/></li> -->
@@ -1160,7 +1160,7 @@
                 <p>Applications</p>
             </ul>
         </div>
-    {{/if isIndexPage}}
+    {{/isIndexPage}}
 
     {{ #scripts }}
     <script {{{defer}}} type="text/javascript" src="{{{src}}}"></script>
