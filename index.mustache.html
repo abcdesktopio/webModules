@@ -274,24 +274,26 @@
             </div>
             <div id="connection" class="disconnected">
             </div>
-            <div id="topScreenRecord" class="keep" title="Screen Recorder">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-                    id="Capa_1" x="0px" y="0px" viewBox="0 0 491.858 491.858"
-                    style="enable-background:new 0 0 491.858 491.858;" xml:space="preserve" width="512px"
-                    height="512px">
-                    <path
-                        d="M357.714,423.331c0,9.328-10.676,16.891-23.847,16.891H23.847C10.676,440.222,0,432.659,0,423.331V203.735     c0-9.33,10.676-16.892,23.847-16.892h310.02c13.171,0,23.847,7.564,23.847,16.892V423.331L357.714,423.331z"
-                        fill="#6EC6F0" />
-                    <circle cx="89.428" cy="118.706" r="59.619" fill="#6EC6F0" />
-                    <circle cx="253.381" cy="103.801" r="74.524" fill="#6EC6F0" />
-                    <path
-                        d="M491.858,447.677c0,0-1.986,14.904-15.899,14.904c-13.912,0-103.34-83.42-103.34-94.397V258.882     c0-10.976,87.443-94.398,103.34-94.398c15.899,0,15.899,14.905,15.899,14.905V447.677z"
-                        fill="#6EC6F0" />
-                </svg>
-            </div>
-            <div id="shell" class="keep" title="Shell">
-                <img src="../img/top/shell.svg" alt="" />
-            </div>
+            {{#if isIndexPage}}
+                <div id="topScreenRecord" class="keep" title="Screen Recorder">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                        id="Capa_1" x="0px" y="0px" viewBox="0 0 491.858 491.858"
+                        style="enable-background:new 0 0 491.858 491.858;" xml:space="preserve" width="512px"
+                        height="512px">
+                        <path
+                            d="M357.714,423.331c0,9.328-10.676,16.891-23.847,16.891H23.847C10.676,440.222,0,432.659,0,423.331V203.735     c0-9.33,10.676-16.892,23.847-16.892h310.02c13.171,0,23.847,7.564,23.847,16.892V423.331L357.714,423.331z"
+                            fill="#6EC6F0" />
+                        <circle cx="89.428" cy="118.706" r="59.619" fill="#6EC6F0" />
+                        <circle cx="253.381" cy="103.801" r="74.524" fill="#6EC6F0" />
+                        <path
+                            d="M491.858,447.677c0,0-1.986,14.904-15.899,14.904c-13.912,0-103.34-83.42-103.34-94.397V258.882     c0-10.976,87.443-94.398,103.34-94.398c15.899,0,15.899,14.905,15.899,14.905V447.677z"
+                            fill="#6EC6F0" />
+                    </svg>
+                </div>
+                <div id="shell" class="keep" title="Shell">
+                    <img src="../img/top/shell.svg" alt="" />
+                </div>
+            {{/if isIndexPage}}
             <div id="upload" class="keep" title="Upload">
                 <img src="../img/top/upload.svg" alt="" />
                 <ul class="drop-down"></ul>
@@ -303,12 +305,15 @@
             <div id="topMail" class="keep" title="Mail">
                 <img id="ico" src="../img/top/mail.svg" alt="" />
             </div>
-            <div id="top-issue-container" class="keep" title="Issue">
-                <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" />
-            </div>
-            <div class="keep" title="Placement">
-                <img draggable="false" launch="placement" id="placement" src="img/top/placement.svg" />
-            </div>
+            {{#if isIndexPage}}
+                <div id="top-issue-container" class="keep" title="Issue">
+                    <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" />
+                </div>
+
+                <div class="keep" title="Placement">
+                    <img draggable="false" launch="placement" id="placement" src="img/top/placement.svg" />
+                </div>
+            {{/if isIndexPage}}
             <div id="copypaste" class="keep" title="Copy / Paste">
                 <img id="ico" src="../img/top/copypaste.svg" alt="" />
                 <ul class="drop-down">
@@ -345,39 +350,41 @@
             <div id="fullscreen" title="Fullscreen" state="false">
                 <img src="img/top/fullscreen.svg" alt="">
             </div>
-            <div class="img_top" id="name">
-                <img src="img/top/menu.svg" title="Settings" alt="">
-                <ul class="drop-down">
-                    <li>
-                        <div class="state" id='settings'></div>
-                        <p id="settings-name" class="placestate">Settings</p>
-                    </li>
-                    <li class="divider"></li>
-                    <!-- <li><div class="state" id='whoami'></div><p class="placestate">Whoami</p></li> -->
-                    <li>
-                        <div class="state" id='appstore'></div>
-                        <p id="applications-name" class="placestate">Applications</p>
-                    </li>
-                    <!-- <li><div class="state" id='clogs'></div><p class="placestate">Logs</p></li> -->
-                    <li class="divider"></li>
-                    <li>
-                        <div class="state" id='screenshot'></div>
-                        <p id="screen-shot-name" class="placestate">Screenshot</p>
-                    </li>
-                    <li>
-                        <!-- <div class="state" id='record'></div> -->
-                        <object id="record" class="state screen-record-animation" type="image/svg+xml"
-                            data="./img/top/record.svg">
-                        </object>
-                        <p id="screen-record-name" class="placestate">Screen record</p>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <div class="state" id='logout'></div>
-                        <p id="log-out-name" class="placestate">Logoff</p>
-                    </li>
-                </ul>
-            </div>
+            {{#if isIndexPage}}
+                <div class="img_top" id="name">
+                    <img src="img/top/menu.svg" title="Settings" alt="">
+                    <ul class="drop-down">
+                        <li>
+                            <div class="state" id='settings'></div>
+                            <p id="settings-name" class="placestate">Settings</p>
+                        </li>
+                        <li class="divider"></li>
+                        <!-- <li><div class="state" id='whoami'></div><p class="placestate">Whoami</p></li> -->
+                        <li>
+                            <div class="state" id='appstore'></div>
+                            <p id="applications-name" class="placestate">Applications</p>
+                        </li>
+                        <!-- <li><div class="state" id='clogs'></div><p class="placestate">Logs</p></li> -->
+                        <li class="divider"></li>
+                        <li>
+                            <div class="state" id='screenshot'></div>
+                            <p id="screen-shot-name" class="placestate">Screenshot</p>
+                        </li>
+                        <li>
+                            <!-- <div class="state" id='record'></div> -->
+                            <object id="record" class="state screen-record-animation" type="image/svg+xml"
+                                data="./img/top/record.svg">
+                            </object>
+                            <p id="screen-record-name" class="placestate">Screen record</p>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="state" id='logout'></div>
+                            <p id="log-out-name" class="placestate">Logoff</p>
+                        </li>
+                    </ul>
+                </div>
+            {{/if isIndexPage}}
         </div>
     </div>
     <div id="tooltip">
