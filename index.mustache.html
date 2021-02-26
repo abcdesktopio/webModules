@@ -1136,22 +1136,24 @@
     <iframe style="display:none;" id="framePDF" src="" frameborder="0"></iframe>
     <ul id="contextmenu"></ul>
 
-    <div id="dock">
-        <ul id="docklist">
-            <!-- <li launch="resolution" class="only-mobile" id="resolution"><img src="img/res.svg"/></li> -->
-            <li launch="keyboard" class="only-mobile" id="keyboard"><img src="img/kb.svg" /></li>
-        </ul>
-        <input type="text" id="searchBar" name="searchBar" />
-    </div>
-    <div id="searchZone">
-        <div id="closeZone"></div>
-        <ul id="fileZone">
-            <p>Files</p>
-        </ul>
-        <ul id="appZone">
-            <p>Applications</p>
-        </ul>
-    </div>
+    {{#if isIndexPage}}
+        <div id="dock">
+            <ul id="docklist">
+                <!-- <li launch="resolution" class="only-mobile" id="resolution"><img src="img/res.svg"/></li> -->
+                <li launch="keyboard" class="only-mobile" id="keyboard"><img src="img/kb.svg" /></li>
+            </ul>
+            <input type="text" id="searchBar" name="searchBar" />
+        </div>
+        <div id="searchZone">
+            <div id="closeZone"></div>
+            <ul id="fileZone">
+                <p>Files</p>
+            </ul>
+            <ul id="appZone">
+                <p>Applications</p>
+            </ul>
+        </div>
+    {{/if isIndexPage}}
 
     {{ #scripts }}
     <script {{{defer}}} type="text/javascript" src="{{{src}}}"></script>
