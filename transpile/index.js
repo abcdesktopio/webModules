@@ -183,7 +183,9 @@ async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, indexPage
 
     return {
       ...json,
-      scripts: json.scripts.map(mapper),
+      scripts: json.scripts.filter(
+        (script) => (script.indexPageOnly ? indexPage : true),
+      ).map(mapper),
     };
   });
   const awaitingMustacheFile = fs.promises.readFile(pathMustacheFile, 'utf8');
