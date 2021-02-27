@@ -83,7 +83,6 @@ export const open = function () {
     tabHeader.click(function () {
       const target = $(this).attr('tab');
       let showFunction;
-
       switch (target) {
         case 'system-tab':
           showFunction = systemStartTab.init;
@@ -121,6 +120,8 @@ export const open = function () {
           showFunction = containersTab.init;
           setTitleSuffix(languages.getTranslate('settings-containers-title'));
           break;
+        case 'opensource-tab':
+          return;
         default:
           showFunction = () => { console.error('No tab found'); };
           break;
