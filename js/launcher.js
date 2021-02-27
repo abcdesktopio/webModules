@@ -124,7 +124,7 @@ export function ocrun(data_dict, element) {
         if (notificationSystem) {
           notificationSystem.displayNotification(
             'Application',
-            'no response',
+            result.error,
             'error',
           );
         }
