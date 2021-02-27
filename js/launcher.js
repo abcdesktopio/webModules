@@ -139,13 +139,15 @@ export function ocrun(data_dict, element) {
       }
     })
     .fail((status, error, result) => {
-      if (status == 200) {
+      if (status === 200) {
         notificationSystem.displayNotification(
           'Application',
           result.status === 401 ? 'deny' : error,
           'error',
         );
-      } else { notificationSystem.displayNotification('Application', error, 'error'); }
+      } else {
+        notificationSystem.displayNotification('Application', error, 'error');
+      }
       if (element instanceof HTMLLIElement) {
         element.setAttribute('state', 'down');
         element.setAttribute('container_id', '');
