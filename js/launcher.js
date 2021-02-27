@@ -121,13 +121,11 @@ export function ocrun(data_dict, element) {
     .runApp(data_dict)
     .done((result) => {
       if (typeof result === 'undefined') {
-        if (notificationSystem) {
-          notificationSystem.displayNotification(
-            'Application',
-            result.error,
-            'error',
-          );
-        }
+        notificationSystem.displayNotification(
+          'Application',
+          result.error,
+          'error',
+        );
         return;
       }
 
@@ -141,18 +139,16 @@ export function ocrun(data_dict, element) {
       }
     })
     .fail((status, error, result) => {
-      if (notificationSystem) {
-        if (status == 200) {
-          notificationSystem.displayNotification(
-            'Application',
-            result.status === 401 ? 'deny' : error,
-            'error',
-          );
-        } else { notificationSystem.displayNotification('Application', error, 'error'); }
-        if (element instanceof HTMLLIElement) {
-          element.setAttribute('state', 'down');
-          element.setAttribute('container_id', '');
-        }
+      if (status == 200) {
+        notificationSystem.displayNotification(
+          'Application',
+          result.status === 401 ? 'deny' : error,
+          'error',
+        );
+      } else { notificationSystem.displayNotification('Application', error, 'error'); }
+      if (element instanceof HTMLLIElement) {
+        element.setAttribute('state', 'down');
+        element.setAttribute('container_id', '');
       }
     })
     .always(() => {
