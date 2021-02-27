@@ -52,7 +52,9 @@ const pathModules = path.join(configPath, 'modules.json');
 
 const pathIndexHtmlFile = path.resolve(path.join('..', 'index.html'));
 const pathAppHtmlFile = path.resolve(path.join('..', 'app.html'));
+const pathDescriptionHtmlFile = path.resolve(path.join('..', 'description.html'));
 const pathIndexMustacheHtmlFile = path.resolve(path.join('..', 'index.mustache.html'));
+const pathDescriptionMustacheHtmlFile = path.resolve(path.join('..', 'description.mustache.html'));
 const pathImg = path.resolve(path.join('..', 'img'));
 
 // #region svg
@@ -162,6 +164,7 @@ async function userInterface() {
   await Promise.all([
     applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathAppHtmlFile, false),
     applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathIndexHtmlFile, true),
+    applyConfToMustacheFile(pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false),
   ]);
   console.timeEnd('Apply userInterface conf');
 }
