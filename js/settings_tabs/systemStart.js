@@ -176,7 +176,7 @@ export function init(home, tab) {
         let keyName = key.toLocaleLowerCase().replace(/_/g, ' ');
 
         wrapper.className = 'row';
-        spanKey.className = 'col-xl-2 col-lg-2 col-md-4 col-4';
+        spanKey.className = 'col-xl-2 col-lg-2 col-md-4 col-4 key-info';
         spanValue.className = 'col-xl-8 col-lg-8 col-md-4 col-4';
 
         if (keyName.includes(' ')) {
