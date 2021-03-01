@@ -90,6 +90,7 @@ const buildLine = (row, container) => {
   spanSubDivCmd.innerText = `${container['oc.path']}${(container['oc.args'] ? ` ${container['oc.args']}` : '')}`;
 
   divCmd.className = 'align-self-center text-left col-xl-3 d-xl-block d-lg-none d-md-none d-none';
+  divCmd.style = 'height:100%;overflow:auto;';
 
   subDivCmd.appendChild(spanSubDivCmd);
   divCmd.appendChild(subDivCmd);
