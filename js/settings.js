@@ -68,8 +68,8 @@ export const open = function () {
     },
   });
 
-  const window = document.getElementById('settings-window');
-  const clone = window.cloneNode(true);
+  const windowsettings = document.getElementById('settings-window');
+  const clone = windowsettings.cloneNode(true);
 
   searchSettings.init(config);
   const tabsHeader = Array.from(clone.querySelectorAll('.tab-header'));
@@ -121,6 +121,8 @@ export const open = function () {
           setTitleSuffix(languages.getTranslate('settings-containers-title'));
           break;
         case 'opensource-tab':
+	  let strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+          window.open("https://www.abcdesktop.io", "abcdesktop.io", strWindowFeatures );
           return;
         default:
           showFunction = () => { console.error('No tab found'); };
@@ -144,7 +146,7 @@ export const open = function () {
     });
   }
 
-  window.parentElement.replaceChild(clone, window);
+  windowsettings.parentElement.replaceChild(clone, windowsettings);
 
   $('div[id^=buttons-screen-] label')
     .each(function () {
