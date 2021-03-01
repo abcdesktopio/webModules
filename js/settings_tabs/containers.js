@@ -77,7 +77,7 @@ const buildLine = (row, container) => {
   spanShortId.style = 'padding-left: 5px;';
   spanShortId.innerText = shortId;
 
-  divShortId.className = 'align-self-center text-left col-xl-1 col-lg-2 col-md-2 col-sm-3 d-md-block d-sm-block d-none';
+  divShortId.className = 'align-self-center text-left col-xl-2 col-lg-2 col-md-2 col-sm-3 d-md-block d-sm-block d-none';
   divShortId.style = 'white-space: nowrap;overflow: hidden;';
 
   divShortId.appendChild(imgShortId);
@@ -89,7 +89,7 @@ const buildLine = (row, container) => {
   subDivCmd.className = 'align-middle';
   spanSubDivCmd.innerText = `${container['oc.path']}${(container['oc.args'] ? ` ${container['oc.args']}` : '')}`;
 
-  divCmd.className = 'align-self-center text-left col-xl-4 d-xl-block d-lg-none d-md-none d-none';
+  divCmd.className = 'align-self-center text-left col-xl-3 d-xl-block d-lg-none d-md-none d-none';
 
   subDivCmd.appendChild(spanSubDivCmd);
   divCmd.appendChild(subDivCmd);
@@ -242,6 +242,7 @@ const build = (containers = []) => {
   for (const [index, container] of containers.entries()) {
     const row = document.createElement('div');
     row.className = 'row';
+    row.style = 'height:40px;';
     buildLine(row, container);
     fragment.appendChild(row);
     if (index !== containers.length - 1) {
