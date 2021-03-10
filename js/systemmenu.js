@@ -485,13 +485,15 @@ export const handleMenuClick = function (clickedApp) {
   if (clickedApp.attributes.launch.value === 'keyboard') {
     window.od.broadway.showVirtualKeyboard();
   }
-  let myapptolaunch;
+  let myapptolaunch = undefined;
+  // look for the applications myapptolaunch
   for (let i = 0; i < window.od.applist.length; i++) {
     if (clickedApp.attributes.launch.value === window.od.applist[i].launch) {
       myapptolaunch = window.od.applist[i];
       break;
-    } else myapptolaunch = undefined;
+    }
   }
+  // myapptolaunch is found, check properties
   if (myapptolaunch) {
     if (myapptolaunch.execmode === 'builtin') {
       launcher.launch(myapptolaunch.launch, '', clickedApp);
@@ -512,6 +514,7 @@ export const handleMenuClick = function (clickedApp) {
           break;
       }
     } else {
+      // This myapptolaunch is a docker image
       const runDict = { image: myapptolaunch.id, args: '' };
       launcher.ocrun(runDict, clickedApp);
       system.addAppLoader(clickedApp);
