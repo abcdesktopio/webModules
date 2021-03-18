@@ -794,6 +794,7 @@ class LoginProgress {
 export function docker_logoff() {
   return logout().always(() => {
     window.Cookies.remove('abcdesktop_token', { path: '/API' });
+    window.Cookies.remove('abcdesktop_host');
     // Do not reload the default page if manager and provider is defined
     // if manager is implicit and provider is anonymous it will
     // window.location.reload( true ); // true - Reloads the current page from the server
