@@ -84,7 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // check if query string contains auth params. parseUrl call
   const bInitContinue = parseUrl();
 
+  // init i18l load json files
   languages.init();
+  
   // Init basic event click for welcome window THEN call init
   welcomeSystem.init().always(
     () => {
@@ -270,6 +272,7 @@ function odinit() {
     return window.od.net.wsurlrewrite(url);
   };
 }
+
 
 function initGlobalEvents() {
   document.body.addEventListener('click', (e) => {
