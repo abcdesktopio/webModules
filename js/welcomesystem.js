@@ -47,9 +47,29 @@ const welcomeSystem = (function () {
         );
     }
 
+    applydemoConfig() {
+  	if (window.location.host == 'demo.abcdesktop.io') {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() {
+                        dataLayer.push(arguments);
+                }
+                gtag('js', new Date());
+                gtag('config', 'G-VS25TGNTRZ');
+
+                // set statusText
+                let statusText = document.getElementById('statusText');
+                if (statusText)
+                        statusText.innerText = languages.getTranslate('statusText');
+        }
+    }
+
     applyConfig(config) {
       const self = this;
       const onlogin = function () { self.onlogin(); };
+      
+      // set demo.abcdesktop.io conf
+      // gtag and statusText
+      self.applydemoConfig();
 
       managers.sharing = new auth.SharingAuthManager('sharing', '#connectShare', {}, onlogin);
 
