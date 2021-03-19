@@ -74,6 +74,10 @@ export const open = function (title, message, type, status, callback) {
       self.querySelector('#new').src = 'img/welcome/google_icon.svg';
       self.querySelector('#old').src = `img/welcome/${window.Cookies.get('auth_provider')}_icon.svg`;
       break;
+    case 'github':
+      self.querySelector('#new').src = 'img/welcome/github_icon.svg';
+      self.querySelector('#old').src = `img/welcome/${window.Cookies.get('auth_provider')}_icon.svg`;
+      break;
     default:
       break;
   }
