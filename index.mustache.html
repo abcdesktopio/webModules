@@ -70,16 +70,19 @@
     <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
     <link rel="stylesheet" href="css/jquery.json-viewer.css" type="text/css" />
     <link rel="stylesheet" href="css/bootstrap-slider.min.css" type="text/css" />
-    <script type="module">
-        window._noVNC_has_module_support = true;
-    </script>
     <script>
-        window.addEventListener("load", function () {
-            if (window._noVNC_has_module_support) return;
-            var loader = document.createElement("script");
-            loader.src = "vendor/browser-es-module-loader/dist/browser-es-module-loader.js";
-            document.head.appendChild(loader);
-        });
+        if (window.location.host == 'demo.abcdesktop.io') {
+                !function(e,s,t){(t=e.createElement(s)).async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-VS25TGNTRZ",(e=e.getElementsByTagName(s)[0]).parentNode.insertBefore(t,e)}(document,"script");
+		//var loader = document.createElement("script");
+                //loader.src = "vendor/browser-es-module-loader/dist/browser-es-module-loader.js";
+                //document.head.appendChild(loader);
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { 
+			dataLayer.push(arguments);
+		}
+                gtag('js', new Date());
+                gtag('config', 'G-VS25TGNTRZ');
+        }
     </script>
 </head>
 
