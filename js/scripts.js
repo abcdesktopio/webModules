@@ -75,6 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // build the object window.od.net.funct*
   odinit();
 
+  // if mode mode
+  applygtagdemoconfig();
+
   // map connectLoader to window object for launcher direct call
   window.od.connectLoader = connectLoader;
 
@@ -348,6 +351,18 @@ function parseUrl() {
   }
   return false;
 }
+
+function applygtagdemoconfig() {
+  if (window.location.host == 'demo.abcdesktop.io') {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-VS25TGNTRZ');
+  }
+}
+
 
 /**
  * @function setupisPCApp

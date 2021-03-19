@@ -50,17 +50,11 @@ const welcomeSystem = (function () {
 
     applydemoConfig() {
   	if (window.location.host == 'demo.abcdesktop.io') {
-                window.dataLayer = window.dataLayer || [];
-                function gtag() {
-                        dataLayer.push(arguments);
-                }
-                gtag('js', new Date());
-                gtag('config', 'G-VS25TGNTRZ');
-
                 // set statusText
                 let statusText = document.getElementById('statusText');
                 if (statusText)
-                        statusText.innerText = languages.getTranslate('homepage-statusText');
+                        statusText.innerText = 'Choose an authentification service provider to login';
+			// not ready languages.getTranslate();
         }
     }
 
