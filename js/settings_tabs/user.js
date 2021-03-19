@@ -22,6 +22,7 @@ let firstAppear = true;
 const providerImg = {
   facebook: '../img/welcome/facebook_icon.svg',
   google: '../img/welcome/google_icon.svg',
+  github: '../img/welcome/github_icon.svg',
   orange: '../img/welcome/orange_icon.svg',
   mobile: '../img/welcome/mobileconnect_icon.svg',
   anonymous: '../img/welcome/anonymous_icon.svg',
