@@ -1,4 +1,5 @@
-{ 
+{
+    "homepage-statusText": "Choose an authentification provider to login",	
     "connect-with-github": "Sign-in with Github account",
     "connect-with-facebook": "Sign-in with Facebook account",
     "connect-with-google": "Sign-in with Google account",

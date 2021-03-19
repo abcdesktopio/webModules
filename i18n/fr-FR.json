@@ -1,4 +1,5 @@
 {
+    "homepage-statusText": "Choisissez un service d'authentification pour vous connecter", 
     "connect-with-github": "Se connecter avec Github",
     "connect-with-facebook": "Se connecter avec Facebook",
     "connect-with-google": "Se connecter avec Google",
