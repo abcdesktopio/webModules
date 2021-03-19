@@ -60,7 +60,7 @@ const welcomeSystem = (function () {
                 // set statusText
                 let statusText = document.getElementById('statusText');
                 if (statusText)
-                        statusText.innerText = languages.getTranslate('statusText');
+                        statusText.innerText = languages.getTranslate('homepage-statusText');
         }
     }
 
