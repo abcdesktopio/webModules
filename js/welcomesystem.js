@@ -19,6 +19,7 @@
 import * as launcher from './launcher.js';
 import odApiClient from './odapiclient.js';
 import * as auth from './auth.js';
+import * as languages from './languages.js';
 
 const welcomeSystem = (function () {
   const managers = {};
