@@ -139,14 +139,25 @@ export function ocrun(data_dict, element) {
       }
     })
     .fail((status, error, result) => {
+      let error_message;
+      if (result && result.error ) {
+	      error_message=result.error;
+      }
+      else {
+	      if (result.status === 401)
+		      error_message = 'call API has been denied';
+	      else
+		      error_message = error; 
+      }
+
       if (status === 200) {
         notificationSystem.displayNotification(
           'Application',
-          result.status === 401 ? 'deny' : error,
+          error_message,
           'error',
         );
       } else {
-        notificationSystem.displayNotification('Application', error, 'error');
+        notificationSystem.displayNotification('Application', error_message, 'error');
       }
       if (element instanceof HTMLLIElement) {
         element.setAttribute('state', 'down');
