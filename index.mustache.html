@@ -27,13 +27,21 @@
     <!-- shortcut ico favicon -->
     <link rel="shortcut icon" href="/img/abcdesktop32x32.ico" />
     <link rel="apple-touch-icon" href="/img/abcdesktop.png" />
-
-
+    <!-- ico files (res)x(res) -->
     <link rel="icon" href="/img/abcdesktop32x32.ico" sizes="32x32">
     <link rel="icon" href="/img/abcdesktop48x48.ico" sizes="48x48">
     <link rel="icon" href="/img/abcdesktop64x64.ico" sizes="64x64">
     <link rel="icon" href="/img/abcdesktop128x128.ico" sizes="128x128">
     <link rel="icon" href="/img/abcdesktop256x256.ico" sizes="256x256">
+
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap-table.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/bootstrap-slider.min.css" type="text/css" />
+
+    <!-- jquery css -->
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery.json-viewer.css" type="text/css" />
 
     {{#isIndexPage}}
         <link rel="stylesheet" href="css/css-dist/settings.css" type="text/css" />
@@ -65,19 +73,18 @@
     <link rel="stylesheet" href="css/css-dist/chatLync.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/emoticons.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/logs.css" type="text/css" />
+    
+    {{#isDemoPage}}
+    	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-VS25TGNTRZ"></script>
+	<script>
+  		window.dataLayer = window.dataLayer || [];
+  		function gtag(){dataLayer.push(arguments);}
+  		gtag('js', new Date());
+  		gtag('config', 'G-VS25TGNTRZ');
+	</script>
+    {{/isDemoPage}}
 
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
-    <link rel="stylesheet" href="css/jquery.json-viewer.css" type="text/css" />
-    <link rel="stylesheet" href="css/bootstrap-slider.min.css" type="text/css" />
-
-    <!-- for demo web site only -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script>
-        if (window.location.host == 'demo.abcdesktop.io') {
-                !function(e,s,t){(t=e.createElement(s)).async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-VS25TGNTRZ",(e=e.getElementsByTagName(s)[0]).parentNode.insertBefore(t,e)}(document,"script");
-        }
-    </script>
 </head>
 
 <body>
@@ -131,6 +138,8 @@
                     attachments saved on the hard disk when you are done. In case of issues, call your usual support.
                 </p>
             </div>
+	
+	    {{^isDemoPage}}
             <div id="connectGP">
                 <ul>
                     <li id="login-facebook">
@@ -153,6 +162,80 @@
                     </li>
                 </ul>
             </div>
+	    {{/isDemoPage}}
+
+	    {{#isDemoPage}}
+	    <div id="connectGP" class="container">
+		<div class="bg-light p-5 rounded" id="title-instance">
+    			<p class="lead">This abcdesktop instance is a quick example to illustrate how the abcdesktop.io projects works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
+  		</div>
+
+	    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                            <h4 class="my-0 fw-normal">OpenID Connect</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="col">
+                            <div id="connectOpenid">
+                                <ul>
+                                    <li id="login-facebook">
+                                        <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
+                                    </li>
+                                    <li id="login-github">
+                                        <a id="connect-with-github" href="#">Sign-in with Github</a>
+                                    </li>
+                                    <li id="login-google">
+                                        <a id="connect-with-google" href="#">Sign-in with Google</a>
+                                    </li>
+                                    <li id="login-orange">
+                                        <a id="connect-with-orange" href="#">Sign-in with Orange</a>
+                                    </li>
+                                    <li id="login-mobileorange">
+                                        <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
+                                    </li>
+                                    <li id="login-anonymous">
+                                        <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 fw-normal">10 minutes to use</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="col">
+                            <img id="icon-alarm" src="img/alarm.svg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 fw-normal">Data clean up</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="col">
+                            <img id="icon-trash" src="img/trash.svg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	</div>
+	    {{/isDemoPage}}
+
+
             <div id="connectShare">
                 <p id="connect-share-message">Connect now with your email address to work with your copartner</p>
                 <form>

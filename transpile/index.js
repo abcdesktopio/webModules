@@ -51,6 +51,7 @@ const pathUIConf = path.join(configPath, 'ui.json');
 const pathModules = path.join(configPath, 'modules.json');
 
 const pathIndexHtmlFile = path.resolve(path.join('..', 'index.html'));
+const pathDemoHtmlFile = path.resolve(path.join('..', 'demo.html'));
 const pathAppHtmlFile = path.resolve(path.join('..', 'app.html'));
 const pathDescriptionHtmlFile = path.resolve(path.join('..', 'description.html'));
 const pathIndexMustacheHtmlFile = path.resolve(path.join('..', 'index.mustache.html'));
@@ -162,9 +163,10 @@ async function buildCss(colors = []) {
 async function userInterface() {
   console.time('Apply userInterface conf');
   await Promise.all([
-    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathAppHtmlFile, false),
-    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathIndexHtmlFile, true),
-    applyConfToMustacheFile(pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false),
+    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true),
+    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathAppHtmlFile,  false, false),
+    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false),
+    applyConfToMustacheFile(pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false),
   ]);
   console.timeEnd('Apply userInterface conf');
 }
@@ -174,7 +176,7 @@ async function userInterface() {
  * @param {string} pathHtmlFile
  * @param {boolean} isIndexPage
  */
-async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, isIndexPage) {
+async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, isIndexPage, isDemoPage) {
   const awaitingUIConf = fs.promises.readFile(pathUIConf, 'utf8').then((jsonFile) => JSON.parse(jsonFile));
   const awaitingModulesConf = fs.promises.readFile(pathModules, 'utf8').then((jsonFile) => {
     const json = JSON.parse(jsonFile);
@@ -204,6 +206,7 @@ async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, isIndexPa
     projectName: uiConf.name,
     urlcannotopensession: uiConf.urlcannotopensession,
     isIndexPage,
+    isDemoPage
   };
 
   await fs.promises.writeFile(pathHtmlFile, Mustache.render(mustacheFile, view));
