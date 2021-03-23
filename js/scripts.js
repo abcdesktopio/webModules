@@ -70,13 +70,10 @@ const _this = this;
 let lastTouchEnd = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Init window.id.net functions
+  // Init window.od.net functions
   // add network low level url rewrite call
   // build the object window.od.net.funct*
   odinit();
-
-  // if mode mode
-  applygtagdemoconfig();
 
   // map connectLoader to window object for launcher direct call
   window.od.connectLoader = connectLoader;
@@ -109,6 +106,13 @@ function setupbeforeuserloginin() {
 
   // Parsing current URI and provide isLogmein with Boolean for auto login
   logmein.init();
+
+  // GDPR cookies
+  initAllowCookies();
+  if (!window.Cookies.get('allowCookies')) {
+     console.log('allowCookies not found');
+     system.show( document.getElementById('cookieConsent') );
+  }
 
   // Create object UAParser for reading User Agent
   ocuaparser.init();
@@ -350,17 +354,6 @@ function parseUrl() {
     return true;
   }
   return false;
-}
-
-function applygtagdemoconfig() {
-  if (window.location.host == 'demo.abcdesktop.io') {
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'G-VS25TGNTRZ');
-  }
 }
 
 
@@ -760,3 +753,17 @@ function initRotation() {
     });
   }
 }
+
+function initAllowCookies() {
+	if (document.getElementById('cookieConsent')) {
+		$('#btnDeny').click(()=>{
+    			window.Cookies.remove('allowCookies', { path:'/'});
+    			system.hide( document.getElementById('cookieConsent') );
+		});
+		$('#btnAccept').click(()=>{
+    			window.Cookies.set('allowCookies', 'true',  { path:'/', expires: 7 });
+    			system.hide( document.getElementById('cookieConsent') );
+		});
+	}
+}
+

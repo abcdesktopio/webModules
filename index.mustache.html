@@ -88,6 +88,31 @@
 </head>
 
 <body>
+
+{{#isDemoPage}}
+	<!-- cookie warning Consent -->
+	<div id="cookieConsent" class="fixed-bottom p-4">
+    	    <div class="toast bg-dark text-white w-100 mw-100" role="alert" data-autohide="false">
+        	<div class="toast-body p-4 d-flex flex-column">
+            	<h4>Cookies policy</h4>
+            	<p>
+		To enhance your browsing experience, abcdesktop.io and partners use cookies. These help us personalise your experience by remembering your preferences so we can show you more of what you like. We also use them for statistical purposes, and to help make sure the website is working properly.
+With your agreement, we and our partners use cookies or similar technologies to store, access, and process personal data like your visit on this website. 
+By using this website, you automatically accept that we use cookies.
+            	</p>
+            	<div class="ml-auto">
+                	<button type="button" class="btn btn-outline-light mr-3" id="btnDeny">
+                    		Deny
+                	</button>
+                	<button type="button" class="btn btn-light" id="btnAccept">
+                    		Accept
+                	</button>
+            	</div>
+        	</div>
+    	    </div>
+	</div>
+ {{/isDemoPage}}
+
     <div id="overScreen">
         <p id="overScreenMessage">
             <span id='overScreenMessageData'>
@@ -180,9 +205,10 @@
 
   </a>
   <a href="#alarm" class="list-group-item list-group-item-action flex-column align-items-start">
-
-	  <p class="mb-1"><span class="badge bg-primary rounded-pill">2</span> Your abcdesktop is ready to run for 10 minutes. <img src="img/warning.svg">The security policy for Internet network prevents requests from your abcdesktop being allowed. Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.</p>
-
+	  <p class="mb-2"><span class="badge bg-primary rounded-pill">2</span> Your abcdesktop is ready to run for 10 minutes.</p>
+	  <p class="mb-1"><img src="img/people-fill.svg">Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.<br>
+	  <img src="img/lock.svg">The security policy for Internet network prevents requests from your abcdesktop being allowed.</p>
+	  </p>
   </a>
   <a href="#cleanup" class="list-group-item list-group-item-action flex-column align-items-start">
 
