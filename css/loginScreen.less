@@ -303,10 +303,17 @@
   width: 80%;
 }
 
+.card {
+    background-color: @secondary;
+}
 
-#loginScreen .card-body {
+#loginScreen .card-body.mb-4.shadow-sm {
   padding: none;
-  background-color: '#2D2D2D';
+  background-color: @secondary;
+}
+
+#loginScreen #connectGP .badge.bg-primary.rounded-pill {
+  background-color: @tertiary;	
 }
 
 #loginScreen #card-head {
@@ -319,18 +326,38 @@
 }
 
 #loginScreen #content #connectGP.container .bg-light {
-    background-color: #1E1E1E!important;
+    background-color: @quaternary!important;
 }
 
+.bg-primary {
+    background-color: @tertiary!important;
+}
+
+
 .btn-primary {
-    background-color: #6ec6f0;
+    background-color: @tertiary;
     border-color: none;
 }
 
 .card-header {
-    background-color: #1E1E1E;
+    background-color: @quaternary;
 }
 
+.chapter-item {
+    margin-top: 10px;
+}
+
+.plead {
+    margin-top: 5px;
+}
+
+.pbadge {
+}
+
+.list-group-item {
+ color: white;
+ background-color: @quaternary;
+}
 
 #loginScreen #content #connectGP #title-instance {
   margin: 5%;

@@ -166,15 +166,39 @@
 
 	    {{#isDemoPage}}
 	    <div id="connectGP" class="container">
-		<div class="bg-light p-5 rounded" id="title-instance">
-    			<p class="lead">This abcdesktop instance is a quick example to illustrate how the abcdesktop.io projects works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
-  		</div>
 
+		    <div class="bg-light p-5 rounded" id="title-instance">
+
+			<p class="lead">This abcdesktop instance is a quick example to illustrate how the abcdesktop.io projects works.</p>
+
+
+			<div class="list-group">
+  <a href="#connectOpenid" class="list-group-item list-group-item-action flex-column align-items-start">
+
+    <p class="mb-1"><span class="badge bg-primary rounded-pill">1</span> Choose an OpenID Connect provider to sign-in</p>
+    <small>LDAP authentification provider or Active Directory authentification provider is not defined for this instance</small>
+
+  </a>
+  <a href="#alarm" class="list-group-item list-group-item-action flex-column align-items-start">
+
+	  <p class="mb-1"><span class="badge bg-primary rounded-pill">2</span> Your abcdesktop is ready to run for 10 minutes. <img src="img/warning.svg">The security policy for Internet network prevents requests from your abcdesktop being allowed. Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.</p>
+
+  </a>
+  <a href="#cleanup" class="list-group-item list-group-item-action flex-column align-items-start">
+
+    <p class="mb-1"><span class="badge bg-primary rounded-pill">3
+   </span> Garbage collector clean up all your datas desktop</p>
+
+  </a>
+</div>
+		</div>
+
+		    
 	    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
             <div class="col">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header">
-                            <h4 class="my-0 fw-normal">OpenID Connect</h4>
+                            <h4 class="my-0 fw-normal"><span class="badge bg-primary rounded-pill">1</span> OpenID Connect</h4>
                     </div>
                     <div class="card-body">
                         <div class="col">
@@ -207,8 +231,8 @@
             
             <div class="col">
                 <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 fw-normal">10 minutes to use</h4>
+                    <div id="alarm" class="card-header">
+                        <h4 class="my-0 fw-normal"><span class="badge bg-primary rounded-pill">2</span> 10 minutes to use</h4>
                     </div>
                     <div class="card-body">
                         <div class="col">
@@ -220,8 +244,8 @@
             
             <div class="col">
                 <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 fw-normal">Data clean up</h4>
+                    <div id="cleanup" class="card-header">
+                        <h4 class="my-0 fw-normal"><span class="badge bg-primary rounded-pill">3</span> Data clean up</h4>
                     </div>
                     <div class="card-body">
                         <div class="col">
