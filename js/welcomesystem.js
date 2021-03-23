@@ -50,11 +50,7 @@ const welcomeSystem = (function () {
 
     applydemoConfig() {
   	if (window.location.host == 'demo.abcdesktop.io') {
-                // set statusText
-                let statusText = document.getElementById('statusText');
-                if (statusText)
-                        statusText.innerText = 'Choose an authentification service provider to login';
-			// not ready languages.getTranslate();
+		// add specific code here
         }
     }
 
