@@ -71,7 +71,6 @@
   position: absolute;
   left: 10%;
   bottom: 20px;
-  max-width: 80%;
   height: 80%;
   margin: 0 auto;
   color: @light;
@@ -180,7 +179,7 @@
 #loginScreen #connectGP,
 #loginScreen #connectShare {
   display: none;
-  margin-top: 30px;
+  box-sizing: border-box;
 }
 
 #loginScreen #activeDirectory p {
@@ -205,6 +204,7 @@
 
 #loginScreen #connectGP ul {
   padding: 0;
+  margin-top: 0;
   overflow: hidden;
   max-width: 450px;
 }
@@ -217,7 +217,7 @@
   width: 100%;
   max-width: 450px;
   overflow: hidden;
-  margin: 10px 0px;
+  margin: 5px 0px;
   background-color: black;
 }
 
@@ -225,14 +225,13 @@
   display: block;
   width: 100%;
   height: 50px;
-  text-indent: 60px;
   line-height: 50px;
   text-decoration: none;
   cursor: pointer;
-  margin: auto;
   font-size: 15px;
-  color: @light;
   font-weight: bold;
+  text-align: left;
+  margin-left: 50px;
 }
 
 #loginScreen #connectShare form {
@@ -241,51 +240,101 @@
 }
 
 #loginScreen #connectGP #login-facebook {
-  background: url("../../../img/welcome/facebook_icon.svg") no-repeat 10px
-    center @info;
+  background: url("../../../img/welcome/facebook_icon.svg") no-repeat 10px center @info;
   background-size: 30px;
+  color: white;
 }
+
 #loginScreen #connectGP #login-google {
-  background: url("../../../img/welcome/google_icon.svg") no-repeat 10px center
-    @danger;
+  background: url("../../../img/welcome/google_icon.svg") no-repeat 10px center @danger;
   background-size: 30px;
+  color: white;
 }
+
 #loginScreen #connectGP #login-github {
-  background: url("../../../img/welcome/github_icon.svg") no-repeat 10px center
-    @light;
+  background: url("../../../img/welcome/github_icon.svg") no-repeat 10px center @light;
   background-size: 30px;
-  color: @dark;
+  color: black;
 }
+
 #loginScreen #connectGP #login-orange {
-  background: url("../../../img/welcome/orange_icon.svg") no-repeat 10px center
-    black;
+  background: url("../../../img/welcome/orange_icon.svg") no-repeat 10px center black;
   background-size: 30px;
+  color: white;
 }
+
 #loginScreen #connectGP #login-mobileorange {
-  background: url("../../../img/welcome/mobileconnect_icon.svg") no-repeat 10px
-    center @tertiary;
+  background: url("../../../img/welcome/mobileconnect_icon.svg") no-repeat 10px center @tertiary;
   background-size: 30px;
+  color: white;
 }
-#loginScreen #connectGP #login-activedirectory {
-  background: url("../../../img/welcome/activedirectory_icon.svg") no-repeat
-    10px center;
-  background-size: 30px;
-}
+
 #loginScreen #connectGP #login-anonymous {
-  background: url("../../../img/welcome/anonymous_icon.svg") no-repeat 10px
-    center @light;
+  background: url("../../../img/welcome/anonymous_icon.svg") no-repeat 10px center @light;
   background-size: 30px;
-  color: @dark;
+  color: black;
 }
 
-#loginScreen #connectGP #login-anonymous a {
-  color: @dark;
+#connect-with-facebook {
+  color: white;
 }
 
-#loginScreen #connectGP #login-github a {
-  color: @dark;
+#connect-with-google {
+  color: white;
 }
 
+#connect-with-orange {
+  color: white;
+}
+
+#connect-with-anonymous {
+  color: black;
+}
+
+#connect-with-github {
+  color: black;
+}
+
+#icon-alarm {
+  width: 80%;
+}
+
+#icon-trash {
+  width: 80%;
+}
+
+
+#loginScreen .card-body {
+  padding: none;
+  background-color: '#2D2D2D';
+}
+
+#loginScreen #card-head {
+  background-color: '#474B45';
+}
+
+#loginScreen #connectGP #connectOAuth #card #card-body #col .img {
+  width: 80%;
+  height: 80%;
+}
+
+#loginScreen #content #connectGP.container .bg-light {
+    background-color: #1E1E1E!important;
+}
+
+.btn-primary {
+    background-color: #6ec6f0;
+    border-color: none;
+}
+
+.card-header {
+    background-color: #1E1E1E;
+}
+
+
+#loginScreen #content #connectGP #title-instance {
+  margin: 5%;
+}
 
 div#overScreen {
   height: 100%;
