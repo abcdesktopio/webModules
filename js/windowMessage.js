@@ -66,6 +66,7 @@ export const open = function (title, message, type, status, callback) {
       self.querySelector('#old').src = `img/welcome/${window.Cookies.get('auth_provider')}_icon.svg`;
       break;
     case 'orange':
+    case 'orangeconnect':
     case 'mobileorange':
       self.querySelector('#new').src = 'img/welcome/orange_icon.svg';
       self.querySelector('#old').src = `img/welcome/${window.Cookies.get('auth_provider')}_icon.svg`;
