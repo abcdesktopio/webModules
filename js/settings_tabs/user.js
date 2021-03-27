@@ -24,6 +24,7 @@ const providerImg = {
   google: '../img/welcome/google_icon.svg',
   github: '../img/welcome/github_icon.svg',
   orange: '../img/welcome/orange_icon.svg',
+  orangeconnect: '../img/welcome/orange_icon.svg',
   mobile: '../img/welcome/mobileconnect_icon.svg',
   anonymous: '../img/welcome/anonymous_icon.svg',
   activedirectory: '../img/welcome/activedirectory_icon.svg',
