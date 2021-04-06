@@ -164,7 +164,7 @@ async function userInterface() {
   console.time('Apply userInterface conf');
   await Promise.all([
     applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true),
-    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathAppHtmlFile,  false, false),
+    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false),
     applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false),
     applyConfToMustacheFile(pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false),
   ]);
@@ -206,7 +206,7 @@ async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, isIndexPa
     projectName: uiConf.name,
     urlcannotopensession: uiConf.urlcannotopensession,
     isIndexPage,
-    isDemoPage
+    isDemoPage,
   };
 
   await fs.promises.writeFile(pathHtmlFile, Mustache.render(mustacheFile, view));
