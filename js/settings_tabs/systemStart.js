@@ -80,12 +80,12 @@ export function init(home, tab) {
         return;
       }
 
-      const settingsServer = systemTab.querySelector('div.settings-server');
-      if (!settingsServer) {
+      const settingsVersions = systemTab.querySelector('div.settings-versions');
+      if (!settingsVersions) {
         return;
       }
 
-      const paragraphes = settingsServer.querySelectorAll('p');
+      const paragraphes = settingsVersions.querySelectorAll('p');
 
       if (!(paragraphes instanceof NodeList)) {
         return;
@@ -110,12 +110,12 @@ export function init(home, tab) {
           return;
         }
 
-        const settingsServer = systemTab.querySelector('div.settings-server');
-        if (!settingsServer) {
+        const settingsVersions = systemTab.querySelector('div.settings-versions');
+        if (!settingsVersions) {
           return;
         }
 
-        const paragraphes = settingsServer.querySelectorAll('p');
+        const paragraphes = settingsVersions.querySelectorAll('p');
 
         if (!(paragraphes instanceof NodeList)) {
           return;
@@ -140,12 +140,12 @@ export function init(home, tab) {
         return;
       }
 
-      const settingsServer = systemTab.querySelector('div.settings-server');
-      if (!settingsServer) {
+      const settingsVersions = systemTab.querySelector('div.settings-versions');
+      if (!settingsVersions) {
         return;
       }
 
-      const paragraphes = settingsServer.querySelectorAll('p');
+      const paragraphes = settingsVersions.querySelectorAll('p');
 
       if (!(paragraphes instanceof NodeList)) {
         return;
