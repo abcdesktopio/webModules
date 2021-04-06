@@ -171,26 +171,32 @@ export function init(home, tab) {
           continue;
         }
         const wrapper = document.createElement('div');
-        const spanKey = document.createElement('span');
+        const card = document.createElement('div');
+        const cardBody = document.createElement('div');
+        const titleKey = document.createElement('h6');
         const spanValue = document.createElement('span');
         let keyName = key.toLocaleLowerCase().replace(/_/g, ' ');
 
-        wrapper.className = 'row';
-        spanKey.className = 'col-xl-2 col-lg-2 col-md-4 col-4 key-info';
-        spanValue.className = 'col-xl-8 col-lg-8 col-md-4 col-4';
+        card.className = 'card';
+        cardBody.className = 'card-body';
+        wrapper.className = 'col-xl-6 col-lg-6 col-12';
+        wrapper.style = 'overflow-x: auto; margin-top:15px;';
 
         if (keyName.includes(' ')) {
           keyName = keyName.split(' ')
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .reduce((prev, cur) => `${prev} ${cur}`, '');
-          spanKey.textContent = `${keyName} : `;
+          titleKey.textContent = keyName.toUpperCase();
           spanValue.textContent = `${msg[key] ? msg[key] : null}`;
         } else {
-          spanKey.textContent = `${keyName.charAt(0).toUpperCase() + key.slice(1)} : `;
+          titleKey.textContent = `${keyName.charAt(0).toUpperCase() + key.slice(1)}`;
           spanValue.textContent = `${msg[key] ? msg[key] : null}`;
         }
-        wrapper.appendChild(spanKey);
-        wrapper.appendChild(spanValue);
+
+        cardBody.appendChild(titleKey);
+        cardBody.appendChild(spanValue);
+        card.appendChild(cardBody);
+        wrapper.appendChild(card);
         fragment.appendChild(wrapper);
       }
       overview.appendChild(fragment);
