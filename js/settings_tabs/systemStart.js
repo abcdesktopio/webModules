@@ -49,19 +49,6 @@ function getScreenInfos() {
   }
 }
 
-function animationLoop() {
-  const current = $(this);
-  const callBack = current.attr('anim-is-running') === 'false' ? () => {} : animationLoop;
-
-  if (current.attr('down') === 'false') {
-    current.attr('down', 'true');
-    current.animate({ top: '0px' }, 500, callBack);
-  } else {
-    current.attr('down', 'false');
-    current.animate({ top: '20px' }, 500, callBack);
-  }
-}
-
 export function init(home, tab) {
   system.hide(home);
 
@@ -205,21 +192,6 @@ export function init(home, tab) {
   // Display
   getScreenInfos();
 
-  $('.logo-animation')
-    .each(function () {
-      const current = $(this);
-      current.attr('anim-is-running', 'false');
-      current.click(() => {
-        if (current.attr('anim-is-running') === 'false') {
-          current.attr('anim-is-running', 'true');
-          current.attr('down', 'false');
-          current.animate({ top: '20px' }, 500, animationLoop);
-        } else {
-          current.attr('anim-is-running', 'false');
-          current.attr('down', 'false');
-        }
-      });
-    });
   system.show(tab);
 }
 
