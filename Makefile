@@ -25,6 +25,7 @@ help:
 	@echo "xterm          : Build xterm."
 	@echo "svg            : Change svg @tertiary color with the transpile @tertiary color configuration."
 	@echo "css            : Transpile all less files in css."
+	@echo "ui             : Transpile mustache file into all generated html file."
 	@echo "oneCss         : Create one css file minified and use it in html instead of all css files."
 	@echo "prod           : Build xterm, create one css minified, use it in index.html, change svg @tertiary color."
 	@echo "clean          : Remove all transpiled css and minified js, and remove [node_modules] from user-interfaces [transpile, xterm, utils]."
