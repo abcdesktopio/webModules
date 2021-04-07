@@ -34,7 +34,9 @@ export function init(home, logs) {
     }
 
     const div = document.createElement('div');
-    div.className = 'container-logs';
+    const cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
+    div.className = 'container-logs card';
     data.result.split('\n')
       .map((row) => {
         const p = document.createElement('p');
@@ -42,10 +44,12 @@ export function init(home, logs) {
         p.style.margin = 0;
         return p;
       })
-      .reduce((div, p) => {
-        div.appendChild(p);
-        return div;
-      }, div);
+      .reduce((cardBody, p) => {
+        cardBody.appendChild(p);
+        return cardBody;
+      }, cardBody);
+
+    div.appendChild(cardBody);
     logsTab.appendChild(div);
   });
   system.show(logs);

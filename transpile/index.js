@@ -205,6 +205,8 @@ async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, isIndexPa
     scripts: modulesConf.scripts,
     projectName: uiConf.name,
     urlcannotopensession: uiConf.urlcannotopensession,
+    urlusermanual: uiConf.urlusermanual,
+    urlusersupport: uiConf.urlusersupport,
     isIndexPage,
     isDemoPage,
   };
