@@ -48,6 +48,10 @@ const tabsHeaders = [
     name: 'container',
     words: ['Containers', 'tasks', 'applications', 'debug', 'remove', 'env', 'kill'],
   },
+  {
+    name: 'opensource',
+    words: ['opensource'],
+  },
 ];
 
 export const init = (config) => {
