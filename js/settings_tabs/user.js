@@ -50,6 +50,19 @@ const browserImg = {
   default: '../img/browser.svg',
 };
 
+function getCardWrappers() {
+  const cardContainer = document.createElement('div');
+  const cardBody = document.createElement('div');
+  cardContainer.className = 'card';
+  cardContainer.style = 'margin-top:15px; overflow-x:auto;';
+  cardBody.className = 'card-body d-flex';
+  cardContainer.appendChild(cardBody);
+  return {
+    cardContainer,
+    cardBody,
+  };
+}
+
 /**
  * @function setProvider
  * @returns {void}
@@ -75,7 +88,11 @@ function setProvider() {
 
   url = window.od.net.urlrewrite(url);
 
-  const fragment = document.createDocumentFragment();
+  const {
+    cardContainer,
+    cardBody,
+  } = getCardWrappers();
+
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
   wrapperText.className = 'd-flex col-6 align-items-center';
@@ -84,14 +101,13 @@ function setProvider() {
   const span = document.createElement('span');
   span.innerText = provider;
   img.src = url;
-  img.style = 'float:right;';
 
   wrapperImage.appendChild(img);
   wrapperText.appendChild(span);
-  fragment.appendChild(wrapperImage);
-  fragment.appendChild(wrapperText);
+  cardBody.appendChild(wrapperImage);
+  cardBody.appendChild(wrapperText);
   system.removeAllChilds(document.querySelector('#settings-user-provider'))
-    .appendChild(fragment);
+    .appendChild(cardContainer);
 }
 
 /**
@@ -119,21 +135,19 @@ async function setName() {
 
   url = window.od.net.urlrewrite(url);
 
-  const fragment = document.createDocumentFragment();
+  const { cardContainer, cardBody } = getCardWrappers();
   const wrapperUserImage = getWrapperUserImage();
   const wrapperUserInfos = await getWrapperUserInfos();
 
-  fragment.appendChild(wrapperUserImage);
-  fragment.appendChild(wrapperUserInfos);
-
+  cardBody.appendChild(wrapperUserImage);
+  cardBody.appendChild(wrapperUserInfos);
   system.removeAllChilds(document.querySelector('#settings-user-name'))
-    .appendChild(fragment);
+    .appendChild(cardContainer);
 
   function getWrapperUserImage() {
     const wrapperUserImage = document.createElement('div');
     const img = document.createElement('img');
     img.src = url;
-    img.style = 'float:right;';
 
     wrapperUserImage.appendChild(img);
 
@@ -200,7 +214,7 @@ function setOS(ua) {
   url = window.od.net.urlrewrite(url);
 
   const osElt = system.removeAllChilds(document.querySelector('#settings-user-os'));
-  const fragment = document.createDocumentFragment();
+  const { cardContainer, cardBody } = getCardWrappers();
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
   wrapperText.className = 'd-flex col-6 align-items-center';
@@ -209,15 +223,14 @@ function setOS(ua) {
   const span = document.createElement('span');
 
   img.src = url;
-  img.style = 'float:right;';
   span.innerText = `${objOS.name} ${objOS.version}`;
 
   wrapperImage.appendChild(img);
   wrapperText.appendChild(span);
-  fragment.appendChild(wrapperImage);
-  fragment.appendChild(wrapperText);
+  cardBody.appendChild(wrapperImage);
+  cardBody.appendChild(wrapperText);
 
-  osElt.appendChild(fragment);
+  osElt.appendChild(cardContainer);
 }
 
 /**
@@ -241,7 +254,7 @@ function setBrowser(ua) {
   url = window.od.net.urlrewrite(url);
 
   const browserElt = system.removeAllChilds(document.querySelector('#settings-user-browser'));
-  const fragment = document.createDocumentFragment();
+  const { cardBody, cardContainer } = getCardWrappers();
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
   wrapperText.className = 'd-flex col-6 align-items-center';
@@ -250,15 +263,14 @@ function setBrowser(ua) {
   const span = document.createElement('span');
 
   img.src = url;
-  img.style = 'float:right;';
   span.innerText = `${name} ${objBrowser.version}`;
 
   wrapperImage.appendChild(img);
   wrapperText.appendChild(span);
-  fragment.appendChild(wrapperImage);
-  fragment.appendChild(wrapperText);
+  cardBody.appendChild(wrapperImage);
+  cardBody.appendChild(wrapperText);
 
-  browserElt.appendChild(fragment);
+  browserElt.appendChild(cardContainer);
 }
 
 /**
