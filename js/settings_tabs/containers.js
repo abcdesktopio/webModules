@@ -20,6 +20,14 @@ import * as languages from '../languages.js';
 let refreshIsActive = false;
 let idInterval = 0;
 let storageContainers = [];
+let containerSelectedForInfos = '';
+
+function hideInfosSection() {
+  const taskManagerContainerInfos = document.getElementById('task-manager-container-infos');
+  const taskManagerContainerList = document.getElementById('task-manager-container-list');
+  taskManagerContainerInfos.style.height = '0%';
+  taskManagerContainerList.style.height = '100%';
+}
 
 const buildLine = (row, container) => {
   const { status, short_id: shortId, id } = container;
@@ -130,6 +138,7 @@ const buildLine = (row, container) => {
           cloneTaskManagerContainerInfos,
           taskManagerContainerInfos,
         );
+        containerSelectedForInfos = id;
       });
   });
 
@@ -177,6 +186,7 @@ const buildLine = (row, container) => {
           cloneTaskManagerContainerInfos,
           taskManagerContainerInfos,
         );
+        containerSelectedForInfos = id;
       });
   });
 
@@ -199,6 +209,9 @@ const buildLine = (row, container) => {
   btnRemove.className = 'btn btn-dark';
   btnRemove.addEventListener('click', () => {
     launcher.removeContainer(id, container['oc.displayname']);
+    if (containerSelectedForInfos === id) {
+      hideInfosSection();
+    }
   });
 
   cardContainer.className += ' w-100';
