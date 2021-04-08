@@ -115,6 +115,8 @@ export function logout(data_dict) {
 export function ocrun(data_dict, element) {
   // Play Icon animation
   // Add code here
+  getSecrets();
+
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   data_dict.timezone = timezone;
   return odApiClient.composer
@@ -736,6 +738,7 @@ export function showError(message) {
   welcomeSystem.open();
 }
 
+
 class LoginProgress {
   constructor(message) {
     this.enabled = true;
@@ -760,16 +763,17 @@ class LoginProgress {
   onDone(result) {
     if (result === 'stopinfo') {
       this.enabled = false;
-    } else if (this.enabled) {
+    }
+    if (this.enabled) {
       if (result.message) {
         this.message = result.message;
         this.bar = '';
       } else {
         this.bar += '.';
       }
-      window.od.connectLoader.editStatus(`${this.message} ${this.bar}`);
-      this.next();
+      window.od.connectLoader.editStatus(`${this.message}${this.bar}`);
     }
+    this.next();
   }
 
   onFail() {
@@ -878,6 +882,14 @@ export function getContainerWSLocation(uri) {
  */
 export function getContainers() {
   return odApiClient.composer.listcontainer();
+}
+
+/**
+ * @function getContainers
+ * @global
+ */
+export function getSecrets() {
+  return odApiClient.composer.listsecrets();
 }
 
 /**
@@ -1406,4 +1418,9 @@ export async function getWebModulesVersion() {
   return window.od.currentUser.webModulesVersion;
 }
 
-broadcastEvent.addEventListener('ocrun', ({ detail: { data_dict } }) => ocrun(data_dict));
+export const containerNotificationInfo = function(data) {
+  notificationSystem.displayNotification(data.name, data.message, 'error', '/img/app/' + data.icon, 10 );
+};
+
+broadcastEvent.addEventListener('container',	({ detail: { container   } }) => containerNotificationInfo(container));
+broadcastEvent.addEventListener('ocrun', 	({ detail: { data_dict   } }) => ocrun(data_dict));

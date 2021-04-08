@@ -713,9 +713,9 @@ export const tryReduceDock = function (docklist, childs) {
   return appRemoved;
 };
 
-broadcastEvent.addEventListener('proc.started', ({ detail: { procStarted } }) => appStarted(procStarted));
-broadcastEvent.addEventListener('proc.killed', ({ detail: { procKilled } }) => appKilled(procKilled));
-broadcastEvent.addEventListener('window.list', ({ detail: { windowList } }) => updateWindowList(windowList));
+broadcastEvent.addEventListener('proc.started',({ detail: { procStarted } }) => appStarted(procStarted));
+broadcastEvent.addEventListener('proc.killed', ({ detail: { procKilled  } }) => appKilled(procKilled));
+broadcastEvent.addEventListener('window.list', ({ detail: { windowList  } }) => updateWindowList(windowList));
 
 const docklist = document.getElementById('docklist');
 let lastWindowWidth = window.innerWidth;

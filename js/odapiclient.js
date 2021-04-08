@@ -205,6 +205,11 @@ const odApiClient = new (class ODApiClient {
       listcontainer() {
         return client.sendRequest('composer/listcontainer');
       }
+
+      listsecrets() {
+        return client.sendRequest('composer/listsecrets');
+      }
+
     })();
   }
 

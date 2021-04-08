@@ -84,6 +84,14 @@ export const connect = () => {
         new CustomEvent('bye', { detail: { user: msg.user } }),
       );
     }
+
+    if (msg.method === 'container') {
+      let data = JSON.parse(msg.data.args);
+      broadcastEvent.dispatchEvent(
+        new CustomEvent('container', { detail: { container: data } } ),
+      );
+    }
+
     if (msg.method === 'proc.started') {
       broadcastEvent.dispatchEvent(
         new CustomEvent('proc.started', { detail: { appStarted: msg.data } }),
@@ -95,6 +103,7 @@ export const connect = () => {
         new CustomEvent('proc.killed', { detail: { procKilled: msg.data } }),
       );
     }
+
     if (msg.method === 'keepalive') {
       // Nothing to do
     }
