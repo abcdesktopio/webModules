@@ -21,21 +21,6 @@ let refreshIsActive = false;
 let idInterval = 0;
 let storageContainers = [];
 
-/**
- * @param {HTMLDivElement} row
- */
-const removeNextDivider = (row) => {
-  const childs = Array.from(row.parentNode.children);
-  const index = childs.indexOf(row);
-  const lastIndex = childs.length - 1;
-  if (lastIndex !== index) {
-    const divider = childs[index + 1];
-    if (divider.tagName.toUpperCase() === 'HR') {
-      row.parentNode.removeChild(divider);
-    }
-  }
-};
-
 const buildLine = (row, container) => {
   const { status, short_id: shortId, id } = container;
   const { cardContainer, cardBody } = system.getCardWrappers();
@@ -202,8 +187,6 @@ const buildLine = (row, container) => {
         btnKill.removeEventListener('click', handlerKill);
         btnKill.setAttribute('disabled', 'true');
       });
-
-    removeNextDivider(row);
   };
   btnKill.addEventListener('click', handlerKill);
 
