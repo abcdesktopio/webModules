@@ -106,11 +106,12 @@ const buildLine = (row, container) => {
     launcher.getContainerLogs(id)
       .done((res) => {
         const taskManagerContainerInfos = document.getElementById('task-manager-container-infos');
+        const taskManagerContainerList = document.getElementById('task-manager-container-list');
         const cloneTaskManagerContainerInfos = taskManagerContainerInfos.cloneNode(true);
         const cloneTaskManagerLogsContainer = system.removeAllChilds(cloneTaskManagerContainerInfos.querySelector('#task-manager-container-logs'));
 
         cloneTaskManagerContainerInfos.querySelector('#task-manager-container-env').style.display = 'none';
-        cloneTaskManagerContainerInfos.style.display = 'block';
+        cloneTaskManagerContainerInfos.style.height = '50%';
         cloneTaskManagerLogsContainer.style.display = 'block';
 
         if (!res.result) {
@@ -124,6 +125,7 @@ const buildLine = (row, container) => {
           cloneTaskManagerLogsContainer.append(res.result);
         }
 
+        taskManagerContainerList.style.height = '50%';
         taskManagerContainerInfos.parentNode.replaceChild(
           cloneTaskManagerContainerInfos,
           taskManagerContainerInfos,
@@ -139,12 +141,13 @@ const buildLine = (row, container) => {
       .done((res) => {
         const dico = res.result;
         const taskManagerContainerInfos = document.getElementById('task-manager-container-infos');
+        const taskManagerContainerList = document.getElementById('task-manager-container-list');
         const cloneTaskManagerContainerInfos = taskManagerContainerInfos.cloneNode(true);
 
         const cloneTaskManagerEnvContainer = cloneTaskManagerContainerInfos.querySelector('#task-manager-container-env');
         const cloneTable = system.removeAllChilds(cloneTaskManagerEnvContainer.querySelector('table'));
         cloneTaskManagerContainerInfos.querySelector('#task-manager-container-logs').style.display = 'none';
-        cloneTaskManagerContainerInfos.style.display = 'block';
+        cloneTaskManagerContainerInfos.style.height = '50%';
         cloneTaskManagerEnvContainer.style.display = 'block';
 
         const dicoOrdered = {};
@@ -169,6 +172,7 @@ const buildLine = (row, container) => {
           }
         }
 
+        taskManagerContainerList.style.height = '50%';
         taskManagerContainerInfos.parentNode.replaceChild(
           cloneTaskManagerContainerInfos,
           taskManagerContainerInfos,

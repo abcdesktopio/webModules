@@ -15,7 +15,7 @@
 }
 
 #container-tab #task-manager-container-list {
-  height: 50%;
+  height: 100%;
   width: 100%;
 }
 
@@ -58,12 +58,15 @@
 }
 
 #container-tab #task-manager-container-infos {
-  height: 50%;
+  height: 0%;
   width: 100%;
   margin: 0 auto;
-  transition: height 0.5s;
   overflow-y: auto;
-  display: none;
+}
+
+#container-tab #task-manager-container-list,
+#container-tab #task-manager-container-infos {
+  transition: height 0.5s;
 }
 
 #container-tab #task-manager-container-infos #task-manager-container-logs {
