@@ -38,6 +38,7 @@ const removeNextDivider = (row) => {
 
 const buildLine = (row, container) => {
   const { status, short_id: shortId, id } = container;
+  const { cardContainer, cardBody } = system.getCardWrappers();
   const envTranslation = languages.getTranslate('settings-containers-btn-env');
   const killTranslation = languages.getTranslate('settings-containers-btn-kill');
   const removeTranslation = languages.getTranslate('settings-containers-btn-remove');
@@ -90,7 +91,7 @@ const buildLine = (row, container) => {
   spanSubDivCmd.innerText = `${container['oc.path']}${(container['oc.args'] ? ` ${container['oc.args']}` : '')}`;
 
   divCmd.className = 'align-self-center text-left col-xl-3 d-xl-block d-lg-none d-md-none d-none';
-  divCmd.style = 'height:100%;overflow:auto;';
+  divCmd.style.overflow = 'auto';
 
   subDivCmd.appendChild(spanSubDivCmd);
   divCmd.appendChild(subDivCmd);
@@ -213,14 +214,16 @@ const buildLine = (row, container) => {
     launcher.removeContainer(id, container['oc.displayname']);
   });
 
-  row.appendChild(divAppName);
-  row.appendChild(divShortId);
-  row.appendChild(divCmd);
-  row.appendChild(divState);
-  row.appendChild(divButtonLog);
-  row.appendChild(divButtonEnv);
-  row.appendChild(divButtonKill);
-  row.appendChild(divButtonRemove);
+  cardContainer.className += ' w-100';
+  cardBody.appendChild(divAppName);
+  cardBody.appendChild(divShortId);
+  cardBody.appendChild(divCmd);
+  cardBody.appendChild(divState);
+  cardBody.appendChild(divButtonLog);
+  cardBody.appendChild(divButtonEnv);
+  cardBody.appendChild(divButtonKill);
+  cardBody.appendChild(divButtonRemove);
+  row.appendChild(cardContainer);
 };
 
 const build = (containers = []) => {
@@ -240,15 +243,11 @@ const build = (containers = []) => {
   message.style.display = 'none';
 
   const fragment = document.createDocumentFragment();
-  for (const [index, container] of containers.entries()) {
+  for (const container of containers) {
     const row = document.createElement('div');
     row.className = 'row';
-    row.style = 'height:40px;';
     buildLine(row, container);
     fragment.appendChild(row);
-    if (index !== containers.length - 1) {
-      fragment.appendChild(document.createElement('hr'));
-    }
   }
   wrap.appendChild(fragment);
 };
