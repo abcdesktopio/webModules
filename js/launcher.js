@@ -1419,7 +1419,7 @@ export async function getWebModulesVersion() {
 }
 
 export const containerNotificationInfo = function(data) {
-  notificationSystem.displayNotification(data.name, data.message, 'error', '/img/app/' + data.icon, 10 );
+  notificationSystem.displayNotification(data.name, data.message, 'error', '/img/app/' + data.icon, 15 );
 };
 
 broadcastEvent.addEventListener('container',	({ detail: { container   } }) => containerNotificationInfo(container));
