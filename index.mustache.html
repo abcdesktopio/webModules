@@ -957,40 +957,64 @@ By using this website, you automatically accept that we use cookies.
             <!-- Logs tab end -->
             <!-- speedtest tab start -->
             <div class="tab" id="speedtest-tab">
-                <div id="test">
-                    <div class="testGroup">
-                        <div class="testArea">
-                            <div id="settings-speedTest-download" class="testName">Download</div>
-                            <canvas id="dlMeter" class="meter"></canvas>
-                            <div id="dlText" class="meterText"></div>
-                            <div id="settings-speedTest-unit-download" class="unit">Mbps</div>
+                <div class="container">
+                    <div id="test" class="row">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="testArea">
+                                        <div id="settings-speedTest-download" class="testName">Download</div>
+                                        <canvas id="dlMeter" class="meter"></canvas>
+                                        <div id="dlText" class="meterText"></div>
+                                        <div id="settings-speedTest-unit-download" class="unit">Mbps</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="testArea">
-                            <div id="settings-speedTest-upload" class="testName">Upload</div>
-                            <canvas id="ulMeter" class="meter"></canvas>
-                            <div id="ulText" class="meterText"></div>
-                            <div class="unit">Mbps</div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="testArea">
+                                        <div id="settings-speedTest-upload" class="testName">Upload</div>
+                                        <canvas id="ulMeter" class="meter"></canvas>
+                                        <div id="ulText" class="meterText"></div>
+                                        <div class="unit">Mbps</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="testArea">
+                                        <div id="settings-speedTest-ping" class="testName">Ping</div>
+                                        <canvas id="pingMeter" class="meter"></canvas>
+                                        <div id="pingText" class="meterText"></div>
+                                        <div id="settings-speedTest-ping-unit" class="unit">ms</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="testArea">
+                                        <div id="settings-speedTest-jitter" class="testName">Jitter</div>
+                                        <canvas id="jitMeter" class="meter"></canvas>
+                                        <div id="jitText" class="meterText"></div>
+                                        <div id="settings-speedTest-jitter-unit" class="unit">ms</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 card-container">
+                            <div id="ipArea">
+                                <span id="settings-speedTest-ip">ip addr</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="testGroup">
-                        <div class="testArea">
-                            <div id="settings-speedTest-ping" class="testName">Ping</div>
-                            <canvas id="pingMeter" class="meter"></canvas>
-                            <div id="pingText" class="meterText"></div>
-                            <div id="settings-speedTest-ping-unit" class="unit">ms</div>
-                        </div>
-                        <div class="testArea">
-                            <div id="settings-speedTest-jitter" class="testName">Jitter</div>
-                            <canvas id="jitMeter" class="meter"></canvas>
-                            <div id="jitText" class="meterText"></div>
-                            <div id="settings-speedTest-jitter-unit" class="unit">ms</div>
-                        </div>
-                    </div>
-                    <div id="ipArea">
-                        <span id="settings-speedTest-ip">ip addr</span>
-                    </div>
+                    <div id="startStopBtn"></div>
                 </div>
-                <div id="startStopBtn"></div>
             </div>
             <!-- speedtest tab end -->
             <!-- Logs tab start -->
