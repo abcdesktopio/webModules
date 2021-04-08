@@ -88,12 +88,12 @@ const buildLine = (row, container) => {
     divState.appendChild(spanState);
   }
 
-  divState.className = 'align-self-center text-center col-auto d-xl-block d-lg-block d-md-block d-none';
+  divState.className = 'align-self-center text-center col-xl-1 col-lg-2 col-md-3 col-2 d-xl-block d-lg-block d-md-block d-none';
 
   divButtonLog.className = 'text-center col-auto d-xl-block d-lg-block d-md-block d-sm-block';
   divButtonEnv.className = 'text-center col-auto d-xl-block d-lg-block d-md-block d-none';
   divButtonKill.className = 'text-center col-auto';
-  divButtonRemove.className = 'text-center col-auto d-xl-block d-lg-block d-none';
+  divButtonRemove.className = 'text-center col-auto d-xl-block d-lg-block d-md-block d-none';
 
   divButtonLog.appendChild(btnLogs);
   divButtonEnv.appendChild(btnEnv);
@@ -202,6 +202,7 @@ const buildLine = (row, container) => {
   });
 
   cardContainer.className += ' w-100';
+  cardContainer.style.overflowX = 'hidden';
   cardBody.appendChild(divAppName);
   cardBody.appendChild(divShortId);
   cardBody.appendChild(divCmd);
