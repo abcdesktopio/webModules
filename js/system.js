@@ -235,4 +235,17 @@ export const checkError = async (res) => {
   }
 };
 
+export function getCardWrappers() {
+  const cardContainer = document.createElement('div');
+  const cardBody = document.createElement('div');
+  cardContainer.className = 'card';
+  cardContainer.style = 'margin-top:15px; overflow-x:auto;';
+  cardBody.className = 'card-body d-flex';
+  cardContainer.appendChild(cardBody);
+  return {
+    cardContainer,
+    cardBody,
+  };
+}
+
 broadcastEvent.addEventListener('connect.counter', ({ detail: { connectCounter } }) => updateNbConnect(connectCounter));
