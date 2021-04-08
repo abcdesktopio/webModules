@@ -61,8 +61,9 @@ function setProvider() {
 
   try {
     url = providerImg[window.od.currentUser.providertype];
-    if (!url)
+    if (!url) {
       url = providerImg[window.od.currentUser.provider];
+    }
   } catch (e) {
     url = '../img/welcome/anonymous_icon.svg';
   }
