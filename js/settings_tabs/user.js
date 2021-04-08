@@ -50,19 +50,6 @@ const browserImg = {
   default: '../img/browser.svg',
 };
 
-function getCardWrappers() {
-  const cardContainer = document.createElement('div');
-  const cardBody = document.createElement('div');
-  cardContainer.className = 'card';
-  cardContainer.style = 'margin-top:15px; overflow-x:auto;';
-  cardBody.className = 'card-body d-flex';
-  cardContainer.appendChild(cardBody);
-  return {
-    cardContainer,
-    cardBody,
-  };
-}
-
 /**
  * @function setProvider
  * @returns {void}
@@ -74,8 +61,9 @@ function setProvider() {
 
   try {
     url = providerImg[window.od.currentUser.providertype];
-    if (!url)
+    if (!url) {
       url = providerImg[window.od.currentUser.provider];
+    }
   } catch (e) {
     url = '../img/welcome/anonymous_icon.svg';
   }
@@ -91,7 +79,7 @@ function setProvider() {
   const {
     cardContainer,
     cardBody,
-  } = getCardWrappers();
+  } = system.getCardWrappers();
 
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
@@ -135,7 +123,7 @@ async function setName() {
 
   url = window.od.net.urlrewrite(url);
 
-  const { cardContainer, cardBody } = getCardWrappers();
+  const { cardContainer, cardBody } = system.getCardWrappers();
   const wrapperUserImage = getWrapperUserImage();
   const wrapperUserInfos = await getWrapperUserInfos();
 
@@ -179,7 +167,7 @@ async function setName() {
       const spanLabel = document.createElement('span');
       spanLabel.className = 'badge badge-pill badge-light';
       spanLabel.innerText = label;
-      wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-auto'));
+      wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
     }
 
     wrapperUserInfos.appendChild(wrapperText);
@@ -214,7 +202,7 @@ function setOS(ua) {
   url = window.od.net.urlrewrite(url);
 
   const osElt = system.removeAllChilds(document.querySelector('#settings-user-os'));
-  const { cardContainer, cardBody } = getCardWrappers();
+  const { cardContainer, cardBody } = system.getCardWrappers();
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
   wrapperText.className = 'd-flex col-6 align-items-center';
@@ -254,7 +242,7 @@ function setBrowser(ua) {
   url = window.od.net.urlrewrite(url);
 
   const browserElt = system.removeAllChilds(document.querySelector('#settings-user-browser'));
-  const { cardBody, cardContainer } = getCardWrappers();
+  const { cardBody, cardContainer } = system.getCardWrappers();
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
   wrapperText.className = 'd-flex col-6 align-items-center';

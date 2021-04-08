@@ -957,58 +957,86 @@ By using this website, you automatically accept that we use cookies.
             <!-- Logs tab end -->
             <!-- speedtest tab start -->
             <div class="tab" id="speedtest-tab">
-                <div id="test">
-                    <div class="testGroup">
-                        <div class="testArea">
-                            <div id="settings-speedTest-download" class="testName">Download</div>
-                            <canvas id="dlMeter" class="meter"></canvas>
-                            <div id="dlText" class="meterText"></div>
-                            <div id="settings-speedTest-unit-download" class="unit">Mbps</div>
+                <div class="container">
+                    <div id="test" class="row">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="testArea">
+                                        <div id="settings-speedTest-download" class="testName">Download</div>
+                                        <canvas id="dlMeter" class="meter"></canvas>
+                                        <div id="dlText" class="meterText"></div>
+                                        <div id="settings-speedTest-unit-download" class="unit">Mbps</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="testArea">
-                            <div id="settings-speedTest-upload" class="testName">Upload</div>
-                            <canvas id="ulMeter" class="meter"></canvas>
-                            <div id="ulText" class="meterText"></div>
-                            <div class="unit">Mbps</div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="testArea">
+                                        <div id="settings-speedTest-upload" class="testName">Upload</div>
+                                        <canvas id="ulMeter" class="meter"></canvas>
+                                        <div id="ulText" class="meterText"></div>
+                                        <div class="unit">Mbps</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="testArea">
+                                        <div id="settings-speedTest-ping" class="testName">Ping</div>
+                                        <canvas id="pingMeter" class="meter"></canvas>
+                                        <div id="pingText" class="meterText"></div>
+                                        <div id="settings-speedTest-ping-unit" class="unit">ms</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="testArea">
+                                        <div id="settings-speedTest-jitter" class="testName">Jitter</div>
+                                        <canvas id="jitMeter" class="meter"></canvas>
+                                        <div id="jitText" class="meterText"></div>
+                                        <div id="settings-speedTest-jitter-unit" class="unit">ms</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 card-container">
+                            <div id="ipArea">
+                                <span id="settings-speedTest-ip">ip addr</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="testGroup">
-                        <div class="testArea">
-                            <div id="settings-speedTest-ping" class="testName">Ping</div>
-                            <canvas id="pingMeter" class="meter"></canvas>
-                            <div id="pingText" class="meterText"></div>
-                            <div id="settings-speedTest-ping-unit" class="unit">ms</div>
-                        </div>
-                        <div class="testArea">
-                            <div id="settings-speedTest-jitter" class="testName">Jitter</div>
-                            <canvas id="jitMeter" class="meter"></canvas>
-                            <div id="jitText" class="meterText"></div>
-                            <div id="settings-speedTest-jitter-unit" class="unit">ms</div>
-                        </div>
-                    </div>
-                    <div id="ipArea">
-                        <span id="settings-speedTest-ip">ip addr</span>
-                    </div>
+                    <div id="startStopBtn"></div>
                 </div>
-                <div id="startStopBtn"></div>
             </div>
             <!-- speedtest tab end -->
             <!-- Logs tab start -->
             <div class="tab" id="localisation-tab">
                 <br>
                 <div id="location" class="d-flex justify-content-center">
-                    <div class="w-100">
+                    <div class="container">
                         <div class="row w-100 writeSpaceNoWrap">
-                            <div id="userPosition" class="col-xl-6 col-lg-6 col-md-6 col-6 d-flex justify-content-center">
-                                <div>
-                                    <h6 id="settings-location-user-location">User location</h6>
-                                    <div id="userxy" class="location"></div>
+                            <div id="userPosition" class="col-6 d-flex justify-content-center">
+                                <div class="card w-100" style="overflow-x: auto;">
+                                    <div class="card-body">
+                                        <h6 id="settings-location-user-location">User location</h6>
+                                        <div id="userxy" class="location"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="serverPosition" class="col-xl-4 col-lg-4 col-md-4 col-6 d-flex justify-content-center">
-                                <div>
-                                    <h6 id="settings-location-server-location">Server location</h6>
-                                    <div id="serverxy" class="location"></div>
+                            <div id="serverPosition" class="col-6 d-flex justify-content-center">
+                                <div class="card w-100" style="overflow-x: auto;">
+                                    <div class="card-body">
+                                        <h6 id="settings-location-server-location">Server location</h6>
+                                        <div id="serverxy" class="location"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1037,16 +1065,24 @@ By using this website, you automatically accept that we use cookies.
                 <div id="modes-screen">
                     <div id="panel_colors">
                         <div class="container h-100">
-                            <div id="color-list">
-                                <input type="color" id="color_input" name="head" value="#333333">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="color-list">
+                                        <input type="color" id="color_input" name="head" value="#333333">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="d-none" id="panel_picture">
                         <div class="container h-100">
-                            <div id="list_background_img" class="d-flex justify-content-center">
-                                <div type="file" id="drop_background_div" class="pictures_blocks">
-                                    <img id="drop_background" title="Drag your image here." src="img/settings/add.svg" />
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="list_background_img" class="d-flex justify-content-center">
+                                        <div type="file" id="drop_background_div" class="pictures_blocks">
+                                            <img id="drop_background" title="Drag your image here." src="img/settings/add.svg" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1061,6 +1097,7 @@ By using this website, you automatically accept that we use cookies.
                 
                 <div id="task-manager-container-infos">
                     <hr />
+                    <p id="task-manager-container-infos-current-container"></p>
                     <div id="task-manager-container-logs"></div>
                     <div id="task-manager-container-env">
                         <table class="table table-striped"></table>

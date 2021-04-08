@@ -20,24 +20,18 @@ import * as languages from '../languages.js';
 let refreshIsActive = false;
 let idInterval = 0;
 let storageContainers = [];
+let containerSelectedForInfos = '';
 
-/**
- * @param {HTMLDivElement} row
- */
-const removeNextDivider = (row) => {
-  const childs = Array.from(row.parentNode.children);
-  const index = childs.indexOf(row);
-  const lastIndex = childs.length - 1;
-  if (lastIndex !== index) {
-    const divider = childs[index + 1];
-    if (divider.tagName.toUpperCase() === 'HR') {
-      row.parentNode.removeChild(divider);
-    }
-  }
-};
+function hideInfosSection() {
+  const taskManagerContainerInfos = document.getElementById('task-manager-container-infos');
+  const taskManagerContainerList = document.getElementById('task-manager-container-list');
+  taskManagerContainerInfos.style.height = '0%';
+  taskManagerContainerList.style.height = '100%';
+}
 
 const buildLine = (row, container) => {
   const { status, short_id: shortId, id } = container;
+  const { cardContainer, cardBody } = system.getCardWrappers();
   const envTranslation = languages.getTranslate('settings-containers-btn-env');
   const killTranslation = languages.getTranslate('settings-containers-btn-kill');
   const removeTranslation = languages.getTranslate('settings-containers-btn-remove');
@@ -90,7 +84,7 @@ const buildLine = (row, container) => {
   spanSubDivCmd.innerText = `${container['oc.path']}${(container['oc.args'] ? ` ${container['oc.args']}` : '')}`;
 
   divCmd.className = 'align-self-center text-left col-xl-3 d-xl-block d-lg-none d-md-none d-none';
-  divCmd.style = 'height:100%;overflow:auto;';
+  divCmd.style.overflow = 'auto';
 
   subDivCmd.appendChild(spanSubDivCmd);
   divCmd.appendChild(subDivCmd);
@@ -102,12 +96,12 @@ const buildLine = (row, container) => {
     divState.appendChild(spanState);
   }
 
-  divState.className = 'align-self-center text-center col-auto d-xl-block d-lg-block d-md-block d-none';
+  divState.className = 'align-self-center text-center col-xl-1 col-lg-2 col-md-3 col-2 d-xl-block d-lg-block d-md-block d-none';
 
   divButtonLog.className = 'text-center col-auto d-xl-block d-lg-block d-md-block d-sm-block';
   divButtonEnv.className = 'text-center col-auto d-xl-block d-lg-block d-md-block d-none';
   divButtonKill.className = 'text-center col-auto';
-  divButtonRemove.className = 'text-center col-auto d-xl-block d-lg-block d-none';
+  divButtonRemove.className = 'text-center col-auto d-xl-block d-lg-block d-md-block d-none';
 
   divButtonLog.appendChild(btnLogs);
   divButtonEnv.appendChild(btnEnv);
@@ -120,11 +114,12 @@ const buildLine = (row, container) => {
     launcher.getContainerLogs(id)
       .done((res) => {
         const taskManagerContainerInfos = document.getElementById('task-manager-container-infos');
+        const taskManagerContainerList = document.getElementById('task-manager-container-list');
         const cloneTaskManagerContainerInfos = taskManagerContainerInfos.cloneNode(true);
         const cloneTaskManagerLogsContainer = system.removeAllChilds(cloneTaskManagerContainerInfos.querySelector('#task-manager-container-logs'));
 
         cloneTaskManagerContainerInfos.querySelector('#task-manager-container-env').style.display = 'none';
-        cloneTaskManagerContainerInfos.style.display = 'block';
+        cloneTaskManagerContainerInfos.style.height = '50%';
         cloneTaskManagerLogsContainer.style.display = 'block';
 
         if (!res.result) {
@@ -138,10 +133,13 @@ const buildLine = (row, container) => {
           cloneTaskManagerLogsContainer.append(res.result);
         }
 
+        taskManagerContainerList.style.height = '50%';
         taskManagerContainerInfos.parentNode.replaceChild(
           cloneTaskManagerContainerInfos,
           taskManagerContainerInfos,
         );
+        containerSelectedForInfos = id;
+        document.getElementById('task-manager-container-infos-current-container').innerText = id;
       });
   });
 
@@ -153,12 +151,13 @@ const buildLine = (row, container) => {
       .done((res) => {
         const dico = res.result;
         const taskManagerContainerInfos = document.getElementById('task-manager-container-infos');
+        const taskManagerContainerList = document.getElementById('task-manager-container-list');
         const cloneTaskManagerContainerInfos = taskManagerContainerInfos.cloneNode(true);
 
         const cloneTaskManagerEnvContainer = cloneTaskManagerContainerInfos.querySelector('#task-manager-container-env');
         const cloneTable = system.removeAllChilds(cloneTaskManagerEnvContainer.querySelector('table'));
         cloneTaskManagerContainerInfos.querySelector('#task-manager-container-logs').style.display = 'none';
-        cloneTaskManagerContainerInfos.style.display = 'block';
+        cloneTaskManagerContainerInfos.style.height = '50%';
         cloneTaskManagerEnvContainer.style.display = 'block';
 
         const dicoOrdered = {};
@@ -183,10 +182,13 @@ const buildLine = (row, container) => {
           }
         }
 
+        taskManagerContainerList.style.height = '50%';
         taskManagerContainerInfos.parentNode.replaceChild(
           cloneTaskManagerContainerInfos,
           taskManagerContainerInfos,
         );
+        containerSelectedForInfos = id;
+        document.getElementById('task-manager-container-infos-current-container').innerText = id;
       });
   });
 
@@ -201,8 +203,6 @@ const buildLine = (row, container) => {
         btnKill.removeEventListener('click', handlerKill);
         btnKill.setAttribute('disabled', 'true');
       });
-
-    removeNextDivider(row);
   };
   btnKill.addEventListener('click', handlerKill);
 
@@ -211,16 +211,22 @@ const buildLine = (row, container) => {
   btnRemove.className = 'btn btn-dark';
   btnRemove.addEventListener('click', () => {
     launcher.removeContainer(id, container['oc.displayname']);
+    if (containerSelectedForInfos === id) {
+      hideInfosSection();
+    }
   });
 
-  row.appendChild(divAppName);
-  row.appendChild(divShortId);
-  row.appendChild(divCmd);
-  row.appendChild(divState);
-  row.appendChild(divButtonLog);
-  row.appendChild(divButtonEnv);
-  row.appendChild(divButtonKill);
-  row.appendChild(divButtonRemove);
+  cardContainer.className += ' w-100';
+  cardContainer.style.overflowX = 'hidden';
+  cardBody.appendChild(divAppName);
+  cardBody.appendChild(divShortId);
+  cardBody.appendChild(divCmd);
+  cardBody.appendChild(divState);
+  cardBody.appendChild(divButtonLog);
+  cardBody.appendChild(divButtonEnv);
+  cardBody.appendChild(divButtonKill);
+  cardBody.appendChild(divButtonRemove);
+  row.appendChild(cardContainer);
 };
 
 const build = (containers = []) => {
@@ -240,15 +246,11 @@ const build = (containers = []) => {
   message.style.display = 'none';
 
   const fragment = document.createDocumentFragment();
-  for (const [index, container] of containers.entries()) {
+  for (const container of containers) {
     const row = document.createElement('div');
     row.className = 'row';
-    row.style = 'height:40px;';
     buildLine(row, container);
     fragment.appendChild(row);
-    if (index !== containers.length - 1) {
-      fragment.appendChild(document.createElement('hr'));
-    }
   }
   wrap.appendChild(fragment);
 };
