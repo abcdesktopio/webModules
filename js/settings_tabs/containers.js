@@ -139,6 +139,7 @@ const buildLine = (row, container) => {
           taskManagerContainerInfos,
         );
         containerSelectedForInfos = id;
+        document.getElementById('task-manager-container-infos-current-container').innerText = id;
       });
   });
 
@@ -187,6 +188,7 @@ const buildLine = (row, container) => {
           taskManagerContainerInfos,
         );
         containerSelectedForInfos = id;
+        document.getElementById('task-manager-container-infos-current-container').innerText = id;
       });
   });
 
