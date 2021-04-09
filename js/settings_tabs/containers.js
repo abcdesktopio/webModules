@@ -57,7 +57,7 @@ const buildLine = (row, container) => {
   spanAppname.innerText = container['oc.displayname'];
   spanAppname.style = 'padding-left: 5px;';
 
-  divAppName.className = 'align-self-center text-left col-xl-1 col-lg-1 col-md-2 col-sm-3 col-4';
+  divAppName.className = 'align-self-center text-left col-xl-1 col-lg-2 col-md-2 col-sm-3 col-4';
   divAppName.style = 'white-space: nowrap;overflow: hidden;';
 
   divAppName.appendChild(imgAppname);
@@ -71,7 +71,7 @@ const buildLine = (row, container) => {
   spanShortId.style = 'padding-left: 5px;';
   spanShortId.innerText = shortId;
 
-  divShortId.className = 'align-self-center text-left col-xl-2 col-lg-2 col-md-2 col-sm-3 d-md-block d-sm-block d-none';
+  divShortId.className = 'align-self-center text-left col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none';
   divShortId.style = 'white-space: nowrap;overflow: hidden;';
 
   divShortId.appendChild(imgShortId);
@@ -83,7 +83,7 @@ const buildLine = (row, container) => {
   subDivCmd.className = 'align-middle';
   spanSubDivCmd.innerText = `${container['oc.path']}${(container['oc.args'] ? ` ${container['oc.args']}` : '')}`;
 
-  divCmd.className = 'align-self-center text-left col-xl-3 d-xl-block d-lg-none d-md-none d-none';
+  divCmd.className = 'align-self-center text-left col-xxl-5 col-xl-4 col-lg-4 d-xxl-block d-xl-block d-lg-block d-md-none d-none';
   divCmd.style.overflow = 'auto';
 
   subDivCmd.appendChild(spanSubDivCmd);
@@ -96,12 +96,11 @@ const buildLine = (row, container) => {
     divState.appendChild(spanState);
   }
 
-  divState.className = 'align-self-center text-center col-xl-2 col-lg-2 col-md-2 col-2 d-xl-block d-lg-block d-md-block  d-none';
-
-  divButtonLog.className = 'text-center col-xl-1 col-lg-2 col-md-2 col-sm-2 col-auto';
-  divButtonEnv.className = 'text-center col-xl-1 col-lg-2 col-md-2 col-sm-2 col-auto';
-  divButtonKill.className = 'text-center col-xl-1 col-lg-1 col-md-2 col-sm-2 col-auto';
-  divButtonRemove.className = 'text-center col-xl-1 col-lg-2 d-xl-block d-lg-block d-none';
+  divState.className = 'align-self-center text-center col-xl-1 col-lg-1 col-md-3 col-2 d-xl-block d-lg-block d-md-block  d-none';
+  divButtonLog.className = 'text-center col-auto';
+  divButtonEnv.className = 'text-center col-auto';
+  divButtonKill.className = 'text-center col-auto';
+  divButtonRemove.className = 'text-center col-auto d-xl-block d-none';
 
   divButtonLog.appendChild(btnLogs);
   divButtonEnv.appendChild(btnEnv);
