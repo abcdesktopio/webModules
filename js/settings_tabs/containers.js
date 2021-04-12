@@ -194,6 +194,11 @@ const buildLine = (row, container) => {
   btnKill.id = 'settings-containers-btn-kill';
   btnKill.innerText = killTranslation || 'Kill';
   btnKill.className = 'btn btn-danger';
+
+  if (status === 'exited') {
+    btnKill.setAttribute('disabled', 'true');
+  }
+
   const handlerKill = () => {
     system.addAppLoader(btnKill);
     launcher.stopContainer(id, container['oc.displayname'])
