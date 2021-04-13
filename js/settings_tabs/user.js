@@ -299,7 +299,7 @@ function buildHistoryList(loginHistory, user) {
           </div>
           <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block">
             <span style="white-space: nowrap;">
-              ${objOS.name} ${objOS.version}
+              ${objOS.name} ${objOS.version || ''}
             </span>
           </div>
         </div>
