@@ -14,7 +14,7 @@ ifndef VERBOSE
 .SILENT:
 endif
 
-all: version updatejs xterm prod
+all: version xterm prod
 
 version:
 	$(shell ./mkversion.sh)
@@ -46,16 +46,16 @@ xterm:
 svg:
 	cd ./transpile && node index.js --svg
 
-css:checkTranspile
+css: checkTranspile
 	cd ./transpile && node index.js --css
 
 ui:
 	cd ./transpile && node index.js --user-interface
 
-oneCss:checkTranspile
+oneCss: checkTranspile
 	cd ./transpile && node index.js --oneCss
 
-prod:checkTranspile version
+prod: updatejs checkTranspile version
 	if [ ! -d "./xterm/dist" ]; then \
 		$(MAKE) -B xterm; \
 	fi
@@ -63,7 +63,7 @@ prod:checkTranspile version
 	cd ./transpile \
 	&& node index.js --svg --css --user-interface --prod \
 
-dev:checkTranspile version
+dev: updatejs checkTranspile version
 	if [ ! -d "./xterm/dist" ]; then \
 		$(MAKE) -B xterm; \
 	fi
