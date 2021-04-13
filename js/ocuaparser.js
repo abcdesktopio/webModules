@@ -25,7 +25,7 @@ let parser = null;
  * @see {@link https://github.com/faisalman/ua-parser-js| UAParser GitHub}
  */
 export const init = function () {
-  parser = new window.UAParser();
+  parser = new exports.UAParser();
   window.od.isTactile = isTouch();
 };
 

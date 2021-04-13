@@ -270,7 +270,7 @@ function setBrowser(ua) {
 function buildHistoryList(loginHistory, user) {
   const table = user.querySelector('#history');
   const mappedArray = loginHistory.map((login) => {
-    const ua = new UAParser(login.useragent);
+    const ua = new exports.UAParser(login.useragent);
     const objBrowser = ua.getBrowser();
     const urlBrowser = browserImg[objBrowser.name];
     const objOS = ua.getOS();
@@ -318,7 +318,7 @@ export function init(home, user) {
   }
   firstAppear = false;
 
-  const ua = new UAParser(navigator.userAgent);
+  const ua = new exports.UAParser(navigator.userAgent);
   /* hide home and show user */
 
   // Provider settings only if user is not a shared access users
