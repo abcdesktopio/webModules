@@ -5,6 +5,7 @@
 #include "./utils.hpp"
 
 Napi::Promise replaceInFileAsync(const Napi::CallbackInfo &info) {
-    Napi::Promise::Deferred deferred = Promise::Deferred::New(env);
+    Napi::Env env = info.Env();
+    Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
     return deferred.Promise();
 }
