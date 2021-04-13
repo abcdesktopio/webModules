@@ -14,7 +14,7 @@ ifndef VERBOSE
 .SILENT:
 endif
 
-all: version xterm prod
+all: version updatejs xterm prod
 
 version:
 	$(shell ./mkversion.sh)
@@ -70,6 +70,12 @@ dev:checkTranspile version
 
 	cd ./transpile \
 	&& node index.js --svg --css --user-interface
+
+
+updatejs:
+	rm  js/ua-parser.min.js
+	wget -O js/ua-parser.min.js https://raw.githubusercontent.com/faisalman/ua-parser-js/master/dist/ua-parser.min.js
+
 
 clean:
 	rm -rf transpile/node_modules | true
