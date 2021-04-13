@@ -49,11 +49,6 @@
       "defer": false
     },
     {
-      "src": "js/renderjson.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
       "src": "js/js.cookie.js",
       "indexPageOnly": false,
       "defer": false
