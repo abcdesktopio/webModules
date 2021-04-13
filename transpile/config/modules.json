@@ -74,7 +74,7 @@
       "defer": false
     },
     {
-      "src": "js/ua-parser.js",
+      "src": "js/ua-parser.min.js",
       "indexPageOnly": false,
       "defer": false
     },
