@@ -279,21 +279,29 @@ function buildHistoryList(loginHistory, user) {
     return {
       date: `<span style="white-space: nowrap;">${login.date}</span>`,
       ipaddr: login.ipaddr,
-      node: login.node ? login.node : 'N/A',
+      node: login.node || 'N/A',
       useragent: `
-        <div class="d-flex justify-content-center align-items-center">
-          <img  src="${urlBrowser}" />
-          <span class="d-none d-xl-block d-lg-block d-md-block" style="white-space: nowrap;">
-            ${objBrowser.name} ${objBrowser.version}
-          </span>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-12 col-xs-12 d-flex justify-content-center">
+            <img  src="${urlBrowser}" />
+          </div>
+          <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block">
+            <span style="white-space: nowrap;">
+              ${objBrowser.name} ${objBrowser.version}
+            </span>
+          </div>
         </div>
       `,
       os: `
-        <div class="d-flex justify-content-center align-items-center">
-          <img src="${urlOS}" />
-          <span class="d-none d-xl-block d-lg-block d-md-block" style="white-space: nowrap;">
-            ${objOS.name} ${objOS.version}
-          </span>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-12 col-xs-12 d-flex justify-content-center">
+            <img src="${urlOS}" />
+          </div>
+          <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block">
+            <span style="white-space: nowrap;">
+              ${objOS.name} ${objOS.version}
+            </span>
+          </div>
         </div>
       `,
     };
