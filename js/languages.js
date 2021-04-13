@@ -43,7 +43,7 @@ export const init = async () => {
     const list = await getJSONFile('/i18n/list.json');
     if (navigator.languages[0] !== list.default) {
       for (const l of navigator.languages) {
-        const file = list.languages[l];
+        const file = list.languages[l.toLowerCase()];
         if (file) {
           try {
             keysValues = await getJSONFile(`/i18n/${file}`);

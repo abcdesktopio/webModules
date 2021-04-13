@@ -1,11 +1,13 @@
 {
     "default":"en",
     "languages":{
-        "fr-FR": "fr-FR.json",
+        "fr-fr": "fr-FR.json",
         "fr": "fr-FR.json",
         "en": "en-EN.json",
-        "en-EN": "en-EN.json",
+        "en-en": "en-EN.json",
+        "en-gb": "en-EN.json",
+        "en-us": "en-EN.json",
         "zh": "zh-CN.json",
-        "zh-CN": "zh-CN.json"
+        "zh-cn": "zh-CN.json"
     }
 }
