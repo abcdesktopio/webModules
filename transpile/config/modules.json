@@ -54,11 +54,6 @@
       "defer": false
     },
     {
-      "src": "js/emoticons.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
       "src": "js/dropzone.js",
       "indexPageOnly": false,
       "defer": false
