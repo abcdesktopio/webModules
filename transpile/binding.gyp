@@ -6,7 +6,7 @@
       "cflags_cc!": [ "-fno-exceptions" ],
       "include_dirs": [ "<!@(node -p \"require('node-addon-api').include\")" ],
       "sources": [
-        "./native/main.cpp"
+        "<!@(node -p 'require(`fs`).readdirSync(`./native`).map(f => `./native/${f}`).join(` `)')"
       ],
       'xcode_settings': {
         'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
