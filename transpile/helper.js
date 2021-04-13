@@ -15,12 +15,14 @@
 /* eslint-disable prefer-rest-params */
 // writes helpers require for vnc.html (they should output app.js)
 
+import { createRequire } from 'module';
 import fs from 'fs/promises';
 import util from 'util';
 import path from 'path';
 import { Worker } from 'worker_threads';
 import browserify from 'browserify';
 
+const transpileNative = createRequire(import.meta.url)('node-gyp-build')(process.cwd());
 
 const dirname = path.resolve();
 const pathWorker = path.join(dirname, 'replaceWorker.js');
@@ -70,4 +72,15 @@ export function callReplaceWorker(filename, searchValue, replaceValue) {
       reject(error);
     }
   });
+}
+
+/**
+ * 
+ * @param {string} filePath 
+ * @param {string} from 
+ * @param {string} to
+ * @desc Allow to replace all occurrence of a string by an other string in a given file
+ */
+export async function replaceInFileAsync(filePath, from, to) {
+  return transpileNative.replaceInFileAsync(filePath, from, to);
 }
