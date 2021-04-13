@@ -1,5 +1,5 @@
-#include <iostream>
 #include <string>
+#include <fstream>
 #include <napi.h>
 #include "./native.hpp"
 #include "./utils.hpp"
@@ -24,7 +24,17 @@ class ReplaceInFileWorker : public Napi::AsyncWorker {
 
     void Execute() override {
         if (this->filePath && this->from && this->to) {
+            std::ifstream t(this->filePath);
+            t.seekg(0, std::ios::end);
+            size_t size = t.tellg();
+            std::string buffer(size, ' ');
+            t.seekg(0);
+            t.read(&buffer[0], size); 
 
+            findAndReplaceAll(buffer, this->from, this->to);
+            std::ofstream ofs(this->filePath, std::ofstream::trunc);
+            ofs << buffer;
+            ofs.close();
         }
     }
 
