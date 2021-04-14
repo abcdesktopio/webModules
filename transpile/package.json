@@ -14,7 +14,10 @@
     "url": "https://github.com/abcdesktopio/webModules.git"
   },
   "binary": {
-    "napi_versions": [2,3]
+    "napi_versions": [
+      2,
+      3
+    ]
   },
   "keywords": [],
   "author": "kecsou",
@@ -44,5 +47,8 @@
     "node-gyp-build": "^4.2.3",
     "prebuild-install": "^6.1.1",
     "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "prebuild": "^10.0.1"
   }
 }
