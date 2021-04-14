@@ -23,7 +23,7 @@ import {
   makeLibFiles,
 } from './production-transformer.js';
 
-import { callReplaceWorker } from './helper.js';
+import { replaceInFileAsync } from './helper.js';
 
 const { program } = createRequire(import.meta.url)('commander');
 
@@ -117,7 +117,7 @@ async function buildSvg(colors = []) {
 
   const awaitingUpdateSvgs = [];
   for await (const svgImage of walkSvgImages(pathImg)) {
-    const awaiting = callReplaceWorker(svgImage, currentSvgColor, newSvgColor);
+    const awaiting = replaceInFileAsync(svgImage, currentSvgColor, newSvgColor);
     awaitingUpdateSvgs.push(awaiting);
   }
   await Promise.all(awaitingUpdateSvgs);

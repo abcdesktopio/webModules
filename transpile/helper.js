@@ -15,15 +15,13 @@
 /* eslint-disable prefer-rest-params */
 // writes helpers require for vnc.html (they should output app.js)
 
+import { createRequire } from 'module';
 import fs from 'fs/promises';
 import util from 'util';
 import path from 'path';
-import { Worker } from 'worker_threads';
 import browserify from 'browserify';
 
-
-const dirname = path.resolve();
-const pathWorker = path.join(dirname, 'replaceWorker.js');
+const transpileNative = createRequire(import.meta.url)('node-gyp-build')(process.cwd());
 
 /**
  * 
@@ -40,34 +38,12 @@ export async function writeAppJSFile(scriptBasePath, outPath) {
 }
 
 /**
- *
- * @param {string} str
- * @param {string} searchValue
- * @param {string} replaceValue
- * @returns {Promise<void>}
- * @desc Allow to create a worker which will replace a provided searched value by an other provided replace value in a given file
+ * 
+ * @param {string} filePath 
+ * @param {string} from 
+ * @param {string} to
+ * @desc Allow to replace all occurrence of a string by an other string in a given file
  */
-export function callReplaceWorker(filename, searchValue, replaceValue) {
-  return new Promise((resolve, reject) => {
-    try {
-      const workerData = {
-        filename,
-        searchValue,
-        replaceValue,
-      };
-
-      const worker = new Worker(pathWorker, { workerData });
-
-      worker.on('exit', () => {
-        resolve();
-      });
-
-      worker.on('error', (err) => {
-        console.error(err);
-        reject(err);
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
+export async function replaceInFileAsync(filePath, from, to) {
+  return transpileNative.replaceInFileAsync(filePath, from, to);
 }
