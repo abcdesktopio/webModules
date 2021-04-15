@@ -29,7 +29,7 @@ export const init = () => {
         updateIconVolumLevel();
       }
     } else {
-      httpProtocol.init();
+      await httpProtocol.init();
     }
   });
 };
