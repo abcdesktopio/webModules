@@ -26,3 +26,4 @@ jobs:
           token: ${{ secrets.TOKEN_DISPATCH }}
           repository: abcdesktopio/oc.nginx
           event-type: dispatch-from-webModules
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
