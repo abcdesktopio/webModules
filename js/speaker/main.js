@@ -23,13 +23,11 @@ const webrtcEnabled = async () => {
 export const init = () => {
   document.addEventListener('broadway.connected', async () => {
     if (webrtcProtocol.janusSupported() && await webrtcEnabled()) {
-      webrtcProtocol.init()
-        .then(() => {
-          const audio = document.getElementById('audioplayer');
-          if (!audio.paused) {
-            updateIconVolumLevel();
-          }
-        });
+      await webrtcProtocol.init();
+      const audio = document.getElementById('audioplayer');
+      if (!audio.paused) {
+        updateIconVolumLevel();
+      }
     } else {
       httpProtocol.init();
     }
