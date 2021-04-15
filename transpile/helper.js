@@ -44,7 +44,7 @@ export async function writeAppJSFile(scriptBasePath, outPath) {
  * @param {string} to
  * @desc Allow to replace all occurrence of a string by an other string in a given file
  */
-export async function replaceInFileAsync(filePath, from, to) {
+export function replaceInFileAsync(filePath, from, to) {
   if (typeof filePath !== 'string') {
     throw new TypeError('filePath must be a string');
   }
