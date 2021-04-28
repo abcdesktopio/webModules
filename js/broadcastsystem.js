@@ -185,6 +185,14 @@ export const connect = () => {
         }),
       );
     }
+
+    if (msg.method === 'speaker.available') {
+      broadcastEvent.dispatchEvent(
+        new CustomEvent('speaker.available', {
+          detail: { available: msg.data },
+        }),
+      );
+    }
   });
 };
 

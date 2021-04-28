@@ -44,6 +44,18 @@ export async function writeAppJSFile(scriptBasePath, outPath) {
  * @param {string} to
  * @desc Allow to replace all occurrence of a string by an other string in a given file
  */
-export async function replaceInFileAsync(filePath, from, to) {
+export function replaceInFileAsync(filePath, from, to) {
+  if (typeof filePath !== 'string') {
+    throw new TypeError('filePath must be a string');
+  }
+
+  if (typeof from !== 'string') {
+    throw new TypeError('from must be a string');
+  }
+
+  if (typeof to !== 'string') {
+    throw new TypeError('to must be a string');
+  }
+
   return transpileNative.replaceInFileAsync(filePath, from, to);
 }

@@ -39,30 +39,27 @@ const bandwithSettings = [
   { sampleRate: 44100, format: wavify.WAVE_FORMAT_PCM, bitsPerSample: 16 },
 ];
 
-export const init = function (callback) {
+export async function init() {
   soundSystem.init();
   if (checkBrowser()) {
     sink = wavplayer.mkWavPlayerSink(numberOfChannels, bitsPerSample, sampleRate, format);
-    launcher.setAudioQuality(sink)
-      .then(() => {
-        document.getElementById('volume_level').disabled = false;
+    await launcher.setAudioQuality(sink);
 
-        window.myplayer = wavplayer.WavPlayer(
-          numberOfChannels,
-          bitsPerSample,
-          sampleRate,
-          lowwatermark,
-          latency,
-          format,
-          scheduleBuffersTimeout,
-        );
+    document.getElementById('volume_level').disabled = false;
 
-        if (callback) { callback(null, 'done'); }
-      });
+    window.myplayer = wavplayer.WavPlayer(
+      numberOfChannels,
+      bitsPerSample,
+      sampleRate,
+      lowwatermark,
+      latency,
+      format,
+      scheduleBuffersTimeout,
+    );
   } else {
     window.myplayer = null;
-    if (callback) { callback('not supported', null); }
     disableSpeaker();
+    throw new Error('not supported');
   }
 };
 
