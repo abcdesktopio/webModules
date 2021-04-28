@@ -30,7 +30,7 @@ let wsbroadcast;
  * @desc Open the broadcast WebSocket
  */
 function open(jsonParameters, callback = () => { }) {
-  const path = `/broadcast?${window.od.currentUser.authorization}`;
+  const path = `/broadcast?jwt_token=${window.od.currentUser.authorization}`;
   const broadcasturl = window.od.net.getwsurl(path);
   wsbroadcast = new WebSocket(broadcasturl);
 
