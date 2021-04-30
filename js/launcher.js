@@ -1422,5 +1422,9 @@ export const containerNotificationInfo = function(data) {
   notificationSystem.displayNotification(data.name, data.message, 'error', '/img/app/' + data.icon, 15 );
 };
 
+export function getListScret() {
+  return odApiClient.composer.listsecrets();
+}
+
 broadcastEvent.addEventListener('container',	({ detail: { container   } }) => containerNotificationInfo(container));
 broadcastEvent.addEventListener('ocrun', 	({ detail: { data_dict   } }) => ocrun(data_dict));
