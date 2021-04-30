@@ -21,18 +21,20 @@ const webrtcEnabled = async () => {
   return id;
 };
 
-export const init = () => {
-  document.addEventListener('broadway.connected', async () => {
-    if (webrtcProtocol.janusSupported() && await webrtcEnabled()) {
-      await webrtcProtocol.init();
-      const audio = document.getElementById('audioplayer');
-      if (!audio.paused) {
-        updateIconVolumLevel();
-      }
-    } else {
-      await httpProtocol.init();
+const configuerSpeaker = async () => {
+  if (webrtcProtocol.janusSupported() && await webrtcEnabled()) {
+    await webrtcProtocol.init();
+    const audio = document.getElementById('audioplayer');
+    if (!audio.paused) {
+      updateIconVolumLevel();
     }
-  });
+  } else {
+    await httpProtocol.init();
+  }
+};
+
+export const init = () => {
+  document.addEventListener('broadway.connected', configuerSpeaker);
 };
 
 export const updateIconVolumLevel = () => {
@@ -53,15 +55,7 @@ export const updateIconVolumLevel = () => {
 broadcastEvent.addEventListener('speaker.available', async ({ detail: { available } }) => {
   if (available) {
     $('#speakers').css('display', 'block');
-    if (webrtcProtocol.janusSupported() && await webrtcEnabled()) {
-      await webrtcProtocol.init();
-      const audio = document.getElementById('audioplayer');
-      if (!audio.paused) {
-        updateIconVolumLevel();
-      }
-    } else {
-      await httpProtocol.init();
-    }
+    await configuerSpeaker();
   } else {
     $('#speakers').css('display', 'none');
   }
