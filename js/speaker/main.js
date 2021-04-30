@@ -16,20 +16,25 @@ import * as webrtcProtocol from './webrtcProtocol/main.js';
 import * as launcher from '../launcher.js';
 import { broadcastEvent } from '../broadcastevent.js';
 
+let speakerConfigured = false;
+
 const webrtcEnabled = async () => {
   const { id } = await launcher.getkeyinfo('webrtc');
   return id;
 };
 
 const configuerSpeaker = async () => {
-  if (webrtcProtocol.janusSupported() && await webrtcEnabled()) {
-    await webrtcProtocol.init();
-    const audio = document.getElementById('audioplayer');
-    if (!audio.paused) {
-      updateIconVolumLevel();
+  if (!speakerConfigured) {
+    if (webrtcProtocol.janusSupported() && await webrtcEnabled()) {
+      await webrtcProtocol.init();
+      const audio = document.getElementById('audioplayer');
+      if (!audio.paused) {
+        updateIconVolumLevel();
+      }
+    } else {
+      await httpProtocol.init();
     }
-  } else {
-    await httpProtocol.init();
+    speakerConfigured = true;
   }
 };
 
