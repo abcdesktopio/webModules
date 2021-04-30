@@ -39,7 +39,7 @@ import * as system from './system.js';
 import * as settings from './settings.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
-import * as secrects from './secrets.js';
+import './secrets.js';
 
 //
 // Build od AbcDesktop Window Object
@@ -204,7 +204,6 @@ window.od.setupafteruserloginin = function () {
 
   system.setUsername(window.od.currentUser.name);
 
-  secrects.init();
   // window.od.video = video;
   // window.od.music = music;
 };

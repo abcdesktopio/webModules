@@ -15,10 +15,6 @@ import * as launcher from './launcher.js';
 
 let secrets = [];
 
-export function init() {
-
-}
-
 document.addEventListener('broadway.connected', async () => {
   const { result } = await launcher.getSecrets();
   secrets = result;
