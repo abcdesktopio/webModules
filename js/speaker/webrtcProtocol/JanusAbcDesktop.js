@@ -56,7 +56,6 @@ export class JanusAbcDesktop extends Janus {
        * @desc Call on error from the session
        */
       function errorSession(error) {
-        JanusAbcDesktop.error(error);
         reject(error);
       }
     });
