@@ -124,7 +124,6 @@ function addListener() {
     const container = this.querySelector('div.container-app-loader');
 
     if (this.getAttribute('locked') === 'true') {
-      // TODO Create authentication pop up here
       runAuthentication(launchApp);
     } else {
       launchApp();
@@ -164,8 +163,6 @@ export const open = function () {
   $('.appstore-window .content-apps .button').click(function() {
     openTab(this.id);
   });
-  addListener();
-  enableDrag();
   languages.applyLanguage();
 };
 
