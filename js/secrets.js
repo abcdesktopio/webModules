@@ -20,16 +20,16 @@ import * as languages from './languages.js';
  */
 export async function runAuthentication(launchApp) {
   const template = document.querySelector('#authent-window-template');
+  const titleAuthenticationWindow = await languages.getTranslate('title-authentication-window');
   const labelCancelButton = await languages.getTranslate('cancel-button');
   const labelSendButton = await languages.getTranslate('send-button');
 
   bootbox.dialog({
-    title: 'Authentication',
+    title: titleAuthenticationWindow || 'Authentication',
     message: template.innerHTML,
     className: 'window-dialog authent-window',
     animate: false,
     onEscape: true,
-    backdrop: true,
     buttons: {
       cancel: {
         label: labelCancelButton || 'Cancel',
@@ -43,6 +43,10 @@ export async function runAuthentication(launchApp) {
       },
     },
   });
+
+  const inputIdAuthentWindow = document.querySelector('.authent-window #input-id-authent-window');
+  inputIdAuthentWindow.value = window.od.currentUser.userid;
+  inputIdAuthentWindow.readOnly = true;
 }
 
 document.addEventListener('broadway.connected', async () => {
