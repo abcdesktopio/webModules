@@ -12,6 +12,38 @@
 */
 
 import * as launcher from './launcher.js';
+import * as languages from './languages.js';
+
+/**
+ * 
+ * @param {Function} launchApp 
+ */
+export async function runAuthentication(launchApp) {
+  const template = document.querySelector('#authent-window-template');
+  const labelCancelButton = await languages.getTranslate('cancel-button');
+  const labelSendButton = await languages.getTranslate('send-button');
+
+  bootbox.dialog({
+    title: 'Authentication',
+    message: template.innerHTML,
+    className: 'window-dialog authent-window',
+    animate: false,
+    onEscape: true,
+    backdrop: true,
+    buttons: {
+      cancel: {
+        label: labelCancelButton || 'Cancel',
+      },
+      send: {
+        label: labelSendButton || 'Send',
+        className: 'window-button',
+        callback: () => {
+          launchApp();
+        },
+      },
+    },
+  });
+}
 
 document.addEventListener('broadway.connected', async () => {
   const { result } = await launcher.getSecrets();

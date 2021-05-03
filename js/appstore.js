@@ -14,6 +14,7 @@
 import * as systemMenu from './systemmenu.js';
 import * as system from './system.js';
 import * as languages from './languages.js';
+import { runAuthentication } from './secrets.js';
 
 let draggedApp;
 
@@ -124,6 +125,7 @@ function addListener() {
 
     if (this.getAttribute('locked') === 'true') {
       // TODO Create authentication pop up here
+      runAuthentication(launchApp);
     } else {
       launchApp();
     }
