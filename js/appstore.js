@@ -16,49 +16,66 @@ import * as system from './system.js';
 import * as languages from './languages.js';
 
 let draggedApp;
-let currentTab = 'office';
 
 /**
  * @function openTab
  * @returns {void}
  * @desc Display apps for selected category
  */
-function openTab() {
-  currentTab = this.id;
+function openTab(tabId) {
   const appListContainer = $('#appstore-applist')[0];
   const parentAppList = $('#appstore-applist')[0].parentElement;
   const clone = system.removeAllChilds($('#appstore-applist')[0], false);
 
   /*
-        * Generate apps for selected category
+       * Generate apps for selected category 
     */
   for (let i = 0; i < window.od.applist.length; i++) {
     const app = window.od.applist[i];
     if (app && app.cat) {
       const cat = app.cat.split(',');
       for (let j = 0; j < cat.length; j++) {
-        if (cat[j] === currentTab) {
+        if (cat[j] === tabId) {
           const url = window.od.net.urlrewrite(`../img/app/${app.icon}`);
           const li = document.createElement('li');
           li.id = app.id;
           li.className = 'appstore-item';
           li.setAttribute('launch', app.launch);
+          li.setAttribute('locked', 'false');
 
-          const div = document.createElement('div');
+          const wrapperIcon = document.createElement('div');
           const img = document.createElement('img');
           const p = document.createElement('p');
           const divAppLoader = document.createElement('div');
 
           img.src = url;
 
-          div.appendChild(img);
+          wrapperIcon.className = 'd-flex justify-content-center align-items-center';
+          wrapperIcon.appendChild(img);
+
+          if (app.secrets_requirement instanceof Array) {
+            /**
+             * 
+             * @param {string} secretRequierement 
+             * @desc Here this predicate is true if the element is not present in the global secret list then this application require a new authentication
+             */
+            const predicate = (secretRequierement) => !window.od.secrets.includes(secretRequierement);
+
+            if (app.secrets_requirement.some(predicate)) {
+              const imageLock = document.createElement('img');
+              imageLock.className = 'app-lock-icon';
+              imageLock.src = 'img/lock.svg';
+              wrapperIcon.appendChild(imageLock);
+              li.setAttribute('locked', 'true');
+            }
+          }
+
           p.className = 'appname d-none d-sm-block';
           p.innerText = app.displayname;
-
           divAppLoader.className = 'container-app-loader';
           divAppLoader.setAttribute('launch', app.launch);
 
-          li.appendChild(div);
+          li.appendChild(wrapperIcon);
           li.appendChild(p);
           li.appendChild(divAppLoader);
           clone.appendChild(li);
@@ -104,14 +121,23 @@ function enableDrag() {
 function addListener() {
   $('#appstore-applist li').click(function () {
     const container = this.querySelector('div.container-app-loader');
-    /**
-     * Check if the apploader container have an apploader
-     * Thus if it already has one don't run the application,
-     * prevent from multipple appLoader for the same application
-     */
-    if (container.children.length === 0) {
-      systemMenu.handleMenuClick(container);
+
+    if (this.getAttribute('locked') === 'true') {
+      // TODO Create authentication pop up here
+    } else {
+      launchApp();
     }
+
+    function launchApp() {
+      /**
+       * Check if the apploader container have an apploader
+       * Thus if it already has one don't run the application,
+       * prevent from multipple appLoader for the same application
+       */
+      if (container.children.length === 0) {
+        systemMenu.handleMenuClick(container);
+      }
+    } 
   });
 }
 
@@ -121,34 +147,8 @@ function addListener() {
  * @desc Open the window
  */
 export const open = function () {
-  let list = '';
   const template = document.querySelector('template#appstore-window-template');
   const applicationTitle = languages.getTranslate('appstore-title');
-
-  if (window.od.applist) {
-    for (let i = 0; i < window.od.applist.length; i++) {
-      const app = window.od.applist[i];
-
-      if (app && app.cat) {
-        const partsCat = app.cat.split(',');
-        for (let j = 0; j < app.cat.length; j++) {
-          const part = partsCat[j];
-          if (part === currentTab) {
-            const url = window.od.net.urlrewrite(`../img/app/${app.icon}`);
-            list += `
-                            <li class="appstore-item" launch="${app.launch}">
-                                <div>
-                                    <img src="${url}"/>
-                                </div>
-                                <p class="appname d-none d-sm-block">${app.displayname}</p>
-                                <div class="container-app-loader" launch="${app.launch}"></div>
-                            </li>
-                        `;
-          }
-        }
-      }
-    }
-  }
 
   bootbox.dialog({
     title: applicationTitle || 'Applications',
@@ -158,8 +158,10 @@ export const open = function () {
     animate: false,
   });
 
-  document.getElementById('appstore-applist').innerHTML = list;
-  $('.appstore-window .content-apps .button').click(openTab);
+  openTab('office');
+  $('.appstore-window .content-apps .button').click(function() {
+    openTab(this.id);
+  });
   addListener();
   enableDrag();
   languages.applyLanguage();
