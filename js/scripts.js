@@ -631,6 +631,7 @@ function setupTopMenu() {
 
     if (!this.children
         || !(this.children instanceof HTMLCollection)
+        || !this.children[0]
         || !this.children[0].id) {
       return;
     }
