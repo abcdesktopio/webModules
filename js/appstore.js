@@ -67,11 +67,15 @@ function openTab(tabId) {
             /**
              * 
              * @param {string} secretRequierement 
-             * @desc Here this predicate is true if the element is not present in the global secret list then this application require a new authentication
+             * @desc Here this predicate is true if the element is present in the global secret list
              */
-            const predicate = (secretRequierement) => !window.od.secrets.includes(secretRequierement);
+            const predicate = (secretRequierement) => window.od.secrets.includes(secretRequierement);
 
-            if (app.secrets_requirement.some(predicate)) {
+            /**
+             * @desc Considering the previous predicate if at least one required secret is not present in the global secret list
+             * the application will be considered as locked
+             */
+            if (!app.secrets_requirement.every(predicate)) {
               const imageLock = document.createElement('img');
               imageLock.className = 'app-lock-icon';
               imageLock.src = 'img/lock.svg';
