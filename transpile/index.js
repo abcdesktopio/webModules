@@ -56,6 +56,7 @@ const pathAppHtmlFile = path.resolve(path.join('..', 'app.html'));
 const pathDescriptionHtmlFile = path.resolve(path.join('..', 'description.html'));
 const pathIndexMustacheHtmlFile = path.resolve(path.join('..', 'index.mustache.html'));
 const pathDescriptionMustacheHtmlFile = path.resolve(path.join('..', 'description.mustache.html'));
+const pathI18nDirectory = path.resolve(path.join('..', 'i18n'));
 const pathImg = path.resolve(path.join('..', 'img'));
 
 // #region svg
@@ -162,47 +163,44 @@ async function buildCss(colors = []) {
 // #region userInterface
 async function userInterface() {
   console.time('Apply userInterface conf');
+  const awaitingUIConf = fs.promises.readFile(pathUIConf, 'utf8')
+    .then((jsonFile) => JSON.parse(jsonFile));
+
+  const awaitingModulesConf = fs.promises.readFile(pathModules, 'utf8')
+    .then((jsonFile) => JSON.parse(jsonFile));
+
+  const [uiConf, modulesConf] = await Promise.all([awaitingUIConf, awaitingModulesConf]);
+
   await Promise.all([
-    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true),
-    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false),
-    applyConfToMustacheFile(pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false),
-    applyConfToMustacheFile(pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false),
   ]);
   console.timeEnd('Apply userInterface conf');
 }
 
 /**
+ * @param {Object} uiConf
+ * @param {Object} modulesConf
  * @param {string} pathMustacheFile
  * @param {string} pathHtmlFile
  * @param {boolean} isIndexPage
  */
-async function applyConfToMustacheFile(pathMustacheFile, pathHtmlFile, isIndexPage, isDemoPage) {
-  const awaitingUIConf = fs.promises.readFile(pathUIConf, 'utf8').then((jsonFile) => JSON.parse(jsonFile));
-  const awaitingModulesConf = fs.promises.readFile(pathModules, 'utf8').then((jsonFile) => {
-    const json = JSON.parse(jsonFile);
-    const mapper = (item) => ({
-      ...item,
-      defer: item.defer ? 'defer' : '',
-    });
-
-    return {
-      ...json,
-      scripts: json.scripts.filter(
-        (script) => (script.indexPageOnly ? isIndexPage : true),
-      ).map(mapper),
-    };
+async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile, pathHtmlFile, isIndexPage, isDemoPage) {
+  const mapper = (item) => ({
+    ...item,
+    defer: item.defer ? 'defer' : '',
   });
-  const awaitingMustacheFile = fs.promises.readFile(pathMustacheFile, 'utf8');
 
-  const [
-    uiConf,
-    modulesConf,
-    mustacheFile,
-  ] = await Promise.all([awaitingUIConf, awaitingModulesConf, awaitingMustacheFile]);
+  const scripts = modulesConf.scripts
+    .filter((script) => (script.indexPageOnly ? isIndexPage : true))
+    .map(mapper);
 
+  const mustacheFile = await fs.promises.readFile(pathMustacheFile, 'utf8');
   const view = {
     modules: modulesConf.modules,
-    scripts: modulesConf.scripts,
+    scripts,
     projectName: uiConf.name,
     urlcannotopensession: uiConf.urlcannotopensession,
     urlusermanual: uiConf.urlusermanual,
