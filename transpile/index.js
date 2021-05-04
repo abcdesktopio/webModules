@@ -59,6 +59,8 @@ const pathDescriptionMustacheHtmlFile = path.resolve(path.join('..', 'descriptio
 const pathI18nDirectory = path.resolve(path.join('..', 'i18n'));
 const pathImg = path.resolve(path.join('..', 'img'));
 
+const patternNamei18nFiles = /\.mustache\.json$/i;
+
 // #region svg
 
 /**
@@ -176,6 +178,7 @@ async function userInterface() {
     applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false),
     applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false),
     applyConfToMustacheHtmlFile(uiConf, modulesConf, pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false),
+    applyConfToMustacheJsonFiles(uiConf),
   ]);
   console.timeEnd('Apply userInterface conf');
 }
@@ -210,6 +213,42 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
   };
 
   await fs.promises.writeFile(pathHtmlFile, Mustache.render(mustacheFile, view));
+}
+
+/**
+ * 
+ * @param {Object} uiConf 
+ */
+async function applyConfToMustacheJsonFiles(uiConf) {
+  const dirents = await fs.promises.readdir(pathI18nDirectory, { withFileTypes: true });
+  const direntsI18nMustacheFiles = dirents.filter(
+    (dirent) => dirent.isFile() && patternNamei18nFiles.test(dirent.name)
+  );
+
+  const i18MustacheFiles = await Promise.all(
+    direntsI18nMustacheFiles
+    .map((direntI18nMustacheFile) => {
+      const pathToI18nMustacheFile = path.join(pathI18nDirectory, direntI18nMustacheFile.name);
+      return fs.promises.readFile(pathToI18nMustacheFile, 'utf8');
+    }),
+  );
+
+  await Promise.all(
+    i18MustacheFiles
+      .map((contentI18nMustacheFile, index) => {
+        const i18nMustacheFile = direntsI18nMustacheFiles[index];
+        const nameI18nJsonFile = i18nMustacheFile.name.replace(patternNamei18nFiles, '.json');
+        const pathI18nJsonFile = path.join(pathI18nDirectory, nameI18nJsonFile);
+        const view = {
+          projectName: uiConf.name,
+          urlcannotopensession: uiConf.urlcannotopensession,
+          urlusermanual: uiConf.urlusermanual,
+          urlusersupport: uiConf.urlusersupport,
+        };
+
+        return fs.promises.writeFile(pathI18nJsonFile, Mustache.render(contentI18nMustacheFile, view));
+      }),
+  );
 }
 
 // #endregion userInterface
