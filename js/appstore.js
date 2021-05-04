@@ -54,6 +54,15 @@ function openTab(tabId) {
           wrapperIcon.className = 'd-flex justify-content-center align-items-center';
           wrapperIcon.appendChild(img);
 
+          p.className = 'appname d-none d-sm-block';
+          p.innerText = app.displayname;
+          divAppLoader.className = 'container-app-loader';
+          divAppLoader.setAttribute('launch', app.launch);
+
+          li.appendChild(wrapperIcon);
+          li.appendChild(p);
+          li.appendChild(divAppLoader);
+
           if (app.secrets_requirement instanceof Array) {
             /**
              * 
@@ -66,19 +75,10 @@ function openTab(tabId) {
               const imageLock = document.createElement('img');
               imageLock.className = 'app-lock-icon';
               imageLock.src = 'img/lock.svg';
-              wrapperIcon.appendChild(imageLock);
               li.setAttribute('locked', 'true');
+              li.appendChild(imageLock);
             }
           }
-
-          p.className = 'appname d-none d-sm-block';
-          p.innerText = app.displayname;
-          divAppLoader.className = 'container-app-loader';
-          divAppLoader.setAttribute('launch', app.launch);
-
-          li.appendChild(wrapperIcon);
-          li.appendChild(p);
-          li.appendChild(divAppLoader);
           clone.appendChild(li);
         }
       }
