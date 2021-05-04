@@ -1148,10 +1148,29 @@ By using this website, you automatically accept that we use cookies.
             </div>
         </template>
         <template id="authent-window-template" class="window">
-            <h3 class="text-center">You have to authent</h3>
-            <div class="container w-25 h-75 d-flex justify-content-center flex-column">  
-                <input type="text" id="input-id-authent-window">
-                <input type="password" id="input-password-authent-window" placeholder="Password">
+            <div class="container w-50 h-75 d-flex justify-content-center flex-column">  
+                <input
+                    id="authent-window-input-id"
+                    placeholder="Login"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="Login"
+                    readonly>
+                <br>
+
+                <input
+                    id="authent-window-input-password"
+                    placeholder="Password"
+                    type="password"
+                    maxlength="127"
+                    autocomplete="current-password">
+                <br>
+
+                <p id="authent-window-requirement">To access to this service you need to be identified. If you use
+                    {{ projectName }} from a personal
+                    computer which does not belong to the company, remember to close your browser and to delete file
+                    attachments saved on the hard disk when you are done. In case of issues, call your usual support.
+                </p>
             </div>
         </template>
     {{/isIndexPage}}

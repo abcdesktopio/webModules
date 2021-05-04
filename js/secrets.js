@@ -19,6 +19,7 @@ import * as languages from './languages.js';
  * @param {Function} launchApp 
  */
 export async function runAuthentication(launchApp) {
+  let authentWindowInputId;
   const template = document.querySelector('#authent-window-template');
   const titleAuthenticationWindow = await languages.getTranslate('title-authentication-window');
   const labelCancelButton = await languages.getTranslate('cancel-button');
@@ -44,9 +45,9 @@ export async function runAuthentication(launchApp) {
     },
   });
 
-  const inputIdAuthentWindow = document.querySelector('.authent-window #input-id-authent-window');
-  inputIdAuthentWindow.value = window.od.currentUser.userid;
-  inputIdAuthentWindow.readOnly = true;
+  if (authentWindowInputId = document.querySelector('.authent-window #authent-window-input-id')) {
+    authentWindowInputId.value = window.od.currentUser.userid;
+  }
 }
 
 document.addEventListener('broadway.connected', async () => {
