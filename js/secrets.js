@@ -20,6 +20,7 @@ import * as languages from './languages.js';
  */
 export async function runAuthentication(launchApp) {
   let authentWindowInputId;
+  let authWindowInputPassword;
   const template = document.querySelector('#authent-window-template');
   const titleAuthenticationWindow = await languages.getTranslate('title-authentication-window');
   const labelCancelButton = await languages.getTranslate('cancel-button');
@@ -38,8 +39,11 @@ export async function runAuthentication(launchApp) {
       send: {
         label: labelSendButton || 'Send',
         className: 'window-button',
-        callback: () => {
-          launchApp();
+        callback: async () => {
+          //TODO: add call to build secrets here
+          //TODO: refresh list secrets
+          //TODO: refresh app icons in the dom
+          //TODO: run the application
         },
       },
     },
@@ -48,6 +52,8 @@ export async function runAuthentication(launchApp) {
   if (authentWindowInputId = document.querySelector('.authent-window #authent-window-input-id')) {
     authentWindowInputId.value = window.od.currentUser.userid;
   }
+
+  authWindowInputPassword = document.getElementById('authent-window-input-password');
 }
 
 document.addEventListener('broadway.connected', async () => {
