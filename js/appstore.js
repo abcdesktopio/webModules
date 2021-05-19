@@ -14,7 +14,7 @@
 import * as systemMenu from './systemmenu.js';
 import * as system from './system.js';
 import * as languages from './languages.js';
-import { runAuthentication } from './secrets.js';
+import * as secrets from './secrets.js';
 
 let draggedApp;
 
@@ -64,18 +64,7 @@ function openTab(tabId) {
           li.appendChild(divAppLoader);
 
           if (app.secrets_requirement instanceof Array) {
-            /**
-             * 
-             * @param {string} secretRequierement 
-             * @desc Here this predicate is true if the element is present in the global secret list
-             */
-            const predicate = (secretRequierement) => window.od.secrets.includes(secretRequierement);
-
-            /**
-             * @desc Considering the previous predicate if at least one required secret is not present in the global secret list
-             * the application will be considered as locked
-             */
-            if (!app.secrets_requirement.every(predicate)) {
+            if (secrets.needAuthorizationForSecrets(app.secrets_requirement)) {
               const imageLock = document.createElement('img');
               imageLock.className = 'app-lock-icon';
               imageLock.src = 'img/lock.svg';
@@ -128,7 +117,7 @@ function addListener() {
     const container = this.querySelector('div.container-app-loader');
 
     if (this.getAttribute('locked') === 'true') {
-      runAuthentication(launchApp);
+      secrets.runAuthentication(launchApp);
     } else {
       launchApp();
     }

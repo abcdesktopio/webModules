@@ -16,6 +16,33 @@ import * as languages from './languages.js';
 
 /**
  * 
+ * @param {string[]} secretRequirementList 
+ * @desc Return true if at least one of the secret requirement of an application is not present in the current secret authorized list
+ * @returns {boolean} 
+ */
+export function needAuthorizationForSecrets(secretRequirementList = []) {
+  /**
+   * 
+   * @param {string} secretRequierement 
+   * @desc Here this predicate is true if the element is present in the global secret list
+   */
+  const predicate = (secretRequierement) => window.od.secrets.includes(secretRequierement);
+
+
+  /**
+   * @desc Considering the previous predicate if at least one required secret is not present in the global secret list
+   * an authorization will be needed for having these secrets
+   */
+  return !secretRequirementList.every(predicate);
+}
+
+async function refreshSecretList() {
+  const { result } = await launcher.getSecrets();
+  window.od.secrets = result;
+}
+
+/**
+ * 
  * @param {Function} launchApp 
  */
 export async function runAuthentication(launchApp) {
@@ -41,7 +68,8 @@ export async function runAuthentication(launchApp) {
         className: 'window-button',
         callback: async () => {
           await launcher.buildsecret(authWindowInputPassword.value);
-          //TODO: refresh list secrets
+          await refreshSecretList();
+
           //TODO: refresh app icons in the dom
           //TODO: run the application
         },
@@ -56,7 +84,4 @@ export async function runAuthentication(launchApp) {
   authWindowInputPassword = document.getElementById('authent-window-input-password');
 }
 
-document.addEventListener('broadway.connected', async () => {
-  const { result } = await launcher.getSecrets();
-  window.od.secrets = result;
-});
+document.addEventListener('broadway.connected', refreshSecretList);
