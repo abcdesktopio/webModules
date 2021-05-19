@@ -18,6 +18,7 @@
 import * as systemMenu from './systemmenu.js';
 import * as launcher from './launcher.js';
 import * as system from './system.js';
+import * as languages from './languages.js';
 
 const cache = {};
 export let draggedApp;
@@ -44,6 +45,8 @@ export const init = function () {
   fileZone = _this.querySelector('#fileZone');
   searchBar = document.getElementById('searchBar');
   closeZone = document.getElementById('closeZone');
+
+  languages.applyLanguage();
 
   if (closeZone) {
     closeZone.addEventListener('click', () => {
