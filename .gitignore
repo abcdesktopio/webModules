@@ -38,3 +38,7 @@ description.html
 demo.html
 
 transpile/.env
+
+i18n/*.json
+!list.json
+!i18n/*.mustache.json
