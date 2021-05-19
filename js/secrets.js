@@ -69,9 +69,16 @@ export async function runAuthentication(launchApp) {
         callback: async () => {
           await launcher.buildsecret(authWindowInputPassword.value);
           await refreshSecretList();
+          const lockedApplications = Array.from(document.querySelectorAll('li[locked=true]'))
+            .filter((lockedApplication) => needAuthorizationForSecrets(
+              JSON.parse(lockedApplication.getAttribute('secrets_requirement'))
+            ));
 
-          //TODO: refresh app icons in the dom
-          //TODO: run the application
+          for (const lockedApplication of lockedApplications) {
+            lockedApplication.setAttribute('locked', 'false');
+          }
+
+          launchApp();
         },
       },
     },
