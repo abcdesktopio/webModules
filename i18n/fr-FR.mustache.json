@@ -129,5 +129,7 @@
     "connectAD": "Se connecter",
     "link-open-session": "Je ne peux pas ouvrir ma session",
     "over-screen-message-data": "Votre desktop est fermé.",
-    "title-authentication-window": "Authentification"
+    "title-authentication-window": "Authentification",
+    "fileZoneTitle": "Fichiers",
+    "appZoneTitle": "Applications"
 }
