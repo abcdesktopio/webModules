@@ -221,15 +221,6 @@
   margin-left: -150px;
 }
 
-#dock li div.puce {
-  height: 3px;
-  position: relative;
-  top: 6px;
-  margin: 0;
-  padding: 0;
-  background: @light;
-}
-
 #dock input[type="text"] {
   cursor: text;
   height: 56px;
@@ -315,4 +306,35 @@
 #contextmenu li div {
   height: 20px;
   float: left;
+}
+
+li img.dock-lock-icon {
+  position: relative;
+  width: 20px !important;
+  height: 20px !important;
+  bottom: 20px;
+  left: 25px;
+  display: none;
+}
+
+li[locked=true] img.dock-lock-icon {
+  display: unset;
+}
+
+#dock li[locked=true] div.puce {
+  height: 3px;
+  position: relative;
+  top: -14px;
+  margin: 0;
+  padding: 0;
+  background: @light;
+}
+
+#dock li div.puce {
+  height: 3px;
+  position: relative;
+  top: 6px;
+  margin: 0;
+  padding: 0;
+  background: @light;
 }

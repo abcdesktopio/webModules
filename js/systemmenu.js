@@ -21,6 +21,7 @@ import * as errorMessage from './errormessage.js';
 import * as webshell from './webshell.js';
 
 import { broadcastEvent } from './broadcastevent.js';
+import * as secrets from './secrets.js';
 
 let myMenuApps;
 let enable = true;
@@ -53,7 +54,7 @@ function clickDockActive() {
  * @returns {void}
  * @desc Init events, load user's menu from MongoDB and make dock sortable (jQuery).
  */
-export const init = function () {
+const init = function () {
   if (!document.getElementById('dock')) {
     enable = false;
     console.log('searchZone is disabled');
@@ -548,18 +549,26 @@ export const internalLoadMenu = function (apps) {
     }
   }
 
-  for (let i = 0; i < apps.length; i++) {
-    const imgurl = window.od.net.urlrewrite(`../img/app/${apps[i].icon}`);
+  for (const {icon, launch, container_id, execmode, id, displayname, name, secrets_requirement} of apps) {
+    const imgurl = window.od.net.urlrewrite(`../img/app/${icon}`);
     const li = document.createElement('li');
-    li.setAttribute('launch', apps[i].launch);
-    li.setAttribute('name', apps[i].name);
-    li.setAttribute('container_id', apps[i].container_id);
+    li.setAttribute('launch', launch);
+    li.setAttribute('name', name);
+    li.setAttribute('container_id', container_id);
     li.setAttribute('state', 'down');
-    if (apps[i].execmode === 'frontendjs') li.setAttribute('execmode', apps[i].execmode);
+    if (execmode === 'frontendjs') li.setAttribute('execmode', execmode);
 
-    li.id = apps[i].id;
+    li.id = id;
     li.innerHTML = '';
-    li.appendChild(getAppFragment(apps[i].displayname, imgurl));
+    li.appendChild(getAppFragment(displayname, imgurl));
+
+    if (Array.isArray(secrets_requirement)) {
+      if (secrets.needAuthorizationForSecrets(secrets_requirement)) {
+        li.setAttribute('locked', 'true');
+      }
+    } else {
+      li.setAttribute('locked', 'false');
+    }
 
     mouselistener();
     docklist.appendChild(li);
@@ -605,8 +614,9 @@ export const getAppFragment = function (appName, imgUrl) {
   const divAppContainer = document.createElement('div');
   const divAppName = document.createElement('div');
   const spanArrowDock = document.createElement('span');
-  const div = document.createElement('div');
+  const wrapperIcons = document.createElement('div');
   const img = document.createElement('img');
+  const iconLock = document.createElement('img');
 
   divAppContainer.className = 'appcontainer';
   divAppName.className = 'appname';
@@ -617,12 +627,18 @@ export const getAppFragment = function (appName, imgUrl) {
   divAppContainer.appendChild(divAppName);
   divAppContainer.appendChild(spanArrowDock);
 
+  wrapperIcons.className = 'd-flex flex-column';
+
   img.className = 'appIconDock';
   img.src = imgUrl;
-  div.appendChild(img);
+  iconLock.src = 'img/lock.svg';
+  iconLock.className = 'dock-lock-icon';
+
+  wrapperIcons.appendChild(img);
+  wrapperIcons.appendChild(iconLock);
 
   appFragment.appendChild(divAppContainer);
-  appFragment.appendChild(div);
+  appFragment.appendChild(wrapperIcons);
 
   return appFragment;
 };
@@ -659,6 +675,8 @@ export const createAppdiv = function (data) {
   }
   return null;
 };
+
+secrets.secretsEvents.addEventListener('loaded', init);
 
 const numberAppsCanBeAdd = function (docklist, nbrDisplayedApps) {
   const docklistWidth = docklist.offsetWidth;

@@ -16,7 +16,6 @@ import * as broadcastSystem from './broadcastsystem.js';
 import BroadwayVNC from './broadway-vnc.js';
 import * as clipboard from './clipboard.js';
 import * as connectLoader from './connectloader.js';
-import * as systemMenu from './systemmenu.js';
 import welcomeSystem from './welcomesystem.js';
 import * as launcher from './launcher.js';
 import * as shareSystem from './shareSystem.js';
@@ -39,6 +38,7 @@ import * as system from './system.js';
 import * as settings from './settings.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
+import './systemmenu.js';
 import './secrets.js';
 
 //
@@ -210,7 +210,6 @@ window.od.setupafteruserloginin = function () {
 
 function initApplist_callback() {
   appSelector.init();
-  systemMenu.init();
   launcher.generateDesktopFiles(window.od.applist);
 }
 
