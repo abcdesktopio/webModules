@@ -25,13 +25,15 @@ export const applyLanguage = () => {
       const elt = document.getElementById(key);
       if (elt) {
         if (elt.tagName.toLowerCase() === 'input') {
-          if (elt.type === 'submit') {
+          if (elt.type === 'submit' && elt.value !== keysValues[key]) {
             elt.value = keysValues[key];
-          } else {
+          } else if (elt.placeholder !== keysValues[key]) {
             elt.placeholder = keysValues[key];
           }
         } else {
-          elt.innerText = keysValues[key];
+          if (elt.innerText !== keysValues[key]) {
+            elt.innerText = keysValues[key];
+          }
         }
       }
     }
