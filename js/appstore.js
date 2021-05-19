@@ -37,6 +37,7 @@ function openTab(tabId) {
       const cat = app.cat.split(',');
       for (let j = 0; j < cat.length; j++) {
         if (cat[j] === tabId) {
+          let appSecretRequirements = [];
           const url = window.od.net.urlrewrite(`../img/app/${app.icon}`);
           const li = document.createElement('li');
           li.id = app.id;
@@ -48,6 +49,7 @@ function openTab(tabId) {
           const img = document.createElement('img');
           const p = document.createElement('p');
           const divAppLoader = document.createElement('div');
+          const imageLock = document.createElement('img');
 
           img.src = url;
 
@@ -59,19 +61,23 @@ function openTab(tabId) {
           divAppLoader.className = 'container-app-loader';
           divAppLoader.setAttribute('launch', app.launch);
 
+          imageLock.className = 'app-lock-icon';
+          imageLock.src = 'img/lock.svg';
+
           li.appendChild(wrapperIcon);
           li.appendChild(p);
           li.appendChild(divAppLoader);
+          li.appendChild(imageLock);
 
           if (app.secrets_requirement instanceof Array) {
+            appSecretRequirements = app.secrets_requirement;
             if (secrets.needAuthorizationForSecrets(app.secrets_requirement)) {
-              const imageLock = document.createElement('img');
-              imageLock.className = 'app-lock-icon';
-              imageLock.src = 'img/lock.svg';
               li.setAttribute('locked', 'true');
-              li.appendChild(imageLock);
+              
             }
           }
+
+          li.setAttribute('secrets_requirement', JSON.stringify(appSecretRequirements));
           clone.appendChild(li);
         }
       }

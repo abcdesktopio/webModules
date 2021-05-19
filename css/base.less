@@ -1760,12 +1760,17 @@ div.wrapper-app-icon {
   align-items: center;
 }
 
+li[locked=true] img.app-lock-icon {
+  display: unset;
+}
+
 img.app-lock-icon {
   position: relative;
   width: 20px !important;
   height: 20px !important;
   bottom: 40px;
   left: 12px;
+  display: none;
 }
 
 .authent-window input,
