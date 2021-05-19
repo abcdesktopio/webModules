@@ -14,6 +14,8 @@
 import * as launcher from './launcher.js';
 import * as languages from './languages.js';
 
+export const secretsEvents = new EventTarget();
+
 /**
  * 
  * @param {string[]} secretRequirementList 
@@ -91,4 +93,7 @@ export async function runAuthentication(launchApp) {
   authWindowInputPassword = document.getElementById('authent-window-input-password');
 }
 
-document.addEventListener('broadway.connected', refreshSecretList);
+document.addEventListener('broadway.connected', async () => {
+  await refreshSecretList();
+  secretsEvents.dispatchEvent(new CustomEvent('loaded'));
+});
