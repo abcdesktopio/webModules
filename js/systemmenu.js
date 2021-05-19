@@ -516,13 +516,21 @@ export const handleMenuClick = function (clickedApp) {
       }
     } else {
       // This myapptolaunch is a docker image
-      const runDict = { image: myapptolaunch.id, args: '' };
-      launcher.ocrun(runDict, clickedApp);
-      system.addAppLoader(clickedApp);
-      clickedApp.setAttribute('state', 'started');
-      $(clickedApp).find('img.appLoader')
-        .addClass('appLoaderDock');
+      if (clickedApp.getAttribute('locked') === 'false') {
+        launchDockerApplication();
+      } else {
+        secrets.runAuthentication(launchDockerApplication);
+      }
     }
+  }
+
+  function launchDockerApplication() {
+    const runDict = { image: myapptolaunch.id, args: '' };
+    launcher.ocrun(runDict, clickedApp);
+    system.addAppLoader(clickedApp);
+    clickedApp.setAttribute('state', 'started');
+    $(clickedApp).find('img.appLoader')
+      .addClass('appLoaderDock');
   }
 };
 
