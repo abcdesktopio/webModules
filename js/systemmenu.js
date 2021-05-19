@@ -634,8 +634,7 @@ export const getAppFragment = function (appName, imgUrl) {
  * @desc Create a temporary icon of a running application who wasn't in the dock.
  */
 export const createAppdiv = function (data) {
-  for (let i = 0; i < window.od.applist.length; i++) {
-    const { launch } = window.od.applist[i];
+  for (const { launch, icon, displayname } of window.od.applist.length) {
     if (launch === data.wm_class) {
       const li = document.createElement('li');
       li.setAttribute('launch', launch);
@@ -646,9 +645,9 @@ export const createAppdiv = function (data) {
 
       li.className = 'temporary active';
 
-      const imgurl = window.od.net.urlrewrite(`../img/app/${window.od.applist[i].icon}`);
+      const imgurl = window.od.net.urlrewrite(`../img/app/${icon}`);
       const divPuce = document.createElement('div');
-      const fragment = getAppFragment(window.od.applist[i].displayname, imgurl);
+      const fragment = getAppFragment(displayname, imgurl);
 
       divPuce.className = 'puce';
 
