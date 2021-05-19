@@ -892,6 +892,16 @@ export function getSecrets() {
   return odApiClient.composer.listsecrets();
 }
 
+
+/**
+ * @function buildsecrets
+ * @param {string} password
+ * @global
+ */
+export function buildsecret(password) {
+  return odApiClient.auth.buildsecret(password);
+}
+
 /**
  * @function stopContainer
  * @param {string} container_id

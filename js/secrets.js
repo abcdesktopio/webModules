@@ -40,7 +40,7 @@ export async function runAuthentication(launchApp) {
         label: labelSendButton || 'Send',
         className: 'window-button',
         callback: async () => {
-          //TODO: add call to build secrets here
+          await launcher.buildsecret(authWindowInputPassword.value);
           //TODO: refresh list secrets
           //TODO: refresh app icons in the dom
           //TODO: run the application

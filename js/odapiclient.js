@@ -44,6 +44,10 @@ const odApiClient = new (class ODApiClient {
       getLabels() {
         return client.sendRequest('auth/labels');
       }
+
+      buildsecret(password) {
+        return client.sendRequest('auth/buildsecret', { password });
+      }
     })();
 
     this.user = new (class userClient {
