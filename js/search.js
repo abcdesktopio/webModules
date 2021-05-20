@@ -86,23 +86,23 @@ export const init = function () {
 
           let url;
           // Add new Apps search result
-          for (let i = 0; i < apps.length; i++) {
-            if (window.od.applist[i].cat) {
+          for (const { cat, icon, id, displayname, launch, execmode } of apps) {
+            if (cat) {
               const li = document.createElement('li');
               const img = document.createElement('img');
               const div = document.createElement('div');
 
-              li.className = `icon app ${window.od.applist[i].cat[0]}`;
-              li.setAttribute('launch', apps[i].launch);
-              if (apps[i].execmode === 'frontendjs') {
-                li.setAttribute('execmode', apps[i].execmode);
+              li.className = `icon app ${cat[0]}`;
+              li.setAttribute('launch', launch);
+              if (execmode === 'frontendjs') {
+                li.setAttribute('execmode', execmode);
               }
-              li.id = apps[i].id;
-              url = window.od.net.urlrewrite(`../img/app/${apps[i].icon}`);
+              li.id = id;
+              url = window.od.net.urlrewrite(`../img/app/${icon}`);
 
               img.src = url;
               div.className = 'appname';
-              div.innerText = apps[i].displayname;
+              div.innerText = displayname;
 
               li.appendChild(img);
               li.appendChild(div);
