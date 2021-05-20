@@ -26,7 +26,12 @@ const odApiClient = new (class ODApiClient {
       }
 
       auth(manager, provider, data) {
-        return client.sendRequest('auth/auth', $.extend({ manager, provider }, data));
+        return client.sendRequest('auth/auth', $.extend({ manager, provider }, data))
+          .then((res) => {
+            const { jwt_user_token } = res.result;
+            localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
+            return res;
+          });
       }
 
       logout(data_dict) {
@@ -38,7 +43,12 @@ const odApiClient = new (class ODApiClient {
       }
 
       refreshtoken() {
-        return client.sendRequest('auth/refreshtoken');
+        return client.sendRequest('auth/refreshtoken')
+          .then((res) => {
+            const { jwt_user_token } = res.result;
+            localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
+            return res;
+          });
       }
 
       getLabels() {
@@ -224,6 +234,9 @@ const odApiClient = new (class ODApiClient {
       data: JSON.stringify(args || {}),
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('abcdesktop_jwt_user_token')}`,
+      },
     }).then(
       (result, status, xhr) => {
         const deferred = $.Deferred();
