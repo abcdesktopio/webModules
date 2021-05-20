@@ -434,7 +434,7 @@ export default function BroadwayVNC() {
     }
     else
     { 
-      path = `websockify?${window.od.currentUser.authorization}`;
+      path = `websockify?jwt_token=${window.od.currentUser.authorization}`;
     }
     url = window.od.net.getwsurl(path, window.od.currentUser.target_ip, port );
    
