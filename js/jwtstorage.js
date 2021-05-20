@@ -11,6 +11,10 @@
 * Software description: cloud native desktop service
 */
 
-if (jwt_user_token) {
-  localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
-}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (jwt_user_token) {
+  	localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
+  }
+  document.location = default_host_url; 
+});
