@@ -557,32 +557,35 @@ export const internalLoadMenu = function (apps) {
     }
   }
 
-  for (const {icon, launch, container_id, execmode, id, displayname, name, secrets_requirement} of apps) {
+  for (
+    const {
+      icon,
+      launch,
+      container_id,
+      execmode,
+      id,
+      displayname,
+      name,
+      secrets_requirement
+    } of apps
+  ) {
     const imgurl = window.od.net.urlrewrite(`../img/app/${icon}`);
-    const li = document.createElement('li');
-    li.setAttribute('launch', launch);
+    const li = system.getLIApp(id, launch, execmode, secrets_requirement);
+
     li.setAttribute('name', name);
     li.setAttribute('container_id', container_id);
     li.setAttribute('state', 'down');
-    if (execmode === 'frontendjs') li.setAttribute('execmode', execmode);
 
-    li.id = id;
     li.innerHTML = '';
     li.appendChild(getAppFragment(displayname, imgurl));
-
-    if (Array.isArray(secrets_requirement)) {
-      if (secrets.needAuthorizationForSecrets(secrets_requirement)) {
-        li.setAttribute('locked', 'true');
-      }
-    } else {
-      li.setAttribute('locked', 'false');
-    }
 
     mouselistener();
     docklist.appendChild(li);
   }
+
   clicklistener();
   mouselistener();
+
   launcher.getwindowslist()
     .then((msg) => {
       updateWindowList(msg.data);
