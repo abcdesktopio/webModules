@@ -73,18 +73,22 @@ export async function runAuthentication(launchApp) {
         label: labelSendButton || 'Send',
         className: 'window-button',
         callback: async () => {
-          await launcher.buildsecret(authWindowInputPassword.value);
-          await refreshSecretList();
-          const lockedApplications = Array.from(document.querySelectorAll('li[locked=true]'))
-            .filter((lockedApplication) => needAuthorizationForSecrets(
-              JSON.parse(lockedApplication.getAttribute('secrets_requirement'))
-            ));
+          try {
+            await launcher.buildsecret(authWindowInputPassword.value);
+            await refreshSecretList();
+            const lockedApplications = Array.from(document.querySelectorAll('li[locked=true]'))
+              .filter((lockedApplication) => needAuthorizationForSecrets(
+                JSON.parse(lockedApplication.getAttribute('secrets_requirement'))
+              ));
 
-          for (const lockedApplication of lockedApplications) {
-            lockedApplication.setAttribute('locked', 'false');
+            for (const lockedApplication of lockedApplications) {
+              lockedApplication.setAttribute('locked', 'false');
+            }
+
+            launchApp();
+          } catch(e) {
+            console.error(e);
           }
-
-          launchApp();
         },
       },
     },
