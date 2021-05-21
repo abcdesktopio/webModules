@@ -13,6 +13,7 @@
 
 import * as languages from './languages.js';
 import { broadcastEvent } from './broadcastevent.js';
+import * as secrets from './secrets.js';
 
 /**
  * @function horloge
@@ -246,6 +247,37 @@ export function getCardWrappers() {
     cardContainer,
     cardBody,
   };
+}
+
+/**
+ * 
+ * @param {string} id 
+ * @param {string} launch 
+ * @param {string} execmode 
+ * @param {string[]} secrets_requirement 
+ * @returns {HTMLLIElement}
+ */
+export function getLIApp(
+  id = '',
+  launch = '',
+  execmode  = '',
+  secrets_requirement = [],
+) {
+  const li = document.createElement('li');
+  li.id = id;
+  li.setAttribute('locked', 'false');
+  li.setAttribute('launch', launch);
+  li.setAttribute('execmode', execmode);
+
+  if (Array.isArray(secrets_requirement)) {
+    if (secrets.needAuthorizationForSecrets(secrets_requirement)) {
+      li.setAttribute('locked', 'true');
+    }
+  } else {
+    li.setAttribute('secrets_requirement', JSON.stringify(secrets_requirement));
+  }
+
+  return li;
 }
 
 broadcastEvent.addEventListener('connect.counter', ({ detail: { connectCounter } }) => updateNbConnect(connectCounter));
