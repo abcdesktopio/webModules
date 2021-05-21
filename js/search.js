@@ -19,6 +19,7 @@ import * as systemMenu from './systemmenu.js';
 import * as launcher from './launcher.js';
 import * as system from './system.js';
 import * as languages from './languages.js';
+import * as secrets from './secrets.js';
 
 const cache = {};
 export let draggedApp;
@@ -86,18 +87,13 @@ export const init = function () {
 
           let url;
           // Add new Apps search result
-          for (const { cat, icon, id, displayname, launch, execmode } of apps) {
+          for (const { cat, icon, id, displayname, launch, execmode, secrets_requirement } of apps) {
             if (cat) {
-              const li = document.createElement('li');
+              const li = system.getLIApp(id, launch, execmode, secrets_requirement);
               const img = document.createElement('img');
               const div = document.createElement('div');
 
               li.className = `icon app ${cat[0]}`;
-              li.setAttribute('launch', launch);
-              if (execmode === 'frontendjs') {
-                li.setAttribute('execmode', execmode);
-              }
-              li.id = id;
               url = window.od.net.urlrewrite(`../img/app/${icon}`);
 
               img.src = url;
