@@ -267,7 +267,10 @@ export function getLIApp(
   li.id = id;
   li.setAttribute('locked', 'false');
   li.setAttribute('launch', launch);
-  li.setAttribute('execmode', execmode);
+
+  if (execmode === 'frontendjs') {
+    li.setAttribute('execmode', execmode);
+  }
 
   if (Array.isArray(secrets_requirement)) {
     if (secrets.needAuthorizationForSecrets(secrets_requirement)) {
