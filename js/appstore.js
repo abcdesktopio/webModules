@@ -37,20 +37,15 @@ function openTab(tabId) {
       const cat = app.cat.split(',');
       for (let j = 0; j < cat.length; j++) {
         if (cat[j] === tabId) {
-          let appSecretRequirements = [];
           const url = window.od.net.urlrewrite(`../img/app/${app.icon}`);
-          const li = document.createElement('li');
-          li.id = app.id;
-          li.className = 'appstore-item';
-          li.setAttribute('launch', app.launch);
-          li.setAttribute('locked', 'false');
-
+          const li = system.getLIApp(app.id, app.launch, app.execmode, app.secrets_requirement);
           const wrapperIcon = document.createElement('div');
           const img = document.createElement('img');
           const p = document.createElement('p');
           const divAppLoader = document.createElement('div');
           const imageLock = document.createElement('img');
 
+          li.className = 'appstore-item';
           img.src = url;
 
           wrapperIcon.className = 'd-flex justify-content-center align-items-center';
@@ -69,15 +64,6 @@ function openTab(tabId) {
           li.appendChild(divAppLoader);
           li.appendChild(imageLock);
 
-          if (app.secrets_requirement instanceof Array) {
-            appSecretRequirements = app.secrets_requirement;
-            if (secrets.needAuthorizationForSecrets(app.secrets_requirement)) {
-              li.setAttribute('locked', 'true');
-              
-            }
-          }
-
-          li.setAttribute('secrets_requirement', JSON.stringify(appSecretRequirements));
           clone.appendChild(li);
         }
       }
