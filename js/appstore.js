@@ -28,45 +28,59 @@ function openTab(tabId) {
   const parentAppList = $('#appstore-applist')[0].parentElement;
   const clone = system.removeAllChilds($('#appstore-applist')[0], false);
 
-  /*
-       * Generate apps for selected category 
-    */
-  for (let i = 0; i < window.od.applist.length; i++) {
-    const app = window.od.applist[i];
-    if (app && app.cat) {
-      const cat = app.cat.split(',');
-      for (let j = 0; j < cat.length; j++) {
-        if (cat[j] === tabId) {
-          const url = window.od.net.urlrewrite(`../img/app/${app.icon}`);
-          const li = system.getLIApp(app.id, app.launch, app.execmode, app.secrets_requirement);
-          const wrapperIcon = document.createElement('div');
-          const img = document.createElement('img');
-          const p = document.createElement('p');
-          const divAppLoader = document.createElement('div');
-          const imageLock = document.createElement('img');
+  /**
+    * @desc Generate apps for selected category 
+  */
+  for (
+    const {
+      cat,
+      icon,
+      id,
+      launch,
+      execmode,
+      secrets_requirement,
+      displayname,
+    } of window.od.applist
+  ) {
 
-          li.className = 'appstore-item';
-          img.src = url;
+    if (typeof cat !== 'string') {
+      continue;
+    }
 
-          wrapperIcon.className = 'd-flex justify-content-center align-items-center';
-          wrapperIcon.appendChild(img);
-
-          p.className = 'appname d-none d-sm-block';
-          p.innerText = app.displayname;
-          divAppLoader.className = 'container-app-loader';
-          divAppLoader.setAttribute('launch', app.launch);
-
-          imageLock.className = 'app-lock-icon';
-          imageLock.src = 'img/lock.svg';
-
-          li.appendChild(wrapperIcon);
-          li.appendChild(p);
-          li.appendChild(divAppLoader);
-          li.appendChild(imageLock);
-
-          clone.appendChild(li);
-        }
+    const catParts = cat.split(',');
+    for (const catPart of catParts) {
+      if (catPart !== tabId) {
+        continue;
       }
+
+      const url = window.od.net.urlrewrite(`../img/app/${icon}`);
+      const li = system.getLIApp(id, launch, execmode, secrets_requirement);
+      const wrapperIcon = document.createElement('div');
+      const img = document.createElement('img');
+      const p = document.createElement('p');
+      const divAppLoader = document.createElement('div');
+      const imageLock = document.createElement('img');
+
+      li.className = 'appstore-item';
+      img.src = url;
+
+      wrapperIcon.className = 'd-flex justify-content-center align-items-center';
+      wrapperIcon.appendChild(img);
+
+      p.className = 'appname d-none d-sm-block';
+      p.innerText = displayname;
+      divAppLoader.className = 'container-app-loader';
+      divAppLoader.setAttribute('launch', launch);
+
+      imageLock.className = 'app-lock-icon';
+      imageLock.src = 'img/lock.svg';
+
+      li.appendChild(wrapperIcon);
+      li.appendChild(p);
+      li.appendChild(divAppLoader);
+      li.appendChild(imageLock);
+
+      clone.appendChild(li);
     }
   }
 
