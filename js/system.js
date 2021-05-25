@@ -276,8 +276,9 @@ export function getLIApp(
     if (secrets.needAuthorizationForSecrets(secrets_requirement)) {
       li.setAttribute('locked', 'true');
     }
-  } else {
     li.setAttribute('secrets_requirement', JSON.stringify(secrets_requirement));
+  } else {
+    li.setAttribute('secrets_requirement', JSON.stringify([]));
   }
 
   return li;
