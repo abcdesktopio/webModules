@@ -661,7 +661,7 @@ export const getAppFragment = function (appName, imgUrl) {
  * @desc Create a temporary icon of a running application who wasn't in the dock.
  */
 export const createAppdiv = function (data) {
-  for (const { launch, icon, displayname } of window.od.applist.length) {
+  for (const { launch, icon, displayname } of window.od.applist) {
     if (launch === data.wm_class) {
       const li = document.createElement('li');
       li.setAttribute('launch', launch);
