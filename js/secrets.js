@@ -59,7 +59,7 @@ function repaintForUnlockAuthorizedApp() {
    * @desc Predicate function returning true for a given application which need to be authorized
    *  and false otherwise
    */
-  const predicate = (lockedApplication) => !needAuthorizationForSecrets(
+  const predicate = (lockedApplication) => needAuthorizationForSecrets(
     JSON.parse(
       lockedApplication.getAttribute('secrets_requirement')
     )
