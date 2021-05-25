@@ -35,11 +35,19 @@ const odApiClient = new (class ODApiClient {
       }
 
       logout(data_dict) {
-        return client.sendRequest('auth/logout', data_dict);
+        return client.sendRequest('auth/logout', data_dict)
+          .then((res) => {
+            localStorage.clear();
+            return res;
+          });
       }
 
       disconnect() {
-        return client.sendRequest('auth/disconnect');
+        return client.sendRequest('auth/disconnect')
+          .then((res) => {
+            localStorage.clear();
+            return res;
+          });
       }
 
       refreshtoken() {
