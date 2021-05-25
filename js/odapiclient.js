@@ -233,6 +233,22 @@ const odApiClient = new (class ODApiClient {
   }
 
   sendRequest(method, args) {
+    function getErrorResponse(result, status, xhr) {
+      const status_ex = (xhr && xhr.status) ? xhr.status : status;
+      const status_dict = { status: xhr.status, error: result };
+      if (xhr.responseJSON) {
+        if (xhr.responseJSON.message) { status_dict.message = xhr.responseJSON.message; }
+        if (xhr.responseJSON.status_message) { status_dict.status_message = xhr.responseJSON.status_message; }
+      }
+
+      return {
+        status,
+        status_ex,
+        status_dict,
+        error: result,
+      }
+    }
+
     return $.ajax({
       type: 'POST',
       url: `${this.baseURL}/${method}`,
@@ -251,7 +267,8 @@ const odApiClient = new (class ODApiClient {
         } else if ((result.status && result.status === 500) || result.error) {
           if (!result.error) result.error = 'API call failed';
           if (!result.status) result.status = 500;
-          deferred.reject(xhr.status, 'API call failed', result);
+          deferred.reject(getErrorResponse(result, xhr.status, xhr));
+
         } else {
           if (!result.status) {
             result.status = 200;
@@ -263,13 +280,7 @@ const odApiClient = new (class ODApiClient {
 
       (xhr, status, error) => {
         const deferred = $.Deferred();
-        const status_ex = (xhr && xhr.status) ? xhr.status : status;
-        const status_dict = { status: xhr.status, error };
-        if (xhr.responseJSON) {
-          if (xhr.responseJSON.message) { status_dict.message = xhr.responseJSON.message; }
-          if (xhr.responseJSON.status_message) { status_dict.status_message = xhr.responseJSON.status_message; }
-        }
-        deferred.reject(xhr.status, error, status_dict);
+        deferred.reject(getErrorResponse(error, status, xhr));
         return deferred.promise();
       },
     );

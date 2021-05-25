@@ -140,16 +140,18 @@ export function ocrun(data_dict, element) {
         element.setAttribute('container_id', result.result.container_id);
       }
     })
-    .fail((status, error, result) => {
+    .fail(({ status, error, status_dict }) => {
       let error_message;
-      if (result && result.error ) {
-	      error_message=result.error;
+      if (status_dict && status_dict.error ) {
+	      error_message=status_dict.error;
       }
       else {
-	      if (result.status === 401)
-		      error_message = 'call API has been denied';
-	      else
-		      error_message = error; 
+	      if (status_dict.status === 401) {
+          error_message = 'call API has been denied';
+        }
+	      else {
+          error_message = error;
+        }
       }
 
       if (status === 200) {
@@ -496,10 +498,10 @@ export function refresh_usertoken() {
   // Refresh the current Auth token
   odApiClient.auth
     .refreshtoken()
-    .fail((_, _a, result) => {
+    .fail(({ status_dict }) => {
       showError(
-        result.error
-        || result.message
+        status_dict.error
+        || status_dict.message
         || 'General failure, no response from refresh token',
       );
       auth_sessionexpired();
@@ -528,10 +530,10 @@ export function refresh_desktoptoken(app) {
   // Refresh the current Auth token
   odApiClient.composer
     .refreshdesktoptoken(app)
-    .fail((_, _a, result) => {
+    .fail(({ status_dict }) => {
       showError(
-        result.error
-        || result.message
+        status_dict.error
+        || status_dict.message
         || 'General failure, no response from refresh token',
       );
       auth_sessionexpired();
@@ -603,8 +605,8 @@ export function login(provider, args) {
   window.od.connectLoader.connect();
   return odApiClient.auth
     .auth(null, provider, args)
-    .fail((status, error, result) => {
-      showLoginError(result);
+    .fail(({ status_dict }) => {
+      showLoginError(status_dict);
     })
     .then((result) => {
       if (
@@ -665,8 +667,8 @@ export function auth(provider, args) {
 
   return odApiClient.auth
     .auth(null, provider, args || {})
-    .fail((status, error, result) => {
-      showLoginError(result);
+    .fail(({ status_dict }) => {
+      showLoginError(status_dict);
     });
 }
 
@@ -712,9 +714,9 @@ export function launchnewDesktopInstance(
           showLoginError(result);
         }
       })
-      .fail((status, error, result) => {
+      .fail(({ status_dict }) => {
         progress.stop();
-        showLoginError(result);
+        showLoginError(status_dict);
       });
   } catch (e) {
     progress.stop();
@@ -932,10 +934,10 @@ export function stopContainer(container_id, dislay_name) {
         );
       }
     })
-    .fail((status, error, result) => {
+    .fail(({ status, error, status_dict }) => {
       if (notificationSystem) {
         if (status == 200) {
-          notificationSystem.displayNotification('Kill', result.error, 'error');
+          notificationSystem.displayNotification('Kill', status_dict.error, 'error');
         } else {
           notificationSystem.displayNotification('Kill', error, 'error');
         }
@@ -967,7 +969,7 @@ export function getContainerLogs(container_id) {
         return result;
       }
     })
-    .fail((status, error) => {
+    .fail(({ status, error }) => {
       if (notificationSystem) {
         if (status !== 200) {
           notificationSystem.displayNotification('Logs', error, 'error');
@@ -996,7 +998,7 @@ export function getContainerEnv(containerId) {
         return result;
       }
     })
-    .fail((status, error) => {
+    .fail(({ status, error }) => {
       if (notificationSystem) {
         if (status !== 200) {
           notificationSystem.displayNotification('Env', error, 'error');
@@ -1027,7 +1029,7 @@ export function removeContainer(containerId, displayName) {
         return result;
       }
     })
-    .fail((status, error) => {
+    .fail(({ status, error }) => {
       if (notificationSystem) {
         if (status !== 200) {
           notificationSystem.displayNotification('Remove', error, 'error');
@@ -1059,8 +1061,8 @@ export function getStream() {
         return result;
       }
     })
-    .fail((status, error, result) => {
-      console.error(result);
+    .fail(({ status_dict }) => {
+      console.error(status_dict);
     });
 }
 
@@ -1080,8 +1082,8 @@ export function destroyStream() {
         return result;
       }
     })
-    .fail((status, error, result) => {
-      console.error(result);
+    .fail(({ status_dict }) => {
+      console.error(status_dict);
     });
 }
 
