@@ -102,6 +102,10 @@ export async function runAuthentication(launchApp) {
 }
 
 document.addEventListener('broadway.connected', async () => {
-  await refreshSecretList();
-  secretsEvents.dispatchEvent(new CustomEvent('loaded'));
+  try {
+    await refreshSecretList();
+    secretsEvents.dispatchEvent(new CustomEvent('loaded'));
+  } catch(e) {
+    console.error(e);
+  }
 });
