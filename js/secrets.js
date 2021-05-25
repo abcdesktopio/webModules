@@ -48,6 +48,33 @@ async function refreshSecretList() {
 }
 
 /**
+ * @desc Browse for all locked app in the DOM and then 
+*/
+function repaintForUnlockAuthorizedApp() {
+
+  /**
+   *
+   * @param {HTMLLIElement} lockedApplication 
+   * @returns {boolean}
+   * @desc Predicate function returning true for a given application which need to be authorized
+   *  and false otherwise
+   */
+  const predicate = (lockedApplication) => !needAuthorizationForSecrets(
+    JSON.parse(
+      lockedApplication.getAttribute('secrets_requirement')
+    )
+  );
+
+  const lockedApplications = Array.from(
+    document.querySelectorAll('li[locked=true]')
+  ).filter(predicate);
+
+  for (const lockedApplication of lockedApplications) {
+    lockedApplication.setAttribute('locked', 'false');
+  }
+}
+
+/**
  * 
  * @param {Function} launchApp 
  */
@@ -76,15 +103,7 @@ export async function runAuthentication(launchApp) {
           try {
             await launcher.buildsecret(authWindowInputPassword.value);
             await refreshSecretList();
-            const lockedApplications = Array.from(document.querySelectorAll('li[locked=true]'))
-              .filter((lockedApplication) => needAuthorizationForSecrets(
-                JSON.parse(lockedApplication.getAttribute('secrets_requirement'))
-              ));
-
-            for (const lockedApplication of lockedApplications) {
-              lockedApplication.setAttribute('locked', 'false');
-            }
-
+            repaintForUnlockAuthorizedApp();
             launchApp();
           } catch(e) {
             console.error(e);
