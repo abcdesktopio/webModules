@@ -39,7 +39,7 @@ export function needAuthorizationForSecrets(secretRequirementList = []) {
    * @desc Considering the previous predicate if at least one required secret is not present in the global secret list
    * an authorization will be needed for having these secrets
    */
-  return !secretRequirementList.every(predicate);
+  return !secretRequirementList.some(predicate);
 }
 
 async function refreshSecretList() {
