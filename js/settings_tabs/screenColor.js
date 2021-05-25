@@ -555,9 +555,13 @@ let idTimeout;
 const handlerResize = () => {
   clearTimeout(idTimeout);
   idTimeout = setTimeout(async () => {
-    const { result: backgroundType } = await launcher.get('backgroundType');
-    if (backgroundType === 'img') {
-      setCurrentImage();
+    try {
+      const { result: backgroundType } = await launcher.get('backgroundType');
+      if (backgroundType === 'img') {
+        await setCurrentImage();
+      }
+    } catch (e) {
+      console.error(e);
     }
   }, 200);
 };
