@@ -92,6 +92,7 @@ export const init = function () {
               const li = system.getLIApp(id, launch, execmode, secrets_requirement);
               const iconApp = document.createElement('img');
               const nameApp = document.createElement('div');
+              const iconLock = document.createElement('img');
 
               li.className = `icon app ${cat[0]}`;
               url = window.od.net.urlrewrite(`../img/app/${icon}`);
@@ -99,9 +100,12 @@ export const init = function () {
               iconApp.src = url;
               nameApp.className = 'appname';
               nameApp.innerText = displayname;
+              iconLock.className = 'search-lock-icon';
+              iconLock.src = 'img/lock.svg';
 
               li.appendChild(iconApp);
               li.appendChild(nameApp);
+              li.appendChild(iconLock);
 
               li.addEventListener('click', function () {
                 if (abortController) {

@@ -90,3 +90,16 @@ div#searchZone p {
   background-size: 40px;
   cursor: pointer;
 }
+
+#searchZone li img.search-lock-icon{
+  position: relative;
+  width: 25px !important;
+  height: 20px !important;
+  bottom: 50px;
+  left: 12px;
+  display: none;
+}
+
+#searchZone li[locked=true] img.search-lock-icon {
+  display: unset;
+}
