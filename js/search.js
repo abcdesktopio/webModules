@@ -90,18 +90,18 @@ export const init = function () {
           for (const { cat, icon, id, displayname, launch, execmode, secrets_requirement } of apps) {
             if (cat) {
               const li = system.getLIApp(id, launch, execmode, secrets_requirement);
-              const img = document.createElement('img');
-              const div = document.createElement('div');
+              const iconApp = document.createElement('img');
+              const nameApp = document.createElement('div');
 
               li.className = `icon app ${cat[0]}`;
               url = window.od.net.urlrewrite(`../img/app/${icon}`);
 
-              img.src = url;
-              div.className = 'appname';
-              div.innerText = displayname;
+              iconApp.src = url;
+              nameApp.className = 'appname';
+              nameApp.innerText = displayname;
 
-              li.appendChild(img);
-              li.appendChild(div);
+              li.appendChild(iconApp);
+              li.appendChild(nameApp);
 
               li.addEventListener('click', function () {
                 if (abortController) {
