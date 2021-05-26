@@ -23,7 +23,11 @@ export const secretsEvents = new EventTarget();
  * @returns {boolean} 
  */
 export function needAuthorizationForSecrets(secretRequirementList = []) {
-  if (secretRequirementList === null) {
+  if (!Array.isArray(secretRequirementList)) {
+    return false;
+  }
+
+  if (secretRequirementList.length === 0) {
     return false;
   }
 
