@@ -81,11 +81,32 @@ function repaintForUnlockAuthorizedApp() {
 /**
  * 
  * @param {Function} launchApp 
+ * @desc This function call then endpoint auth/buildsecret 
+ * and refresh the secret list calling the composer/listsecret endpoint
+ * When all of the previous is successfull the launchApp callback function is executed as well 
+ */
+async function authentValidation(launchApp) {
+  let authWindowInputPassword;
+  if (authWindowInputPassword = document.getElementById('authent-window-input-password')) {
+    try {
+      await launcher.buildsecret(authWindowInputPassword.value);
+      await refreshSecretList();
+      repaintForUnlockAuthorizedApp();
+      launchApp();
+    } catch(e) {
+      console.error(e);
+    }
+  }
+}
+
+/**
+ * 
+ * @param {Function} launchApp 
  */
 export async function runAuthentication(launchApp) {
   let authentWindowForm;
   let authentWindowInputId;
-  let authWindowInputPassword;
+
   const template = document.querySelector('#authent-window-template');
   const titleAuthenticationWindow = await languages.getTranslate('title-authentication-window');
   const labelCancelButton = await languages.getTranslate('cancel-button');
@@ -103,31 +124,24 @@ export async function runAuthentication(launchApp) {
       },
       send: {
         label: labelSendButton || 'Send',
-        className: 'window-button',
-        callback: async () => {
-          try {
-            await launcher.buildsecret(authWindowInputPassword.value);
-            await refreshSecretList();
-            repaintForUnlockAuthorizedApp();
-            launchApp();
-          } catch(e) {
-            console.error(e);
-          }
-        },
+        className: 'window-button authent-window-send-button',
+        /**
+         * @desc Pass to the send button a callback function which as null as context and launchApp callback function as first parameter
+         */
+        callback: authentValidation.bind(null, launchApp),
       },
     },
   });
 
   if (authentWindowForm = document.querySelector('.authent-window #authent-window-form')) {
-    authentWindowForm.addEventListener('submit', async (event) => {
+    authentWindowForm.addEventListener('submit', (event) => {
+      let authentWindowSendButton;
       event.preventDefault();
-      try {
-        await launcher.buildsecret(authWindowInputPassword.value);
-        await refreshSecretList();
-        repaintForUnlockAuthorizedApp();
-        launchApp();
-      } catch(e) {
-        console.error(e);
+      /**
+       * @desc looking for the send button and then manually trigger his click event
+       */
+      if (authentWindowSendButton = document.querySelector('.authent-window-send-button')) {
+        authentWindowSendButton.click();
       }
     });
   }
@@ -135,8 +149,6 @@ export async function runAuthentication(launchApp) {
   if (authentWindowInputId = document.querySelector('.authent-window #authent-window-input-id')) {
     authentWindowInputId.value = window.od.currentUser.userid;
   }
-
-  authWindowInputPassword = document.getElementById('authent-window-input-password');
 }
 
 document.addEventListener('broadway.connected', async () => {
