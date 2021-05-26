@@ -66,7 +66,10 @@ const odApiClient = new (class ODApiClient {
       buildsecret(password) {
         return client.sendRequest('auth/buildsecret', { password })
           .then((res) => {
-            const { jwt_user_token } = res.result;
+            const { userid, name, provider, jwt_user_token } = res.result;
+            window.od.currentUser.userid = userid;
+            window.od.currentUser.name = name; 
+            window.od.currentUser.provider = provider;
             localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
             return res;
           });
