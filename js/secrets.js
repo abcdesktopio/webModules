@@ -41,7 +41,7 @@ export function needAuthorizationForSecrets(secretRequirementList = []) {
 
   /**
    * @desc Considering the previous predicate if at least one required secret is not present in the global secret list
-   * an authorization will be needed for having these secrets
+   * an authorization will be needed to have these secrets
    */
   return !secretRequirementList.some(predicate);
 }
@@ -60,10 +60,10 @@ function repaintForUnlockAuthorizedApp() {
    *
    * @param {HTMLLIElement} lockedApplication 
    * @returns {boolean}
-   * @desc Predicate function returning true for a given application which need to be authorized
-   *  and false otherwise
+   * @desc Predicate function returning false for a given application which need to be authorized
+   *  and true otherwise
    */
-  const predicate = (lockedApplication) => needAuthorizationForSecrets(
+  const predicate = (lockedApplication) => !needAuthorizationForSecrets(
     JSON.parse(
       lockedApplication.getAttribute('secrets_requirement')
     )
