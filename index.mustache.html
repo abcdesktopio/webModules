@@ -1149,22 +1149,25 @@ By using this website, you automatically accept that we use cookies.
         </template>
         <template id="authent-window-template" class="window">
             <div class="container w-50 h-75 d-flex justify-content-center flex-column">  
-                <input
-                    id="authent-window-input-id"
-                    placeholder="Login"
-                    type="text"
-                    maxlength="20"
-                    autocomplete="Login"
-                    readonly>
-                <br>
+                <form id="authent-window-form">
+                    <input
+                        id="authent-window-input-id"
+                        placeholder="Login"
+                        type="text"
+                        maxlength="20"
+                        autocomplete="Login"
+                        readonly>
+                    <br>
 
-                <input
-                    id="authent-window-input-password"
-                    placeholder="Password"
-                    type="password"
-                    maxlength="127"
-                    autocomplete="current-password">
-                <br>
+                    <input
+                        id="authent-window-input-password"
+                        placeholder="Password"
+                        type="password"
+                        maxlength="127"
+                        autocomplete="current-password">
+                    <br>
+                    <button type="submit" class="d-none" ></button>
+                </form>
 
                 <p id="authent-window-requirement">To access to this service you need to be identified. If you use
                     {{ projectName }} from a personal

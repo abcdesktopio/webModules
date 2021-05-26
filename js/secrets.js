@@ -83,6 +83,7 @@ function repaintForUnlockAuthorizedApp() {
  * @param {Function} launchApp 
  */
 export async function runAuthentication(launchApp) {
+  let authentWindowForm;
   let authentWindowInputId;
   let authWindowInputPassword;
   const template = document.querySelector('#authent-window-template');
@@ -116,6 +117,20 @@ export async function runAuthentication(launchApp) {
       },
     },
   });
+
+  if (authentWindowForm = document.querySelector('.authent-window #authent-window-form')) {
+    authentWindowForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      try {
+        await launcher.buildsecret(authWindowInputPassword.value);
+        await refreshSecretList();
+        repaintForUnlockAuthorizedApp();
+        launchApp();
+      } catch(e) {
+        console.error(e);
+      }
+    });
+  }
 
   if (authentWindowInputId = document.querySelector('.authent-window #authent-window-input-id')) {
     authentWindowInputId.value = window.od.currentUser.userid;
