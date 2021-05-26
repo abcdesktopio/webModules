@@ -486,14 +486,12 @@ export const handleMenuClick = function (clickedApp) {
   if (clickedApp.attributes.launch.value === 'keyboard') {
     window.od.broadway.showVirtualKeyboard();
   }
-  let myapptolaunch = undefined;
+
   // look for the applications myapptolaunch
-  for (let i = 0; i < window.od.applist.length; i++) {
-    if (clickedApp.attributes.launch.value === window.od.applist[i].launch) {
-      myapptolaunch = window.od.applist[i];
-      break;
-    }
-  }
+  const myapptolaunch =  window.od.applist.find(
+    ({ launch }) => clickedApp.attributes.launch.value === launch
+  );
+
   // myapptolaunch is found, check properties
   if (myapptolaunch) {
     if (myapptolaunch.execmode === 'builtin') {
