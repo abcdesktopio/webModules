@@ -71,6 +71,7 @@ function openTab(tabId) {
       p.innerText = displayname;
       divAppLoader.className = 'container-app-loader';
       divAppLoader.setAttribute('launch', launch);
+      divAppLoader.setAttribute('locked', li.getAttribute('locked'));
 
       imageLock.className = 'app-lock-icon';
       imageLock.src = 'img/lock.svg';
@@ -121,23 +122,23 @@ function enableDrag() {
 function addListener() {
   $('#appstore-applist li').click(function () {
     const container = this.querySelector('div.container-app-loader');
-
-    if (this.getAttribute('locked') === 'true') {
-      secrets.runAuthentication(launchApp);
-    } else {
-      launchApp();
-    }
-
-    function launchApp() {
+    const launchApp = () => {
       /**
        * Check if the apploader container have an apploader
        * Thus if it already has one don't run the application,
        * prevent from multipple appLoader for the same application
        */
       if (container.children.length === 0) {
+        container.setAttribute('locked', this.getAttribute('locked'));
         systemMenu.handleMenuClick(container);
       }
-    } 
+    };
+
+    if (this.getAttribute('locked') === 'true') {
+      secrets.runAuthentication(launchApp);
+    } else {
+      launchApp();
+    }
   });
 }
 
