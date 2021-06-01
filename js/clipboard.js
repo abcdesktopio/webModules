@@ -34,7 +34,8 @@ export const init = function () {
 
         // Listen for changes to the permission state
         permissionStatus.onchange = () => { console.debug(permissionStatus.state); };
-      });
+      })
+      .catch(console.error);
 
     // Debug info clipboard-write
     const awaitingPermissionWrite = navigator.permissions.query({ name: 'clipboard-write', allowWithoutGesture: true })
@@ -44,7 +45,8 @@ export const init = function () {
 
         // Listen for changes to the permission state
         permissionStatus.onchange = () => { console.debug(permissionStatus.state); };
-      });
+      })
+      .catch(console.error);
 
     Promise.all([awaitingPermissionRead, awaitingPermissionWrite])
       .then(() => {
