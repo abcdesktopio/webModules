@@ -260,17 +260,23 @@ const odApiClient = new (class ODApiClient {
       }
     }
 
-    return $.ajax({
+    const options = {
       type: 'POST',
       url: `${this.baseURL}/${method}`,
       data: JSON.stringify(args || {}),
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('abcdesktop_jwt_user_token')}`,
-      },
-    }).then(
-      (result, status, xhr) => {
+    };
+
+    const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
+    if (abcdesktop_jwt_user_token) {
+      options.headers = {
+        'Authorization': `Bearer ${abcdesktop_jwt_user_token}`,
+      };
+    }
+  
+    return $.ajax(options)
+      .then((result, status, xhr) => {
         const deferred = $.Deferred();
 
         if (!result) {
