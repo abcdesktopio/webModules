@@ -55,6 +55,14 @@ ui:
 oneCss: checkTranspile
 	cd ./transpile && node index.js --oneCss
 
+uiAndAssets: checkTranspile
+	if [ ! -d "./xterm/dist" ]; then \
+		$(MAKE) -B xterm; \
+	fi
+
+	cd ./transpile \
+	&& node index.js --svg --css --user-interface
+
 prod: checkTranspile version
 	if [ ! -d "./xterm/dist" ]; then \
 		$(MAKE) -B xterm; \
