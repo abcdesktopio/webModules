@@ -96,24 +96,6 @@ function clipboardHandler() {
   }
 }
 
-function handleCopyClipboard(clipText) {
-  if (clipText !== localclip) {
-    localclip = clipText;
-    pastClipboard(clipText);
-  }
-}
-
-function clipboardEventHandler(e) {
-  console.log('clipboardEventHandler event received');
-  try {
-    navigator.clipboard.readText().then(handleCopyClipboard);
-  } catch (e) {
-    if (e.message !== 'Document is not focused.') {
-      console.error(e);
-    }
-  }
-}
-
 /**
  * @function sendClipboard
  * @returns {void}
