@@ -71,14 +71,7 @@ prod: checkTranspile version
 	cd ./transpile \
 	&& node index.js --svg --css --user-interface --prod \
 
-dev: checkTranspile version
-	if [ ! -d "./xterm/dist" ]; then \
-		$(MAKE) -B xterm; \
-	fi
-
-	cd ./transpile \
-	&& node index.js --svg --css --user-interface
-
+dev: uiAndAssets version
 
 updatejs:
 	rm  js/ua-parser.min.js | true
