@@ -253,6 +253,21 @@ async function applyConfToMustacheJsonFiles(uiConf) {
 
 // #endregion userInterface
 
+
+// #region build js for production
+async function buildJSProductionFiles() {
+  console.time('Build app.js file');
+  try {
+    await makeLibFiles();
+  } catch(error) {
+    console.error(`Failure converting modules: ${error}`);
+  } finally {
+    console.timeEnd('Build app.js file');
+    await clean();
+  }
+}
+// #endregion build js for production
+
 // #region run
 async function run() {
   console.time('Total duration');
@@ -276,22 +291,16 @@ async function run() {
     promises.push(buildCss(colors));
   }
 
-  if (program.userInterface) {
-    await userInterface(); // Prevent of access index.html at the same time
-  }
-
-  if (program.prod) {
-    console.time('Build app.js file');
-    const awaitingMakeLibrary = makeLibFiles()
-      .catch((err) => {
-        console.error(`Failure converting modules: ${err}`);
-      })
-      .finally(() => {
-        console.timeEnd('Build app.js file');
-        return clean();
-      });
-
-    promises.push(awaitingMakeLibrary);
+  if (program.userInterface && program.prod) { // Prevent of access index.html at the same time
+    await userInterface();
+    await buildJSProductionFiles();
+  } else {
+    if (program.userInterface) {
+      promises.push(userInterface());
+    }
+    else if (program.prod) {
+      promises.push(buildJSProductionFiles());
+    }
   }
 
   await Promise.all(promises);
