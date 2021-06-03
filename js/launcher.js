@@ -123,24 +123,21 @@ export function ocrun(data_dict, element) {
     .runApp(data_dict)
     .done((result) => {
       if (typeof result === 'undefined') {
-        notificationSystem.displayNotification(
-          'Application',
-          result.error,
-          'error',
-        );
+        notificationSystem.displayNotification('Application', 'Unknow error', 'error');
         return;
       }
 
       if (!window.od.isTactile) {
         systemMenu.mouselistener();
       }
+
       document.getElementById('noVNC_canvas').focus();
       if (element && result.result) {
         element.setAttribute('state', 'running');
         element.setAttribute('container_id', result.result.container_id);
       }
     })
-    .fail(({ status, error, status_dict }) => {
+    .fail(({ error, status_dict }) => {
       let error_message;
       if (status_dict && status_dict.error ) {
 	      error_message=status_dict.error;
@@ -154,15 +151,8 @@ export function ocrun(data_dict, element) {
         }
       }
 
-      if (status === 200) {
-        notificationSystem.displayNotification(
-          'Application',
-          error_message,
-          'error',
-        );
-      } else {
-        notificationSystem.displayNotification('Application', error_message, 'error');
-      }
+      notificationSystem.displayNotification('Application', error_message, 'error');
+
       if (element instanceof HTMLLIElement) {
         element.setAttribute('state', 'down');
         element.setAttribute('container_id', '');
@@ -1018,22 +1008,18 @@ export function removeContainer(containerId, displayName) {
     .removecontainer(containerId)
     .done((result) => {
       if (typeof result === 'undefined' || result.status !== 200) {
-        if (notificationSystem) {
-          notificationSystem.displayNotification(
-            'Remove',
-            `Unexpected error can't get docker container Remove [${displayName}]`,
-            'error',
-          );
-        }
+        notificationSystem.displayNotification(
+          'Remove',
+          `Unexpected error can't get docker container Remove [${displayName}]`,
+          'error',
+        );
       } else {
         return result;
       }
     })
     .fail(({ status, error }) => {
-      if (notificationSystem) {
-        if (status !== 200) {
-          notificationSystem.displayNotification('Remove', error, 'error');
-        }
+      if (status !== 200) {
+        notificationSystem.displayNotification('Remove', error, 'error');
       }
     });
 }
