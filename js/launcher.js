@@ -140,7 +140,7 @@ export function ocrun(data_dict, element) {
     .fail(({ error, status_dict }) => {
       let error_message;
       if (status_dict && status_dict.error ) {
-	      error_message=status_dict.error;
+	      error_message=status_dict.error.error;
       }
       else {
 	      if (status_dict.status === 401) {
