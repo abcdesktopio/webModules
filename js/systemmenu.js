@@ -479,10 +479,11 @@ export const appKilled = function (data) {
 /**
  * @function handleMenuClick
  * @param {object} clickedApp HTML element you clicked on inside the dock.
+ * @param {Function} onAppIsRunning Optional callback called when the application is running
  * @returns {void}
  * @desc Check if your application is HTML or X11 application.
  */
-export const handleMenuClick = function (clickedApp) {
+export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) {
   if (clickedApp.attributes.launch.value === 'keyboard') {
     window.od.broadway.showVirtualKeyboard();
   }
@@ -524,7 +525,7 @@ export const handleMenuClick = function (clickedApp) {
 
   function launchDockerApplication() {
     const runDict = { image: myapptolaunch.id, args: '' };
-    launcher.ocrun(runDict, clickedApp);
+    launcher.ocrun(runDict, clickedApp, onAppIsRunning);
     system.addAppLoader(clickedApp);
     clickedApp.setAttribute('state', 'started');
     $(clickedApp).find('img.appLoader')

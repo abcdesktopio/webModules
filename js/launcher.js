@@ -105,14 +105,16 @@ export function logout(data_dict) {
 /**
  * @function ocrun
  * @global
- * data_dict { image: image, args: args, pod_name: pod_name }
+ * @param data_dict { image: image, args: args, pod_name: pod_name }
  *   string image image name OR a mime type
  *   string args  arg is the file name to execute
  *   string pod_name pod_name is the name of the pod
+ * @param {HTMLLIElement|HTMLDivElement} element
+ * @param {Function} onAppIsRunning
  * @return {void}
  * @desc Launch an application container
  */
-export function ocrun(data_dict, element) {
+export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
   // Play Icon animation
   // Add code here
   getSecrets();
@@ -131,6 +133,7 @@ export function ocrun(data_dict, element) {
         systemMenu.mouselistener();
       }
 
+      onAppIsRunning();
       document.getElementById('noVNC_canvas').focus();
       if (element && result.result) {
         element.setAttribute('state', 'running');

@@ -130,7 +130,20 @@ function addListener() {
        */
       if (container.children.length === 0) {
         container.setAttribute('locked', this.getAttribute('locked'));
-        systemMenu.handleMenuClick(container);
+        const callbackOnAppIsRunning = () => {
+          const appStoreWindow = document.querySelector('div.appstore-window');
+          if (!appStoreWindow) {
+            return;
+          }
+
+          const appStoreCloseButton = appStoreWindow.querySelector('button[class="bootbox-close-button close"]');
+
+          if (appStoreCloseButton) {
+            appStoreCloseButton.click();
+          }
+        };
+
+        systemMenu.handleMenuClick(container, callbackOnAppIsRunning);
       }
     };
 
@@ -157,6 +170,7 @@ export const open = function () {
     className: 'window-dialog appstore-window',
     onEscape: true,
     animate: false,
+    id: '454545'
   });
 
   openTab('office');
