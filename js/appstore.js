@@ -170,7 +170,6 @@ export const open = function () {
     className: 'window-dialog appstore-window',
     onEscape: true,
     animate: false,
-    id: '454545'
   });
 
   openTab('office');
