@@ -90,24 +90,24 @@
 {{#isDemoPage}}
 	<!-- cookie warning Consent -->
 	<div id="cookieConsent" class="fixed-bottom p-4">
-    	    <div class="toast bg-dark text-white w-100 mw-100" role="alert" data-autohide="false">
-        	<div class="toast-body p-4 d-flex flex-column">
-		<h4 id="cookietitle">Cookies policy</h4>
-            	<p>
-		To enhance your browsing experience, abcdesktop.io and partners use cookies. These help us personalise your experience by remembering your preferences so we can show you more of what you like. We also use them for statistical purposes, and to help make sure the website is working properly.
-With your agreement, we and our partners use cookies or similar technologies to store, access, and process personal data like your visit on this website. 
-By using this website, you automatically accept that we use cookies.
-            	</p>
-            	<div class="ml-auto">
-                	<button type="button" class="btn btn-outline-light mr-3" id="btnDeny">
-                    		Deny
-                	</button>
-                	<button type="button" class="btn btn-light" id="btnAccept">
-                    		Accept
-                	</button>
-            	</div>
-        	</div>
-    	    </div>
+    	<div class="toast bg-dark text-white w-100 mw-100" role="alert" data-autohide="false">
+            <div class="toast-body p-4 d-flex flex-column">
+                <h4 id="cookietitle">Cookies policy</h4>
+                <p>
+                    To enhance your browsing experience, abcdesktop.io and partners use cookies. These help us personalise your experience by remembering your preferences so we can show you more of what you like. We also use them for statistical purposes, and to help make sure the website is working properly.
+                    With your agreement, we and our partners use cookies or similar technologies to store, access, and process personal data like your visit on this website. 
+                    By using this website, you automatically accept that we use cookies.
+                </p>
+                <div class="ml-auto">
+                        <button type="button" class="btn btn-outline-light mr-3" id="btnDeny">
+                                Deny
+                        </button>
+                        <button type="button" class="btn btn-light" id="btnAccept">
+                                Accept
+                        </button>
+                </div>
+            </div>
+    	</div>
 	</div>
  {{/isDemoPage}}
 
@@ -125,7 +125,8 @@ By using this website, you automatically accept that we use cookies.
     on-screen keyboard. Let's hope Chrome implements the ime-mode
     style for example -->
     <textarea id="noVNC_keyboardinput" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"
-        mozactionhint="Enter" tabindex="-1"></textarea>
+        mozactionhint="Enter" tabindex="-1">
+    </textarea>
     <div style="display: none;" id="loader">
         <div id="dot-container">
             <noscript>
@@ -168,7 +169,7 @@ By using this website, you automatically accept that we use cookies.
                     <li id="login-facebook">
                         <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
                     </li>
-		    <li id="login-github">
+		            <li id="login-github">
                         <a id="connect-with-github" href="#">Sign-in with Github</a>
                     </li>
                     <li id="login-google">
@@ -183,7 +184,7 @@ By using this website, you automatically accept that we use cookies.
                     <li id="login-anonymous">
                         <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
                     </li>
-		    <li id="login-orangeconnect">
+		            <li id="login-orangeconnect">
                         <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
                     </li>
                 </ul>
@@ -191,108 +192,121 @@ By using this website, you automatically accept that we use cookies.
 	    {{/isDemoPage}}
 
 	    {{#isDemoPage}}
-	    <div id="connectGP" class="container">
-
-		    <div class="bg-light p-5 rounded" id="title-instance">
-
-			<p class="lead">This abcdesktop instance is a quick example to illustrate how the abcdesktop.io project works.</p>
-
-
-			<div class="list-group">
-  <a href="#connectOpenid" class="list-group-item list-group-item-action flex-column align-items-start">
-
-    <p class="mb-1"><span class="badge bg-primary rounded-pill">1</span> Choose an OpenID Connect provider to sign-in</p>
-    <small>LDAP authentification provider or Active Directory authentification provider is not defined for this instance</small>
-
-  </a>
-  <a href="#alarm" class="list-group-item list-group-item-action flex-column align-items-start">
-	  <p class="mb-2"><span class="badge bg-primary rounded-pill">2</span> Your abcdesktop is ready to run for 10 minutes.</p>
-	  <p class="mb-1"><img src="img/people-fill.svg">Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.<br>
-	  <img src="img/lock.svg">The security policy for Internet network prevents requests from your abcdesktop being allowed.</p>
-	  </p>
-	  <small>To hear sound, just click on the sound icon.</small><br>
-	  <small>To printer a file on your local printer, select the default printer "Desktop_PDF_Printer".</small><br>
-	  <small>To upload a file just use a drag and drop into your web browser's  window.</small><br>
-	  <small>To download a file, start the filemanager, select your file, and choose "Download for Desktop" option.</small><br>
-  </a>
-  <a href="#cleanup" class="list-group-item list-group-item-action flex-column align-items-start">
-
-    <p class="mb-1"><span class="badge bg-primary rounded-pill">3
-   </span> Garbage collector clean up all your datas desktop</p>
-
-  </a>
-</div>
-		</div>
-
-		    
-	    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            <div class="col">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                            <h4 class="my-0 fw-normal"><span class="badge bg-primary rounded-pill">1</span> OpenID Connect</h4>
+	        <div id="connectGP" class="container">
+    
+                <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                    <div class="col">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                    <h4 class="my-0 fw-normal">
+                                        <span class="badge bg-primary rounded-pill">1</span> 
+                                        OpenID Connect
+                                    </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="col">
+                                    <div id="connectOpenid">
+                                        <ul>
+                                            <li id="login-facebook">
+                                                <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
+                                            </li>
+                                            <li id="login-github">
+                                                <a id="connect-with-github" href="#">Sign-in with Github</a>
+                                            </li>
+                                            <li id="login-google">
+                                                <a id="connect-with-google" href="#">Sign-in with Google</a>
+                                            </li>
+                                            <li id="login-orange">
+                                                <a id="connect-with-orange" href="#">Sign-in with Orange</a>
+                                            </li>
+                                            <li id="login-mobileorange">
+                                                <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
+                                            </li>
+                                            <li id="login-anonymous">
+                                                <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
+                                            </li>
+                                            <li id="login-orangeconnect">
+                                                <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="col">
-                            <div id="connectOpenid">
-                                <ul>
-                                    <li id="login-facebook">
-                                        <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
-                                    </li>
-                                    <li id="login-github">
-                                        <a id="connect-with-github" href="#">Sign-in with Github</a>
-                                    </li>
-                                    <li id="login-google">
-                                        <a id="connect-with-google" href="#">Sign-in with Google</a>
-                                    </li>
-                                    <li id="login-orange">
-                                        <a id="connect-with-orange" href="#">Sign-in with Orange</a>
-                                    </li>
-                                    <li id="login-mobileorange">
-                                        <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
-                                    </li>
-                                    <li id="login-anonymous">
-                                        <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
-                                    </li>
-				     <li id="login-orangeconnect">
-                                        <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
-                                    </li>
-                                </ul>
+                    
+                    <div class="col">
+                        <div class="card mb-4 shadow-sm">
+                            <div id="alarm" class="card-header">
+                                <h4 class="my-0 fw-normal">
+                                    <span class="badge bg-primary rounded-pill">2</span>
+                                     10 minutes to use
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="col">
+                                    <img id="icon-alarm" src="img/alarm.svg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card mb-4 shadow-sm">
+                            <div id="cleanup" class="card-header">
+                                <h4 class="my-0 fw-normal">
+                                    <span class="badge bg-primary rounded-pill">3</span>
+                                     Data clean up
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="col">
+                                    <img id="icon-trash" src="img/trash.svg">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="col">
-                <div class="card mb-4 shadow-sm">
-                    <div id="alarm" class="card-header">
-                        <h4 class="my-0 fw-normal"><span class="badge bg-primary rounded-pill">2</span> 10 minutes to use</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="col">
-                            <img id="icon-alarm" src="img/alarm.svg">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col">
-                <div class="card mb-4 shadow-sm">
-                    <div id="cleanup" class="card-header">
-                        <h4 class="my-0 fw-normal"><span class="badge bg-primary rounded-pill">3</span> Data clean up</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="col">
-                            <img id="icon-trash" src="img/trash.svg">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-	</div>
-	    {{/isDemoPage}}
 
+                <div class="bg-light p-5 rounded" id="title-instance">
+                    <p class="lead">
+                        This abcdesktop instance is a quick example to illustrate how the abcdesktop.io project works.
+                    </p>
+			        <div class="list-group">
+                        <a href="#connectOpenid" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <p class="mb-1">
+                                <span class="badge bg-primary rounded-pill">1</span> 
+                                Choose an OpenID Connect provider to sign-in
+                            </p>
+                            <small>LDAP authentification provider or Active Directory authentification provider is not defined for this instance</small>
+                        </a>
+
+                        <a href="#alarm" class="list-group-item list-group-item-action flex-column align-items-start">
+	                        <p class="mb-2">
+                                <span class="badge bg-primary rounded-pill">2</span> 
+                                Your abcdesktop is ready to run for 10 minutes.
+                            </p>
+	                        <p class="mb-1">
+                                <img src="img/people-fill.svg">Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.<br>
+	                            <img src="img/lock.svg">The security policy for Internet network prevents requests from your abcdesktop being allowed.
+                            </p>
+                            <small>To hear sound, just click on the sound icon.</small><br>
+                            <small>To printer a file on your local printer, select the default printer "Desktop_PDF_Printer".</small><br>
+                            <small>To upload a file just use a drag and drop into your web browser's  window.</small><br>
+                            <small>To download a file, start the filemanager, select your file, and choose "Download for Desktop" option.</small><br>
+                        </a>
+
+                        <a href="#cleanup" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <p class="mb-1">
+                                <span class="badge bg-primary rounded-pill">3</span> 
+                                Garbage collector clean up all your datas desktop
+                            </p>
+                        </a>
+                    </div>
+		        </div>
+                
+            </div>
+	    {{/isDemoPage}}
 
             <div id="connectShare">
                 <p id="connect-share-message">Connect now with your email address to work with your copartner</p>
@@ -330,27 +344,31 @@ By using this website, you automatically accept that we use cookies.
     <div id="fullbcg">
         <div class="window" id="navMessage">
             <p>Oops, your web browser <span id="currentNav"></span> is no longer supported. Please upgrade to a modern,
-                fully supported browser.</p>
+                fully supported browser.
+            </p>
             <p>Find the lastest versions of our supported browsers below.</p>
             <div class="navs"><img src="img/google-chrome.svg">
                 <p>Google Chrome 41</p><a target="_blank"
                     href="https://www.google.fr/chrome/browser/desktop/">Download</a>
             </div>
             <div class="navs"><img src="img/firefox-icons.svg">
-                <p>Mozilla Firefox 36</p><a target="_blank" href="https://www.mozilla.org/fr/firefox/new/">Download</a>
+                <p>Mozilla Firefox 36</p>
+                <a target="_blank" href="https://www.mozilla.org/fr/firefox/new/">Download</a>
             </div>
             <div class="navs"><img src="img/internetexplorer.svg">
-                <p>Internet Explorer 11</p><a target="_blank"
-                    href="http://windows.microsoft.com/fr-fr/internet-explorer/download-ie">Download</a>
+                <p>Internet Explorer 11</p>
+                <a target="_blank" href="http://windows.microsoft.com/fr-fr/internet-explorer/download-ie">Download</a>
             </div>
             <p>Our developers are using Google Chrome and you recommend this browser for these performances.</p>
-            <div id="btnIgnore"><img src="img/error/bug.svg" alt="">Ignore and accept the eventual bugs<img
-                    src="img/error/arrow.svg" alt=""></div>
+            <div id="btnIgnore"><img src="img/error/bug.svg" alt="">Ignore and accept the eventual bugs<img src="img/error/arrow.svg" alt="">
+            </div>
         </div>
         <div class="window" id="IEMessage">
             <img style="position: relative;left: 50%;margin-left: -128px" src="img/error/stop.png">
-            <p><b>Oops</b>, your Internet Explorer is running in Compatibility Mode emulating IE <span
-                    id='version'></span>. Please turn off Compatibility mode or use supported browser.</p>
+            <p>
+                <b>Oops</b>, your Internet Explorer is running in Compatibility Mode emulating IE 
+                <span id='version'></span>. Please turn off Compatibility mode or use supported browser.
+            </p>
             <p>Our developers are using Google Chrome and you recommend this browser for these performances.</p>
         </div>
     </div>
@@ -364,8 +382,7 @@ By using this website, you automatically accept that we use cookies.
                 <div id="min"></div>
                 <div id="max"></div>
             </div>
-            <div id="size"
-                style="display:none;height:24px; width:100px;position: absolute;top: 2px;pointer-events: none;left:0px;color:rgba(68, 68, 68, 0.5);">
+            <div id="size" style="display:none;height:24px; width:100px;position: absolute;top: 2px;pointer-events: none;left:0px;color:rgba(68, 68, 68, 0.5);">
                 <div style="float:left;" id="width"></div>
                 <div style="float:left;">x</div>
                 <div style="float:left;" id="height"></div>
@@ -411,10 +428,8 @@ By using this website, you automatically accept that we use cookies.
         <div id="top-right">
             <div class="loader-inner ball-clip-rotate" title="Connecting…"
                 style="height: 23px;width: 23px;display:none;">
-                <div></div>
             </div>
-            <div id="connection" class="disconnected">
-            </div>
+            <div id="connection" class="disconnected"></div>
             {{#isIndexPage}}
                 <div id="topScreenRecord" class="keep" title="Screen Recorder">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
@@ -446,15 +461,17 @@ By using this website, you automatically accept that we use cookies.
             <div id="topMail" class="keep" title="Mail">
                 <img id="ico" src="../img/top/mail.svg" alt="" />
             </div>
-            {{#isIndexPage}}
-                <div id="top-issue-container" class="keep" title="Issue">
-                    <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" />
-                </div>
 
-                <div class="keep" title="Placement">
-                    <img draggable="false" launch="placement" id="placement" src="img/top/placement.svg" />
-                </div>
+            {{#isIndexPage}}
+            <div id="top-issue-container" class="keep" title="Issue">
+                <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" />
+            </div>
+
+            <div class="keep" title="Placement">
+                <img draggable="false" launch="placement" id="placement" src="img/top/placement.svg" />
+            </div>
             {{/isIndexPage}}
+
             <div id="copypaste" class="keep" title="Copy / Paste">
                 <img id="ico" src="../img/top/copypaste.svg" alt="" />
                 <ul class="drop-down">
@@ -613,6 +630,7 @@ By using this website, you automatically accept that we use cookies.
             <div class="button" id="cancel">Cancel</div>
         </div>
     </div>
+
     <div id="chatWindow" class="window">
         <div class="control">
             <div class="close"></div>
@@ -666,6 +684,7 @@ By using this website, you automatically accept that we use cookies.
             </div>
         </div>
     </div>
+
     {{#isIndexPage}}
         <template id="settings-window-template" class="window">
             <div class="tab" id="panel-settings">
@@ -690,7 +709,6 @@ By using this website, you automatically accept that we use cookies.
                         <span id="settings-location-title-desc" class="title-desc">Location informations</span>
                     </div>
                 </div>
-
                 <div class="tab-header" tab="logs-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
                         <img src="img/settings/logs.svg">
@@ -737,8 +755,7 @@ By using this website, you automatically accept that we use cookies.
                         <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle">
                             <label class="btn btn-settings btn-settings-active"
                                 data-view="settings-system-view-infos-system"
-                                style="margin-left: 15px;"
-                            >
+                                style="margin-left: 15px;">
                                 <input type="radio" name="options" checked>
                                 <span id="settings-system-btn-system">System</span>
                             </label>
@@ -1177,6 +1194,7 @@ By using this website, you automatically accept that we use cookies.
             </div>
         </template>
     {{/isIndexPage}}
+
     <div style="display: none;" id="about-window" class="window">
         <div class="control">
             <div class="close"></div>
@@ -1196,9 +1214,9 @@ By using this website, you automatically accept that we use cookies.
             <a target="_blank">Cookies</a>
         </div>
     </div>
-    <div id="imgViewer" class="window">
 
-    </div>
+    <div id="imgViewer" class="window"></div>
+
     <div id="webshell" class="window">
         <div class="control">
             <div class="close"></div>
@@ -1208,6 +1226,7 @@ By using this website, you automatically accept that we use cookies.
         <div id="terminal-container"></div>
         <div class="grab"></div>
     </div>
+
     <div id="taskManager" class="window" style="display: none;">
         <div class="control">
             <div class="close"></div>
@@ -1223,26 +1242,31 @@ By using this website, you automatically accept that we use cookies.
             </div>
         </div>
     </div>
+
     <iframe style="display:none;" id="framePDF" src="" frameborder="0"></iframe>
+
+    <!-- context menu -->
     <ul id="contextmenu"></ul>
 
     {{#isIndexPage}}
-        <div id="dock">
-            <ul id="docklist">
-                <!-- <li launch="resolution" class="only-mobile" id="resolution"><img src="img/res.svg"/></li> -->
-                <li launch="keyboard" class="only-mobile" id="keyboard"><img src="img/kb.svg" /></li>
-            </ul>
-            <input type="text" id="searchBar" name="searchBar" />
-        </div>
-        <div id="searchZone">
-            <div id="closeZone"></div>
-            <ul id="fileZone">
-                <p id="fileZoneTitle">Files</p>
-            </ul>
-            <ul id="appZone">
-                <p id="appZoneTitle">Applications</p>
-            </ul>
-        </div>
+    <!-- dock -->
+    <div id="dock">
+        <ul id="docklist">
+            <!-- <li launch="resolution" class="only-mobile" id="resolution"><img src="img/res.svg"/></li> -->
+            <li launch="keyboard" class="only-mobile" id="keyboard"><img src="img/kb.svg" /></li>
+        </ul>
+        <input type="text" id="searchBar" name="searchBar" />
+    </div>
+    <!-- searchZone -->
+    <div id="searchZone">
+        <div id="closeZone"></div>
+        <ul id="fileZone">
+            <p id="fileZoneTitle">Files</p>
+        </ul>
+        <ul id="appZone">
+            <p id="appZoneTitle">Applications</p>
+        </ul>
+    </div>
     {{/isIndexPage}}
 
     {{ #scripts }}
