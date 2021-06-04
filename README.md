@@ -13,4 +13,3 @@ abcdesktop.io webModules
 
 webModules is the main submodule of github repo abcdesktopio/oc.nginx
 look at https://github.com/abcdesktopio/oc.nginx to build the docker container web frontend 
-
