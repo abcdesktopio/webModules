@@ -109,14 +109,26 @@ export const fullscreen = function () {
 };
 
 export const resize = function () {
+  let width;
+  let height;
   let cols = (_this.offsetWidth - 10) / window.term._core.renderer.dimensions.actualCellWidth;
   let rows = (_this.offsetHeight - 35) / window.term._core.renderer.dimensions.actualCellHeight;
+
   cols = parseInt(cols, 10);
   rows = parseInt(rows, 10);
-  if (!isfullscreen) {
-    _this.style.width = `${cols * window.term._core.renderer.dimensions.actualCellWidth}px`;
-    _this.style.height = `${rows * window.term._core.renderer.dimensions.actualCellHeight + 35}px`;
+
+  if (window.innerWidth <= 700) {
+    _this.style.left = '0px';
+    width = '100%';
+    cols = window.innerWidth / window.term._core.renderer.dimensions.actualCellWidth;
+  } else {
+    width = `${cols * window.term._core.renderer.dimensions.actualCellWidth}px`;
   }
+
+  height = `${rows * window.term._core.renderer.dimensions.actualCellHeight + 35}px`;
+  _this.style.width = width;
+  _this.style.height = height;
+
   window.term.resize(cols, rows);
   window.term.focus();
 };
@@ -154,3 +166,5 @@ export const resizing = function () {
   document.addEventListener('mousemove', move);
   document.addEventListener('mouseup', up);
 };
+
+window.addEventListener('resize', resize);
