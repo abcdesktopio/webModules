@@ -42,10 +42,10 @@ export const disconnectClicked = function () {
  */
 export const logoffOpen = function () {
   const logOffTitle = languages.getTranslate('log-off-title');
-  const logOffWarningQuestion = languages.getTranslate('log-off-warning-question');
   const logOffCancelBtn = languages.getTranslate('log-off-cancel-btn');
   const logOffBtn = languages.getTranslate('log-off-logOff-btn');
   const disconnectBtn = languages.getTranslate('log-off-disconnect-btn');
+  const templateLogOff = document.getElementById('log-off-window-template');
 
   const buttons = {
     cancel: {
@@ -68,24 +68,15 @@ export const logoffOpen = function () {
 
   bootbox.dialog({
     title: logOffTitle || 'Logoff',
-    message: `
-      <div class=" container w-100">
-        <div class="row">
-          <div class="col-xl-2 col-lg-2 col-md-2 d-xl-block d-lg-block d-md-block d-none">
-            <img class="logoff-img-window" src="img/top/logout.svg">
-          </div>
-          <div class="col-10 d-flex align-items-center">
-            <span>${logOffWarningQuestion || 'Are you sure you want to logoff your desktop ?'}</span>
-          </div>
-        </div>
-      </div>
-    `,
+    message: templateLogOff.innerHTML,
     className: 'window-dialog-small',
     onEscape: true,
     backdrop: true,
     buttons,
     animate: false,
   });
+
+  languages.applyLanguage();
 };
 
 export const init = function () {
