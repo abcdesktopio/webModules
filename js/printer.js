@@ -138,7 +138,7 @@ export const getFiles = function () {
   }
 
   const xhr = new XMLHttpRequest();
-  const url = window.od.net.urlrewrite('/filer/directory/list');
+  const url = window.od.net.urlrewrite('/printerfiler/directory/list');
   xhr.open('GET', `${url}?directory=/home/balloon/.printer-queue`);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('Authorization', `Bearer ${window.od.currentUser.authorization}`);
@@ -170,7 +170,7 @@ export const removeFile = function (file) {
   if (!enable) return;
   if (file) {
     const xhr = new XMLHttpRequest();
-    const url = window.od.net.urlrewrite('/filer');
+    const url = window.od.net.urlrewrite('/printerfiler');
     xhr.open('DELETE', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', `Bearer ${window.od.currentUser.authorization}`);

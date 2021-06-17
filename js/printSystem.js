@@ -27,7 +27,7 @@ import { broadcastEvent } from './broadcastevent.js';
  *
  */
 export const doPrint = (file) => {
-  const endpoint = '/filer';
+  const endpoint = '/printerfiler';
   const params = new URLSearchParams({ file });
   const url = `${endpoint}?${params}`;
 
