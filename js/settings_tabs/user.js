@@ -163,20 +163,24 @@ async function setName() {
     wrapperText.appendChild(getSpanContainer(spanName, 'col-12 align-items-center'));
     wrapperText.appendChild(getSpanContainer(spanId, 'col-12 align-items-center'));
 
-    const labels = await launcher.getLabels();
-    for (const label of labels) {
-      const spanLabel = document.createElement('span');
-      spanLabel.className = 'badge badge-pill badge-light';
-      spanLabel.innerText = label;
-      wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
-    }
+    try {
+      const labels = await launcher.getLabels();
+      for (const label of labels) {
+        const spanLabel = document.createElement('span');
+        spanLabel.className = 'badge badge-pill badge-light';
+        spanLabel.innerText = label;
+        wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
+      }
 
-    if (labels.length === 0) {
-      const spanLabel = document.createElement('span');
-      spanLabel.style.color = '#FFFFFF';
-      spanLabel.id = 'user-label-not-found';
-      spanLabel.innerText = languages.getTranslate('user-label-not-found');
-      wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
+      if (labels.length === 0) {
+        const spanLabel = document.createElement('span');
+        spanLabel.style.color = '#FFFFFF';
+        spanLabel.id = 'user-label-not-found';
+        spanLabel.innerText = languages.getTranslate('user-label-not-found');
+        wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
+      }
+    } catch(e) {
+      console.error(e);
     }
 
     wrapperUserInfos.appendChild(wrapperText);
