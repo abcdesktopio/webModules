@@ -109,6 +109,10 @@ export const fullscreen = function () {
 };
 
 export const resize = function () {
+  if (!window.term || !isopen) {
+    return;
+  }
+
   let width;
   let height;
   let cols = (_this.offsetWidth - 10) / window.term._core.renderer.dimensions.actualCellWidth;
