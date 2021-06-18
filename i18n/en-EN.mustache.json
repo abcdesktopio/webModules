@@ -131,5 +131,6 @@
     "over-screen-message-data": "Your abcdesktop session has been disconnected.",
     "title-authentication-window": "Authentication",
     "fileZoneTitle": "Files",
-    "appZoneTitle": "Applications"
+    "appZoneTitle": "Applications",
+    "user-label-not-found": "No label found"
 }

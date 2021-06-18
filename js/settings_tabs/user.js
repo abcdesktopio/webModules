@@ -16,6 +16,7 @@ import * as launcher from '../launcher.js';
 import * as whichBrowser from '../which-browser.js';
 
 import { settingsEvents } from '../settingsevents.js';
+import * as languages from '../languages.js';
 
 let firstAppear = true;
 
@@ -167,6 +168,14 @@ async function setName() {
       const spanLabel = document.createElement('span');
       spanLabel.className = 'badge badge-pill badge-light';
       spanLabel.innerText = label;
+      wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
+    }
+
+    if (labels.length === 0) {
+      const spanLabel = document.createElement('span');
+      spanLabel.style.color = '#FFFFFF';
+      spanLabel.id = 'user-label-not-found';
+      spanLabel.innerText = languages.getTranslate('user-label-not-found');
       wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
     }
 

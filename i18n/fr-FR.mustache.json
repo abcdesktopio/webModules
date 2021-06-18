@@ -131,5 +131,6 @@
     "over-screen-message-data": "Votre desktop est fermé.",
     "title-authentication-window": "Authentification",
     "fileZoneTitle": "Fichiers",
-    "appZoneTitle": "Applications"
+    "appZoneTitle": "Applications",
+    "user-label-not-found": "Aucun label"
 }
