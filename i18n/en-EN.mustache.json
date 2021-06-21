@@ -133,5 +133,7 @@
     "fileZoneTitle": "Files",
     "appZoneTitle": "Applications",
     "user-label-not-found": "No label found",
-    "issue-header-message":"Sumbit a new issue"
+    "issue-header-message":"Sumbit a new issue",
+    "issue-cancel-button": "Cancel",
+    "issue-send-button" : "Send"
 }

@@ -50,8 +50,8 @@ export async function init() {
         .click(async () => {
           const titleWindowIssue = languages.getTranslate('title-window-issue');
           const issueHeaderMessageTranslation = languages.getTranslate('issue-header-message');
-          const cancelButton = languages.getTranslate('');
-          const sendButton = languages.getTranslate('');
+          const cancelButtonTranslation = languages.getTranslate('issue-cancel-button');
+          const sendButtonTranslation = languages.getTranslate('issue-send-button');
 
           const {
             cn,
@@ -119,10 +119,10 @@ export async function init() {
             backdrop: true,
             buttons: {
               cancel: {
-                label: cancelButton || 'Cancel',
+                label: cancelButtonTranslation || 'Cancel',
               },
               send: {
-                label: sendButton || 'Send',
+                label: sendButtonTranslation || 'Send',
                 className: 'window-button',
                 callback: () => {
                   postIssue(issue)
