@@ -42,24 +42,6 @@ export const init = function () {
 };
 
 /**
- * @function show
- * @return {void}
- * @desc Show printer icon on top bar
- */
-export const show = function () {
-  if (enable) system.show(self);
-};
-
-/**
- * @function hide
- * @return {void}
- * @desc Hide printer icon on top bar
- */
-export const hide = function () {
-  if (enable) system.hide(self);
-};
-
-/**
  * @function showFiles
  * @param  {object} files  File list
  * @return {void}
@@ -70,58 +52,57 @@ export const showFiles = function (files) {
   if (!enable) return;
 
   ul = system.removeAllChilds(ul);
-  if (files.length > 0) {
-    show();
-    const fragment = document.createDocumentFragment();
-    for (const file of files) {
-      const li = document.createElement('li');
-      const leftContainer = document.createElement('div');
-      const p = document.createElement('p');
-      const imgLeft = document.createElement('img');
-      const del = document.createElement('div');
-      const imgDel = document.createElement('img');
-
-      leftContainer.className = 'left-container';
-
-      url = '../img/top/printer.svg';
-      url = window.od.net.urlrewrite(url);
-      imgLeft.src = url;
-
-      path = `/home/balloon/.printer-queue/${file}`;
-      path = window.od.net.urlrewrite(path);
-
-      p.setAttribute('path', path);
-      p.className = 'fileName';
-      p.innerText = files;
-
-      del.className = 'deletePrint';
-      url = '../img/folder/close.svg';
-      url = window.od.net.urlrewrite(url);
-      imgDel.src = url;
-
-      del.setAttribute('name', file);
-      del.addEventListener('click', function () {
-        removeFile(this.attributes.name.value);
-      });
-
-      p.addEventListener('click', function () {
-        printSystem.doPrint(this.attributes.path.value);
-      });
-
-      p.appendChild(imgLeft);
-      del.appendChild(imgDel);
-
-      leftContainer.appendChild(imgLeft);
-      leftContainer.appendChild(p);
-
-      li.appendChild(leftContainer);
-      li.appendChild(del);
-      fragment.appendChild(li);
-    }
-    ul.appendChild(fragment);
-  } else {
-    hide();
+  if (files.length === 0) {
+    return;
   }
+
+  const fragment = document.createDocumentFragment();
+  for (const file of files) {
+    const li = document.createElement('li');
+    const leftContainer = document.createElement('div');
+    const p = document.createElement('p');
+    const imgLeft = document.createElement('img');
+    const del = document.createElement('div');
+    const imgDel = document.createElement('img');
+
+    leftContainer.className = 'left-container';
+
+    url = '../img/top/printer.svg';
+    url = window.od.net.urlrewrite(url);
+    imgLeft.src = url;
+
+    path = `/home/balloon/.printer-queue/${file}`;
+    path = window.od.net.urlrewrite(path);
+
+    p.setAttribute('path', path);
+    p.className = 'fileName';
+    p.innerText = files;
+
+    del.className = 'deletePrint';
+    url = '../img/folder/close.svg';
+    url = window.od.net.urlrewrite(url);
+    imgDel.src = url;
+
+    del.setAttribute('name', file);
+    del.addEventListener('click', function () {
+      removeFile(this.attributes.name.value);
+    });
+
+    p.addEventListener('click', function () {
+      printSystem.doPrint(this.attributes.path.value);
+    });
+
+    p.appendChild(imgLeft);
+    del.appendChild(imgDel);
+
+    leftContainer.appendChild(imgLeft);
+    leftContainer.appendChild(p);
+
+    li.appendChild(leftContainer);
+    li.appendChild(del);
+    fragment.appendChild(li);
+  }
+  ul.appendChild(fragment);
 };
 
 /**
@@ -195,6 +176,10 @@ export const handlerSettingsConfig = (config) => {
   if (config.enabledTabsHeaders.includes('printers')) {
     enable = true;
     settingsConfigProvided = true;
+    const printerIcon = document.querySelector('#printer img');
+    if (printerIcon) {
+      printerIcon.src = '../img/top/printer.svg';
+    }
     if (tryedToGetFilesBeforSettingsConfig) {
       getFiles();
     }
