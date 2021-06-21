@@ -113,27 +113,31 @@ export const resize = function () {
     return;
   }
 
-  let width;
-  let height;
   let cols = (_this.offsetWidth - 10) / window.term._core.renderer.dimensions.actualCellWidth;
   let rows = (_this.offsetHeight - 35) / window.term._core.renderer.dimensions.actualCellHeight;
 
-  cols = parseInt(cols, 10);
-  rows = parseInt(rows, 10);
+  let colsAsInteger = parseInt(cols, 10);
+  let rowsAsInteger = parseInt(rows, 10);
 
-  if (window.innerWidth <= 700) {
-    _this.style.left = '0px';
-    width = '100%';
-    cols = window.innerWidth / window.term._core.renderer.dimensions.actualCellWidth;
-  } else {
-    width = `${cols * window.term._core.renderer.dimensions.actualCellWidth}px`;
+  const colsDecimalsPart = cols - colsAsInteger;
+  const rowsDecimalsPart = rows - rowsAsInteger;
+
+  /**
+   * @desc Put the terminal as in fullscreen on small devices
+   */
+  if (!isfullscreen && window.innerWidth <= 700) {
+    fullscreen();
   }
 
-  height = `${rows * window.term._core.renderer.dimensions.actualCellHeight + 35}px`;
-  _this.style.width = width;
-  _this.style.height = height;
+  if (colsDecimalsPart > 0) {
+    colsAsInteger++;
+  }
 
-  window.term.resize(cols, rows);
+  if (rowsDecimalsPart > 0) {
+    rowsAsInteger++;
+  }
+
+  window.term.resize(colsAsInteger, rowsAsInteger);
   window.term.focus();
 };
 
