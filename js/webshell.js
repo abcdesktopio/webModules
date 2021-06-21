@@ -76,6 +76,7 @@ export const open = function () {
 export const close = function () {
   system.hide(_this);
   isopen = false;
+  isfullscreen = false;
   window.closeTerminal();
 };
 
@@ -127,6 +128,7 @@ export const resize = function () {
    */
   if (!isfullscreen && window.innerWidth <= 700) {
     fullscreen();
+    return;
   }
 
   if (colsDecimalsPart > 0) {
