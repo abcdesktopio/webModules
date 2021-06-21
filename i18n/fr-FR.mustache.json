@@ -132,5 +132,11 @@
     "title-authentication-window": "Authentification",
     "fileZoneTitle": "Fichiers",
     "appZoneTitle": "Applications",
-    "user-label-not-found": "Aucun label"
+    "user-label-not-found": "Aucun label",
+    "title-window-issue": "Bug",
+    "issue-header-message":"Reporter un bug",
+    "issue-summary": "Objet",
+    "issue-description": "Description",
+    "issue-cancel-button": "Annuler",
+    "issue-send-button" : "Envoyer"
 }
