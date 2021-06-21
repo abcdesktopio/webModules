@@ -45,21 +45,15 @@ const config = {
  * @desc Add an event listener for closing the window.
  */
 export const open = function () {
-  const template = document.querySelector('template#settings-window-template');
+  const templateTitle = document.querySelector('template#settings-window-title-template');
+  const templateBody = document.querySelector('template#settings-window-body-template');
+
   bootbox.dialog({
-    title: `
-        <div class="settings-title">
-            <div id="settings-back-button"><img src="img/settings/back.svg"></div>
-            <h5 id="settings-title">${languages.getTranslate('settings-title')}</h5>
-            <div class="searchSection">
-                <input id="input-search-section" class="d-sm-block d-none" type="text" aria-describedby="basic-addon1" />
-            </div>
-        </div>
-    `,
+    title: templateTitle.innerHTML,
     message: `
-        <div id="settings-window">
-            ${template.innerHTML}
-        </div>
+      <div id="settings-window">
+        ${templateBody.innerHTML}
+      </div>
     `,
     className: 'window-dialog window-dialog-settings',
     animate: false,
@@ -68,7 +62,11 @@ export const open = function () {
     },
   });
 
+  const settingsTitle = document.getElementById('settings-title');
   const windowsettings = document.getElementById('settings-window');
+
+  settingsTitle.innerText = languages.getTranslate('settings-title');
+
   const clone = windowsettings.cloneNode(true);
 
   searchSettings.init(config);

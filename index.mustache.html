@@ -686,7 +686,16 @@
     </div>
 
     {{#isIndexPage}}
-        <template id="settings-window-template" class="window">
+        <template id='settings-window-title-template'>
+            <div class="settings-title">
+                <div id="settings-back-button"><img src="img/settings/back.svg"></div>
+                <h5 id="settings-title"></h5>
+                <div class="searchSection">
+                    <input id="input-search-section" class="d-sm-block d-none" type="text" aria-describedby="basic-addon1" />
+                </div>
+            </div>
+        </template>
+        <template id="settings-window-body-template" class="window">
             <div class="tab" id="panel-settings">
                 <div class="tab-header" tab="system-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
