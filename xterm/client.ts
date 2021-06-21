@@ -8,10 +8,9 @@ import * as webLinks from './lib/addons/webLinks/webLinks';
 
 // Pulling in the module's types relies on the <reference> above, it's looks a
 // little weird here as we're importing "this" module
-import { Terminal as TerminalType } from 'xterm';
 
 export interface IWindowWithTerminal extends Window {
-  term: TerminalType;
+  term: Terminal;
   createTerminal:Function;
   closeTerminal:Function;
   od:any;
@@ -24,15 +23,16 @@ Terminal.applyAddon(fullscreen);
 Terminal.applyAddon(search);
 Terminal.applyAddon(webLinks);
 
-let term;
-let socketURL;
-let socket;
-let currentSocket;
-let pid;
+let termOpen = false;
+let term: Terminal;
+let socketURL:string;
+let socket:WebSocket;
+let currentSocket:WebSocket;
+let pid:number;
 
 const terminalContainer = document.getElementById('terminal-container');
 
-window.createTerminal = function (onWSClose) {
+window.createTerminal = function (onWSCreated, onWSClose) {
   // Clean terminal
   while (terminalContainer.children.length) {
     terminalContainer.removeChild(terminalContainer.children[0]);
@@ -41,7 +41,7 @@ window.createTerminal = function (onWSClose) {
   term = new Terminal({cursorBlink: true,cols: 80,rows: 24});
   window.term = term;  // Expose `term` to window for debugging purposes
   term.onResize((size: { cols: number, rows: number }) => {
-    if (!pid) {
+    if (!pid || !termOpen) {
       return;
     }
 
@@ -79,13 +79,19 @@ window.createTerminal = function (onWSClose) {
       };
 
       const res = await fetch(url, options);
-      const pid:number = await res.json();
+      pid = await res.json();
 
       socketURL += `${pid}?${window.od.currentUser.authorization}`;
       socket = new WebSocket( window.od.net.wsurlrewrite(socketURL) );
-      socket.onopen = runRealTerminal;
+      socket.onopen = () => {
+        runRealTerminal();
+        if (typeof onWSCreated === 'function') {
+          onWSCreated();
+        }
+      };
       socket.onerror = runFakeTerminal;
       socket.onclose = () => {
+        termOpen = false;
         if (typeof onWSClose === "function") {
           onWSClose();
         }
@@ -108,6 +114,7 @@ window.closeTerminal = function() {
 
 function runRealTerminal() {
   term.attach(socket);
+  termOpen = true;
   term._initialized = true;
 }
 

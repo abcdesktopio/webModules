@@ -58,13 +58,13 @@ export const open = function () {
   system.show(_this);
   system.activeWindow(_this);
   if (!isopen) {
-    window.createTerminal(() => {
-      isopen = false;
-      close();
+    window.createTerminal(resize,
+      () => {
+        isopen = false;
+        close();
     });
     isopen = true;
   }
-  resize();
 };
 
 /**
