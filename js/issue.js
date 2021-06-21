@@ -49,7 +49,6 @@ export async function init() {
       $('#top-issue')
         .click(async () => {
           const titleWindowIssue = languages.getTranslate('title-window-issue');
-          const issueHeaderMessageTranslation = languages.getTranslate('issue-header-message');
           const cancelButtonTranslation = languages.getTranslate('issue-cancel-button');
           const sendButtonTranslation = languages.getTranslate('issue-send-button');
 
@@ -139,12 +138,7 @@ export async function init() {
             animate: false,
           });
 
-          if (issueHeaderMessageTranslation) {
-            const issueHeaderMessage = document.getElementById('issue-header-message');
-            if (issueHeaderMessage) {
-              issueHeaderMessage.innerText = issueHeaderMessageTranslation;
-            }
-          }
+          languages.applyLanguage();
 
           $('#issue-summary')
             .on('input', function () {
