@@ -41,13 +41,15 @@ function catchingCallback(error) {
 let attempt = 0;
 export async function init() {
   try {
+    const templateIssue = document.querySelector('template#issue-window-template');
     const { id } = await launcher.getkeyinfo('tracker');
 
     if (id) {
       $('#top-issue-container').css('display', 'block');
       $('#top-issue')
         .click(async () => {
-          const titleWindowBug = languages.getTranslate('');
+          const titleWindowIssue = languages.getTranslate('title-window-issue');
+          const issueHeaderMessageTranslation = languages.getTranslate('issue-header-message');
           const cancelButton = languages.getTranslate('');
           const sendButton = languages.getTranslate('');
 
@@ -110,14 +112,8 @@ export async function init() {
           };
 
           bootbox.dialog({
-            title: titleWindowBug || 'Issue',
-            message: `
-              <h3 class="text-center">Sumbit a new issue</h3>
-              <div class="container w-100 h-75 d-flex justify-content-center flex-column">  
-                <input id="issue-summary" placeholder="Summary" />
-                <textarea id="issue-description" class="h-50" placeholder="Your report"></textarea>
-              </div>
-            `,
+            title: titleWindowIssue || 'Issue',
+            message: templateIssue.innerHTML,
             className: 'window-dialog',
             onEscape: true,
             backdrop: true,
@@ -142,6 +138,13 @@ export async function init() {
             },
             animate: false,
           });
+
+          if (issueHeaderMessageTranslation) {
+            const issueHeaderMessage = document.getElementById('issue-header-message');
+            if (issueHeaderMessage) {
+              issueHeaderMessage.innerText = issueHeaderMessageTranslation;
+            }
+          }
 
           $('#issue-summary')
             .on('input', function () {

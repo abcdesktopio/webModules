@@ -132,5 +132,6 @@
     "title-authentication-window": "Authentication",
     "fileZoneTitle": "Files",
     "appZoneTitle": "Applications",
-    "user-label-not-found": "No label found"
+    "user-label-not-found": "No label found",
+    "issue-header-message":"Sumbit a new issue"
 }

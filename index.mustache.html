@@ -686,6 +686,13 @@
     </div>
 
     {{#isIndexPage}}
+        <template id='issue-window-template'>
+            <h3 id='issue-header-message' class="text-center">Sumbit a new issue</h3>
+            <div class="container w-100 h-75 d-flex justify-content-center flex-column">  
+              <input id="issue-summary" placeholder="Summary" />
+              <textarea id="issue-description" class="h-50" placeholder="Your report"></textarea>
+            </div>
+        </template>
         <template id='settings-window-title-template'>
             <div class="settings-title">
                 <div id="settings-back-button"><img src="img/settings/back.svg"></div>
