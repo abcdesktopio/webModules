@@ -44,6 +44,7 @@ window.createTerminal = function (onWSClose) {
     if (!pid) {
       return;
     }
+
     const cols = size.cols;
     const rows = size.rows;
     const url = window.od.net.urlrewrite('/terminals/' + pid + '/size?cols=' + cols + '&rows=' + rows);
@@ -66,58 +67,34 @@ window.createTerminal = function (onWSClose) {
   term.focus();
 
   // fit is called within a setTimeout, cols and rows need this.
-  setTimeout(function () {
-    let url = '/terminals?cols=' + term.cols + '&rows=' + term.rows;
-    url = window.od.net.urlrewrite( url );
- 
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + window.od.currentUser.authorization);
-    xhr.onreadystatechange = function () {
-      if (xhr.status == 200 && xhr.readyState === 4 && xhr.response) {
-        try {
-          // Read all the last char from the end of the request
-          // This is NOT dummy !!!
-          // In case of gateway which add some js code 
-          let length =  xhr.response.length;
-          if (length && length > 1) {
-            let i, c;
-            pid = '';
-            for ( i = length-1; i>=0; --i) {
-              c = xhr.response[i];
-              if (isNaN(c))
-                break;
-              pid = c + pid;
-            }
-            if (!isNaN(parseInt(pid))) {
-              socketURL += pid + '?' + window.od.currentUser.authorization;
-              socket = new WebSocket( window.od.net.wsurlrewrite(socketURL) );
-              socket.onopen = runRealTerminal;
-              socket.onerror = runFakeTerminal;
-              socket.onclose = () => {
-                if (typeof onWSClose === "function") {
-                    onWSClose();
-                }
-                currentSocket = null;
-              };
-              currentSocket = socket;
-            } else {
-              console.log( 'invalid pid format ');
-            }
-          }
-          else
-            console.log( 'invalid xterm response ');
-        } catch (e) {
-          console.log(e);
+  setTimeout(async function () {
+    try {
+      const { urlrewrite } = window.od.net;
+      const url = urlrewrite(`/terminals?cols=${term.cols}&rows=${term.rows}`);
+      const options : RequestInit = {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${window.od.currentUser.authorization}`
+        },
+      };
+
+      const res = await fetch(url, options);
+      const pid:number = await res.json();
+
+      socketURL += `${pid}?${window.od.currentUser.authorization}`;
+      socket = new WebSocket( window.od.net.wsurlrewrite(socketURL) );
+      socket.onopen = runRealTerminal;
+      socket.onerror = runFakeTerminal;
+      socket.onclose = () => {
+        if (typeof onWSClose === "function") {
+          onWSClose();
         }
-      }
-    };
-
-    xhr.onerror = function () {
-      console.log("create terminals failed");
-    };
-
-    xhr.send();
+        currentSocket = null;
+      };
+      currentSocket = socket;
+    } catch(e) {
+      console.error("create terminals failed", e);
+    }
   }, 0);
 };
 
