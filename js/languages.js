@@ -23,16 +23,25 @@ export const applyLanguage = () => {
   for (const key in keysValues) {
     if (key in keysValues) {
       const elt = document.getElementById(key);
+      
       if (elt) {
-        if (elt.tagName.toLowerCase() === 'input') {
-          if (elt.type === 'submit' && elt.value !== keysValues[key]) {
-            elt.value = keysValues[key];
-          } else if (elt.placeholder !== keysValues[key]) {
-            elt.placeholder = keysValues[key];
+        const eltTagnameLoweCase = elt.tagName.toLowerCase();
+        const translation = keysValues[key];
+
+        if (eltTagnameLoweCase === 'input') {
+          if (elt.type === 'submit' && elt.value !== translation) {
+            elt.value = translation;
+          } else if (elt.placeholder !== translation) {
+            elt.placeholder = translation;
           }
-        } else {
-          if (elt.innerText !== keysValues[key]) {
-            elt.innerText = keysValues[key];
+        } else if (eltTagnameLoweCase === 'textarea') {
+          if (elt.placeholder !== translation) {
+            elt.placeholder = translation;
+          }
+        }
+        else {
+          if (elt.innerText !== translation) {
+            elt.innerText = translation;
           }
         }
       }
