@@ -63,6 +63,14 @@ uiAndAssets: checkTranspile
 	cd ./transpile \
 	&& node index.js --svg --css --user-interface
 
+prodWithoutVersion: checkTranspile
+	if [ ! -d "./xterm/dist" ]; then \
+		$(MAKE) -B xterm; \
+	fi
+
+	cd ./transpile \
+	&& node index.js --svg --css --user-interface --prod
+
 prod: checkTranspile version
 	if [ ! -d "./xterm/dist" ]; then \
 		$(MAKE) -B xterm; \
