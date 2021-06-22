@@ -281,10 +281,13 @@ export const showContextmenu = function (status, element) {
               divider.className = 'divider';
 
               win.id = msg.data[i].id;
-              win.addEventListener('click', function () {
-                launcher.activatewindow(Number(this.id), () => {
+              win.addEventListener('click', async function () {
+                try {
+                  await launcher.activatewindows([Number(this.id)]);
                   $('#noVNC_canvas').focus();
-                });
+                } catch(e) {
+                  console.error(e);
+                }
               });
 
               img.src = url;
