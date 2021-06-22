@@ -582,6 +582,10 @@ function toggleFullScreen() {
  */
 function setupTopMenu() {
   $('#top #top-right div').bind('click', function () {
+    if (this.id === 'printer' && !printer.hasFiles) {
+      return;
+    }
+
     const hasSelected = $(this).hasClass('selected');
     if (!$(this).hasClass('keep')) {
       closeTopRightDropDowns();

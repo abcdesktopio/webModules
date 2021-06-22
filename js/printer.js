@@ -25,6 +25,7 @@ let ul;
 let enable = false;
 let settingsConfigProvided = false;
 let tryedToGetFilesBeforSettingsConfig = false;
+export let hasFiles = false;
 
 /**
  * @function init
@@ -53,8 +54,10 @@ export const showFiles = function (files) {
 
   ul = system.removeAllChilds(ul);
   if (files.length === 0) {
+    hasFiles = false;
     return;
   }
+  hasFiles = true;
 
   const fragment = document.createDocumentFragment();
   for (const file of files) {
