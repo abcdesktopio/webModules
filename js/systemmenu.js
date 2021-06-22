@@ -269,21 +269,20 @@ export const showContextmenu = function (status, element) {
         .then((msg) => {
           const cloneContexmenue = system.removeAllChilds(window.contextmenu, false);
 
-          for (let i = 0; i < msg.data.length; i++) {
-            if (msg.data[i].wm_class === element.attributes.launch.value) {
+          for (const { wm_class, id, title } of msg.data) {
+            if (wm_class === element.attributes.launch.value) {
               const divider = document.createElement('li');
               const win = document.createElement('li');
               const img = document.createElement('img');
               const div = document.createElement('div');
-
               const url = element.querySelector('img').src;
 
               divider.className = 'divider';
 
-              win.id = msg.data[i].id;
-              win.addEventListener('click', async function () {
+              win.id = id;
+              win.addEventListener('click', async () => {
                 try {
-                  await launcher.activatewindows([Number(this.id)]);
+                  await launcher.activatewindows([Number(id)]);
                   $('#noVNC_canvas').focus();
                 } catch(e) {
                   console.error(e);
@@ -291,7 +290,7 @@ export const showContextmenu = function (status, element) {
               });
 
               img.src = url;
-              div.innerText = msg.data[i].title;
+              div.innerText = title;
 
               win.appendChild(img);
               win.appendChild(div);
