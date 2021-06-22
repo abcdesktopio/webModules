@@ -77,4 +77,6 @@ export const destroySession = () => {
   JanusAbcDesktop.destroyCurrentSession();
 };
 
-export const janusSupported = () => JanusAbcDesktop.isWebrtcSupported();
+export const janusSupported = () => {
+  return JanusAbcDesktop.isWebrtcSupported();
+};
