@@ -26,10 +26,15 @@ const webrtcEnabled = async () => {
 const configuerSpeaker = async () => {
   if (!speakerConfigured) {
     if (webrtcProtocol.janusSupported() && await webrtcEnabled()) {
-      await webrtcProtocol.init();
-      const audio = document.getElementById('audioplayer');
-      if (!audio.paused) {
-        updateIconVolumLevel();
+      try {
+        await webrtcProtocol.init();
+        const audio = document.getElementById('audioplayer');
+        if (!audio.paused) {
+          updateIconVolumLevel();
+        }
+      } catch(e) {
+        console.error(e);
+        await httpProtocol.init();  
       }
     } else {
       await httpProtocol.init();

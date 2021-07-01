@@ -28,34 +28,30 @@ export const init = async () => {
    */
   await JanusAbcDesktop.init();
 
-  try {
-    const {
-      result: {
-        id,
-        host,
-        hostip,
-        audioport,
-        pin,
-      },
-    } = await launcher.getStream();
+  const {
+    result: {
+      id,
+      host,
+      hostip,
+      audioport,
+      pin,
+    },
+  } = await launcher.getStream();
 
-    await launcher.configurePulse(hostip, audioport);
-    const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`);
-    await janusSession.attachElt(audio);
-    await janusSession.watchStream(id, pin);
-    if (audio.paused) {
-      // In this case the user did not make any interaction.
-      // Thus we print a notification for asking the user to activate the song.
-      const title = 'Sound disabled';
-      const desc = 'Please click on icon to hear the sound';
-      const type = 'info';
-      const img = '';
-      const url = '';
-      const duration = 5000;
-      notificationSystem.displayNotification(title, desc, type, img, url, duration);
-    }
-  } catch (e) {
-    console.error(e);
+  await launcher.configurePulse(hostip, audioport);
+  const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`);
+  await janusSession.attachElt(audio);
+  await janusSession.watchStream(id, pin);
+  if (audio.paused) {
+    // In this case the user did not make any interaction.
+    // Thus we print a notification for asking the user to activate the song.
+    const title = 'Sound disabled';
+    const desc = 'Please click on icon to hear the sound';
+    const type = 'info';
+    const img = '';
+    const url = '';
+    const duration = 5000;
+    notificationSystem.displayNotification(title, desc, type, img, url, duration);
   }
 };
 
