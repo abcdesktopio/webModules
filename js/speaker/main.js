@@ -32,12 +32,15 @@ const configuerSpeaker = async () => {
         if (!audio.paused) {
           updateIconVolumLevel();
         }
+        window.od.currentUser.speakerMode = 'WEBRTC';
       } catch(e) {
         console.error(e);
-        await httpProtocol.init();  
+        await httpProtocol.init();
+        window.od.currentUser.speakerMode = 'ULAW';
       }
     } else {
       await httpProtocol.init();
+      window.od.currentUser.speakerMode = 'ULAW';
     }
     speakerConfigured = true;
   }
