@@ -47,7 +47,7 @@ export const connectToGateway = async () => {
   const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`);
   await janusSession.attachElt(audio);
   await janusSession.watchStream(id, pin);
-  debugger
+
   if (audio.paused) {
     // In this case the user did not make any interaction.
     // Thus we print a notification for asking the user to activate the song.
