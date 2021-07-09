@@ -110,7 +110,6 @@ export const close = function () {
  *
  */
 function refresh() {
-  const url = window.location.href;
-  const arr = url.split('/');
-  window.location.href = `${arr[0]}//${arr[2]}`;
+  const strPort = (window.location.port) ? ':' + window.location.port : '';
+  window.location.href = window.location.protocol + '//' + window.location.hostname + strPort; 
 }
