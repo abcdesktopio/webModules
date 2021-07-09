@@ -101,7 +101,7 @@ window.createTerminal = function (onWSCreated, onWSClose) {
     } catch(e) {
       console.error("create terminals failed", e);
     }
-  }, 0);
+  }, 500);
 };
 
 window.closeTerminal = function() {
