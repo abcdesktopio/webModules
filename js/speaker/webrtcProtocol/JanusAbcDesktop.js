@@ -26,6 +26,7 @@ export class JanusAbcDesktop extends Janus {
 
   static destroyCurrentSession() {
     if (JanusAbcDesktop.currentJanusSession) {
+      JanusAbcDesktop.currentJanusSession.streaming.detach();
       JanusAbcDesktop.currentJanusSession.destroy();
       JanusAbcDesktop.currentJanusSession = null;
     }
@@ -48,6 +49,7 @@ export class JanusAbcDesktop extends Janus {
        * @desc Resolve the promise with the janussSession when it has been open
        */
       function successSession() {
+        JanusAbcDesktop.currentJanusSession = janusSession;
         resolve(janusSession);
       }
 

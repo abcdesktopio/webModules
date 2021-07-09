@@ -11,16 +11,30 @@
 * Software description: cloud native desktop service
 */
 
-import * as launcher from '../../launcher.js';
 import { JanusAbcDesktop } from './JanusAbcDesktop.js';
 import * as notificationSystem from '../../notificationsystem.js';
+import * as launcher from '../../launcher.js';
+
+export const configuration = {
+  id: null,
+  host: null,
+  hostip: null,
+  pin: null,
+  received: false,
+};
+
+export const state = {
+  connected: false,
+  connecting: false,
+};
 
 /**
  * @desc Create a stream element wich will be bind with remote's stream afteward.
  * Initialise Janus
  */
-export const init = async () => {
+export const connectToGateway = async () => {
   const audio = document.getElementById('audioplayer');
+  state.connecting = true;
 
   /**
    * @desc
@@ -28,20 +42,12 @@ export const init = async () => {
    */
   await JanusAbcDesktop.init();
 
-  const {
-    result: {
-      id,
-      host,
-      hostip,
-      audioport,
-      pin,
-    },
-  } = await launcher.getStream();
+  const {host, id, pin} = configuration;
 
-  await launcher.configurePulse(hostip, audioport);
   const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`);
   await janusSession.attachElt(audio);
   await janusSession.watchStream(id, pin);
+
   if (audio.paused) {
     // In this case the user did not make any interaction.
     // Thus we print a notification for asking the user to activate the song.
@@ -53,6 +59,9 @@ export const init = async () => {
     const duration = 5000;
     notificationSystem.displayNotification(title, desc, type, img, url, duration);
   }
+  state.connected = true;
+  state.connecting = false;
+  window.od.currentUser.speakerMode = 'WEBRTC';
 };
 
 /**
@@ -71,8 +80,19 @@ export const openSession = () => {
  */
 export const destroySession = () => {
   JanusAbcDesktop.destroyCurrentSession();
+  state.connected = false;
 };
 
 export const janusSupported = () => {
   return JanusAbcDesktop.isWebrtcSupported();
+};
+
+export const enabled = async () => {
+  try {
+    const { id } = await launcher.getkeyinfo('webrtc');
+    return !!id;
+  } catch(e) {
+    console.error(e);
+    return false;
+  }
 };
