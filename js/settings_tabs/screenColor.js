@@ -561,7 +561,8 @@ const handlerResize = () => {
         await setCurrentImage();
       }
     } catch (e) {
-      console.error(e);
+      if (e && e.status != 200)
+      	console.error(e);
     }
   }, 200);
 };
