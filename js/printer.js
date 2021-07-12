@@ -175,6 +175,16 @@ broadcastEvent.addEventListener('printer.new', ({ detail: { data } }) => {
   }
 });
 
+broadcastEvent.addEventListener('printer.available', ({ detail: { available } }) => {
+  enable = available;
+  const printerIcon = document.querySelector('#printer img');
+  if (available) {
+    printerIcon.src = '../img/top/printer.svg';
+  } else {
+    printerIcon.src = '../img/top/printer_None.svg';
+  }
+});
+
 export const handlerSettingsConfig = (config) => {
   if (config.enabledTabsHeaders.includes('printers')) {
     enable = true;
