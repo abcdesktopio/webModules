@@ -64,6 +64,7 @@ const configureSpeaker = async () => {
           ) {
             await webrtcProtocol.connectToGateway();
             setLevelSound();
+            $('#speakers').css('display', 'block');
           }
         }
       } catch(e) {
@@ -111,7 +112,6 @@ const setLevelSound = () => {
 broadcastEvent.addEventListener('speaker.available', async ({ detail: { available } }) => {
   if (available) {
     state.pulseAudioIsAvailable = true;
-    $('#speakers').css('display', 'block');
     if (
       webrtcProtocol.configuration.received &&
       !webrtcProtocol.state.connected &&
@@ -120,6 +120,7 @@ broadcastEvent.addEventListener('speaker.available', async ({ detail: { availabl
       try {
         await webrtcProtocol.connectToGateway();
         setLevelSound();
+        $('#speakers').css('display', 'block');
       } catch(e) {
         console.error(e);
       }
