@@ -193,6 +193,14 @@ export const connect = () => {
         }),
       );
     }
+
+    if (msg.method === 'printer.available') {
+      broadcastEvent.dispatchEvent(
+        new CustomEvent('printer.available', {
+          detail: { available: msg.data },
+        }),
+      );
+    }
   });
 };
 
