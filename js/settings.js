@@ -119,7 +119,7 @@ export const open = function () {
           setTitleSuffix(languages.getTranslate('settings-containers-title'));
           break;
         case 'opensource-tab':
-	  let strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+	        let strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
           window.open("https://www.abcdesktop.io", "abcdesktop.io", strWindowFeatures );
           return;
         default:
