@@ -704,7 +704,6 @@ export function launchnewDesktopInstance(
 	        setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
           connectReady();
         } else {
-          debugger;
           showLoginError(result);
         }
       })
