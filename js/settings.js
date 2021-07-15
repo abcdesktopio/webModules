@@ -125,9 +125,8 @@ export const open = function () {
           window.open("https://www.abcdesktop.io", "abcdesktop.io", strWindowFeatures );
           return;
         case 'support-tab':
-          showFunction = supportTab.init;
-          setTitleSuffix(languages.getTranslate('settings-support-title'));
-          break;
+          window.open(GLOBAL_SUPPORT_URL, 'abcdesktop.io');
+          return;
         default:
           showFunction = () => { console.error('No tab found'); };
           break;
