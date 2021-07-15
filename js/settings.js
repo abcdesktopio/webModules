@@ -33,7 +33,6 @@ import * as printersTab from './settings_tabs/printer.js';
 import * as speedTestTab from './settings_tabs/speedTest.js';
 import * as screenColorTab from './settings_tabs/screenColor.js';
 import * as containersTab from './settings_tabs/containers.js';
-import * as supportTab from './settings_tabs/support.js';
 
 import * as languages from './languages.js';
 
