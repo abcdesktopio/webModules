@@ -33,6 +33,8 @@ import * as printersTab from './settings_tabs/printer.js';
 import * as speedTestTab from './settings_tabs/speedTest.js';
 import * as screenColorTab from './settings_tabs/screenColor.js';
 import * as containersTab from './settings_tabs/containers.js';
+import * as supportTab from './settings_tabs/support.js';
+
 import * as languages from './languages.js';
 
 const config = {
@@ -122,10 +124,15 @@ export const open = function () {
 	        let strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
           window.open("https://www.abcdesktop.io", "abcdesktop.io", strWindowFeatures );
           return;
+        case 'support-tab':
+          showFunction = supportTab.init;
+          setTitleSuffix(languages.getTranslate('settings-support-title'));
+          break;
         default:
           showFunction = () => { console.error('No tab found'); };
           break;
       }
+
       const selector = `div#${target}`;
       const tabToShow = clone.querySelector(selector);
       const home = Array.from(clone.querySelectorAll('div.tab'))[0];
