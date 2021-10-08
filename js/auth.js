@@ -15,11 +15,12 @@ import * as windowMessage from './windowMessage.js';
 import * as launcher from './launcher.js';
 
 export class AuthManager {
-  constructor(name, ui, config, onlogin) {
+  constructor(name, ui, config, onlogin, parents) {
     this.name = name;
     this.$ui = $(ui);
     this.providers = {};
     this.onlogin = onlogin;
+    this.parents = parents
     this.initProviders(config.providers || {});
   }
 
@@ -70,9 +71,24 @@ export class AuthManager {
   }
 }
 
+
+export class MetaExplicitAuthManager extends AuthManager {
+  constructor(name, ui, config, onlogin, parents) {
+    super(name, ui, config, onlogin, parents);
+    this.default_domain = config.default_domain;
+
+    const self = this;
+    $('form', this.$ui).submit((e) => {
+      self.onsubmit();
+      e.preventDefault();
+      return false;
+    });
+  }
+}
+
 export class ExplicitAuthManager extends AuthManager {
-  constructor(name, ui, config, onlogin) {
-    super(name, ui, config, onlogin);
+  constructor(name, ui, config, onlogin, parents) {
+    super(name, ui, config, onlogin, parents);
     this.default_domain = config.default_domain;
 
     const self = this;
@@ -89,10 +105,10 @@ export class ExplicitAuthManager extends AuthManager {
     }
 
     if (providerName) {
-      const expected = providerName;
+      const expected = providerName.toLowerCase();
       providerName = null;
       for (const name in this.providers) {
-        if (name.toLowerCase() == expected.toLowerCase()) {
+        if (name.toLowerCase() == expected) {
           providerName = name;
           break;
         }
@@ -100,10 +116,20 @@ export class ExplicitAuthManager extends AuthManager {
     }
 
     if (!providerName) {
-	    launcher.showLoginError({ message: 'Invalid domain' });
-    } else {
-      super.manageLogin(providerName);
-    }
+      //
+      // No provider has been found
+      // 
+      // Check if metaexplicit manager exists
+      // Check if metadirectory provider exixts 
+      //
+      const metaexplicit_manager = this.parents['metaexplicit'];
+      if (!metaexplicit_manager || !metaexplicit_manager.getProvider('metadirectory') )
+	        launcher.showLoginError({ message: 'Invalid domain' });
+    } 
+
+    const provider = this.getProvider(providerName);
+    if (this.onlogin) this.onlogin(this, provider);
+    return this.login(provider);
   }
 
   getDomain() {
@@ -124,11 +150,12 @@ export class ExplicitAuthManager extends AuthManager {
   }
 
   login(provider) {
+    const providername = (provider) ? provider.name : null;
     const user = this.parseUsername();
     const pswd = this.getPassword();
     if (user[1] && pswd) {
       this.$ui.hide();
-      launcher.explicitLogin(provider.name, user[1], pswd);
+      launcher.explicitLogin(providername, user[1], pswd);
     } else {
       launcher.showLoginError({ message: 'Invalid credentials' });
     }
@@ -196,8 +223,8 @@ export class ExternalAuthManager extends LoginButtonAuthManager {
 }
 
 export class SharingAuthManager extends AuthManager {
-  constructor(name, ui, config, onlogin) {
-    super(name, ui, config, onlogin);
+  constructor(name, ui, config, onlogin, parents) {
+    super(name, ui, config, onlogin, parents);
 
     const self = this;
     $('form', this.$ui).submit((e) => {
