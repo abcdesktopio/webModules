@@ -551,6 +551,8 @@ broadcastEvent.addEventListener(
   ({ detail: { color } }) => setBackgroundBorderColor(color),
 );
 
+
+// describe code usage 
 let idTimeout;
 const handlerResize = () => {
   clearTimeout(idTimeout);
