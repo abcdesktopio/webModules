@@ -71,13 +71,16 @@ const welcomeSystem = (function () {
         if (cfg.providers && cfg.providers.length) {
           switch (cfg.name) {
             case 'external':
-              manager = new auth.ExternalAuthManager(cfg.name, '#connectGP', cfg, onlogin);
+              manager = new auth.ExternalAuthManager(cfg.name, '#connectGP', cfg, onlogin, managers);
               break;
+            case 'metaexplicit':
+                manager = new auth.MetaExplicitAuthManager(cfg.name, '#metaactiveDirectory', cfg, onlogin, managers);
+                break;
             case 'explicit':
-              manager = new auth.ExplicitAuthManager(cfg.name, '#activeDirectory', cfg, onlogin);
+              manager = new auth.ExplicitAuthManager(cfg.name, '#activeDirectory', cfg, onlogin, managers);
               break;
             case 'implicit':
-              manager = new auth.ImplicitAuthManager(cfg.name, '#connectGP', cfg, onlogin);
+              manager = new auth.ImplicitAuthManager(cfg.name, '#connectGP', cfg, onlogin, managers);
               break;
           }
 
