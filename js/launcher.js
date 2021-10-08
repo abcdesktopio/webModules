@@ -698,18 +698,29 @@ export function launchnewDesktopInstance(
           window.od.currentUser.target_ip = result.result.target_ip;
           window.od.currentUser.vncpassword = result.result.vncpassword;
           window.od.currentUser.authorization = result.result.authorization;
-	  window.od.currentUser.websocketrouting = result.result.websocketrouting;
+	        window.od.currentUser.websocketrouting = result.result.websocketrouting;
           window.od.currentUser.websockettcpport = result.result.websockettcpport;
           window.od.currentUser.pulseaudiotcpport = 4714;
-	  setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
+	        setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
           connectReady();
         } else {
           showLoginError(result);
         }
       })
-      .fail(({ status_dict }) => {
+      .fail((result) => {
+        let errorDescription;
         progress.stop();
-        showLoginError(status_dict);
+
+        if (result.error) {
+          errorDescription = {
+            message: result.error.error,
+            status_message: result.error.status,
+          }
+        } else {
+          errorDescription = result;
+        }
+
+        showLoginError(errorDescription);
       });
   } catch (e) {
     progress.stop();

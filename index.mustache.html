@@ -79,13 +79,26 @@
   		window.dataLayer = window.dataLayer || [];
   		function gtag(){dataLayer.push(arguments);}
   		gtag('js', new Date());
-  		gtag('config', 'G-VS25TGNTRZ');
+        gtag('config', 'G-VS25TGNTRZ');
 	</script>
     {{/isDemoPage}}
 
 </head>
 
 <body>
+    <!-- Global builded variables -->
+    <span
+        id='hiden-span-for-url-support-global-value'
+        class='hidden-span-for-global-value'
+    >{{ urlusersupport }}</span>
+
+    <script>
+        const hidenSpanForUrlSupportGlobalValue = document.getElementById('hiden-span-for-url-support-global-value');
+        let GLOBAL_SUPPORT_URL = "";
+        if (hidenSpanForUrlSupportGlobalValue) {
+            GLOBAL_SUPPORT_URL = hidenSpanForUrlSupportGlobalValue.innerText;
+        }
+    </script>
 
 {{#isDemoPage}}
 	<!-- cookie warning Consent -->
@@ -146,12 +159,16 @@
                     <!--
                     The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) is limited to 256 characters in the Active Directory schema.
                     However, for backward compatibility the limit is 20 characters.
+		    Len( domain ) = 253
+		    Len('\') = 1
+		    Len(SAMAccountName) = 20
+ 		    maxlength = 253 + 1 + 20 = 274 
                     -->
-                    <input id="cuid" placeholder="Login" type="text" maxlength="20" autocomplete="Login"><br>
+                    <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="Login"><br>
                     <!--
                     The userPassword attribute has maximum length 128 and format UTF-8.
                     -->
-                    <input id="ADpassword" placeholder="Password" type="password" maxlength="127"
+                    <input id="ADpassword" placeholder="Password" type="password" maxlength="128"
                         autocomplete="current-password"><br>
                     <input type="submit" class="button" id="connectAD" value="Sign in"></input>
                     <a href="{{ urlcannotopensession }}" id="link-open-session">I can't open my session</a>
@@ -762,6 +779,15 @@
 			    </span>
                     </div>
                 </div>
+                <div class="tab-header" tab="support-tab">
+                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                        <img src="img/settings/support_agent.svg">
+                        <span id="settings-support-title">Support</span>
+                        <span id="settings-support-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">
+                            Support links
+                        </span>
+                    </div>
+                </div>
             </div>
             <!-- System tab start -->
             <div class="tab" id="system-tab">
@@ -782,10 +808,6 @@
                             <label class="btn btn-settings d-none d-sm-block" data-view="settings-system-view-display">
                                 <input type="radio" name="options">
                                 <span id="settings-system-btn-view-infos">Display</span>
-                            </label>
-                            <label class="btn btn-settings" data-view="settings-system-view-support">
-                                <input type="radio" name="options">
-                                <span id="settings-system-btn-support">Support</span>
                             </label>
                         </div>
                     </div>
@@ -907,28 +929,6 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-none container" id="settings-system-view-support">
-                        <div class="row">
-                            <div class='card-container col-xl-6 col-lg-6 col-12'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <a href="{{ urlusermanual }}" target="_blank">
-                                            <h6 id="settings-system-view-display-user-manual" class="card-title">User Manual</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='card-container col-xl-6 col-lg-6 col-12'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <a href="{{ urlusersupport }}" target="_blank">
-                                            <h6 id="settings-system-view-display-support" class="card-title">Abcdesktop Support</h6>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -1133,6 +1133,28 @@
                     <div id="task-manager-container-logs"></div>
                     <div id="task-manager-container-env">
                         <table class="table table-striped"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab" id="support-tab">
+                <div class="row">
+                    <div class='card-container col-xl-6 col-lg-6 col-12'>
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="{{ urlusermanual }}" target="_blank">
+                                    <h6 id="settings-system-view-display-user-manual" class="card-title">User Manual</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='card-container col-xl-6 col-lg-6 col-12'>
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="{{ urlusersupport }}" target="_blank">
+                                    <h6 id="settings-system-view-display-support" class="card-title">Abcdesktop Support</h6>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
