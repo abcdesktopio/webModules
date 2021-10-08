@@ -159,12 +159,16 @@
                     <!--
                     The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) is limited to 256 characters in the Active Directory schema.
                     However, for backward compatibility the limit is 20 characters.
+		    Len( domain ) = 253
+		    Len('\') = 1
+		    Len(SAMAccountName) = 20
+ 		    maxlength = 253 + 1 + 20 = 274 
                     -->
-                    <input id="cuid" placeholder="Login" type="text" maxlength="20" autocomplete="Login"><br>
+                    <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="Login"><br>
                     <!--
                     The userPassword attribute has maximum length 128 and format UTF-8.
                     -->
-                    <input id="ADpassword" placeholder="Password" type="password" maxlength="127"
+                    <input id="ADpassword" placeholder="Password" type="password" maxlength="128"
                         autocomplete="current-password"><br>
                     <input type="submit" class="button" id="connectAD" value="Sign in"></input>
                     <a href="{{ urlcannotopensession }}" id="link-open-session">I can't open my session</a>
