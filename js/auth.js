@@ -144,6 +144,10 @@ export class ExplicitAuthManager extends AuthManager {
     return $('#ADpassword', this.$ui).val();
   }
 
+  getLoginSessionid() {
+    return $('#loginsessionid', this.$ui).val();
+  }
+
   parseUsername() {
     const parts = this.getUsername().split('\\');
     return (parts.length >= 2) ? [parts[0], parts[1]] : [null, parts[0]];
@@ -153,9 +157,11 @@ export class ExplicitAuthManager extends AuthManager {
     const providername = (provider) ? provider.name : null;
     const user = this.parseUsername();
     const pswd = this.getPassword();
+    const loginsessionid = this.getLoginSessionid();
+
     if (user[1] && pswd) {
       this.$ui.hide();
-      launcher.explicitLogin(providername, user[1], pswd);
+      launcher.explicitLogin(providername, user[1], pswd, loginsessionid );
     } else {
       launcher.showLoginError({ message: 'Invalid credentials' });
     }
