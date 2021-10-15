@@ -51,8 +51,10 @@ const pathUIConf = path.join(configPath, 'ui.json');
 const pathModules = path.join(configPath, 'modules.json');
 
 const pathIndexHtmlFile = path.resolve(path.join('..', 'index.html'));
+const pathIndexSessionHtmlFile = path.resolve(path.join('..', 'index.session.mustache.html'));
 const pathDemoHtmlFile = path.resolve(path.join('..', 'demo.html'));
 const pathAppHtmlFile = path.resolve(path.join('..', 'app.html'));
+const pathAppSessionHtmlFile = path.resolve(path.join('..', 'app.session.mustache.html'));
 const pathDescriptionHtmlFile = path.resolve(path.join('..', 'description.html'));
 const pathIndexMustacheHtmlFile = path.resolve(path.join('..', 'index.mustache.html'));
 const pathDescriptionMustacheHtmlFile = path.resolve(path.join('..', 'description.mustache.html'));
@@ -173,11 +175,14 @@ async function userInterface() {
 
   const [uiConf, modulesConf] = await Promise.all([awaitingUIConf, awaitingModulesConf]);
 
+  // isIndexPage, isDemoPage, isLoginSessionPage)
   await Promise.all([
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true),
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false),
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false),
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexSessionHtmlFile, true, false, true),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppSessionHtmlFile, false, false, true),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false, false),
     applyConfToMustacheJsonFiles(uiConf),
   ]);
   console.timeEnd('Apply userInterface conf');
@@ -190,7 +195,7 @@ async function userInterface() {
  * @param {string} pathHtmlFile
  * @param {boolean} isIndexPage
  */
-async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile, pathHtmlFile, isIndexPage, isDemoPage) {
+async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile, pathHtmlFile, isIndexPage, isDemoPage, isLoginSessionPage) {
   const mapper = (item) => ({
     ...item,
     defer: item.defer ? 'defer' : '',
@@ -200,6 +205,13 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
     .filter((script) => (script.indexPageOnly ? isIndexPage : true))
     .map(mapper);
 
+  //	
+  // mapping formated like key: "{{ key }}", 
+  // 
+  // cuid: "{{ cuid }}",
+  // loginsessionid: "{{ loginsessionid }}", 
+  // permit to make another mustache file from the index.mustache.html
+  //
   const mustacheFile = await fs.promises.readFile(pathMustacheFile, 'utf8');
   const view = {
     modules: modulesConf.modules,
@@ -208,8 +220,12 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
     urlcannotopensession: uiConf.urlcannotopensession,
     urlusermanual: uiConf.urlusermanual,
     urlusersupport: uiConf.urlusersupport,
+    cuid: "{{ cuid }}",
+    loginsessionid: "{{ loginsessionid }}",
+    base_url: "{{ base_url }}",
     isIndexPage,
     isDemoPage,
+    isLoginSessionPage
   };
 
   await fs.promises.writeFile(pathHtmlFile, Mustache.render(mustacheFile, view));

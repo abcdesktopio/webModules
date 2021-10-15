@@ -7,7 +7,9 @@
     <meta name="description" content="{{ projectName }}">
     <meta name="keywords" content="{{ projectName }}">
     <title>{{ projectName }}</title>
-
+    {{#isLoginSessionPage}}
+    <base href="{{ base_url }}">
+    {{/isLoginSessionPage}}
     <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
          Remove this if you use the .htaccess -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -164,7 +166,16 @@
 		    Len(SAMAccountName) = 20
  		    maxlength = 253 + 1 + 20 = 274 
                     -->
+		    {{^isLoginSessionPage}}
                     <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="Login"><br>
+		    <input id="loginsessionid" type="hidden" value="" ><br>
+		    {{/isLoginSessionPage}}
+		    {{#isLoginSessionPage}}
+		    <input id="cuid" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly"><br>
+		    <!-- loginsessionid is used to check that the user in cuid input value did not change with the previous request -->
+		    <!-- in case if the http request id formated manually --> 
+		    <input id="loginsessionid" type="hidden" value="{{ loginsessionid }}" ><br>
+		    {{/isLoginSessionPage}}
                     <!--
                     The userPassword attribute has maximum length 128 and format UTF-8.
                     -->
