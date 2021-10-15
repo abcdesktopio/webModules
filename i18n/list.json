@@ -7,6 +7,8 @@
         "en-en": "en-EN.json",
         "en-gb": "en-EN.json",
         "en-us": "en-EN.json",
+        "ro-ro": "ro-RO.json",
+        "ro": "ro-RO.json",
         "zh": "zh-CN.json",
         "zh-cn": "zh-CN.json"
     }
