@@ -472,8 +472,8 @@ export function support(callback) {
     */
 }
 
-export function explicitLogin(provider, userid, password) {
-  return login(provider, { userid, password });
+export function explicitLogin(provider, userid, password, loginsessionid) {
+  return login(provider, { userid, password, loginsessionid });
 }
 
 export function implicitLogin(provider) {
