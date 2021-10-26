@@ -32,8 +32,11 @@ let wsbroadcast;
 function open(jsonParameters, callback = () => { }) {
   const path = `/broadcast?jwt_token=${window.od.currentUser.authorization}`;
   const broadcasturl = window.od.net.getwsurl(path);
+  // Create WebSocket connection to broadcasturl
   wsbroadcast = new WebSocket(broadcasturl);
-
+  // Change binary type from "blob" to "arraybuffer"
+  // wsbroadcast.binaryType = "arraybuffer";
+  
   wsbroadcast.onerror = () => {
     console.info('Failed to connect to broadcast service');
   };
@@ -59,6 +62,9 @@ export const close = () => {
   wsbroadcast = null;
 };
 
+
+
+
 /**
  * @function connect
  * @param  {callback} callback
@@ -66,143 +72,179 @@ export const close = () => {
  * @desc Manage broadcast events
  */
 export const connect = () => {
+  
   close();
+
   const jsonParameters = JSON.stringify({
     method: 'hello',
     user: window.od.currentUser,
   });
+
   open(jsonParameters, (msgevent) => {
-    const msg = JSON.parse(msgevent.data);
-    console.log(`broadcastSystem:msgevent: ${msg.method}`);
-    if (msg.method === 'hello') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('hello', { detail: { user: msg.user } }),
-      );
-    }
-    if (msg.method === 'bye') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('bye', { detail: { user: msg.user } }),
-      );
+    var data;
+    // Support Blob, 
+    // Support ArrayBuffer, 
+    // Support string text utf8
+    // as data type
+    // 
+    if (msgevent.data instanceof String) {
+      const data = JSON.parse(msgevent.data);
+      process_event( data );
     }
 
-    if (msg.method === 'container') {
-      let data = JSON.parse(msg.data.args);
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('container', { detail: { container: data } } ),
-      );
+    if (msgevent.data instanceof Blob) {
+      msgevent.data.text().then( (data) => {
+          const parsed_data = JSON.parse(data);
+          process_event( parsed_data ); 
+      });
+    }
+    
+    if (msgevent.data instanceof ArrayBuffer) {
+      const dataView = new DataView(msgevent.data);
+      const decoder = new TextDecoder();
+      const decodedString = decoder.decode(dataView);
+      const data = JSON.parse(decodedString);
+      process_event( data );
     }
 
-    if (msg.method === 'proc.started') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('proc.started', { detail: { appStarted: msg.data } }),
-      );
-    }
-
-    if (msg.method === 'proc.killed') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('proc.killed', { detail: { procKilled: msg.data } }),
-      );
-    }
-
-    if (msg.method === 'keepalive') {
-      // Nothing to do
-    }
-    if (msg.method === 'window.list') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('window.list', { detail: { windowList: msg.data } }),
-      );
-    }
-    if (msg.method === 'printer.new') {
-      console.log('printer', msg);
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('printer.new', { detail: { data: msg.data } }),
-      );
-    }
-
-    if (msg.method === 'download') {
-      console.log('download', msg);
-      const {
-        files: [file],
-      } = msg.data;
-      const url = `/filer?${new URLSearchParams({ file })}`;
-      const headers = new Headers();
-      headers.append(
-        'Authorization',
-        `Bearer ${window.od.currentUser.authorization}`,
-      );
-      const options = {
-        headers,
-      };
-
-      fetch(url, options)
-        .then(checkError)
-        .then((res) => res.blob())
-        .then((blobZipFile) => {
-          const urlBlob = URL.createObjectURL(blobZipFile);
-          const a = document.createElement('a');
-          a.href = urlBlob;
-          a.target = '_blank';
-          const parts = file.split('/');
-          const name = parts[parts.length - 1];
-
-          if (blobZipFile.type === 'application/zip') {
-            a.download = `${name}.zip`;
-          } else if (file.includes('/')) {
-            a.download = name;
-          } else {
-            a.download = file;
-          }
-
-          document.body.appendChild(a);
-          a.click();
-          URL.revokeObjectURL(urlBlob);
-        });
-    }
-
-    if (msg.method === 'logout') {
-      launcher.logout(msg.data);
-    }
-
-    if (msg.method === 'ocrun') {
-      console.log(msg.data);
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('ocrun', { detail: { data_dict: msg.data } }),
-      );
-    }
-
-    if (msg.method === 'connect.counter') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('connect.counter', {
-          detail: { connectCounter: msg.data },
-        }),
-      );
-    }
-
-    if (msg.method === 'display.setBackgroundBorderColor') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('display.setBackgroundBorderColor', {
-          detail: { color: msg.data },
-        }),
-      );
-    }
-
-    if (msg.method === 'speaker.available') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('speaker.available', {
-          detail: { available: msg.data },
-        }),
-      );
-    }
-
-    if (msg.method === 'printer.available') {
-      broadcastEvent.dispatchEvent(
-        new CustomEvent('printer.available', {
-          detail: { available: msg.data },
-        }),
-      );
-    }
   });
 };
+
+export const process_event = ( msg ) => {
+
+  console.log(`broadcastSystem:msgevent: ${msg.method}`);
+
+  if (msg.method === 'hello') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('hello', { detail: { user: msg.user } }),
+    );
+  }
+  if (msg.method === 'bye') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('bye', { detail: { user: msg.user } }),
+    );
+  }
+
+  if (msg.method === 'container') {
+    let data = JSON.parse(msg.data.args);
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('container', { detail: { container: data } } ),
+    );
+  }
+
+  if (msg.method === 'proc.started') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('proc.started', { detail: { appStarted: msg.data } }),
+    );
+  }
+
+  if (msg.method === 'proc.killed') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('proc.killed', { detail: { procKilled: msg.data } }),
+    );
+  }
+
+  if (msg.method === 'keepalive') {
+    // Nothing to do
+  }
+  if (msg.method === 'window.list') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('window.list', { detail: { windowList: msg.data } }),
+    );
+  }
+  if (msg.method === 'printer.new') {
+    console.log('printer', msg);
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('printer.new', { detail: { data: msg.data } }),
+    );
+  }
+
+  if (msg.method === 'download') {
+    console.log('download', msg);
+    const {
+      files: [file],
+    } = msg.data;
+    const url = `/filer?${new URLSearchParams({ file })}`;
+    const headers = new Headers();
+    headers.append(
+      'Authorization',
+      `Bearer ${window.od.currentUser.authorization}`,
+    );
+    const options = {
+      headers,
+    };
+
+    fetch(url, options)
+      .then(checkError)
+      .then((res) => res.blob())
+      .then((blobZipFile) => {
+        const urlBlob = URL.createObjectURL(blobZipFile);
+        const a = document.createElement('a');
+        a.href = urlBlob;
+        a.target = '_blank';
+        const parts = file.split('/');
+        const name = parts[parts.length - 1];
+
+        if (blobZipFile.type === 'application/zip') {
+          a.download = `${name}.zip`;
+        } else if (file.includes('/')) {
+          a.download = name;
+        } else {
+          a.download = file;
+        }
+
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(urlBlob);
+      });
+  }
+
+  if (msg.method === 'logout') {
+    launcher.logout(msg.data);
+  }
+
+  if (msg.method === 'ocrun') {
+    console.log(msg.data);
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('ocrun', { detail: { data_dict: msg.data } }),
+    );
+  }
+
+  if (msg.method === 'connect.counter') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('connect.counter', {
+        detail: { connectCounter: msg.data },
+      }),
+    );
+  }
+
+  if (msg.method === 'display.setBackgroundBorderColor') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('display.setBackgroundBorderColor', {
+        detail: { color: msg.data },
+      }),
+    );
+  }
+
+  if (msg.method === 'speaker.available') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('speaker.available', {
+        detail: { available: msg.data },
+      }),
+    );
+  }
+
+  if (msg.method === 'printer.available') {
+    broadcastEvent.dispatchEvent(
+      new CustomEvent('printer.available', {
+        detail: { available: msg.data },
+      }),
+    );
+  }
+
+};
+
+
 
 /**
  * @function broadwayconnected
