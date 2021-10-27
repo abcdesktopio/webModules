@@ -81,18 +81,23 @@ export const connect = () => {
   });
 
   open(jsonParameters, (msgevent) => {
-    var data;
+
     // Support Blob, 
     // Support ArrayBuffer, 
     // Support string text utf8
     // as data type
     // 
-    if (msgevent.data instanceof String) {
+    
+    var bMatch = false;
+    
+    if (typeof(msgevent.data) === 'string') {
+      bMatch = true;
       const data = JSON.parse(msgevent.data);
       process_event( data );
     }
 
     if (msgevent.data instanceof Blob) {
+      bMatch = true;
       msgevent.data.text().then( (data) => {
           const parsed_data = JSON.parse(data);
           process_event( parsed_data ); 
@@ -100,12 +105,16 @@ export const connect = () => {
     }
     
     if (msgevent.data instanceof ArrayBuffer) {
+      bMatch = true;
       const dataView = new DataView(msgevent.data);
       const decoder = new TextDecoder();
       const decodedString = decoder.decode(dataView);
       const data = JSON.parse(decodedString);
       process_event( data );
     }
+
+    if (!bMatch)
+      console.log( 'Missing event type-> ' + typeof(msgevent.data) );
 
   });
 };
