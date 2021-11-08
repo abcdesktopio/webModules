@@ -89,7 +89,7 @@ export const connect = () => {
     // 
     
     var bMatch = false;
-    
+
     if (typeof(msgevent.data) === 'string') {
       bMatch = true;
       const data = JSON.parse(msgevent.data);
@@ -114,7 +114,7 @@ export const connect = () => {
     }
 
     if (!bMatch)
-      console.log( 'Missing event type-> ' + typeof(msgevent.data) );
+      console.error( 'Missing event type-> ' + typeof(msgevent.data) );
 
   });
 };
