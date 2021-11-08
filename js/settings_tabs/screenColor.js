@@ -569,9 +569,10 @@ const handlerResize = () => {
   }, 200);
 };
 
-window.addEventListener('resize', handlerResize);
+// window.addEventListener('resize', handlerResize);
 
 document.addEventListener('broadway.connected', async () => {
+  window.addEventListener('resize', handlerResize);
   try {
     const backgroundType = await getBackgroundType();
     if (backgroundType.status === 200) {
