@@ -21,7 +21,7 @@ import * as notificationSystem from './notificationsystem.js';
  */
 async function postIssue(issue) {
   const headers = new Headers();
-  headers.append('Authorization', `Bearer ${window.od.currentUser.authorization}`);
+  headers.append('ABCAuthorization', `Bearer ${window.od.currentUser.authorization}`);
   headers.append('Content-Type', 'application/json');
 
   const options = {

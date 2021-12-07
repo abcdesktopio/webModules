@@ -1116,7 +1116,7 @@ export function requestSpawnerAPI(
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
   headers.append(
-    'Authorization',
+    'ABCAuthorization',
     `Bearer ${window.od.currentUser.authorization}`,
   );
 
@@ -1260,7 +1260,7 @@ export function requestFileAPI(method, file) {
   let body = null;
   const headers = new Headers();
   headers.append(
-    'Authorization',
+    'ABCAuthorization',
     `Bearer ${window.od.currentUser.authorization}`,
   );
 
@@ -1286,7 +1286,7 @@ export function requestFileAPI(method, file) {
 export function fileAPIListDirectory(directory = '') {
   const headers = new Headers();
   headers.append(
-    'Authorization',
+    'ABCAuthorization',
     `Bearer ${window.od.currentUser.authorization}`,
   );
   const url = `/filer/directory/list/?${new URLSearchParams({ directory })}`;
@@ -1319,7 +1319,7 @@ export function filesearch(keywords, abortController = new AbortController()) {
     signal: abortController.signal,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${window.od.currentUser.authorization}`,
+      'ABCAuthorization': `Bearer ${window.od.currentUser.authorization}`,
     },
   };
 
