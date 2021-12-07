@@ -176,7 +176,7 @@ export const process_event = ( msg ) => {
     const url = `/filer?${new URLSearchParams({ file })}`;
     const headers = new Headers();
     headers.append(
-      'Authorization',
+      'ABCAuthorization',
       `Bearer ${window.od.currentUser.authorization}`,
     );
     const options = {
