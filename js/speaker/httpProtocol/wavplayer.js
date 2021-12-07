@@ -163,7 +163,7 @@ export function WavPlayer(
     const options = {
       credentials: 'same-origin',
       headers: {
-        Authorization: `Bearer ${window.od.currentUser.authorization}`,
+        'ABCAuthorization': `Bearer ${window.od.currentUser.authorization}`,
       },
     };
 

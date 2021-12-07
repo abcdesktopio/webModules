@@ -33,7 +33,7 @@ export const init = function () {
       clickable: false,
       previewsContainer: '#upload .drop-down',
       maxFilesize: null,
-      headers: { Authorization: `Bearer ${window.od.currentUser.authorization}` },
+      headers: { 'ABCAuthorization': `Bearer ${window.od.currentUser.authorization}` },
     });
 
     myDropzone.on('queuecomplete', () => {
@@ -47,7 +47,7 @@ export const init = function () {
       upload.style.display = 'block';
       console.log(file);
       // update the headers Authorization
-      this.options.headers.Authorization = `Bearer ${window.od.currentUser.authorization}`;
+      this.options.headers.ABCAuthorization = `Bearer ${window.od.currentUser.authorization}`;
       file.previewElement.querySelector('.dz-error-mark').addEventListener('click', () => {
         myDropzone.cancelUpload(file);
       });
