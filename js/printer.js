@@ -125,7 +125,7 @@ export const getFiles = function () {
   const url = window.od.net.urlrewrite('/printerfiler/directory/list');
   xhr.open('GET', `${url}?directory=/home/balloon/.printer-queue`);
   xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('Authorization', `Bearer ${window.od.currentUser.authorization}`);
+  xhr.setRequestHeader('ABCAuthorization', `Bearer ${window.od.currentUser.authorization}`);
   xhr.onreadystatechange = () => {
     if (xhr.status === 200
         && xhr.readyState === 4
@@ -157,7 +157,7 @@ export const removeFile = function (file) {
     const url = window.od.net.urlrewrite('/printerfiler');
     xhr.open('DELETE', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Authorization', `Bearer ${window.od.currentUser.authorization}`);
+    xhr.setRequestHeader('ABCAuthorization', `Bearer ${window.od.currentUser.authorization}`);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         getFiles();

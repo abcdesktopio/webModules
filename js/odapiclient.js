@@ -271,7 +271,7 @@ const odApiClient = new (class ODApiClient {
     const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
     if (abcdesktop_jwt_user_token) {
       options.headers = {
-        'Authorization': `Bearer ${abcdesktop_jwt_user_token}`,
+        'ABCAuthorization': `Bearer ${abcdesktop_jwt_user_token}`,
       };
     }
   

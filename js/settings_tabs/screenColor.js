@@ -453,7 +453,7 @@ function buildDropzoneEvents() {
     }
 
     this.options.headers = {
-      Authorization: `Bearer ${window.od.currentUser.authorization}`,
+      'ABCAuthorization': `Bearer ${window.od.currentUser.authorization}`,
     };
 
     file.previewElement

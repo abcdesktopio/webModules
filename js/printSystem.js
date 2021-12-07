@@ -32,7 +32,7 @@ export const doPrint = (file) => {
   const url = `${endpoint}?${params}`;
 
   const headers = new Headers();
-  headers.append('Authorization', `Bearer ${window.od.currentUser.authorization}`);
+  headers.append('ABCAuthorization', `Bearer ${window.od.currentUser.authorization}`);
 
   const req = {
     mathod: 'GET',
