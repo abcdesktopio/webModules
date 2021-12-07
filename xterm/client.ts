@@ -51,7 +51,7 @@ window.createTerminal = function (onWSCreated, onWSClose) {
     const options = {
       method: 'POST',
       headers : {
-        'Authorization':'Bearer ' + window.od.currentUser.authorization
+        'ABCAuthorization':'Bearer ' + window.od.currentUser.authorization
       }
     };
     fetch(url, options)
@@ -74,7 +74,7 @@ window.createTerminal = function (onWSCreated, onWSClose) {
       const options : RequestInit = {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${window.od.currentUser.authorization}`
+          'ABCAuthorization': `Bearer ${window.od.currentUser.authorization}`
         },
       };
 
