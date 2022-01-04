@@ -86,16 +86,20 @@ export const init = function () {
       if (ret.id) {
         menuconfig = ret.id;
         for (const key in menuconfig) {
-          if (menuconfig[key]) {
             const elt = document.getElementById(key);
             if (elt) {
+              // if the entry is not true enable
+              if (!menuconfig[key]) {
+                elt.parentElement.remove();
+                continue;
+              }
+              //  the entry is enable
               const li = elt.parentElement;
               li.style.display = 'block';
               const dropDown = li.parentElement;
               const indexDivider = Array.from(dropDown.children).indexOf(li) + 1;
               const divider = dropDown.children[indexDivider];
               if (divider) { divider.style.display = 'block'; }
-            }
           }
         }
       }
