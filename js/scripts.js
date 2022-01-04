@@ -686,9 +686,7 @@ function setupTopMenu() {
         break;
 
       case 'grabmouse':
-        window.od.broadway.rfb.requestInputLock({ pointer: true })
-	      // var canvas = document.getElementById('noVNC_canvas');
-	      // canvas.requestPointerLock();
+        requestInputLock();
 	      break;
 
       default:
@@ -712,6 +710,10 @@ function setupTopMenu() {
   });
 
   bug.init();
+}
+
+export function requestInputLock() {
+  window.od.broadway.rfb.requestInputLock({ pointer: true });
 }
 
 /**
