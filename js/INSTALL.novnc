@@ -3,5 +3,5 @@
 git clone https://github.com/novnc/noVNC.git
 cd noVNC
 # remove unused files
-rm -rf docs/ snap/ tests/ vnc.html vnc_lite.html karma.conf.js app/ui.js app/sounds/ utils/
+rm -rf docs/ snap/ tests/ vnc.html vnc_lite.html karma.conf.js app/ui.js app/sounds/ utils/ app/images
 
