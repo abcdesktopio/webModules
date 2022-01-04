@@ -445,6 +445,10 @@ export default function BroadwayVNC() {
         shared: WebUtil.getConfigVar('shared', true),
         credentials: { password },
       });
+      
+      // set an id to the RFB canvas
+      // after the constructor
+      rfb._canvas.id = 'noVNC_canvas';
 
       rfb._screenSize = function () {
         const h = this._screen.offsetHeight - getTopAndDockHeight();
