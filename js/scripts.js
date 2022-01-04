@@ -467,6 +467,10 @@ function init() {
 
   // set fullscreen option callback in top menu
   $('#fullscreen').on('click', () => { toggleFullScreen(); });
+  // event then fullscreenchange 
+  // can be a mouse click event or an escape key event 
+  // set fullscreen option icon [] or # 
+  document.onfullscreenchange = setFullScreenUI;
 
   // enable time at the top
   system.horloge('time');
@@ -557,8 +561,7 @@ function toggleFullScreen() {
     } else if (document.documentElement.msRequestFullscreen) {
       document.documentElement.msRequestFullscreen();
     }
-    $('#fullscreen img').attr('src', 'img/top/fullscreen-back.svg');
-    $('#fullscreen').attr('state', 'true');
+    
   } else {
     if (document.cancelFullScreen) {
       document.cancelFullScreen();
@@ -569,10 +572,32 @@ function toggleFullScreen() {
     } else if (document.msExitFullscreen) {
       document.msExitFullscreen();
     }
-    $('#fullscreen img').attr('src', 'img/top/fullscreen.svg');
-    $('#fullscreen').attr('state', 'false');
+    
   }
 }
+
+
+/**
+ * @function setFullScreenUI
+ * @global
+ * @param none
+ * @return {void}
+ * @desc set fullscreen User Interface.
+ */
+ function setFullScreenUI() {
+  console.log( "setFullScreenUI");
+  if ( !document.fullscreenElement
+    && !document.mozFullScreenElement
+    && !document.webkitFullscreenElement
+    && !document.msFullscreenElement) {
+      $('#fullscreen img').attr('src', 'img/top/fullscreen.svg');
+      $('#fullscreen').attr('state', 'false');
+   }
+   else {
+    $('#fullscreen img').attr('src', 'img/top/fullscreen-back.svg');
+    $('#fullscreen').attr('state', 'true');
+   }
+ }
 
 /**
  * @function setupTopMenu
@@ -659,6 +684,12 @@ function setupTopMenu() {
       case 'logout':
         menu.logoffOpen();
         break;
+
+      case 'grabmouse':
+        window.od.broadway.rfb.requestInputLock({ pointer: true })
+	      // var canvas = document.getElementById('noVNC_canvas');
+	      // canvas.requestPointerLock();
+	      break;
 
       default:
         console.error(`Invalid menu entry ${this.children[0].id}`);
