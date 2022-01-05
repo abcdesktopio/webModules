@@ -74,9 +74,8 @@ export function getTopAndDockHeight() {
 
   const dockElement = document.getElementById('dock');
   
-  if (dockElement && dockElement.clientHeight) {
-    const border_bottom=3; // border-bottom: 3px solid #6EC6F0
-    height += dockElement.clientHeight + border_bottom; 
+  if (dockElement && dockElement.offsetHeight) {
+    height += dockElement.offsetHeight;
   }
 
   return height;
