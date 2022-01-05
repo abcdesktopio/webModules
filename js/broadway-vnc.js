@@ -463,6 +463,7 @@ export default function BroadwayVNC() {
 
       // Permit RFB viewport
       rfb.scaleViewport = true;
+
     } catch (exc) {
       // this.updateState(null, 'fatal', null, 'Unable to create RFB client -- ' + exc);
       console.error(`Unable to create RFB client -- ${exc}`);
@@ -471,8 +472,8 @@ export default function BroadwayVNC() {
 
     // Store rfb in window object
     window.od.broadway.rfb = rfb;
-    window.od.broadway.rfb.addEventListener('connect', this.connected);
-    window.od.broadway.rfb.addEventListener('disconnect', 	this.disconnected);
-    window.od.broadway.rfb.addEventListener('clipboard', syncClipBoardtoUserAgent);
+    window.od.broadway.rfb.addEventListener('connect',    this.connected);
+    window.od.broadway.rfb.addEventListener('disconnect', this.disconnected);
+    window.od.broadway.rfb.addEventListener('clipboard',  syncClipBoardtoUserAgent);
   };
 }
