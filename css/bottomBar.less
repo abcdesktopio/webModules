@@ -14,7 +14,7 @@
 @import "@{global}";
 
 #dock {
-  height: 60px;
+  height: 55px;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -22,7 +22,6 @@
   display: flex;
   flex-direction: row;
   background: @secondary;
-  border-bottom: 3px solid @tertiary;
 }
 
 #dock ul#docklist {
@@ -223,7 +222,6 @@
 
 #dock input[type="text"] {
   cursor: text;
-  height: 56px;
   width: 100%;
   background: @primary url(../../../img/search1.svg) 5px no-repeat;
   border: none;
@@ -322,19 +320,27 @@ li[locked=true] img.dock-lock-icon {
 }
 
 #dock li[locked=true] div.puce {
-  height: 3px;
+  height: 2px;
   position: relative;
   top: -14px;
   margin: 0;
   padding: 0;
+  margin-left: 5px;
+  margin-right: 5px;
   background: @light;
 }
 
 #dock li div.puce {
-  height: 3px;
+  height: 2px;
   position: relative;
-  top: 6px;
+  top: 2px;
   margin: 0;
   padding: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 2px;
   background: @light;
 }
+
+
+
