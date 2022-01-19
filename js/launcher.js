@@ -803,7 +803,7 @@ class LoginProgress {
     if (this.enabled) {
       setTimeout(() => {
         self.getProgress();
-      }, 1000);
+      }, 300);
     }
   }
 }
