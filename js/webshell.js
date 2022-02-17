@@ -114,8 +114,14 @@ export const resize = function () {
     return;
   }
 
-  let cols = (_this.offsetWidth - 10) / window.term._core.renderer.dimensions.actualCellWidth;
-  let rows = (_this.offsetHeight - 35) / window.term._core.renderer.dimensions.actualCellHeight;
+  let defaultcontroloffsetHeight = 0;
+  let htmlcollectioncontrols = _this.getElementsByClassName("control");
+  if (htmlcollectioncontrols && htmlcollectioncontrols.length > 0)
+	// get the clientHeight if controlwebshell
+	defaultcontroloffsetHeight = htmlcollectioncontrols[0].clientHeight;
+
+  let cols = (_this.offsetWidth) / window.term._core.renderer.dimensions.actualCellWidth;
+  let rows = (_this.offsetHeight - defaultcontroloffsetHeight) / window.term._core.renderer.dimensions.actualCellHeight;
 
   let colsAsInteger = parseInt(cols, 10);
   let rowsAsInteger = parseInt(rows, 10);
@@ -131,13 +137,19 @@ export const resize = function () {
     return;
   }
 
+  /*
+  Do not colsAsInteger++;
   if (colsDecimalsPart > 0) {
     colsAsInteger++;
   }
-
+  
+  Do not rowsAsInteger++;
+  Do not use rowsDecimalsPart
+  number of rows must always be less to see all line 
   if (rowsDecimalsPart > 0) {
     rowsAsInteger++;
   }
+  */
 
   window.term.resize(colsAsInteger, rowsAsInteger);
   window.term.focus();
