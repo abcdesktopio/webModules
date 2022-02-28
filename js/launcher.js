@@ -1434,7 +1434,8 @@ export async function getWebModulesVersion() {
 }
 
 export const containerNotificationInfo = function(data) {
-  notificationSystem.displayNotification(data.name, data.message, 'error', '/img/app/' + data.icon, 15 );
+  const icon = "data:image/svg+xml;base64," + data.icon_data;
+  notificationSystem.displayNotification(data.name, data.message, 'error', icon, 15 );
 };
 
 export function getListScret() {
