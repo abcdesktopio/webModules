@@ -15,7 +15,8 @@ export class JanusAbcDesktop extends Janus {
   static init() {
     return new Promise((resolve) => {
       super.init({
-        debug: 'all',
+        // debug: 'all',
+	debug: false,
         dependencies: super.useDefaultDependencies(),
         callback: () => {
           resolve();
@@ -83,7 +84,7 @@ export class JanusAbcDesktop extends Janus {
           plugin: 'janus.plugin.streaming',
           opaqueId: JanusAbcDesktop.opaqueId,
           success: (streaming) => {
-            console.log(streaming);
+            // console.log(streaming);
             this.streaming = streaming;
             resolve();
           },
