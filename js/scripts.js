@@ -38,7 +38,7 @@ import * as system from './system.js';
 import * as settings from './settings.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
-import './systemmenu.js';
+import * as systemMenu from './systemmenu.js';
 import './secrets.js';
 
 //
@@ -170,7 +170,7 @@ window.od.setupafteruserloginin = function () {
   // call odApiClient.composer.getUserAppList
   // need user token
   launcher.initUserApplist()
-    .done(initApplist_callback);
+	 .done(initApplist_callback);
 
   // Add event listener for buttons share window.
   shareSystem.init();
@@ -211,6 +211,7 @@ window.od.setupafteruserloginin = function () {
 function initApplist_callback() {
   appSelector.init();
   launcher.generateDesktopFiles(window.od.applist);
+  systemMenu.init();
 }
 
 function odinit() {

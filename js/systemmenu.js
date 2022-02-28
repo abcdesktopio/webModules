@@ -25,7 +25,6 @@ import * as secrets from './secrets.js';
 
 let myMenuApps;
 let enable = true;
-let menuLoaded = false;
 let windowList = [];
 let xMousePosition = 0;
 let yMousePosition = 0;
@@ -54,17 +53,14 @@ function clickDockActive() {
  * @returns {void}
  * @desc Init events, load user's menu from MongoDB and make dock sortable (jQuery).
  */
-const init = function () {
+export const init = function () { 
   if (!document.getElementById('dock')) {
     enable = false;
     console.log('searchZone is disabled');
     return;
   }
 
-  if (!menuLoaded) {
-    loadMenu();
-    menuLoaded = true;
-  }
+  loadMenu();
 
   $(() => {
     let removeIntent = false;
@@ -551,10 +547,12 @@ export const saveMenu = function () {
 
 export const internalLoadMenu = function (apps) {
   const docklist = document.getElementById('docklist');
+  console.log( "apps.length=" + apps.length);
   // if apps is empty
   if (apps.length === 0) {
     for (let i = 0; i < window.od.applist.length; i++) {
-      if (window.od.applist[i].showinview === 'dock') apps.push(window.od.applist[i]);
+      if (window.od.applist[i].showinview === 'dock') 
+	    apps.push(window.od.applist[i]);
     }
   }
 
@@ -589,6 +587,7 @@ export const internalLoadMenu = function (apps) {
   clicklistener();
   mouselistener();
 
+  
   launcher.getwindowslist()
     .then((msg) => {
       updateWindowList(msg.data);
@@ -596,6 +595,7 @@ export const internalLoadMenu = function (apps) {
       const childs = Array.from(docklist.children);
       tryReduceDock(docklist, childs);
     });
+  
 };
 
 /**
@@ -605,6 +605,7 @@ export const internalLoadMenu = function (apps) {
  */
 export const loadMenu = function () {
   const apps = [];
+  // console.log( "loadMenu" );
   launcher.get('dock')
     .done((msg) => {
       if (msg.status === 200 && msg.result) {
@@ -691,7 +692,7 @@ export const createAppdiv = function (data) {
   return null;
 };
 
-secrets.secretsEvents.addEventListener('loaded', init);
+// secrets.secretsEvents.addEventListener('loaded', init);
 
 const numberAppsCanBeAdd = function (docklist, nbrDisplayedApps) {
   const docklistWidth = docklist.offsetWidth;

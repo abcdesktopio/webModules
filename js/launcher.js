@@ -366,9 +366,10 @@ export function initUserApplist() {
     .getUserAppList()
     .done((result) => {
       if (typeof result === 'undefined') {
+	console.error( "list application failed" );
         notificationSystem.displayNotification(
           'applist',
-          'list app failed',
+          'list application failed, please reload',
           'error',
         );
         return;
@@ -376,6 +377,7 @@ export function initUserApplist() {
       window.od.applist = result.result;
     })
     .fail(() => {
+      console.error( "list application failed" );
       notificationSystem.displayNotification(
         'applist',
         'launcher:applist request call error',
