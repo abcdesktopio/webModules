@@ -197,7 +197,13 @@ export class LoginButtonAuthManager extends AuthManager {
 
 export class ImplicitAuthManager extends LoginButtonAuthManager {
   login(provider) {
-    launcher.implicitLogin(provider.name);
+    if (provider.dialog_url)
+      this.openDialog(provider.dialog_url);
+    else
+      launcher.implicitLogin(provider.name);
+  }
+  openDialog(url) {
+    document.location = url;
   }
 }
 
