@@ -30,6 +30,7 @@ const providerImg = {
   anonymous: '../img/welcome/anonymous_icon.svg',
   activedirectory: '../img/welcome/activedirectory_icon.svg',
   ldap: '../img/welcome/ldap.svg',
+  sslclient: '../img/welcome/sslclient_icon.svg',
 };
 
 const osImg = {
