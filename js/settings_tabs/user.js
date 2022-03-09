@@ -58,17 +58,13 @@ const browserImg = {
  * @desc Display user's connection provider inside the window.
  */
 function setProvider() {
-  let url; let
-    provider;
+  let url; 
+  let provider;
 
-  try {
-    url = providerImg[window.od.currentUser.providertype];
-    if (!url) {
-      url = providerImg[window.od.currentUser.provider];
-    }
-  } catch (e) {
-    url = '../img/welcome/anonymous_icon.svg';
-  }
+  url = providerImg[window.od.currentUser.providertype];
+  if (!url) {
+      url = '../img/welcome/authdefault_icon.svg';
+  } 
 
   try {
     provider = `Auth: ${window.od.currentUser.providertype} ${window.od.currentUser.provider.charAt(0).toUpperCase()}${window.od.currentUser.provider.slice(1)}`;
