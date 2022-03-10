@@ -52,7 +52,7 @@ const buildLine = (row, container) => {
   const imgAppname = document.createElement('img');
   const spanAppname = document.createElement('span');
 
-  imgAppname.src = window.od.net.urlrewrite(`../img/app/${container['oc.icon']}`);
+  imgAppname.src = "data:image/svg+xml;base64," + container['oc.icondata'];
   spanAppname.className = 'align-middle';
   spanAppname.innerText = container['oc.displayname'];
   spanAppname.style = 'padding-left: 5px;';
