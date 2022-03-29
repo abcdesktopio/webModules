@@ -347,8 +347,8 @@
                 
             </div>
 	    {{/isDemoPage}}
-	    <div id="clearlocalstoragedata222">
-		<a id="clearlocalstoragedata" class="btn btn-lg btn-outline-primary mb-3" href="javascript:window.localStorage.clear();">Clear local storage data</a>
+	    <div>
+		<a id="clearlocalstoragedata" class="btn btn-lg btn-outline-primary mb-3" href="javascript:clearlocalstoragedata();">Clear local storage data</a>
 	    </div>
 	    <div id="connectShare">
                 <p id="connect-share-message">Connect now with your email address to work with your copartner</p>
@@ -1352,6 +1352,9 @@
 
     {{ #scripts }}
     <script {{{defer}}} type="text/javascript" src="{{{src}}}"></script>
+    <script type="text/javascript">
+	    function clearlocalstoragedata() { window.localStorage.clear(); }
+    </script>
     {{ /scripts }}
 
     <!-- Modules START HERE -->
