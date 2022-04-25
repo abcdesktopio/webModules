@@ -15,8 +15,8 @@ export class JanusAbcDesktop extends Janus {
   static init() {
     return new Promise((resolve) => {
       super.init({
-        // debug: 'all',
-	debug: false,
+        debug: 'all',
+	//debug: false,
         dependencies: super.useDefaultDependencies(),
         callback: () => {
           resolve();
@@ -36,10 +36,11 @@ export class JanusAbcDesktop extends Janus {
   /**
   * @desc Allow to get a new Janus session
   */
-  static createSession(server) {
+  static createSession(server, token) {
     return new Promise((resolve, reject) => {
       const optionsJanus = {
         server,
+	token: token,
         success: successSession,
         error: errorSession,
       };

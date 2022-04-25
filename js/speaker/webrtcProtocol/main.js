@@ -20,7 +20,8 @@ export const configuration = {
   host: null,
   hostip: null,
   pin: null,
-  received: false,
+  received: false, 
+  token: null
 };
 
 export const state = {
@@ -42,9 +43,9 @@ export const connectToGateway = async () => {
    */
   await JanusAbcDesktop.init();
 
-  const {host, id, pin} = configuration;
+  const {host, id, pin, token} = configuration;
 
-  const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`);
+  const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`,token);
   await janusSession.attachElt(audio);
   await janusSession.watchStream(id, pin);
 
