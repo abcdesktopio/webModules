@@ -33,21 +33,43 @@ const configureSpeaker = async () => {
             hostip,
             audioport,
             pin,
+	    media,
+	    token,
           },
         } = await launcher.getStream();
-
+	/*
+ 	{	"status": 200, 
+  		"result": {
+  			"id": 5, 
+  			"name": "mp-5", 
+  			"description": "alex-b90f6896-de78-4ca1-937c-f6780e55c79c", 
+  			"pin": "Q8DLpnH6T5", 
+  			"enabled": true, 
+  			"viewers": 0, 
+  			"type": "live", 
+ 			"media": [{"mindex": 0, "type": "audio", "mid": "a", "label": "audio", "pt": 8, "rtpmap": "PCMA/8000", "port": 5105, "age_ms": 5}], 
+  			"host": "janus.domain.local", 
+  			"hostip": "1.2.3.4"
+		}, 
+  		"message": "ok" }
+	*/
+	let useAudioPort = audioport;
+	// janus change format in release 1.0
+	if (!audioport && Array.isArray(media)) {
+		useAudioPort=media[0].port;
+	}
         webrtcProtocol.configuration.received = true;
         webrtcProtocol.configuration.id = id;
         webrtcProtocol.configuration.host = host;
-        webrtcProtocol.configuration.audioport = audioport;
+        webrtcProtocol.configuration.audioport = useAudioPort;
         webrtcProtocol.configuration.pin = pin;
-
+	webrtcProtocol.configuration.token = token;
         const {
           data: {
             pulseAudioIsConfigured,
             pulseAudioIsAvailable,
           }
-        } = await launcher.configurePulse(hostip, audioport);
+        } = await launcher.configurePulse(hostip, useAudioPort);
 
         if (pulseAudioIsAvailable) {
           state.pulseAudioIsAvailable = pulseAudioIsAvailable;
