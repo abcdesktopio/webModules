@@ -42,7 +42,7 @@ export class JanusAbcDesktop extends Janus {
         server,
 	token: token,
         success: successSession,
-        error: errorSession,
+        error: errorSession
       };
 
       const janusSession = new JanusAbcDesktop(optionsJanus); // This is a Janus session
@@ -62,6 +62,7 @@ export class JanusAbcDesktop extends Janus {
       function errorSession(error) {
         reject(error);
       }
+
     });
   }
 
@@ -125,6 +126,15 @@ export class JanusAbcDesktop extends Janus {
           ondata: (data) => {
             JanusAbcDesktop.debug('We got data from the DataChannel!', data);
           },
+	  webrtcState: function(on) {
+  	    Janus.log("Janus says our WebRTC PeerConnection is " + (on ? "up" : "down") + " now");
+	    //'speaker.available', async ({ detail: { available } }
+	    document.dispatchEvent(new CustomEvent('speaker.webrtcState', { detail: { 'status': on } })); 
+	  },
+	  slowLink: function(uplink, lost, mid) {
+  	    Janus.warn("Janus reports problems " + (uplink ? "sending" : "receiving") +
+			" packets on mid " + mid + " (" + lost + " lost packets)");
+	  },
           oncleanup() {},
           // Don't used but I keep it there to know it is possible to add an action at this moment
         };
