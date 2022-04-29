@@ -745,27 +745,6 @@ export function closeTopLeftDropDowns() {
   $('#top #top-left div').unbind('mouseover');
 }
 
-export function formToJSON(form) {
-  const obj = {};
-  const elements = form.querySelectorAll('input, select, textarea');
-  for (let i = 0; i < elements.length; ++i) {
-    const element = elements[i];
-    const { name } = element;
-    const { value } = element;
-    const { checked } = element;
-
-    if (name) {
-      if (element.type === 'checkbox') {
-        obj[name] = checked;
-      } else {
-        obj[name] = value;
-      }
-    }
-  }
-
-  return obj;
-}
-
 /**
  * @function addTransOverlay
  * @global
