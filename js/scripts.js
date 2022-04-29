@@ -688,7 +688,7 @@ function setupTopMenu() {
 
       case 'grabmouse':
         requestInputLock();
-	      break;
+	break;
 
       default:
         console.error(`Invalid menu entry ${this.children[0].id}`);
@@ -713,6 +713,15 @@ function setupTopMenu() {
   bug.init();
 }
 
+
+/**
+ * @function requestInputLock
+ * @global
+ * @return {void}
+ * @desc force to grab mouse input for game like minecraft
+ *       make sure that vnc server support this option 
+ *       works with realvnc server on arm64
+ */
 export function requestInputLock() {
   window.od.broadway.rfb.requestInputLock({ pointer: true });
 }
