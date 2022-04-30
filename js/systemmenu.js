@@ -22,6 +22,8 @@ import * as webshell from './webshell.js';
 
 import { broadcastEvent } from './broadcastevent.js';
 import * as secrets from './secrets.js';
+// import * as speaker from './speaker/main.js';
+
 
 let myMenuApps;
 let enable = true;
@@ -528,6 +530,7 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
     clickedApp.setAttribute('state', 'started');
     $(clickedApp).find('img.appLoader')
       .addClass('appLoaderDock');
+    // speaker.letsPlaySound();
   }
 };
 
