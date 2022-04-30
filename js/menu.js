@@ -59,7 +59,17 @@ export const logoffOpen = function () {
     },
   };
 
-  if (menuconfig.disconnect && window.od.currentUser.providertype !== 'anonymous') {
+  if (!menuconfig) {
+	  console.error( 'Fatal error: menuconfig is not defined !');
+	  return;
+  }
+
+  if (!menuconfig.disconnect) {
+          console.error( 'menuconfig.disconnect is not defined, or disabled by config file');
+          return;
+  }
+
+  if (window.od.currentUser.providertype !== 'anonymous') {
     buttons.disconnect = {
       label: disconnectBtn || 'Just disconnect',
       className: 'window-button',
