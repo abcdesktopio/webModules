@@ -67,7 +67,6 @@ window.od.docker_logoff = launcher.docker_logoff;
 window.od.get_stream = launcher.get_stream;
 window.od.destroy_stream = launcher.destroy_stream;
 
-const _this = this;
 let lastTouchEnd = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // init i18l load json files
   languages.init();
-  
+
   // Init basic event click for welcome window THEN call init
   welcomeSystem.init().always(
     () => {
@@ -111,8 +110,8 @@ function setupbeforeuserloginin() {
   // GDPR cookies
   initAllowCookies();
   if (!window.Cookies.get('allowCookies')) {
-     console.log('allowCookies not found');
-     system.show( document.getElementById('cookieConsent') );
+    console.log('allowCookies not found');
+    system.show(document.getElementById('cookieConsent'));
   }
 
   // Create object UAParser for reading User Agent
@@ -169,8 +168,7 @@ function setupbeforeuserloginin() {
 window.od.setupafteruserloginin = function () {
   // call odApiClient.composer.getUserAppList
   // need user token
-  launcher.initUserApplist()
-	 .done(initApplist_callback);
+  launcher.initUserApplist().done(initApplistcallback);
 
   // Add event listener for buttons share window.
   shareSystem.init();
@@ -208,7 +206,7 @@ window.od.setupafteruserloginin = function () {
   // window.od.music = music;
 };
 
-function initApplist_callback() {
+function initApplistcallback() {
   appSelector.init();
   launcher.generateDesktopFiles(window.od.applist);
   systemMenu.init();
@@ -245,7 +243,10 @@ function odinit() {
     let url;
     let urlport = '';
     let s = '/'; // for / in url
-    if (window.location.protocol.substring(0, 5) == 'https') {
+
+    // if we use https then use wss
+    // if we use http  then use ws
+    if (window.location.protocol.substring(0, 5) === 'https') {
       defaultport = 443;
       url = 'wss';
     } else {
@@ -253,6 +254,7 @@ function odinit() {
       url = 'ws';
     }
 
+    // for pulse gateway
     if (typeof window.DanaOrigHost === 'function') {
       // set host to OrigHost
       host = window.DanaOrigHost();
@@ -280,7 +282,6 @@ function odinit() {
     return window.od.net.wsurlrewrite(url);
   };
 }
-
 
 function initGlobalEvents() {
   document.body.addEventListener('click', (e) => {
@@ -356,7 +357,6 @@ function parseUrl() {
   }
   return false;
 }
-
 
 /**
  * @function setupisPCApp
@@ -468,9 +468,9 @@ function init() {
 
   // set fullscreen option callback in top menu
   $('#fullscreen').on('click', () => { toggleFullScreen(); });
-  // event then fullscreenchange 
-  // can be a mouse click event or an escape key event 
-  // set fullscreen option icon [] or # 
+  // event then fullscreenchange
+  // can be a mouse click event or an escape key event
+  // set fullscreen option icon [] or #
   document.onfullscreenchange = setFullScreenUI;
 
   // enable time at the top
@@ -562,21 +562,16 @@ function toggleFullScreen() {
     } else if (document.documentElement.msRequestFullscreen) {
       document.documentElement.msRequestFullscreen();
     }
-    
-  } else {
-    if (document.cancelFullScreen) {
-      document.cancelFullScreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitCancelFullScreen) {
-      document.webkitCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-    
+  } else if (document.cancelFullScreen) {
+    document.cancelFullScreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitCancelFullScreen) {
+    document.webkitCancelFullScreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
   }
 }
-
 
 /**
  * @function setFullScreenUI
@@ -585,20 +580,17 @@ function toggleFullScreen() {
  * @return {void}
  * @desc set fullscreen User Interface.
  */
- function setFullScreenUI() {
-  console.log( "setFullScreenUI");
-  if ( !document.fullscreenElement
-    && !document.mozFullScreenElement
-    && !document.webkitFullscreenElement
-    && !document.msFullscreenElement) {
-      $('#fullscreen img').attr('src', 'img/top/fullscreen.svg');
-      $('#fullscreen').attr('state', 'false');
-   }
-   else {
+function setFullScreenUI() {
+  console.log('setFullScreenUI');
+  if (!document.fullscreenElement && !document.mozFullScreenElement
+      && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    $('#fullscreen img').attr('src', 'img/top/fullscreen.svg');
+    $('#fullscreen').attr('state', 'false');
+  } else {
     $('#fullscreen img').attr('src', 'img/top/fullscreen-back.svg');
     $('#fullscreen').attr('state', 'true');
-   }
- }
+  }
+}
 
 /**
  * @function setupTopMenu
@@ -688,7 +680,7 @@ function setupTopMenu() {
 
       case 'grabmouse':
         requestInputLock();
-	break;
+        break;
 
       default:
         console.error(`Invalid menu entry ${this.children[0].id}`);
@@ -699,8 +691,13 @@ function setupTopMenu() {
   const audioplayer = document.getElementById('audioplayer');
   $('#top #top-right #speakers #volume_level')
     .on('input', function () {
-      if (audioplayer.paused) {
+      if (this.value > 0 && audioplayer.paused)
+      {
         audioplayer.play();
+      }
+      if (Number(this.value) === 0 )
+      {
+        audioplayer.pause();
       }
       audioplayer.volume = this.value;
       speaker.updateIconVolumLevel();
@@ -713,13 +710,12 @@ function setupTopMenu() {
   bug.init();
 }
 
-
 /**
  * @function requestInputLock
  * @global
  * @return {void}
  * @desc force to grab mouse input for game like minecraft
- *       make sure that vnc server support this option 
+ *       make sure that vnc server support this option
  *       works with realvnc server on arm64
  */
 export function requestInputLock() {
@@ -774,7 +770,7 @@ function initRotation() {
   if (window.isIOS && window.isSafari) {
     window.addEventListener('orientationchange', () => {
       setTimeout(() => {
-      // Hidde the bottom tool bar
+        // Hidde the bottom tool bar
         window.scrollTo(0, 1); // Scroll to x=0,y=1
       }, 1000); // Wait one second for refresh screen image
     });
@@ -782,15 +778,14 @@ function initRotation() {
 }
 
 function initAllowCookies() {
-	if (document.getElementById('cookieConsent')) {
-		$('#btnDeny').click(()=>{
-    			window.Cookies.remove('allowCookies', { path:'/'});
-    			system.hide( document.getElementById('cookieConsent') );
-		});
-		$('#btnAccept').click(()=>{
-    			window.Cookies.set('allowCookies', 'true',  { path:'/', expires: 7 });
-    			system.hide( document.getElementById('cookieConsent') );
-		});
-	}
+  if (document.getElementById('cookieConsent')) {
+    $('#btnDeny').click(() => {
+      window.Cookies.remove('allowCookies', { path: '/' });
+      system.hide(document.getElementById('cookieConsent'));
+    });
+    $('#btnAccept').click(() => {
+      window.Cookies.set('allowCookies', 'true', { path: '/', expires: 7 });
+      system.hide(document.getElementById('cookieConsent'));
+    });
+  }
 }
-
