@@ -129,7 +129,7 @@ export class JanusAbcDesktop extends Janus {
 	  webrtcState: function(on) {
   	    Janus.log("Janus says our WebRTC PeerConnection is " + (on ? "up" : "down") + " now");
 	    //'speaker.available', async ({ detail: { available } }
-	    document.dispatchEvent(new CustomEvent('speaker.webrtcState', { detail: { 'status': on } })); 
+	    document.dispatchEvent(new CustomEvent('speaker.webrtcState', { detail: { 'available': on } })); 
 	  },
 	  slowLink: function(uplink, lost, mid) {
   	    Janus.warn("Janus reports problems " + (uplink ? "sending" : "receiving") +
