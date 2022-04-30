@@ -15,6 +15,7 @@ import * as httpProtocol from './httpProtocol/main.js';
 import * as webrtcProtocol from './webrtcProtocol/main.js';
 import * as launcher from '../launcher.js';
 import { broadcastEvent } from '../broadcastevent.js';
+import * as notificationSystem from '../notificationsystem.js';
 
 const state = {
   soundIsEnabled: false,
@@ -129,7 +130,61 @@ const setLevelSound = () => {
   if (!audio.paused) {
     updateIconVolumLevel();
   }
+};
+
+export const letsPlaySound = () => {
+    const audio = document.getElementById('audioplayer');
+    if (audio.available) {
+        audio.play();
+    }
+};
+
+export const enableSoundIcon = (level) => {
+    const audio = document.getElementById('audioplayer');
+    if (audio) {
+        const volumeLevel = document.getElementById('volume_level');
+        volumeLevel.value = (Number.isInteger(level)) ? level : 1;
+        setLevelSound();
+        $('#speakers').css('display', 'block');
+        updateIconVolumLevel();
+    }
+};
+ 
+
+export const displayNotificationNoSound = () => {
+    // In this case the user did not make any interaction.
+    // Thus we print a notification for asking the user to activate the song.
+    const title = 'Sound disabled';
+    const desc = 'Please click on icon to hear sound';
+    const type = '';
+    const img = '../img/top/Volume_None.svg';
+    const url = '';
+    const duration = 5000;
+    notificationSystem.displayNotification(title, desc, type, img, url, duration);
 }
+
+
+document.addEventListener('speaker.webrtcState', async ({ detail: { available } }) => {
+    const audio = document.getElementById('audioplayer');
+    audio.available = available;
+    if (available) {
+	const audio = document.getElementById('audioplayer');
+	var promise = audio.play();
+
+	if (promise !== undefined) {
+  		promise.then(_ => {
+    			// Autoplay started!
+			 enableSoundIcon();
+  		}).catch(error => {
+			enableSoundIcon( 0 );
+			displayNotificationNoSound();
+    			// Autoplay was prevented.
+    			// Show a "Play" button so that user can start playback.
+  		});
+	}
+    }
+});
+
 
 broadcastEvent.addEventListener('speaker.available', async ({ detail: { available } }) => {
   if (available) {
