@@ -12,7 +12,6 @@
 */
 
 import { JanusAbcDesktop } from './JanusAbcDesktop.js';
-import * as notificationSystem from '../../notificationsystem.js';
 import * as launcher from '../../launcher.js';
 
 export const configuration = {
@@ -48,18 +47,7 @@ export const connectToGateway = async () => {
   const janusSession = await JanusAbcDesktop.createSession(`https://${host}/janus`,token);
   await janusSession.attachElt(audio);
   await janusSession.watchStream(id, pin);
-
-  if (audio.paused) {
-    // In this case the user did not make any interaction.
-    // Thus we print a notification for asking the user to activate the song.
-    const title = 'Sound disabled';
-    const desc = 'Please click on icon to hear the sound';
-    const type = 'info';
-    const img = '';
-    const url = '';
-    const duration = 5000;
-    notificationSystem.displayNotification(title, desc, type, img, url, duration);
-  }
+  
   state.connected = true;
   state.connecting = false;
   window.od.currentUser.speakerMode = 'WEBRTC';
