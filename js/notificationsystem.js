@@ -53,6 +53,7 @@ export const displayNotification = function (title, desc, type, img, url, durati
       $(`#notification${i}`).remove();
     }
   }
+  if (!img)
   switch (type) {
     case 'error':
       img = '../img/error/error.svg';
