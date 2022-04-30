@@ -18,8 +18,6 @@ import * as system from './system.js';
 import odApiClient from './odapiclient.js';
 import { broadcastEvent } from './broadcastevent.js';
 
-const refreshTokenfactor = 750; // timeout before Toekn must be refreshed max value 1000 in ms
-
 /**
  * @function getWindowsWidth
  * @global
@@ -73,7 +71,7 @@ export function getTopAndDockHeight() {
   if (topElement && topElement.clientHeight) height += topElement.clientHeight;
 
   const dockElement = document.getElementById('dock');
-  
+
   if (dockElement && dockElement.offsetHeight) {
     height += dockElement.offsetHeight;
   }
@@ -145,16 +143,12 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
     })
     .fail(({ error, status_dict }) => {
       let error_message;
-      if (status_dict && status_dict.error ) {
-	      error_message=status_dict.error.error;
-      }
-      else {
-	      if (status_dict.status === 401) {
-          error_message = 'call API has been denied';
-        }
-	      else {
-          error_message = error;
-        }
+      if (status_dict && status_dict.error) {
+	      error_message = status_dict.error.error;
+      } else if (status_dict.status === 401) {
+        error_message = 'call API has been denied';
+      } else {
+        error_message = error;
       }
 
       notificationSystem.displayNotification('Application', error_message, 'error');
@@ -366,7 +360,7 @@ export function initUserApplist() {
     .getUserAppList()
     .done((result) => {
       if (typeof result === 'undefined') {
-	console.error( "list application failed" );
+        console.error('list application failed');
         notificationSystem.displayNotification(
           'applist',
           'list application failed, please reload',
@@ -377,7 +371,7 @@ export function initUserApplist() {
       window.od.applist = result.result;
     })
     .fail(() => {
-      console.error( "list application failed" );
+      console.error('list application failed');
       notificationSystem.displayNotification(
         'applist',
         'launcher:applist request call error',
@@ -720,7 +714,7 @@ export function launchnewDesktopInstance(
           errorDescription = {
             message: result.error.error,
             status_message: result.error.status,
-          }
+          };
         } else {
           errorDescription = result;
         }
@@ -748,7 +742,6 @@ export function showError(message) {
   window.od.connectLoader.showError(message);
   welcomeSystem.open();
 }
-
 
 class LoginProgress {
   constructor(message) {
@@ -902,7 +895,6 @@ export function getContainers() {
 export function getSecrets() {
   return odApiClient.composer.listsecrets();
 }
-
 
 /**
  * @function buildsecrets
@@ -1324,7 +1316,7 @@ export function filesearch(keywords, abortController = new AbortController()) {
     signal: abortController.signal,
     headers: {
       'Content-Type': 'application/json',
-      'ABCAuthorization': `Bearer ${window.od.currentUser.authorization}`,
+      ABCAuthorization: `Bearer ${window.od.currentUser.authorization}`,
     },
   };
 
@@ -1435,14 +1427,14 @@ export async function getWebModulesVersion() {
   return window.od.currentUser.webModulesVersion;
 }
 
-export const containerNotificationInfo = function(data) {
-  const icon = "data:image/svg+xml;base64," + data.icon_data;
-  notificationSystem.displayNotification(data.name, data.message, 'error', icon, 15 );
+export const containerNotificationInfo = function (data) {
+  const icon = `data:image/svg+xml;base64,${data.icon_data}`;
+  notificationSystem.displayNotification(data.name, data.message, 'error', icon, 15);
 };
 
 export function getListScret() {
   return odApiClient.composer.listsecrets();
 }
 
-broadcastEvent.addEventListener('container',	({ detail: { container   } }) => containerNotificationInfo(container));
-broadcastEvent.addEventListener('ocrun', 	({ detail: { data_dict   } }) => ocrun(data_dict));
+broadcastEvent.addEventListener('container',	({ detail: { container } }) => containerNotificationInfo(container));
+broadcastEvent.addEventListener('ocrun', 	({ detail: { data_dict } }) => ocrun(data_dict));
