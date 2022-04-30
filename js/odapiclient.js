@@ -66,9 +66,11 @@ const odApiClient = new (class ODApiClient {
       buildsecret(password) {
         return client.sendRequest('auth/buildsecret', { password })
           .then((res) => {
-            const { userid, name, provider, jwt_user_token } = res.result;
+            const {
+              userid, name, provider, jwt_user_token,
+            } = res.result;
             window.od.currentUser.userid = userid;
-            window.od.currentUser.name = name; 
+            window.od.currentUser.name = name;
             window.od.currentUser.provider = provider;
             localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
             return res;
@@ -239,7 +241,6 @@ const odApiClient = new (class ODApiClient {
       listsecrets() {
         return client.sendRequest('composer/listsecrets');
       }
-
     })();
   }
 
@@ -257,7 +258,7 @@ const odApiClient = new (class ODApiClient {
         status_ex,
         status_dict,
         error: result,
-      }
+      };
     }
 
     const options = {
@@ -271,10 +272,10 @@ const odApiClient = new (class ODApiClient {
     const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
     if (abcdesktop_jwt_user_token) {
       options.headers = {
-        'ABCAuthorization': `Bearer ${abcdesktop_jwt_user_token}`,
+        ABCAuthorization: `Bearer ${abcdesktop_jwt_user_token}`,
       };
     }
-  
+
     return $.ajax(options)
       .then((result, status, xhr) => {
         const deferred = $.Deferred();
@@ -285,7 +286,6 @@ const odApiClient = new (class ODApiClient {
           if (!result.error) result.error = 'API call failed';
           if (!result.status) result.status = 500;
           deferred.reject(getErrorResponse(result, xhr.status, xhr));
-
         } else {
           if (!result.status) {
             result.status = 200;
@@ -299,8 +299,7 @@ const odApiClient = new (class ODApiClient {
         const deferred = $.Deferred();
         deferred.reject(getErrorResponse(error, status, xhr));
         return deferred.promise();
-      },
-    );
+      });
   }
 })();
 export default odApiClient;
