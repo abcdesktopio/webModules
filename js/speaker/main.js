@@ -203,10 +203,10 @@ broadcastEvent.addEventListener('speaker.available', async ({ detail: { availabl
       }
     }
   } else {
+    $('#speakers').css('display', 'none');
     state.pulseAudioIsAvailable = false;
     if (webrtcProtocol.state.connected) {
       webrtcProtocol.destroySession();
     }
-    $('#speakers').css('display', 'none');
   }
 });
