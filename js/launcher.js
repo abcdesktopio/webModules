@@ -1428,7 +1428,7 @@ export async function getWebModulesVersion() {
 }
 
 export const containerNotificationInfo = function (data) {
-  const icon = `data:image/svg+xml;base64,${data.icon_data}`;
+  const icon = `data:image/svg+xml;base64,${data.icondata}`;
   notificationSystem.displayNotification(data.name, data.message, 'error', icon, 15);
 };
 

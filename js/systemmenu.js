@@ -562,7 +562,7 @@ export const internalLoadMenu = function (apps) {
   for (
     const {
       icon,
-      icon_data,
+      icondata,
       launch,
       container_id,
       execmode,
@@ -573,7 +573,7 @@ export const internalLoadMenu = function (apps) {
     } of apps
   ) {
     // const imgurl = window.od.net.urlrewrite(`../img/app/${icon}`);
-    const imgurl =  "data:image/svg+xml;base64," + icon_data;
+    const imgurl =  "data:image/svg+xml;base64," + icondata;
     const li = system.getLIApp(id, launch, execmode, secrets_requirement);
 
     li.setAttribute('name', name);
@@ -668,7 +668,7 @@ export const getAppFragment = function (appName, imgUrl) {
  * @desc Create a temporary icon of a running application who wasn't in the dock.
  */
 export const createAppdiv = function (data) {
-  for (const { launch, icon, icon_data, displayname } of window.od.applist) {
+  for (const { launch, icon, icondata, displayname } of window.od.applist) {
     if (launch === data.wm_class) {
       const li = document.createElement('li');
       li.setAttribute('launch', launch);
@@ -680,7 +680,7 @@ export const createAppdiv = function (data) {
       li.className = 'temporary active';
 
       // const imgurl = window.od.net.urlrewrite(`../img/app/${icon}`);
-      const imgurl = "data:image/svg+xml;base64," + icon_data;
+      const imgurl = "data:image/svg+xml;base64," + icondata;
       const divPuce = document.createElement('div');
       const fragment = getAppFragment(displayname, imgurl);
 
