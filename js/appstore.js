@@ -35,7 +35,7 @@ function openTab(tabId) {
     const {
       cat,
       icon,
-      icon_data,
+      icondata,
       id,
       launch,
       execmode,
@@ -55,7 +55,7 @@ function openTab(tabId) {
       }
 
       //const url = window.od.net.urlrewrite(`../img/app/${icon}`);
-      const url = "data:image/svg+xml;base64," + icon_data;
+      const url = "data:image/svg+xml;base64," + icondata;
       const li = system.getLIApp(id, launch, execmode, secrets_requirement);
       const wrapperIcon = document.createElement('div');
       const img = document.createElement('img');
