@@ -87,7 +87,7 @@ export const init = function () {
 
           let url;
           // Add new Apps search result
-          for (const { cat, icon, icon_data, id, displayname, launch, execmode, secrets_requirement } of apps) {
+          for (const { cat, icon, icondata, id, displayname, launch, execmode, secrets_requirement } of apps) {
             if (cat) {
               const li = system.getLIApp(id, launch, execmode, secrets_requirement);
               const iconApp = document.createElement('img');
@@ -96,7 +96,7 @@ export const init = function () {
 
               li.className = `icon app ${cat[0]}`;
               // url = window.od.net.urlrewrite(`../img/app/${icon}`);
-              url = "data:image/svg+xml;base64," + icon_data;
+              url = "data:image/svg+xml;base64," + icondata;
               iconApp.src = url;
               nameApp.className = 'appname';
               nameApp.innerText = displayname;
