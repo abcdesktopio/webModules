@@ -37,7 +37,8 @@ const odApiClient = new (class ODApiClient {
       logout(data_dict) {
         return client.sendRequest('auth/logout', data_dict)
           .then((res) => {
-            localStorage.clear();
+            localStorage.removeItem('abcdesktop_jwt_user_token');
+            // localStorage.clear();
             return res;
           });
       }
