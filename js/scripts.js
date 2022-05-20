@@ -39,6 +39,7 @@ import * as settings from './settings.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
 import * as systemMenu from './systemmenu.js';
+import userGeolocation from './geolocation.js';
 import './secrets.js';
 
 //
@@ -56,7 +57,7 @@ window.od.isShared = false;
 window.od.listprinter = launcher.listprinter;
 
 // Permit external call from test module
-// There entry point use window.od to becalled from external scritpt
+// There entry point use window.od call from external scripts
 window.od.ocrun = launcher.ocrun;
 window.od.test = window.test;
 window.od.docker_logoff = launcher.docker_logoff;
@@ -113,6 +114,10 @@ function setupbeforeuserloginin() {
     console.log('allowCookies not found');
     system.show(document.getElementById('cookieConsent'));
   }
+
+
+  // init geolocation 
+  userGeolocation.init();
 
   // Create object UAParser for reading User Agent
   ocuaparser.init();
