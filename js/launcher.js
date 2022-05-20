@@ -17,6 +17,7 @@ import * as notificationSystem from './notificationsystem.js';
 import * as system from './system.js';
 import odApiClient from './odapiclient.js';
 import { broadcastEvent } from './broadcastevent.js';
+import userGeolocation from './geolocation.js';
 
 /**
  * @function getWindowsWidth
@@ -593,8 +594,10 @@ function ctrlRefresh_desktop_token(app) {
  * @return {void}
  * @desc login call odApiClient.auth.auth
  */
-export function login(provider, args) {
+export function login(provider, args={}) {
   window.od.connectLoader.connect();
+  if (userGeolocation)
+        args.geolocation = userGeolocation.getCurrentGeolocation();
   return odApiClient.auth
     .auth(null, provider, args)
     .fail(({ status_dict }) => {
@@ -654,9 +657,13 @@ export function runAppsOrDesktop() {
   return launchnewDesktopInstance(abcdesktopinstancetypecallback, app, args);
 }
 
-export function auth(provider, args) {
+export function auth(provider, args={}) {
   window.od.connectLoader.connect();
-
+  
+  let geolocation={};
+  if (userGeolocation) 
+	geolocation = userGeolocation.getCurrentGeolocation();
+  args.geolocation = geolocation;
   return odApiClient.auth
     .auth(null, provider, args || {})
     .fail(({ status_dict }) => {
