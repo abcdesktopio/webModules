@@ -158,6 +158,7 @@ export const showError = function (error) {
  * @desc Start connection
  *
  */
-export const connect = function () {
-  editStatus('Authentication');
+export const connect = function (msg) {
+  if (!msg) msg='Authentication';
+  editStatus(msg);
 };
