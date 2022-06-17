@@ -52,7 +52,14 @@ const buildLine = (row, container) => {
   const imgAppname = document.createElement('img');
   const spanAppname = document.createElement('span');
 
-  imgAppname.src = "data:image/svg+xml;base64," + container['oc.icondata'];
+  // if oc.icondata base64 svg format exist
+  if (container['oc.icondata'])
+    // read base64 formated svg icon
+    imgAppname.src = "data:image/svg+xml;base64," + container['oc.icondata'];
+  else
+    // use url format to download image
+    imgAppname.src = window.od.net.urlrewrite(`../img/app/${container['oc.icon']}`);
+
   spanAppname.className = 'align-middle';
   spanAppname.innerText = container['oc.displayname'];
   spanAppname.style = 'padding-left: 5px;';
