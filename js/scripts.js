@@ -226,13 +226,14 @@ function odinit() {
     return url;
   };
 
-  window.od.logoff = function () {
-    const newlocation = window.location.origin;
+  window.od.logoff = function (url) {
+    if (!url || url === '/' )
+      url = window.location.origin;
     if (typeof window.DanaGetIVEHostname === 'function') {
       // newlocation = 'https://' + window.DanaGetIVEHostname() + '/dana-na/auth/logout.cgi';
       close();
     }
-    window.location = newlocation;
+    window.location = url;
   };
 
   window.od.net.wsurlrewrite = function (wsurl) {
