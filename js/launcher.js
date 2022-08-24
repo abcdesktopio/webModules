@@ -488,9 +488,18 @@ export function auth_sessionexpired() {
 }
 
 export function refresh_usertoken() {
+  let args = {};
+
+  // add missing data to the login query
+  args.utctimestamp = getutctimestamp();        // to profiler
+  // if userGeolocation is enabled
+  if (userGeolocation)
+    // add geolocalisation dict
+    args.geolocation = userGeolocation.getCurrentGeolocation();     // add geolocalisation
+
   // Refresh the current Auth token
   odApiClient.auth
-    .refreshtoken()
+    .refreshtoken(args)
     .fail(({ status_dict }) => {
       showError(
         status_dict.error
@@ -586,6 +595,16 @@ function ctrlRefresh_desktop_token(app) {
   }
 }
 
+
+function getutctimestamp() {
+	// const utc_timestamp = new Date().getTime();
+	var now = new Date;
+	const utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+	return utc_timestamp;
+}
+
+
+
 /**
  * @function login
  * @global
@@ -596,8 +615,14 @@ function ctrlRefresh_desktop_token(app) {
  */
 export function login(provider, args={}) {
   window.od.connectLoader.connect();
+
+  // add missing data to the login query
+  args.utctimestamp = getutctimestamp(); 	// to profiler
+  // if userGeolocation is enabled
   if (userGeolocation)
-        args.geolocation = userGeolocation.getCurrentGeolocation();
+	// add geolocalisation dict
+        args.geolocation = userGeolocation.getCurrentGeolocation();	// add geolocalisation
+
   return odApiClient.auth
     .auth(null, provider, args)
     .fail(({ status_dict }) => {
@@ -610,6 +635,7 @@ export function login(provider, args={}) {
         && Number.isInteger(result.result.expire_in)
       ) {
         window.od.currentUser = result.result;
+	window.od.connectLoader.editStatus(result.message);
         const expire_refresh_token = result.result.expire_in * 750;
         setTimeout(ctrlRefresh_user_token, expire_refresh_token);
         getUserInfo().then(
@@ -661,7 +687,7 @@ export function auth(provider, args={}) {
   window.od.connectLoader.connect();
   
   let geolocation={};
-  if (userGeolocation) 
+  if (userGeolocation) // userGeolocation is optionnal
 	geolocation = userGeolocation.getCurrentGeolocation();
   args.geolocation = geolocation;
   return odApiClient.auth
@@ -678,9 +704,8 @@ export function launchnewDesktopInstance(
 ) {
   // app is undefined for Desktop
   try {
-    window.od.connectLoader.connect();
     var progress = new LoginProgress();
-    progress.start('Instancing AbcDesktop');
+    progress.start('Instancing abcdesktop');
 
     return abcdesktopinstancetypecallback(
       getScreenWidth(),
@@ -818,14 +843,17 @@ class LoginProgress {
  * @see {@link logout}
  */
 export function docker_logoff() {
-  return logout().always(() => {
+  return logout().always((logoutresult) => {
     window.Cookies.remove('abcdesktop_token', { path: '/API' });
     window.Cookies.remove('abcdesktop_host');
     // Do not reload the default page if manager and provider is defined
     // if manager is implicit and provider is anonymous it will
     // window.location.reload( true ); // true - Reloads the current page from the server
     // Do not reload the default page if dana pulse id set
-    window.od.logoff(); // do redirect location or logout call for pulse
+    let url = '/';
+    if (logoutresult.status == 200)
+      url = logoutresult.result.url;
+    window.od.logoff( url ); // do redirect location or logout call for pulse
   });
 }
 
@@ -918,9 +946,9 @@ export function buildsecret(password) {
  * @param {string} dislay_name
  * @desc Stop a docker container
  */
-export function stopContainer(container_id, dislay_name) {
+export function stopContainer(podname, container_id, dislay_name) {
   return odApiClient.composer
-    .stopcontainer(container_id)
+    .stopcontainer(podname, container_id)
     .done((result) => {
       if (
         typeof result === 'undefined'
@@ -930,14 +958,14 @@ export function stopContainer(container_id, dislay_name) {
         if (notificationSystem) {
           notificationSystem.displayNotification(
             'Kill',
-            `Unexpected error can't stop docker container ${dislay_name}`,
+            `Unexpected error can't stop container ${dislay_name}`,
             'error',
           );
         }
       } else if (notificationSystem) {
         notificationSystem.displayNotification(
           'Kill',
-          `Docker container ${dislay_name} killed`,
+          `runtime container ${dislay_name} killed`,
           'info',
         );
       }
@@ -957,9 +985,9 @@ export function stopContainer(container_id, dislay_name) {
  * @function getContainerLogs
  * @param {string} container
  */
-export function getContainerLogs(container_id) {
+export function getContainerLogs(podname, container_id) {
   return odApiClient.composer
-    .logcontainer(container_id)
+    .logcontainer(podname, container_id)
     .done((result) => {
       if (
         typeof result === 'undefined'
@@ -990,9 +1018,9 @@ export function getContainerLogs(container_id) {
  * @function getContainerEnv
  * @param {string} container
  */
-export function getContainerEnv(containerId) {
+export function getContainerEnv(podname, containerId) {
   return odApiClient.composer
-    .envcontainer(containerId)
+    .envcontainer(podname, containerId)
     .done((result) => {
       if (typeof result === 'undefined' || result.status !== 200) {
         if (notificationSystem) {
@@ -1021,9 +1049,9 @@ export function getContainerEnv(containerId) {
  * @param {string} displayName
  */
 
-export function removeContainer(containerId, displayName) {
+export function removeContainer(podname, containerId, displayName) {
   return odApiClient.composer
-    .removecontainer(containerId)
+    .removecontainer(podname, containerId)
     .done((result) => {
       if (typeof result === 'undefined' || result.status !== 200) {
         notificationSystem.displayNotification(
