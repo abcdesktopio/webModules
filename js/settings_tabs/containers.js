@@ -30,7 +30,7 @@ function hideInfosSection() {
 }
 
 const buildLine = (row, container) => {
-  const { status, short_id: shortId, id } = container;
+  const { status, short_id: shortId, id, podname, type } = container;
   const { cardContainer, cardBody } = system.getCardWrappers();
   const envTranslation = languages.getTranslate('settings-containers-btn-env');
   const killTranslation = languages.getTranslate('settings-containers-btn-kill');
@@ -73,7 +73,11 @@ const buildLine = (row, container) => {
   const imgShortId = document.createElement('img');
   const spanShortId = document.createElement('span');
 
-  imgShortId.src = window.od.net.urlrewrite('../img/settings/docker.svg');
+
+  if (container['runtime'] == 'kubernetes' )
+	imgShortId.src = window.od.net.urlrewrite('../img/settings/kubernetes.svg');
+  else
+  	imgShortId.src = window.od.net.urlrewrite('../img/settings/docker.svg');
   spanShortId.className = 'align-middle';
   spanShortId.style = 'padding-left: 5px;';
   spanShortId.innerText = shortId;
@@ -117,7 +121,7 @@ const buildLine = (row, container) => {
   btnLogs.innerText = 'Logs';
   btnLogs.className = 'btn btn-info';
   btnLogs.addEventListener('click', () => {
-    launcher.getContainerLogs(id)
+    launcher.getContainerLogs(container['podname'], id)
       .done((res) => {
         const taskManagerContainerInfos = document.getElementById('task-manager-container-infos');
         const taskManagerContainerList = document.getElementById('task-manager-container-list');
@@ -153,7 +157,7 @@ const buildLine = (row, container) => {
   btnEnv.innerText = envTranslation || 'Env';
   btnEnv.className = 'btn btn-secondary';
   btnEnv.addEventListener('click', () => {
-    launcher.getContainerEnv(id)
+    launcher.getContainerEnv(container['podname'], id)
       .done((res) => {
         const dico = res.result;
         const taskManagerContainerInfos = document.getElementById('task-manager-container-infos');
@@ -202,13 +206,17 @@ const buildLine = (row, container) => {
   btnKill.innerText = killTranslation || 'Kill';
   btnKill.className = 'btn btn-danger';
 
-  if (status === 'exited') {
+  if (status === 'exited' || status === 'terminated') {
+    btnKill.setAttribute('disabled', 'true');
+  }
+  
+  if (type === 'ephemeralcontainer') {
     btnKill.setAttribute('disabled', 'true');
   }
 
   const handlerKill = () => {
     system.addAppLoader(btnKill);
-    launcher.stopContainer(id, container['oc.displayname'])
+    launcher.stopContainer(container['podname'], id, container['oc.displayname'])
       .done(() => {
         system.removeAppLoader(btnKill);
         btnKill.removeEventListener('click', handlerKill);
@@ -221,11 +229,15 @@ const buildLine = (row, container) => {
   btnRemove.innerText = removeTranslation || 'Remove';
   btnRemove.className = 'btn btn-dark';
   btnRemove.addEventListener('click', () => {
-    launcher.removeContainer(id, container['oc.displayname']);
+    launcher.removeContainer( container['podname'], id, container['oc.displayname']);
     if (containerSelectedForInfos === id) {
       hideInfosSection();
     }
   });
+
+  if (type === 'ephemeralcontainer') {
+    btnRemove.setAttribute('disabled', 'true');
+  }
 
   cardContainer.className += ' w-100';
   cardContainer.style.overflowX = 'hidden';
