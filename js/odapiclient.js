@@ -51,8 +51,8 @@ const odApiClient = new (class ODApiClient {
           });
       }
 
-      refreshtoken() {
-        return client.sendRequest('auth/refreshtoken')
+      refreshtoken(data) {
+        return client.sendRequest('auth/refreshtoken',data)
           .then((res) => {
             const { jwt_user_token } = res.result;
             localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
@@ -188,7 +188,7 @@ const odApiClient = new (class ODApiClient {
         app = 'desktop';
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         return client.sendRequest('composer/launchdesktop', {
-          width, height, hostname, timezone,
+          width, height, hostname, timezone, args
         });
       }
 
@@ -219,20 +219,20 @@ const odApiClient = new (class ODApiClient {
         return client.sendRequest('composer/getlogs');
       }
 
-      stopcontainer(containerid) {
-        return client.sendRequest('composer/stopcontainer', { containerid });
+      stopcontainer(podname, containerid) {
+        return client.sendRequest('composer/stopcontainer', { podname, containerid });
       }
 
-      logcontainer(containerid) {
-        return client.sendRequest('composer/logcontainer', { containerid });
+      logcontainer(podname, containerid) {
+        return client.sendRequest('composer/logcontainer', { podname, containerid });
       }
 
-      envcontainer(containerid) {
-        return client.sendRequest('composer/envcontainer', { containerid });
+      envcontainer(podname, containerid) {
+        return client.sendRequest('composer/envcontainer', { podname, containerid });
       }
 
-      removecontainer(containerid) {
-        return client.sendRequest('composer/removecontainer', { containerid });
+      removecontainer(podname, containerid) {
+        return client.sendRequest('composer/removecontainer', { podname, containerid });
       }
 
       listcontainer() {
