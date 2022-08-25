@@ -859,8 +859,11 @@ export function docker_logoff() {
 
 export function disconnect() {
   return odApiClient.auth.disconnect()
-    .always(() => {
-      window.od.logoff();
+    .always((logoutresult) => {
+      let url = '/';
+      if (logoutresult.result)
+        url = logoutresult.result.url;
+      window.od.logoff(url);
     });
 }
 
