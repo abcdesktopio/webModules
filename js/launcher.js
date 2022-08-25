@@ -851,7 +851,7 @@ export function docker_logoff() {
     // window.location.reload( true ); // true - Reloads the current page from the server
     // Do not reload the default page if dana pulse id set
     let url = '/';
-    if (logoutresult.status == 200)
+    if (logoutresult.result)
       url = logoutresult.result.url;
     window.od.logoff( url ); // do redirect location or logout call for pulse
   });
