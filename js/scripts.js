@@ -111,7 +111,7 @@ function setupbeforeuserloginin() {
   // GDPR cookies
   initAllowCookies();
   if (!window.Cookies.get('allowCookies')) {
-    console.log('allowCookies not found');
+    // console.log('allowCookies not found');
     system.show(document.getElementById('cookieConsent'));
   }
 
