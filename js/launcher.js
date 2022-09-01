@@ -344,7 +344,7 @@ export function initApplist() {
         'error',
       );
       window.od.connectLoader.showError(
-        'Service unavailable. Applications list failed. Please try to reload',
+        'Service API unavailable. Applications list failed. Please try to reload',
       );
     });
 }
@@ -625,8 +625,9 @@ export function login(provider, args={}) {
 
   return odApiClient.auth
     .auth(null, provider, args)
-    .fail(({ status_dict }) => {
-      showLoginError(status_dict);
+    .fail( ( jqXHR, textStatus, errorThrown ) => {
+      console.error( 'odApiClient.auth.auth.fail');
+      showLoginError(jqXHR);
     })
     .then((result) => {
       if (
@@ -760,12 +761,19 @@ export function launchnewDesktopInstance(
 }
 
 export function showLoginError(result) {
-  let msg_info = 'General failure';
-  if (result.message && result.status_message) { msg_info = `${result.status_message}: ${result.message}`; } else {
-    msg_info = result.message
-      || result.status_message
-      || result.error
-      || 'General failure, no response from login service';
+  let msg_info = 'General failure, login error';
+  if (result) {
+	  if (result.message)
+		  if (result.status_message)
+	  		msg_info = `${result.status_message}: ${result.message}`;
+	  	  else
+		        msg_info = `${result.message}`;
+	  else if (result.error)
+			if (result.error.status)
+				msg_info = `${result.error.status} ${result.error.error}`;
+	  	  	else
+		  		msg_info = `${result.error.error}`;
+	  else msg_info = String(result);
   }
   showError(msg_info);
 }
