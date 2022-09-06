@@ -178,6 +178,7 @@ broadcastEvent.addEventListener('printer.new', ({ detail: { data } }) => {
 broadcastEvent.addEventListener('printer.available', ({ detail: { available } }) => {
   enable = available;
   const printerIcon = document.querySelector('#printer img');
+  if (!printerIcon) return;
   if (available) {
     printerIcon.src = '../img/top/printer.svg';
   } else {
