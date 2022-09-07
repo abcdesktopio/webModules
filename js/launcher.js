@@ -763,17 +763,26 @@ export function launchnewDesktopInstance(
 export function showLoginError(result) {
   let msg_info = 'General failure, login error';
   if (result) {
-	  if (result.message)
-		  if (result.status_message)
-	  		msg_info = `${result.status_message}: ${result.message}`;
-	  	  else
-		        msg_info = `${result.message}`;
-	  else if (result.error)
-			if (result.error.status)
-				msg_info = `${result.error.status} ${result.error.error}`;
-	  	  	else
-		  		msg_info = `${result.error.error}`;
-	  else msg_info = String(result);
+          if (result.message) {
+                  if (result.status_message)
+                        msg_info = `${result.status_message}: ${result.message}`;
+                  else
+                        msg_info = `${result.message}`;
+          }
+          else  {
+                if (result.error) {
+                        if (result.error.error) {
+                                if (result.error.status)
+                                        msg_info = `${result.error.status} ${result.error.error}`;
+                                else
+                                        msg_info = `${result.error.error}`;
+                        }
+                        else
+                                msg_info = JSON.stringify(result.error);
+                }
+                else
+                        msg_info = JSON.stringify(result);
+          }
   }
   showError(msg_info);
 }
