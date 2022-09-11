@@ -38,12 +38,16 @@ const welcomeSystem = (function () {
       return odApiClient.auth.getauthconfig()
         .done(
           (config) => {
-            if (config) { self.applyConfig(config); } else { window.od.connectLoader.showError('API Service return empty config. This is a configuration error.'); }
+            if (config) { 
+		    self.applyConfig(config); 
+	    } else { 
+		    window.od.connectLoader.showError('API Service return undefined config. Please fix the od.config configuration file.'); 
+	    }
           },
         )
         .fail(
           () => {
-            window.od.connectLoader.showError('API Service is unreachable. Please try to reload.');
+            window.od.connectLoader.showError('API Service is unreachable, bad gateway. Please try to reload.');
           },
         );
     }
@@ -51,6 +55,7 @@ const welcomeSystem = (function () {
     applydemoConfig() {
   	if (window.location.host == 'demo.abcdesktop.io') {
 		// add specific code here
+		// nothing to do 
         }
     }
 
