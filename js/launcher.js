@@ -1225,6 +1225,14 @@ export async function about() {
   return window.od.currentUser.about;
 }
 
+export function getenv() {
+   return requestSpawnerAPI('getenv', null, 'GET');
+}
+
+export function getnetworkinterfaces() {
+   return requestSpawnerAPI('getnetworkinterfaces', null, 'GET');
+}
+
 /**
  * @function closewindow
  * @params {Array<number>} windowsid
