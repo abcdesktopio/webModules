@@ -11,6 +11,8 @@
 * Software description: cloud native desktop service
 */
 
+import * as launcher from './launcher.js';
+
 /**
  * @name clipboard
  * @module
@@ -68,12 +70,19 @@ export const init = function () {
   //
 
   const copypaste = document.getElementById('copypaste');
-  if (copypaste) {
-    cparea = copypaste.querySelector('textarea');
-    copypaste.querySelector('#send').addEventListener('click', () => {
-      sendClipboard();
-    });
-  }
+  launcher.getLabels().done((labels) => {
+      const noacceptcuttext = labels.includes('noacceptcuttext');
+      const nosendcuttext = labels.includes('nosendcuttext');
+      if ( noacceptcuttext && nosendcuttext ) {
+	      console.info('cuttext icon is disabled by labels');
+	      return;
+      }
+      if (copypaste) {
+ 	copypaste.style.display = 'block'; // show copypaste	
+    	cparea = copypaste.querySelector('textarea');
+    	copypaste.querySelector('#send').addEventListener('click', () => { sendClipboard(); });
+      }
+  });
 };
 
 function clipboardHandler() {
