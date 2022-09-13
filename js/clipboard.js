@@ -70,18 +70,23 @@ export const init = function () {
   //
 
   const copypaste = document.getElementById('copypaste');
-  launcher.getLabels().done((labels) => {
-      const noacceptcuttext = labels.includes('noacceptcuttext');
-      const nosendcuttext = labels.includes('nosendcuttext');
-      if ( noacceptcuttext && nosendcuttext ) {
-	      console.info('cuttext icon is disabled by labels');
-	      return;
-      }
-      if (copypaste) {
- 	copypaste.style.display = 'block'; // show copypaste	
-    	cparea = copypaste.querySelector('textarea');
-    	copypaste.querySelector('#send').addEventListener('click', () => { sendClipboard(); });
-      }
+  launcher.getenv().then( (data) => {
+	if (data.env) {
+      		const noacceptcuttext = (data.env.ACCEPTCUTTEXT === 'disabled');
+      		const nosendcuttext   = (data.env.SENDCUTTEXT   === 'disabled');
+      		if ( noacceptcuttext && nosendcuttext ) {
+	      		console.info('cuttext icon is disabled by env');
+	      		return;
+		}
+        	if (copypaste) {
+ 			copypaste.style.display = 'block'; // show copypaste	
+    			cparea = copypaste.querySelector('textarea');
+			if (noacceptcuttext)
+				copypaste.querySelector('#send').style.display = 'none'; 
+			else
+    				copypaste.querySelector('#send').addEventListener('click', () => { sendClipboard(); });
+      		}
+	}
   });
 };
 
@@ -135,7 +140,9 @@ function pastClipboard(text) {
  *
  */
 export const getClipboard = function (data) {
-  cparea.value = data;
-  // send notification to plugin
-  window.postMessage({ action: 'copyClipboard', data });
+  if (cparea) {
+  	cparea.value = data;
+  	// send notification to plugin
+  	window.postMessage({ action: 'copyClipboard', data });
+  }
 };
