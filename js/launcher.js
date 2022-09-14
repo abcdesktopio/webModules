@@ -143,16 +143,12 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
       }
     })
     .fail(({ error, status_dict }) => {
-      let error_message;
-      if (status_dict && status_dict.error) {
-	      error_message = status_dict.error.error;
-      } else if (status_dict.status === 401) {
-        error_message = 'call API has been denied';
-      } else {
-        error_message = error;
-      }
+      let msg_info;
+      let mstatus = error.status || status_dict.status || 500;
+      let message = error.error  || status_dict.error  || JSON.stringify(status_dict);
+      msg_info = `${mstatus}: ${message}`;
 
-      notificationSystem.displayNotification('Application', error_message, 'error');
+      notificationSystem.displayNotification('Application', msg_info, 'error');
 
       if (element instanceof HTMLLIElement) {
         element.setAttribute('state', 'down');
