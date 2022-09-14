@@ -36,6 +36,7 @@ import * as screenRecord from './screenRecord.js';
 import * as menu from './menu.js';
 import * as system from './system.js';
 import * as settings from './settings.js';
+import * as tipsinfo from './tipsinfo.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
 import * as systemMenu from './systemmenu.js';
@@ -678,6 +679,7 @@ function setupTopMenu() {
 
       case 'record':
         screenRecord.open();
+        //tipsinfo.open();
         break;
 
       case 'logout':

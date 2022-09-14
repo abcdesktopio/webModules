@@ -38,8 +38,10 @@
 
     <!-- bootstrap css-->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <!-- 
     <link rel="stylesheet" href="css/bootstrap-table.min.css" type="text/css" />
     <link rel="stylesheet" href="css/bootstrap-slider.min.css" type="text/css" />
+    -->
 
     <!-- jquery css -->
     <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
@@ -47,6 +49,7 @@
 
     {{#isIndexPage}}
         <link rel="stylesheet" href="css/css-dist/settings.css" type="text/css" />
+        <link rel="stylesheet" href="css/css-dist/tipsinfo.css" type="text/css" />
         <link rel="stylesheet" href="css/css-dist/screenRecord.css" type="text/css" />
         <link rel="stylesheet" href="xterm/xterm.css" />
         <link rel="stylesheet" href="css/css-dist/appstore.css" type="text/css" />
@@ -743,6 +746,18 @@
               <textarea id="issue-description" class="h-50" placeholder="Your report"></textarea>
             </div>
         </template>
+	    <template id='tipsinfo-window-title-template'>
+            <div class="tipsinfo-title">
+                <h5 id="tipsinfo-title">Tips information network maps</h5>
+            </div>
+        </template>
+        <template id="tipsinfo-window-body-template" class="window">
+            <figure class="highlight">
+                <pre>
+                    <code class="language-bash" data-lang="bash">bower <span class="nb">install </span>bootstrap</code>
+                </pre>
+            </figure>
+        </template>
         <template id='settings-window-title-template'>
             <div class="settings-title">
                 <div id="settings-back-button"><img src="img/settings/back.svg"></div>
@@ -827,24 +842,16 @@
                 <br>
                 <div class="row">
                     <div id="system-tab-switch-buttons" class="d-flex justify-content-center max-size">
-                        <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle">
-                            <label class="btn btn-settings btn-settings-active"
-                                data-view="settings-system-view-infos-system"
-                                style="margin-left: 15px;">
-                                <input type="radio" name="options" checked>
-                                <span id="settings-system-btn-system">System</span>
-                            </label>
-                            <label class="btn btn-settings" data-view="settings-system-view-user-container">
-                                <input type="radio" name="options">
-                                <span id="settings-system-btn-user-container">User Container</span>
-                            </label>
-                            <label class="btn btn-settings d-none d-sm-block" data-view="settings-system-view-display">
-                                <input type="radio" name="options">
-                                <span id="settings-system-btn-view-infos">Display</span>
-                            </label>
+                        <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle" >
+                            <input type="radio" class="btn-check" name="options" id="settings-system-btn-system-input" autocomplete="off" checked>
+                            <label id="settings-system-btn-system" class="btn btn-secondary btn-settings-active"  data-view="settings-system-view-infos-system" for="settings-system-btn-system-input">System</label>
+                            <input type="radio" class="btn-check" name="options" id="settings-system-view-user-container-input" autocomplete="off">
+                            <label id="settings-system-btn-user-container" class="btn btn-secondary" data-view="settings-system-view-user-container" for="settings-system-view-user-container-input">Pod</label>
+                            <input type="radio" class="btn-check" name="options" id="settings-system-btn-view-infos-input" autocomplete="off">
+                            <label id="settings-system-btn-view-infos"  class="btn btn-secondary" data-view="settings-system-view-display" for="settings-system-btn-view-infos-input">Display</label>
                         </div>
                     </div>
-                    <br>
+ 
                     <div class="container" id="settings-system-view-infos-system">
                         <div class="row col-12 settings-versions">
                             <div class='card-container col-xl-4 col-lg-4'>
@@ -976,14 +983,11 @@
                 <div class="row">
                     <div id="user-tab-switch-buttons" class="d-flex justify-content-center max-size">
                         <div id="buttons-screen-user" class="d-flex btn-group btn-group-toggle">
-                            <label class="btn btn-settings btn-settings-active" data-view="user-current-session">
-                                <input type="radio" name="options" checked>
-                                <span id="settings-user-current-session-btn">Current session</span>
-                            </label>
-                            <label class="btn btn-settings" data-view="user-connection-history">
-                                <input type="radio" name="options">
-                                <span id="settings-user-connection-history">Connection history</span>
-                            </label>
+                            <input type="radio" class="btn-check" name="options" id="settings-user-current-session-btn-input" autocomplete="off" checked>
+                            <label id="settings-user-current-session-btn" class="btn btn-secondary btn-settings-active" data-view="user-current-session" for="settings-user-current-session-btn-input">Current session</label>
+                   
+                            <input type="radio" class="btn-check" name="options" id="settings-user-connection-history-input" autocomplete="off" >
+                            <label id="settings-user-connection-history" class="btn btn-secondary" data-view="user-connection-history" for="settings-user-connection-history-input">Connection history</label>
                         </div>
                     </div>
                     <div class="container">
@@ -1116,15 +1120,13 @@
             <!-- ScreenColor tab start -->
             <div class="tab" id="screen-background-tab" data-first_show=1>
                 <br>
-                <div id="buttons-screen-background" class="d-flex justify-content-center btn-group btn-group-toggle">
-                    <label class="btn btn-settings btn-settings-active" data-view="panel_colors">
-                        <input type="radio" name="options" checked>
-                        <span id="settings-screen-background-colors-btn">Colors</span>
-                    </label>
-                    <label class="btn btn-settings" data-view="panel_picture">
-                        <input type="radio" name="options">
-                        <span id="settings-screen-background-pictures-btn">Pictures</span>
-                    </label>
+                <div id="system-tab-switch-buttons" class="d-flex justify-content-center max-size">
+                    <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle" >
+                        <input type="radio" class="btn-check" name="options" id="settings-screen-background-colors-btn-input" autocomplete="off" checked>
+                        <label id="settings-screen-background-colors-btn" class="btn btn-secondary btn-settings-active" data-view="panel_colors" for="settings-screen-background-colors-btn-input">Colors</label>
+                        <input type="radio" class="btn-check" name="options" id="settings-screen-background-pictures-btn-input" autocomplete="off">
+                        <label id="settings-screen-background-pictures-btn" class="btn btn-secondary" data-view="panel_picture" for="settings-screen-background-pictures-btn-input">Pictures</label>
+                    </div>
                 </div>
                 <br>
                 <div id="modes-screen">

@@ -19,18 +19,8 @@
       "defer": false
     },
     {
-      "src": "js/bootstrap-table.min.js",
-      "indexPageOnly": true,
-      "defer": false
-    },
-    {
-      "src": "js/bootstrap.min.js",
+      "src": "js/bootstrap.bundle.min.js",
       "indexPageOnly": false,
-      "defer": false
-    },
-    {
-      "src": "js/bootstrap-slider.min.js",
-      "indexPageOnly": true,
       "defer": false
     },
     {

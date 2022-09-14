@@ -65,24 +65,27 @@ const buildLine = (row, container) => {
   spanAppname.style = 'padding-left: 5px;';
 
   divAppName.className = 'align-self-center text-left col-xl-1 col-lg-2 col-md-2 col-sm-3 col-4';
-  divAppName.style = 'white-space: nowrap;overflow: hidden;';
+  // divAppName.className = 'align-self-center text-left';
+  divAppName.style = 'white-space: nowrap; overflow: hidden;';
 
-  divAppName.appendChild(imgAppname);
   divAppName.appendChild(spanAppname);
+  divAppName.appendChild(imgAppname);
 
   const imgShortId = document.createElement('img');
   const spanShortId = document.createElement('span');
 
 
   if (container['runtime'] == 'kubernetes' )
-	imgShortId.src = window.od.net.urlrewrite('../img/settings/kubernetes.svg');
+	  imgShortId.src = window.od.net.urlrewrite('../img/settings/kubernetes.svg');
   else
   	imgShortId.src = window.od.net.urlrewrite('../img/settings/docker.svg');
+
   spanShortId.className = 'align-middle';
   spanShortId.style = 'padding-left: 5px;';
   spanShortId.innerText = shortId;
 
   divShortId.className = 'align-self-center text-left col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none';
+  //divShortId.className = 'align-self-center text-left d-md-block d-sm-block d-none';
   divShortId.style = 'white-space: nowrap;overflow: hidden;';
 
   divShortId.appendChild(imgShortId);
@@ -107,7 +110,7 @@ const buildLine = (row, container) => {
     divState.appendChild(spanState);
   }
 
-  divState.className = 'align-self-center text-center col-xl-1 col-lg-1 col-md-3 col-2 d-xl-block d-lg-block d-md-block  d-none';
+  divState.className = 'align-self-center text-center col-xl-1 col-lg-1 col-md-3 col-2 d-xl-block d-lg-block d-md-block d-none';
   divButtonLog.className = 'text-center col-auto';
   divButtonEnv.className = 'text-center col-auto';
   divButtonKill.className = 'text-center col-auto';
