@@ -95,25 +95,32 @@ export const init = function () {
     .done((ret) => {
       if (ret.id) {
         menuconfig = ret.id;
-        for (const key in menuconfig) {
-            const elt = document.getElementById(key);
-            if (elt) {
-              // if the entry is not true enable
-              if (!menuconfig[key]) {
+        let documentmenu=document.getElementById('mainmenu');
+        if (documentmenu) {
+          let documentmenuentries = documentmenu.querySelectorAll(".state");
+          // ready the key menu
+          documentmenuentries.forEach(elt => {
+            let menuentryid = elt.id;
+            if ( menuentryid ) {
+              if (!menuconfig[menuentryid]) {
+                // the entry is disabled by config file
                 elt.parentElement.remove();
-                continue;
               }
-              //  the entry is enable
-              const li = elt.parentElement;
-              li.style.display = 'block';
-              const dropDown = li.parentElement;
-              const indexDivider = Array.from(dropDown.children).indexOf(li) + 1;
-              const divider = dropDown.children[indexDivider];
-              if (divider) { divider.style.display = 'block'; }
-          }
+              else {
+                //  the entry is enable
+                const li = elt.parentElement;
+                li.style.display = 'block';
+                const dropDown = li.parentElement;
+                const indexDivider = Array.from(dropDown.children).indexOf(li) + 1;
+                const divider = dropDown.children[indexDivider];
+                if (divider) { divider.style.display = 'block'; }
+              }
+            }
+          });
         }
       }
       // document.getElementById("logoff-window") should always exist
       // Add an event listener for close , logoff and cancel buttons to the menu
-    });
+    }
+  );
 };
