@@ -77,6 +77,11 @@
       "src": "js/janus.js",
       "indexPageOnly": false,
       "defer": false
+    },
+    {
+      "src": "js/mustache.js",
+      "indexPageOnly": false,
+      "defer": false
     }
   ]
 }
