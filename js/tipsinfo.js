@@ -20,9 +20,8 @@ import * as launcher from './launcher.js';
 import * as system from './system.js';
 import * as languages from './languages.js';
 
-const config = {
-  enabledTabsHeaders: [],
-};
+let networkinterfacesdescriptions = {};
+let networkinterfaces = {};
 
 export const tipsinfoEvents = new EventTarget();
 
@@ -31,7 +30,72 @@ export const tipsinfoEvents = new EventTarget();
  * @returns {void}
  * @desc Add an event listener for closing the window.
  */
+export const init = function() {
+  for (var key in networkinterfacesdescriptions){
+    networkinterfaces[ networkinterfacesdescriptions[key] ] = 'unknow';
+  }
+}
+
+/**
+ * @function open
+ * @returns {void}
+ * @desc Add an event listener for closing the window.
+ */
 export const open = function () {
+  readRenderDescription();
+};
+
+
+/*
+function renderHello() {
+  fetch('/tips/template/networkmap.pki.mustache.svg')
+    .then((response) => response.text())
+    .then((template) => {
+      var rendered = Mustache.render(template, { name: 'Luke' });
+      document.getElementById('tipsinfo-window-body-template').innerHTML = rendered;    
+    });
+}
+
+
+function readRenderDescription(result) {
+    if (result) {
+      fetch('/tips/template/tipsinfo-window-body-template.mustache.html')
+        .then((response) => response.text())
+        .then((template) => {
+          var tipsinfo_innerHTML = Mustache.render(template, res.result );
+          showpage( tipsinfo_innerHTML );
+        });
+    }
+}
+*/
+
+function readRenderDescription() {
+  launcher.getdesktopdescription()
+    .then((res) => {
+      // should be like networkinterfacesdescriptions = { 'private': 'lo', 'public': 'eth0' };
+      if (res && res.result) {
+        fetch('/tips/template/tipsinfo-window-body-template.mustache.html')
+        .then((response) => response.text())
+        .then((template) => {
+          if (res.result.sshconfig) {
+            // render commandline
+            for (var key in res.result.sshconfig){
+              for (var keyos in res.result.sshconfig[key]){
+                let newrenderdata = Mustache.render(res.result.sshconfig[key][keyos], res.result );
+                res.result.sshconfig[key][keyos] = newrenderdata;
+              }
+            }
+          }
+          var tipsinfo_innerHTML = Mustache.render(template, res.result );
+          showpage( tipsinfo_innerHTML );
+        });
+      }
+    });
+}
+
+
+
+function showpage( tipsinfo_innerHTML ) {
   const templateTitle = document.querySelector('template#tipsinfo-window-title-template');
   const templateBody = document.querySelector('template#tipsinfo-window-body-template');
 
@@ -39,7 +103,7 @@ export const open = function () {
     title: templateTitle.innerHTML,
     message: `
       <div id="tipsinfo-window">
-        ${templateBody.innerHTML}
+        ${tipsinfo_innerHTML}
       </div>
     `,
     className: 'window-dialog window-dialog-settings',
@@ -49,36 +113,24 @@ export const open = function () {
     },
   });
 
+  /*
   const settingsTitle = document.getElementById('tipsinfo-title');
   const windowsettings = document.getElementById('tipsinfo-window');
-
+  const networkmap = document.getElementById('networkmap');
+  networkmap 
   settingsTitle.innerText = languages.getTranslate('tipsinfo-title');
 
   const clone = windowsettings.cloneNode(true);
-
-  
-
   windowsettings.parentElement.replaceChild(clone, windowsettings);
 
   languages.applyLanguage();
-  
+  */
+
   function setTitleSuffix(name = '') {
     const tipsinfoTitle = document.getElementById('tipsinfo-title');
     if (tipsinfoTitle) {
       tipsinfoTitle.innerText = `${languages.getTranslate('tipsinfo-title')}${name ? `:${name}` : ''}`;
     }
   }
-};
 
-document.addEventListener('broadway.connected', () => {
-  launcher.getSettings()
-    .then((res) => {
-      if (res.code === 200) {
-        config.enabledTabsHeaders = res.data;
-        printer.handlerSettingsConfig(config);
-        if (config.enabledTabsHeaders.includes('audio')) {
-          $('#speakers').css('display', 'block');
-        }
-      }
-    });
-});
+}
