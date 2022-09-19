@@ -1221,13 +1221,14 @@ export async function about() {
   return window.od.currentUser.about;
 }
 
-export function getenv() {
-   return requestSpawnerAPI('getenv', null, 'GET');
+export function getdesktopdescription() {
+   return odApiClient.composer.getdesktopdescription();
 }
 
-export function getnetworkinterfaces() {
-   return requestSpawnerAPI('getnetworkinterfaces', null, 'GET');
+export function getenv() {
+  return requestSpawnerAPI('getenv', null, 'GET');
 }
+
 
 /**
  * @function closewindow
