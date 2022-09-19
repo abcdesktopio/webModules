@@ -1,0 +1,46 @@
+
+<div class="container px-4 py-5" id="hanging-icons">
+    <div><svg id="networkmap" xmlns="http://www.w3.org/2000/svg">{{{ svgnetworkmapdata }}}</svg></div>
+    <h2 class="pb-2 border-bottom">Command line to reach your target</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <svg class="bi" width="1em" height="1em" src="/img/linux.svg"></svg>
+        </div>
+        <div>
+          <h3 class="fs-2">GNU/Linux</h3>
+          <p>On GNU/Linux, please use the command line.</p>
+          <pre>ssh -- {{ clientipaddr }}.</pre>
+          <a href="#" class="btn btn-primary">
+            GNU Linux document
+          </a>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <svg class="bi" width="1em" height="1em" src="/img/apple.svg"></svg>
+        </div>
+        <div>
+          <h3 class="fs-2">Mac OS/X</h3>
+          <p>On Mac OS/X, please use the command line.</p>
+          <pre>ssh -- .</pre>
+          <a href="#" class="btn btn-primary">
+            Primary button
+          </a>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <svg class="bi" width="1em" height="1em" src="/img/windows.svg"></svg>
+        </div>
+        <div>
+          <h3 class="fs-2">Microsoft Windows</h3>
+          <p>On Microsoft Windows, please use the command line.</p>
+          <pre>ssh -- .</pre> 
+           <a href="#" class="btn btn-primary">
+            Primary button
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
