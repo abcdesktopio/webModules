@@ -10,25 +10,25 @@
     {{#isLoginSessionPage}}
     <base href="{{ base_url }}">
     {{/isLoginSessionPage}}
+
     <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
          Remove this if you use the .htaccess -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+    <!-- Responsive meta tag settings 
+         To ensure proper rendering and touch zooming for all devices
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
     <!-- Apple iOS Safari settings -->
-    <meta name="viewport" content="
-        width=device-width, 
-        initial-scale=1.0, 
-        maximum-scale=1.0, 
-        minimum-scale=1.0, 
-        user-scalable=no, 
-        viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="{{ projectName }}">
 
     <!-- shortcut ico favicon -->
-    <link rel="shortcut icon" href="/img/abcdesktop32x32.ico" />
-    <link rel="apple-touch-icon" href="/img/abcdesktop.png" />
+    <link rel="shortcut icon" href="/img/abcdesktop32x32.ico">
+    <link rel="apple-touch-icon" href="/img/abcdesktop.png">
+
     <!-- ico files (res)x(res) -->
     <link rel="icon" href="/img/abcdesktop32x32.ico" sizes="32x32">
     <link rel="icon" href="/img/abcdesktop48x48.ico" sizes="48x48">
@@ -37,7 +37,7 @@
     <link rel="icon" href="/img/abcdesktop256x256.ico" sizes="256x256">
 
     <!-- bootstrap css-->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 
     <!-- deprecated use  
     <link rel="stylesheet" href="css/bootstrap-table.min.css" type="text/css" />
@@ -75,8 +75,10 @@
     <link rel="stylesheet" href="css/css-dist/share.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/mailSystem.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css" />
+    <!--
     <link rel="stylesheet" href="css/css-dist/chatLync.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/emoticons.css" type="text/css" />
+    -->
     
     {{#isDemoPage}}
     	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -93,10 +95,7 @@
 
 <body>
     <!-- Global builded variables -->
-    <span
-        id='hiden-span-for-url-support-global-value'
-        class='hidden-span-for-global-value'
-    >{{ urlusersupport }}</span>
+    <span id='hiden-span-for-url-support-global-value' class='hidden-span-for-global-value'>{{ urlusersupport }}</span>
 
     <script>
         const hidenSpanForUrlSupportGlobalValue = document.getElementById('hiden-span-for-url-support-global-value');
@@ -105,6 +104,7 @@
             GLOBAL_SUPPORT_URL = hidenSpanForUrlSupportGlobalValue.innerText;
         }
     </script>
+    <!-- End of global builded variables -->
 
 {{#isDemoPage}}
 	<!-- cookie warning Consent -->
@@ -143,9 +143,7 @@
     html attributes which attempt to disable text suggestions on the
     on-screen keyboard. Let's hope Chrome implements the ime-mode
     style for example -->
-    <textarea id="noVNC_keyboardinput" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"
-        mozactionhint="Enter" tabindex="-1">
-    </textarea>
+    <textarea id="noVNC_keyboardinput" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" mozactionhint="Enter" tabindex="-1"></textarea>
     <div style="display: none;" id="loader">
         <div id="dot-container">
             <noscript>
@@ -157,18 +155,19 @@
     </div>
 
     <div id="loginScreen">
+        
         <div id="content">
 		<h1>{{ projectName }}</h1>
             <p id="statusText"></p>
             <div id="activeDirectory">
                 <form>
                     <!--
-                    The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) is limited to 256 characters in the Active Directory schema.
-                    However, for backward compatibility the limit is 20 characters.
-		    Len( domain ) = 253
-		    Len('\') = 1
-		    Len(SAMAccountName) = 20
- 		    maxlength = 253 + 1 + 20 = 274 
+                        The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) is limited to 256 characters in the Active Directory schema.
+                        However, for backward compatibility the limit is 20 characters.
+                        Len( domain ) = 253
+                        Len('\') = 1
+                        Len(SAMAccountName) = 20
+                        maxlength = 253 + 1 + 20 = 274 
                     -->
 		    {{^isLoginSessionPage}}
                     <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="Login"><br>
@@ -183,8 +182,7 @@
                     <!--
                     The userPassword attribute has maximum length 128 and format UTF-8.
                     -->
-                    <input id="ADpassword" placeholder="Password" type="password" maxlength="128"
-                        autocomplete="current-password"><br>
+                    <input id="ADpassword" placeholder="Password" type="password" maxlength="128" autocomplete="current-password"><br>
                     <input type="submit" class="button" id="connectAD" value="Sign in"></input>
                     <a href="{{ urlcannotopensession }}" id="link-open-session">I can't open my session</a>
                 </form>
@@ -231,14 +229,13 @@
 
 	    {{#isDemoPage}}
 	        <div id="connectGP" class="container">
-    
                 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                     <div class="col">
                         <div class="card mb-4 shadow-sm">
                             <div class="card-header">
                                     <h4 class="my-0 fw-normal">
                                         <span class="badge bg-primary rounded-pill">1</span> 
-                                        OpenID Connect
+                                        OAuth 2.0
                                     </h4>
                             </div>
                             <div class="card-body">
@@ -269,7 +266,7 @@
                                             <li id="login-sslclient">
                                                 <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
                                             </li>
-					    <li id="login-sslclient-directory">
+					                        <li id="login-sslclient-directory">
                                                 <a id="connect-with-sslclient-directory" href="#">Sign-in with SSL client certificat and query directory services</a>
                                             </li>
                                         </ul>
@@ -351,6 +348,7 @@
                 
             </div>
 	    {{/isDemoPage}}
+
 	    <div id="connectShare">
                 <p id="connect-share-message">Connect now with your email address to work with your copartner</p>
                 <form>
@@ -359,6 +357,7 @@
                 </form>
             </div>
         </div>
+
     </div>
     <audio id="connectSound" src="/sound/connexion.mp3"> </audio>
     <div class="removeapp">
@@ -497,17 +496,17 @@
                 <img src="../img/top/upload.svg" alt="" />
                 <ul class="drop-down"></ul>
             </div>
-	    <!-- printer is hidden by default -->
-	    
+
+	        <!-- printer is hidden by default -->
             <div id="printer" title="Printer"  style="display: none;" >
                 <img src="../img/top/printer_None.svg" alt="" />
                 <ul class="drop-down"></ul>
             </div>
-	    <!--
-            <div id="topMail" class="keep" title="Mail">
-                <img id="ico" src="../img/top/mail.svg" alt="" />
-            </div>
-	    -->
+            <!--
+                <div id="topMail" class="keep" title="Mail">
+                    <img id="ico" src="../img/top/mail.svg" alt="" />
+                </div>
+            -->
             {{#isIndexPage}}
             <div id="top-issue-container" class="keep" title="Issue">
                 <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" />
@@ -525,12 +524,13 @@
                     <button id="send"><img src="../img/top/send.svg"></button>
                 </ul>
             </div>
-	    <!-- deprecated
-            <div id="share" class="keep" title="Share your desktop">
-                <img src="../img/top/video-meeting_inverted.png" alt="" />
-                <div id="nb">0</div>
-            </div>
-	    -->
+            <!-- deprecated
+                <div id="share" class="keep" title="Share your desktop">
+                    <img src="../img/top/video-meeting_inverted.png" alt="" />
+                    <div id="nb">0</div>
+                </div>
+            -->
+
             <div id="support" title="Quick support">
                 <img src="../img/wrench.svg" alt="" />
             </div>
@@ -559,7 +559,7 @@
             {{#isIndexPage}}
                 <div class="img_top" id="name">
                     <img src="img/top/menu.svg" title="Settings" alt="">
-                    <ul class="drop-down">
+                    <ul id="mainmenu" class="drop-down">
                         <li>
                             <div class="state" id='settings'></div>
                             <p id="settings-name" class="placestate">Settings</p>
@@ -578,6 +578,10 @@
                             <p id="grabmouse-name" class="placestate">Grab pointer for gaming</p>
                         </li>
                         -->
+                        <li>
+                            <div class="state" id='tips'></div>
+                            <p id="tips-shot-name" class="placestate">Tips</p>
+                        </li>
                         <li>
                             <div class="state" id='screenshot'></div>
                             <p id="screen-shot-name" class="placestate">Screen shot</p>
@@ -684,7 +688,7 @@
             <div class="button" id="cancel">Cancel</div>
         </div>
     </div>
-
+    <!-- 
     <div id="chatWindow" class="window">
         <div class="control">
             <div class="close"></div>
@@ -714,6 +718,8 @@
             </div>
         </div>
     </div>
+    -->
+
     <div id="restart-window" class="window">
         <div class="control">
             <div class="close"></div>
@@ -739,6 +745,7 @@
         </div>
     </div>
 
+
     {{#isIndexPage}}
         <template id='issue-window-template'>
             <h3 id='issue-header-message' class="text-center">Sumbit a new issue</h3>
@@ -753,11 +760,6 @@
             </div>
         </template>
         <template id="tipsinfo-window-body-template" class="window">
-            <figure class="highlight">
-                <pre>
-                    <code class="language-bash" data-lang="bash">bower <span class="nb">install </span>bootstrap</code>
-                </pre>
-            </figure>
         </template>
         <template id='settings-window-title-template'>
             <div class="settings-title">
@@ -1357,9 +1359,6 @@
 
     {{ #scripts }}
     <script {{{defer}}} type="text/javascript" src="{{{src}}}"></script>
-    <script type="text/javascript">
-	    function clearlocalstoragedata() { window.localStorage.clear(); }
-    </script>
     {{ /scripts }}
 
     <!-- Modules START HERE -->
