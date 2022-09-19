@@ -206,6 +206,10 @@ window.od.setupafteruserloginin = function () {
   // need a user token
   menu.init();
 
+  // init tips
+  // call launcher.getkeyinfo
+  tipsinfo.init();
+
   system.setUsername(window.od.currentUser.name);
 
   // window.od.video = video;
@@ -679,8 +683,11 @@ function setupTopMenu() {
 
       case 'record':
         screenRecord.open();
-        //tipsinfo.open();
         break;
+
+      case 'tips':
+          tipsinfo.open();
+          break;
 
       case 'logout':
         menu.logoffOpen();
