@@ -242,6 +242,9 @@ const odApiClient = new (class ODApiClient {
       listsecrets() {
         return client.sendRequest('composer/listsecrets');
       }
+      getdesktopdescription() {
+        return client.sendRequest('composer/getdesktopdescription');
+      }
     })();
   }
 
