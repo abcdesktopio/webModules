@@ -50,7 +50,7 @@ export const logoffOpen = function () {
   const buttons = {
     cancel: {
       label: logOffCancelBtn || 'Cancel',
-      className: 'd-xl-block d-lg-block d-md-block d-none',
+      className: 'd-xl-block d-lg-block d-md-block d-none btn-outline-secondary',
     },
     logOff: {
       label: logOffBtn || 'Logoff',
