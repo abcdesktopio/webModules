@@ -45,30 +45,6 @@ export const open = function () {
   readRenderDescription();
 };
 
-
-/*
-function renderHello() {
-  fetch('/tips/template/networkmap.pki.mustache.svg')
-    .then((response) => response.text())
-    .then((template) => {
-      var rendered = Mustache.render(template, { name: 'Luke' });
-      document.getElementById('tipsinfo-window-body-template').innerHTML = rendered;    
-    });
-}
-
-
-function readRenderDescription(result) {
-    if (result) {
-      fetch('/tips/template/tipsinfo-window-body-template.mustache.html')
-        .then((response) => response.text())
-        .then((template) => {
-          var tipsinfo_innerHTML = Mustache.render(template, res.result );
-          showpage( tipsinfo_innerHTML );
-        });
-    }
-}
-*/
-
 function readRenderDescription() {
   launcher.getdesktopdescription()
     .then((res) => {
@@ -134,3 +110,13 @@ function showpage( tipsinfo_innerHTML ) {
   }
 
 }
+
+function showatlogin() {
+  launcher.getkeyinfo('tipsinfo').done((msg) => {
+    if (msg && msg.id && msg.id.networkmap) {
+      open();
+    }
+  });
+}
+
+document.addEventListener('broadway.connected', showatlogin);
