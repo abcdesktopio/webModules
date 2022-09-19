@@ -19,7 +19,7 @@ import * as systemMenu from './systemmenu.js';
 import * as launcher from './launcher.js';
 import * as system from './system.js';
 import * as languages from './languages.js';
-import * as secrets from './secrets.js';
+import * as tipsinfo from './tipsinfo.js';
 
 const cache = {};
 export let draggedApp;
@@ -75,6 +75,13 @@ export const init = function () {
         if (e.keyCode === 27) {
           close();
         } else if (this.value !== '') {
+          if (this.value == 'tipsinfo') {
+            hideAppZone();
+            hideFileZone();
+            hideCloseZone();
+            tipsinfo.open();
+            return;
+          }
           const pattern = new RegExp(`^${this.value}`, 'i');
           const apps = window.od.applist.filter((app) => (
             typeof app.keyword === 'string'
