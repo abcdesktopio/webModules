@@ -149,7 +149,7 @@ async function setName() {
 
     wrapperUserInfos.className = 'd-flex col-10 align-items-center row';
     wrapperText.className = 'd-flex col-12 align-items-center row';
-    wrapperLabels.className = 'd-flex col-12 align-items-center row';
+    wrapperLabels.className = 'd-flex col-12 align-items-center row tag-labels';
 
     spanName.id = 'name';
     spanName.innerText = name;
@@ -163,10 +163,10 @@ async function setName() {
     try {
       const labels = await launcher.getLabels();
       for (const label of labels) {
-        const spanLabel = document.createElement('span');
-        spanLabel.className = 'btn btn-secondary btn-label';
-        spanLabel.innerText = label;
-        wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
+        const btnLabel = document.createElement('button');
+        btnLabel.className = 'btn btn-secondary btn-label';
+        btnLabel.innerText = label;
+        wrapperLabels.appendChild( btnLabel );
       }
 
       if (labels.length === 0) {
