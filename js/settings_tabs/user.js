@@ -21,35 +21,35 @@ import * as languages from '../languages.js';
 let firstAppear = true;
 
 const providerImg = {
-  facebook: '../img/welcome/facebook_icon.svg',
-  google: '../img/welcome/google_icon.svg',
-  github: '../img/welcome/github_icon.svg',
-  orange: '../img/welcome/orange_icon.svg',
-  orangeconnect: '../img/welcome/orange_icon.svg',
-  mobile: '../img/welcome/mobileconnect_icon.svg',
-  anonymous: '../img/welcome/anonymous_icon.svg',
-  activedirectory: '../img/welcome/activedirectory_icon.svg',
-  ldap: '../img/welcome/ldap.svg',
-  sslclient: '../img/welcome/sslclient_icon.svg',
+  'facebook': '../img/welcome/facebook_icon.svg',
+  'google': '../img/welcome/google_icon.svg',
+  'github': '../img/welcome/github_icon.svg',
+  'orange': '../img/welcome/orange_icon.svg',
+  'orangeconnect': '../img/welcome/orange_icon.svg',
+  'mobile': '../img/welcome/mobileconnect_icon.svg',
+  'anonymous': '../img/welcome/anonymous_icon.svg',
+  'activedirectory': '../img/welcome/activedirectory_icon.svg',
+  'ldap': '../img/welcome/ldap.svg',
+  'sslclient': '../img/welcome/sslclient_icon.svg',
 };
 
 const osImg = {
-  Linux: '../img/linux.svg',
-  Ubuntu: '../img/ubuntu.svg',
-  Windows: '../img/windows.svg',
+  'Linux': '../img/linux.svg',
+  'Ubuntu': '../img/ubuntu.svg',
+  'Windows': '../img/windows.svg',
   'Mac OS': '../img/apple.svg',
-  iOS: '../img/apple.svg',
-  Android: '../img/android.svg',
+  'iOS': '../img/apple.svg',
+  'Android': '../img/android.svg',
 };
 
 const browserImg = {
-  Chrome: '../img/google-chrome.svg',
-  Firefox: '../img/firefox-icons.svg',
-  Safari: '../img/safari.svg',
+  'Chrome': '../img/google-chrome.svg',
+  'Firefox': '../img/firefox-icons.svg',
+  'Safari': '../img/safari.svg',
   'Mobile Safari': '../img/safari.svg',
-  Edge: '../img/edge.svg',
-  IE: '../img/IE.svg',
-  default: '../img/browser.svg',
+  'Edge': '../img/edge.svg',
+  'IE': '../img/IE.svg',
+  'default': '../img/browser.svg',
 };
 
 /**
@@ -81,7 +81,7 @@ function setProvider() {
 
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
-  wrapperText.className = 'd-flex col-6 align-items-center';
+  wrapperText.className = 'd-flex col-6 align-items-center text-info';
 
   const img = document.createElement('img');
   const span = document.createElement('span');
@@ -157,14 +157,14 @@ async function setName() {
     spanId.id = 'userID';
     spanId.innerText = ` ID : ${userid}`;
 
-    wrapperText.appendChild(getSpanContainer(spanName, 'col-12 align-items-center'));
-    wrapperText.appendChild(getSpanContainer(spanId, 'col-12 align-items-center'));
+    wrapperText.appendChild(getSpanContainer(spanName, 'col-12 align-items-center text-info'));
+    wrapperText.appendChild(getSpanContainer(spanId, 'col-12 align-items-center text-info'));
 
     try {
       const labels = await launcher.getLabels();
       for (const label of labels) {
         const spanLabel = document.createElement('span');
-        spanLabel.className = 'badge text-bg-primary badge-pill badge-light';
+        spanLabel.className = 'btn btn-secondary btn-label';
         spanLabel.innerText = label;
         wrapperLabels.appendChild(getSpanContainer(spanLabel, 'col-12'));
       }
@@ -215,7 +215,7 @@ function setOS(ua) {
   const { cardContainer, cardBody } = system.getCardWrappers();
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
-  wrapperText.className = 'd-flex col-6 align-items-center';
+  wrapperText.className = 'd-flex col-6 align-items-center text-info';
 
   const img = document.createElement('img');
   const span = document.createElement('span');
@@ -255,7 +255,7 @@ function setBrowser(ua) {
   const { cardBody, cardContainer } = system.getCardWrappers();
   const wrapperImage = document.createElement('div');
   const wrapperText = document.createElement('div');
-  wrapperText.className = 'd-flex col-6 align-items-center';
+  wrapperText.className = 'd-flex col-6 align-items-center text-info';
 
   const img = document.createElement('img');
   const span = document.createElement('span');
@@ -295,7 +295,7 @@ function buildHistoryList(loginHistory, user) {
           <div class="col-xl-4 col-lg-4 col-md-12 col-xs-12 d-flex justify-content-center">
             <img  src="${urlBrowser}" />
           </div>
-          <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block">
+          <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block text-info">
             <span style="white-space: nowrap;">
               ${objBrowser.name} ${objBrowser.version}
             </span>
@@ -307,7 +307,7 @@ function buildHistoryList(loginHistory, user) {
           <div class="col-xl-4 col-lg-4 col-md-12 col-xs-12 d-flex justify-content-center">
             <img src="${urlOS}" />
           </div>
-          <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block">
+          <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block text-info">
             <span style="white-space: nowrap;">
               ${objOS.name} ${objOS.version || ''}
             </span>
