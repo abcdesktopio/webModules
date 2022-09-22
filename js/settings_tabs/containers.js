@@ -60,16 +60,17 @@ const buildLine = (row, container) => {
     // use url format to download image
     imgAppname.src = window.od.net.urlrewrite(`../img/app/${container['oc.icon']}`);
 
-  spanAppname.className = 'align-middle';
+  spanAppname.className = 'align-middle btn-left-very-small';
   spanAppname.innerText = container['oc.displayname'];
-  spanAppname.style = 'padding-left: 5px;';
+  // spanAppname.style = 'padding-left: 5px;';
 
   divAppName.className = 'align-self-center text-left col-xl-1 col-lg-2 col-md-2 col-sm-3 col-4';
   // divAppName.className = 'align-self-center text-left';
-  divAppName.style = 'white-space: nowrap; overflow: hidden;';
+  divAppName.style = 'white-space: nowrap; overflow: hidden; width: 10rem;';
 
-  divAppName.appendChild(spanAppname);
+  
   divAppName.appendChild(imgAppname);
+  divAppName.appendChild(spanAppname);
 
   const imgShortId = document.createElement('img');
   const spanShortId = document.createElement('span');
@@ -122,7 +123,7 @@ const buildLine = (row, container) => {
   divButtonRemove.appendChild(btnRemove);
 
   btnLogs.innerText = 'Logs';
-  btnLogs.className = 'btn btn-info';
+  btnLogs.className = 'btn btn-info btn-left';
   btnLogs.addEventListener('click', () => {
     launcher.getContainerLogs(container['podname'], id)
       .done((res) => {
@@ -158,7 +159,7 @@ const buildLine = (row, container) => {
 
   btnEnv.id = 'settings-containers-btn-env';
   btnEnv.innerText = envTranslation || 'Env';
-  btnEnv.className = 'btn btn-secondary';
+  btnEnv.className = 'btn btn-secondary btn-left';
   btnEnv.addEventListener('click', () => {
     launcher.getContainerEnv(container['podname'], id)
       .done((res) => {
@@ -172,6 +173,7 @@ const buildLine = (row, container) => {
         cloneTaskManagerContainerInfos.querySelector('#task-manager-container-logs').style.display = 'none';
         cloneTaskManagerContainerInfos.style.height = '50%';
         cloneTaskManagerEnvContainer.style.display = 'block';
+        cloneTable.id = 'task-manager-container-env-table-container-env';
 
         const dicoOrdered = {};
         Object.keys(dico)
@@ -184,6 +186,7 @@ const buildLine = (row, container) => {
           if (dico[key]) {
             const tr = document.createElement('tr');
             const firstTD = document.createElement('td');
+            firstTD.className = "text-info";
             const secondTD = document.createElement('td');
 
             firstTD.innerText = key;
@@ -207,7 +210,7 @@ const buildLine = (row, container) => {
 
   btnKill.id = 'settings-containers-btn-kill';
   btnKill.innerText = killTranslation || 'Kill';
-  btnKill.className = 'btn btn-danger';
+  btnKill.className = 'btn btn-danger btn-left';
 
   if (status === 'exited' || status === 'terminated') {
     btnKill.setAttribute('disabled', 'true');
@@ -230,7 +233,7 @@ const buildLine = (row, container) => {
 
   btnRemove.id = 'settings-containers-btn-remove';
   btnRemove.innerText = removeTranslation || 'Remove';
-  btnRemove.className = 'btn btn-dark';
+  btnRemove.className = 'btn btn-dark btn-left';
   btnRemove.addEventListener('click', () => {
     launcher.removeContainer( container['podname'], id, container['oc.displayname']);
     if (containerSelectedForInfos === id) {
