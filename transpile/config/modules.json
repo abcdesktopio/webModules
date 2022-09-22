@@ -24,6 +24,11 @@
       "defer": false
     },
     {
+      "src": "js/bootstrap-table.min.js",
+      "indexPageOnly": true,
+      "defer": false
+    },
+    {
       "src": "js/popper.min.js",
       "indexPageOnly": false,
       "defer": false

@@ -286,16 +286,16 @@ function buildHistoryList(loginHistory, user) {
     const objOS = ua.getOS();
     let urlOS = osImg[objOS.name];
     urlOS = window.od.net.urlrewrite(urlOS);
+    // bootstrap 5.X => align-self-center text-center col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none
+    // bootstrap 3.X => col-xl-4 col-lg-4 col-md-12 col-xs-12 d-flex justify-content-center
     return {
       date: `<span style="white-space: nowrap;">${login.date}</span>`,
       ipaddr: login.ipaddr,
       node: login.node || 'N/A',
       useragent: `
         <div class="row">
-          <div class="col-xl-4 col-lg-4 col-md-12 col-xs-12 d-flex justify-content-center">
+          <div class="align-self-center text-center col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none">
             <img  src="${urlBrowser}" />
-          </div>
-          <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block text-info">
             <span style="white-space: nowrap;">
               ${objBrowser.name} ${objBrowser.version}
             </span>
@@ -304,10 +304,8 @@ function buildHistoryList(loginHistory, user) {
       `,
       os: `
         <div class="row">
-          <div class="col-xl-4 col-lg-4 col-md-12 col-xs-12 d-flex justify-content-center">
+          <div class="align-self-center text-center col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none">
             <img src="${urlOS}" />
-          </div>
-          <div class="col-xl-8 col-lg-8 d-none d-xl-block d-lg-block text-info">
             <span style="white-space: nowrap;">
               ${objOS.name} ${objOS.version || ''}
             </span>
