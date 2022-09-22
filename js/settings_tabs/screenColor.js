@@ -21,6 +21,7 @@ import { broadcastEvent } from '../broadcastevent.js';
 import { settingsEvents } from '../settingsevents.js';
 
 let firstAppear = true;
+let acceptfileservice= false;
 let defaultColor = '#6ec6f0';
 
 const sizeDivColor = { offsetHeight: 0, offsetWidth: 0 };
@@ -510,6 +511,24 @@ function buildPicturesSection() {
 }
 // #endregion pictures
 
+
+
+/**
+ * @function disablePicturesSection
+ * @desc remove PicturesSection
+ */
+function disablePicturesSection() {
+  const buttons_screen_background = document.getElementById( 'buttons-screen-background' );
+  const btn_settings_screen_background_pictures_btn = document.getElementById( 'settings-screen-background-pictures-btn' );
+  const input_settings_screen_background_pictures_btn_input = document.getElementById( 'settings-screen-background-pictures-btn-input' );
+  if (btn_settings_screen_background_pictures_btn) 
+    btn_settings_screen_background_pictures_btn.style.display='none';
+  if (btn_settings_screen_background_pictures_btn) 
+    input_settings_screen_background_pictures_btn_input.style.display='none';
+  if (buttons_screen_background)
+    buttons_screen_background.className = 'd-flex';
+}
+
 /**
  * @function build_screen
  * @desc Call all build function
@@ -517,7 +536,19 @@ function buildPicturesSection() {
 function buildScreen() {
   if (firstAppear) {
     buildColorsSection();
-    buildPicturesSection();
+    launcher.getenv().then( (data) => {
+      if (data.env) {
+        // check if filer service is enabled
+        const filterservice = (data.env.ABCDESKTOP_SERVICE_filer === 'enabled');
+        if ( filterservice ) {
+          buildPicturesSection();
+        } else {
+          disablePicturesSection();
+        }
+      }
+      else 
+        disablePicturesSection();
+    });
   }
 }
 
@@ -540,6 +571,7 @@ export function init(home, screenBackground) {
   system.hide(home);
   system.show(screenBackground);
   firstAppear = false;
+  acceptfileservice = false;
 }
 
 settingsEvents.addEventListener('close', () => {
