@@ -759,13 +759,15 @@ export function launchnewDesktopInstance(
 export function showLoginError(result) {
   let msg_info = '500: General failure, login error';
   if (result) {
-	  console.info( `showLoginError result ${JSON.stringify(result)}` );
+	  console.error( "showLoginError" );
+    console.error( result );
 	  let mstatus = result.error.status || result.status_ex || result.status_dict.status || 500; 
 	  let message = result.error.error  || result.status_dict.status.error || result.status_dict.error || JSON.stringify(result);
 	  msg_info = `${mstatus}: ${message}`;
   }
   else
-	console.info( "showLoginError result is undefined" );
+	  console.error( "showLoginError result is undefined" );
+    console.error( msg_info );
   showError(msg_info);
 }
 
