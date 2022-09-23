@@ -765,9 +765,10 @@ export function showLoginError(result) {
 	  let message = result.error.error  || result.status_dict.status.error || result.status_dict.error || JSON.stringify(result);
 	  msg_info = `${mstatus}: ${message}`;
   }
-  else
+  else {
 	  console.error( "showLoginError result is undefined" );
-    console.error( msg_info );
+  }
+  console.error( msg_info );
   showError(msg_info);
 }
 
