@@ -762,7 +762,7 @@ export function showLoginError(result) {
 	  console.error( "showLoginError" );
     console.error( result );
 	  let mstatus = result.error.status || result.status_ex || result.status_dict.status || 500; 
-	  let message = result.error.error  || result.status_dict.status.error || result.status_dict.error || JSON.stringify(result);
+	  let message = result.error.error  || result.status_dict.status.error || result.status_dict.error || JSON.stringify(result);
 	  msg_info = `${mstatus}: ${message}`;
   }
   else {
