@@ -174,12 +174,17 @@ function setupbeforeuserloginin() {
 window.od.setupafteruserloginin = function () {
   // call odApiClient.composer.getUserAppList
   // need user token
-  launcher.initUserApplist().done(initApplistcallback);
+  launcher.initUserApplist()
+    .done(initApplistcallback)
+    .fail( (err) => { 
+      console.error( 'initUserApplist failed' ); 
+      console.error( err ); 
+    } );
 
   // Add event listener for buttons share window.
   shareSystem.init();
 
-  // Get proclist from os.py and create event listener on broadway connect and disconnect.
+  // Get proclist from od.py and create event listener on broadway connect and disconnect.
   broadcastSystem.init();
 
   // Init clipboard events.
@@ -217,9 +222,19 @@ window.od.setupafteruserloginin = function () {
 };
 
 function initApplistcallback() {
+  // console.info( 'initApplistcallback' );
   appSelector.init();
-  launcher.generateDesktopFiles(window.od.applist);
-  systemMenu.init();
+  launcher.generateDesktopFiles(window.od.applist)
+    .then( (data) => { 
+      // console.log( data ); 
+      if (data)
+        console.log( 'generateDesktopFiles mimetype database updated ' + data.code )
+      systemMenu.init(); 
+    })
+    .catch( (err) => {
+      console.error( 'generateDesktopFiles failed' );
+      console.error( err );
+    });
 }
 
 function odinit() {

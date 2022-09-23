@@ -550,18 +550,20 @@ export const saveMenu = function () {
 
 export const internalLoadMenu = function (apps) {
   const docklist = document.getElementById('docklist');
-  console.log( "apps.length=" + apps.length);
+  console.log( "number of application in dock is " + apps.length);
   // if apps is empty
+  // then add all application with showinview 'dock'
   if (apps.length === 0) {
     for (let i = 0; i < window.od.applist.length; i++) {
       if (window.od.applist[i].showinview === 'dock') 
-	    apps.push(window.od.applist[i]);
+	      apps.push(window.od.applist[i]);
     }
   }
 
+  // update dock
   for (
     const {
-      icon,
+      // icon,
       icondata,
       launch,
       container_id,
@@ -609,16 +611,22 @@ export const internalLoadMenu = function (apps) {
 export const loadMenu = function () {
   const apps = [];
   // console.log( "loadMenu" );
+  if (!window.od.applist)
+    console.warn( 'loadMenu is trying to read undefined data from window.od.applist' );
   launcher.get('dock')
     .done((msg) => {
-      if (msg.status === 200 && msg.result) {
-        const data = msg.result;
-        for (let i = 0; i < data.length; i++) {
-          for (let j = 0; j < window.od.applist.length; j++) {
-            if (data[i] === window.od.applist[j].launch && !window.od.applist[j].hideindock) {
-              apps.push(window.od.applist[j]);
+      if (msg && msg.status === 200 && msg.result) {
+        const dockapplist = msg.result;
+        console.log( 'user dock application list is ' +  dockapplist );
+        for (let i = 0; i < dockapplist.length; i++) {
+          window.od.applist.forEach(element => {
+            // if dock application exist data[i] === element.launch
+            // and application is not hideindock
+            if (dockapplist[i] === element.launch && !element.hideindock) {
+              // add entry in dock
+              apps.push(element);
             }
-          }
+          });
         }
       }
     })
