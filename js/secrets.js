@@ -23,6 +23,9 @@ export const secretsEvents = new EventTarget();
  * @returns {boolean} 
  */
 export function needAuthorizationForSecrets(secretRequirementList = []) {
+  // make sure window.od.secrets exist
+  window.od.secrets = [];
+
   if (!Array.isArray(secretRequirementList)) {
     return false;
   }
