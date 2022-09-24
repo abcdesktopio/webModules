@@ -19,18 +19,13 @@
       "defer": false
     },
     {
-      "src": "js/bootstrap.bundle.min.js",
+      "src": "js/bootstrap.min.js",
       "indexPageOnly": false,
       "defer": false
     },
     {
       "src": "js/bootstrap-table.min.js",
       "indexPageOnly": true,
-      "defer": false
-    },
-    {
-      "src": "js/popper.min.js",
-      "indexPageOnly": false,
       "defer": false
     },
     {
