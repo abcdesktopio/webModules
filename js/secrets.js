@@ -24,7 +24,7 @@ export const secretsEvents = new EventTarget();
  */
 export function needAuthorizationForSecrets(secretRequirementList = []) {
   // make sure window.od.secrets exist
-  // window.od.secrets = [];
+  return false;
 
   if (!Array.isArray(secretRequirementList)) {
     return false;
@@ -39,7 +39,8 @@ export function needAuthorizationForSecrets(secretRequirementList = []) {
    * @param {string} secretRequierement 
    * @desc Here this predicate is true if the element is present in the global secret list
    */
-  const predicate = (secretRequierement) => window.od.secrets.includes(secretRequierement);
+  // const predicate = (secretRequierement) => window.od.secrets.includes(secretRequierement);
+  const predicate = (secretRequierement) => true;
 
 
   /**
