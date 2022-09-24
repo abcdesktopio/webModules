@@ -742,7 +742,7 @@ export function launchnewDesktopInstance(
         if (result.error) {
           errorDescription = {
             message: result.error.error,
-            status_message: result.error.status,
+            status: result.error.status,
           };
         } else {
           errorDescription = result;
@@ -757,18 +757,28 @@ export function launchnewDesktopInstance(
 }
 
 export function showLoginError(result) {
-  let msg_info = '500: General failure, login error';
+  let msg_info = '';
+  let mstatus=500;
+  let message='General failure, login error';
   if (result) {
-	  console.error( "showLoginError" );
-    console.error( result );
-	  let mstatus = result.error.status || result.status_ex || result.status_dict.status || 500; 
-	  let message = result.error.error  || result.status_dict.status.error || result.status_dict.error || JSON.stringify(result);
-	  msg_info = `${mstatus}: ${message}`;
+	  console.log( "showLoginError" );
+    console.log( result );
+    try {
+      if (!result.error) result.error = {};
+      if (!result.status_dict)  result.status_dict = {};
+      if (!result.status_dict.status) result.status_dict.status={}
+      mstatus = result.error.status || result.status_ex || result.status_dict.status || 500; 
+      message = result.error.error  || result.status_dict.error || result.status_dict.status.error || JSON.stringify(result);
+      msg_info = `${mstatus}: ${message}`;
+    } catch (error) {
+      console.error(error);
+    }
   }
   else {
-	  console.error( "showLoginError result is undefined" );
+	  console.log( "showLoginError result is undefined" );
   }
-  console.error( msg_info );
+  msg_info = `${mstatus}: ${message}`;
+  console.log( msg_info );
   showError(msg_info);
 }
 
