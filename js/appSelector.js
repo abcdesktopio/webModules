@@ -45,12 +45,18 @@ export const open = function () {
 export const close = function () {
   system.hide(self);
   const noVNCCanvas = document.getElementById('noVNC_canvas');
-  if (noVNCCanvas) { noVNCCanvas.focus(); }
+  if (noVNCCanvas) { 
+    noVNCCanvas.focus(); 
+  }
 };
 
 export const updateWindowList = function (windowList) {
-  console.log(windowList.length);
-  if (windowList.length === 0) { open(); } else { close(); }
+  console.log("windowList.length = " + windowList.length);
+  if (windowList.length === 0) { 
+      open(); 
+    } else { 
+      close(); 
+    }
 };
 
 broadcastEvent.addEventListener('window.list', ({ detail: { windowList } }) => {

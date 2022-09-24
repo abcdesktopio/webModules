@@ -154,7 +154,9 @@ export const init = function () {
 };
 
 function initialStates() {
+  console.log('initialStates');
   $('#dock ul li').each(function () {
+    // console.log(this);
     const img = Array.from($(this).find('img'))
       .find((img) => $(img).hasClass('appIconDock'));
     if (img && img.style) {
@@ -259,6 +261,7 @@ let getWihndowListIsPending = false;
  * @desc Show context menu (right clic).
 */
 export const showContextmenu = function (status, element) {
+  console.log('showContextmenu');
   system.show(window.contextmenu);
   if (status === true) {
     if (!getWihndowListIsPending) {
@@ -353,6 +356,7 @@ export const showContextmenu = function (status, element) {
 };
 
 function getListWidApp(app) {
+  console.log('getListWidApp');
   const listWid = [];
   for (let i = 0; i < windowList.length; i++) {
     const win = windowList[i];
@@ -370,9 +374,10 @@ function getListWidApp(app) {
  * @desc Called by broadcastSystem when an application window is opened or closed.
  */
 export const updateWindowList = function (data) {
+  console.log('systemmenu updateWindowList')
   // Check if systemMenu has been initialized
+  console.log('updateWindowList');
   if (!enable) return;
-
   windowList = data;
   const docklist = Array.from(document.querySelectorAll('#docklist li'));
   if (docklist) {
@@ -397,6 +402,7 @@ export const updateWindowList = function (data) {
  * @desc Update status of dock's applications who as started.
  */
 export const appStarted = function (data) {
+  console.log('appStarted');
   // console.debug( 'appStarted');
   let isPresent = false;
   let isActive = false;
@@ -595,10 +601,17 @@ export const internalLoadMenu = function (apps) {
   
   launcher.getwindowslist()
     .then((msg) => {
+      console.log( 'launcher.getwindowslist response' );
       updateWindowList(msg.data);
       const docklist = document.getElementById('docklist');
       const childs = Array.from(docklist.children);
       tryReduceDock(docklist, childs);
+      // Now init app is done
+      // let's bind event in always
+      console.log('now binding addEventListener window.list');
+      broadcastEvent.addEventListener('proc.started',({ detail: { procStarted } }) => appStarted(procStarted));
+      broadcastEvent.addEventListener('proc.killed', ({ detail: { procKilled  } }) => appKilled(procKilled));
+      broadcastEvent.addEventListener('window.list', ({ detail: { windowList  } }) => updateWindowList(windowList));
     });
   
 };
@@ -610,7 +623,7 @@ export const internalLoadMenu = function (apps) {
  */
 export const loadMenu = function () {
   const apps = [];
-  // console.log( "loadMenu" );
+  console.log( "loadMenu" );
   if (!window.od.applist)
     console.warn( 'loadMenu is trying to read undefined data from window.od.applist' );
   launcher.get('dock')
@@ -624,6 +637,7 @@ export const loadMenu = function () {
             // and application is not hideindock
             if (dockapplist[i] === element.launch && !element.hideindock) {
               // add entry in dock
+              console.log( 'adding ' +  element.launch + ' to apps' );
               apps.push(element);
             }
           });
@@ -632,6 +646,10 @@ export const loadMenu = function () {
     })
     .always(() => {
       internalLoadMenu(apps);
+      // console.log('binding addEventListener window.list');
+      // broadcastEvent.addEventListener('proc.started',({ detail: { procStarted } }) => appStarted(procStarted));
+      // broadcastEvent.addEventListener('proc.killed', ({ detail: { procKilled  } }) => appKilled(procKilled));
+      // broadcastEvent.addEventListener('window.list', ({ detail: { windowList  } }) => updateWindowList(windowList));
     });
 };
 
@@ -745,8 +763,7 @@ export const tryReduceDock = function (docklist, childs) {
   let nbrDisplayedApps = 0;
   let appRemoved = false;
   // Stop if their is no apps to hide
-  while ((nbrDisplayedApps = countDisplayedApps(childs))
-            && numberAppsCanBeAdd(docklist, nbrDisplayedApps) <= 0
+  while ((nbrDisplayedApps = countDisplayedApps(childs)) && numberAppsCanBeAdd(docklist, nbrDisplayedApps) <= 0
   ) {
     // Continue while we can't add an app
     const anAppRemoved = removeAppInDock(childs);
@@ -757,9 +774,11 @@ export const tryReduceDock = function (docklist, childs) {
   return appRemoved;
 };
 
-broadcastEvent.addEventListener('proc.started',({ detail: { procStarted } }) => appStarted(procStarted));
-broadcastEvent.addEventListener('proc.killed', ({ detail: { procKilled  } }) => appKilled(procKilled));
-broadcastEvent.addEventListener('window.list', ({ detail: { windowList  } }) => updateWindowList(windowList));
+
+// console.log('binding addEventListener window.list');
+// broadcastEvent.addEventListener('proc.started',({ detail: { procStarted } }) => appStarted(procStarted));
+// broadcastEvent.addEventListener('proc.killed', ({ detail: { procKilled  } }) => appKilled(procKilled));
+// broadcastEvent.addEventListener('window.list', ({ detail: { windowList  } }) => updateWindowList(windowList));
 
 const docklist = document.getElementById('docklist');
 let lastWindowWidth = window.innerWidth;
