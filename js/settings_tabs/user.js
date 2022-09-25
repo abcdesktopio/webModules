@@ -294,7 +294,7 @@ function buildHistoryList(loginHistory, user) {
       node: login.node || 'N/A',
       useragent: `
         <div class="row">
-          <div class="align-self-center text-center col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none">
+          <div class="align-self-center col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none">
             <img  src="${urlBrowser}" />
             <span style="white-space: nowrap;">
               ${objBrowser.name} ${objBrowser.version}
@@ -304,7 +304,7 @@ function buildHistoryList(loginHistory, user) {
       `,
       os: `
         <div class="row">
-          <div class="align-self-center text-center col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none">
+          <div class="align-self-center col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none">
             <img src="${urlOS}" />
             <span style="white-space: nowrap;">
               ${objOS.name} ${objOS.version || ''}
