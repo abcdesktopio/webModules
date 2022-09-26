@@ -767,8 +767,8 @@ export function showLoginError(result) {
       if (!result.error) result.error = {};
       if (!result.status_dict)  result.status_dict = {};
       if (!result.status_dict.status) result.status_dict.status={}
-      mstatus = result.error.status || result.status_ex || result.status_dict.status || 500; 
-      message = result.error.error  || result.status_dict.error || result.status_dict.status.error || JSON.stringify(result);
+      mstatus = result.error.status || result.status_ex || result.status_dict.status || result.status ||  500; 
+      message = result.error.error  || result.status_dict.error || result.status_dict.status.error || result.message || JSON.stringify(result);
       msg_info = `${mstatus}: ${message}`;
     } catch (error) {
       console.error(error);
