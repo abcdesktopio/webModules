@@ -123,69 +123,73 @@
       </div>
       {{/sshconfig.description}}
 
-      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         {{#sshconfig.linux}}
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-            <svg class="bi" width="1em" height="1em" style="filter: invert(1);"><use xlink:href="#toggles2"></use></svg>
-          </div>
-          <div>
-            <h3 class="fs-2">GNU/Linux</h3>
-            <p>Use the command line to estalish your ssh connection, and configure the ssh client to read your smartcard private key</p>
-            <div class='shellcommand'>
-              <div class='shellcommandline'>
-                <pre class="commandline"> {{ sshconfig.linux.commandline }} </pre>
-              </div>
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <h4 class="my-0 fw-normal">GNU/Linux</h4>
             </div>
-            {{#sshconfig.linux.url}}
-            <a href="{{ sshconfig.linux.url }}" id="btnsshconfiglinuxurl" class="btn btn-secondary">
-              Get more details on GNU/Linux
-            </a>
-            {{/sshconfig.linux.url}}
+            <div class="card-body">
+              <p>Use the command line to estalish your ssh connection, and configure the ssh client to read your smartcard private key</p>
+              <div class='shellcommand'>
+                <div class='shellcommandline'>
+                  <pre class="commandline"> {{ sshconfig.linux.commandline }} </pre>
+                </div>
+              </div>
+              {{#sshconfig.linux.url}}
+              <a href="{{ sshconfig.linux.url }}" id="btnsshconfiglinuxurl" class="btn btn-secondary">
+                Get more details on GNU/Linux
+              </a>
+              {{/sshconfig.linux.url}}
+            </div>
           </div>
         </div>
         {{/sshconfig.linux}}
 
         {{#sshconfig.macos}}
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-            <svg class="bi" width="1em" height="1em" style="filter: invert(1);"><use xlink:href="#cpu-fill"></use></svg>
-          </div>
-          <div>
-            <h3 class="fs-2">Mac OS/X</h3>
-            <p>Use the command line to estalish your ssh connection, and configure the ssh client to read your smartcard private key</p>
-            <div class='shellcommand'>
-              <div class='shellcommandline'>
-                <pre class="commandline">{{ sshconfig.macos.commandline }}</pre>
-              </div>
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <h4 class="my-0 fw-normal">Mac OS/X</h4>
             </div>
-            {{#sshconfig.macos.url}}
-            <a href="{{ sshconfig.macos.url }}" id="btnsshconfigmacurl" class="btn btn-secondary">
-              Get more details on Mac OS/X
-            </a>
-            {{/sshconfig.macos.url}}
+            <div class="card-body">
+              <p>Use the command line to estalish your ssh connection, and configure the ssh client to read your smartcard private key</p>
+              <div class='shellcommand'>
+                <div class='shellcommandline'>
+                  <pre class="commandline">{{ sshconfig.macos.commandline }}</pre>
+                </div>
+              </div>
+              {{#sshconfig.macos.url}}
+              <a href="{{ sshconfig.macos.url }}" id="btnsshconfigmacurl" class="btn btn-secondary">
+                Get more details on Mac OS/X
+              </a>
+              {{/sshconfig.macos.url}}
+            </div>
           </div>
         </div>
         {{/sshconfig.macos}}
 
         {{#sshconfig.windows}}
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-            <svg class="bi" width="1em" height="1em" style="filter: invert(1);"><use xlink:href="#tools"></use></svg>
-          </div>
-          <div>
-            <h3 class="fs-2">Microsoft Windows</h3>
-            <p>Use the command line to estalish your putty connection,  and configure the Putty and Pageant to read your smartcard private key</p>
-            <div class='shellcommand'>
-              <div class='shellcommandline'>
-                <pre class="commandline">{{ sshconfig.windows.commandline }}</pre>
-              </div>
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <!-- text-bg-primary -->
+            <div class="card-header py-3">
+              <h4 class="my-0 fw-normal">Microsoft Windows</h4>
             </div>
-            {{#sshconfig.windows.url}}
-            <a href="{{ sshconfig.windows.url }}" id="btnsshconfigwindowsurl" class="btn btn-secondary">
-              Get more details on Windows
-            </a>
-            {{/sshconfig.windows.url}}
+            <div class="card-body">
+              <p>Use the command line to estalish your ssh connection, and configure the ssh client to read your smartcard private key</p>
+              <div class='shellcommand'>
+                <div class='shellcommandline'>
+                  <pre class="commandline">{{ sshconfig.windows.commandline }}</pre>
+                </div>
+              </div>
+              {{#sshconfig.windows.url}}
+              <a href="{{ sshconfig.windows.url }}" id="btnsshconfigwindowsurl" class="btn btn-secondary">
+                Get more details on Windows
+              </a>
+              {{/sshconfig.windows.url}}
+            </div>
           </div>
         </div>
         {{/sshconfig.windows}}
