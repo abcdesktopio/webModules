@@ -21,12 +21,14 @@ import * as launcher from './launcher.js';
 let cparea;
 let localclip = '';
 
-/**
- * @function init
- * @returns {void}
- * @desc Init events for clipboard.
- */
-export const init = function () {
+
+
+const initNavigatorPermission = function (acceptcuttext, sendcuttext) {
+  if (!acceptcuttext && !sendcuttext ) {
+    // nothing to do acceptcuttext and sendcuttext are disabled
+    return;
+  }
+
   if (navigator.permissions && navigator.permissions.query) {
     // Debug info clipboard-read
     const awaitingPermissionRead = navigator.permissions.query({ name: 'clipboard-read', allowWithoutGesture: true })
@@ -50,13 +52,30 @@ export const init = function () {
       })
       .catch(console.error);
 
-    Promise.all([awaitingPermissionRead, awaitingPermissionWrite])
+    let promisePermissionsArray = [] //  [awaitingPermissionRead, awaitingPermissionWrite]
+    if (acceptcuttext) 
+      promisePermissionsArray.concat( awaitingPermissionRead );
+
+    if (sendcuttext)
+      promisePermissionsArray.concat( awaitingPermissionWrite );
+
+    Promise.all(promisePermissionsArray)
       .then(() => {
         if (navigator.clipboard && navigator.clipboard.readText) {
           clipboardHandler();
         }
       });
   }
+}
+
+
+/**
+ * @function init
+ * @returns {void}
+ * @desc Init events for clipboard.
+ */
+export const init = function () {
+ 
 
   // Keep this code, it should works, but it does not
   // This section does not work
@@ -69,24 +88,36 @@ export const init = function () {
   //    });
   //
 
-  const copypaste = document.getElementById('copypaste');
+  
   launcher.getenv().then( (data) => {
-	if (data.env) {
-      		const noacceptcuttext = (data.env.ACCEPTCUTTEXT === 'disabled');
-      		const nosendcuttext   = (data.env.SENDCUTTEXT   === 'disabled');
-      		if ( noacceptcuttext && nosendcuttext ) {
-	      		console.info('cuttext icon is disabled by env');
-	      		return;
-		}
-        	if (copypaste) {
- 			copypaste.style.display = 'block'; // show copypaste	
-    			cparea = copypaste.querySelector('textarea');
-			if (noacceptcuttext)
-				copypaste.querySelector('#send').style.display = 'none'; 
-			else
-    				copypaste.querySelector('#send').addEventListener('click', () => { sendClipboard(); });
-      		}
-	}
+    // copypaste.style.display is hidden by default
+    if (data && data.env) {
+      const noacceptcuttext = (data.env.ACCEPTCUTTEXT === 'disabled');
+      const nosendcuttext   = (data.env.SENDCUTTEXT   === 'disabled');
+      if ( noacceptcuttext )  { console.info('ACCEPTCUTTEXT is disabled by env, in the desktop'); }
+      if ( nosendcuttext )    { console.info('SENDCUTTEXT is disabled by env, in the desktop');   }
+      if ( noacceptcuttext && nosendcuttext ) {
+        // nothing to do
+        console.info('All clipboard CUTTEXT features are disabled by env, no clipboard icon on top');
+        return;
+      }
+      
+      const copypaste = document.getElementById('copypaste');
+      if (copypaste) {
+        initNavigatorPermission( !noacceptcuttext, !nosendcuttext );
+        copypaste.style.display = 'block';  // show copypaste	icon
+        cparea = copypaste.querySelector('textarea');
+        // if the server does not accept cut text
+        if (noacceptcuttext) {
+          // hidden the send button
+          copypaste.querySelector('#send').style.display = 'none'; 
+        } // if the serveraccept cut text
+        else {
+          // bind click event to sendClipboard
+          copypaste.querySelector('#send').addEventListener('click', () => { sendClipboard(); });
+        }
+      }
+    }
   });
 };
 
