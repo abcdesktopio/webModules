@@ -110,7 +110,12 @@ export const init = function () {
         // if the server does not accept cut text
         if (noacceptcuttext) {
           // hidden the send button
-          copypaste.querySelector('#send').style.display = 'none'; 
+          const element = copypaste.querySelector('#send');
+          element.remove();
+          // querySelector('#send').style.display = 'none'; 
+          // copypaste.style.width = '260px';
+          cparea.style.width = '260px';
+          cparea.style.maxWidth = '260px';
         } // if the serveraccept cut text
         else {
           // bind click event to sendClipboard
