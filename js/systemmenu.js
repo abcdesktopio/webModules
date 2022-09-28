@@ -154,9 +154,7 @@ export const init = function () {
 };
 
 function initialStates() {
-  console.log('initialStates');
   $('#dock ul li').each(function () {
-    // console.log(this);
     const img = Array.from($(this).find('img'))
       .find((img) => $(img).hasClass('appIconDock'));
     if (img && img.style) {
