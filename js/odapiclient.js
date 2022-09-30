@@ -254,7 +254,7 @@ const odApiClient = new (class ODApiClient {
       const status_dict = { status: xhr.status, error: result };
       if (xhr.responseJSON) {
         if (xhr.responseJSON.message) { status_dict.message = xhr.responseJSON.message; }
-        if (xhr.responseJSON.status_message) { status_dict.status_message = xhr.responseJSON.status_message; }
+        if (xhr.responseJSON.status)  { status_dict.status = xhr.responseJSON.status; }
       }
 
       return {
