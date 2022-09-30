@@ -109,13 +109,15 @@ export const init = function () {
         cparea = copypaste.querySelector('textarea');
         // if the server does not accept cut text
         if (noacceptcuttext) {
-          // hidden the send button
-          const element = copypaste.querySelector('#send');
-          element.remove();
-          // querySelector('#send').style.display = 'none'; 
-          // copypaste.style.width = '260px';
-          cparea.style.width = '260px';
-          cparea.style.maxWidth = '260px';
+          // remove the send button
+          const sendbtn = copypaste.querySelector('#send');
+          if (sendbtn && cparea && cparea.style) {
+            sendbtn.remove();
+            // update the width and the maxWidth of the textarea
+            // to reuse the size of the removed send button
+            cparea.style.width = '260px';
+            cparea.style.maxWidth = cparea.style.width;
+          }
         } // if the serveraccept cut text
         else {
           // bind click event to sendClipboard
