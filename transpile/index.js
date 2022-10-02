@@ -222,6 +222,7 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
     urlcannotopensession: uiConf.urlcannotopensession,
     urlusermanual: uiConf.urlusermanual,
     urlusersupport: uiConf.urlusersupport,
+    urlopensourceproject: uiConf.urlopensourceproject,
     cuid: "{{ cuid }}",
     loginsessionid: "{{ loginsessionid }}",
     base_url: "{{ base_url }}",

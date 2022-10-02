@@ -813,15 +813,17 @@
                         <span id="settings-containers-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Tasks manager</span>
                     </div>
                 </div>
+                {{#urlopensourceproject}}
                 <div class="tab-header" tab="opensource-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                            <img src="img/settings/open-source.svg">
-                            <span id="settings-about-title">Open Source</span>
-                            <span id="settings-about-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">
-				    {{projectName}}
-			    </span>
+                        <img src="img/settings/open-source.svg">
+                        <span id="settings-about-title">Open Source</span>
+                        <span id="settings-about-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">
+                            {{projectName}}
+                        </span>
                     </div>
                 </div>
+                {{/urlopensourceproject}}
                 <!-- removed in release 2.x
                 <div class="tab-header" tab="support-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
@@ -1083,7 +1085,7 @@
                 </div>
             </div>
             <!-- speedtest tab end -->
-            <!-- Logs tab start -->
+            <!-- location tab start -->
             <div class="tab" id="localisation-tab">
                 <br>
                 <div id="location" class="d-flex justify-content-center">
@@ -1158,7 +1160,6 @@
                 <div id="task-manager-container-list">
                     <div class="wrap"></div>
                 </div>
-                
                 <div id="task-manager-container-infos">
                     <hr />
                     <p id="task-manager-container-infos-current-container"></p>
