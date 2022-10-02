@@ -401,7 +401,6 @@ export function share_login(email, token) {
             welcomeSystem.close();
             notificationSystem.displayNotification('Shared access', 'Shared access mode is ' + message, 'info');
             window.od.currentUser = {...window.od.currentUser, ...result.result};
-            window.od.connectLoader.connect();
             console.debug(result);
             // window.od.setup();
             window.od.broadway.setview_only((result.result.share == 'ro'));
