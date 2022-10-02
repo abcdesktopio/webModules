@@ -151,14 +151,3 @@ export const hide = function () {
 export const showError = function (error) {
   welcomeSystem.showError(error);
 };
-
-/**
- * @function connect
- * @returns {void}
- * @desc Start connection
- *
- */
-export const connect = function (msg) {
-  if (!msg) msg='Authentication';
-  editStatus(msg);
-};
