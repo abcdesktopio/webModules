@@ -67,6 +67,7 @@ const broadwaydisconnected = function () {
  *
  */
 export const editStatus = function (status) {
+  
   try {
     const mystatus = status.charAt(0).toUpperCase() + status.slice(1);
     status = mystatus;
@@ -78,7 +79,9 @@ export const editStatus = function (status) {
 
   if (status === 'Connection') {
     welcomeSystem.close();
-    if (ocuaparser.isSoundSupported()) { document.querySelector('#connectSound').play(); }
+    if (ocuaparser.isSoundSupported()) { 
+      document.querySelector('#connectSound').play(); 
+    }
   }
 
   if (status === 'Normal') {
@@ -108,18 +111,14 @@ export const editStatus = function (status) {
   }
 
   if (status === 'Disconnected') {
-    /*
-      document.querySelector('#reconnect').style.display = 'block';
-      document.querySelector('#connectloader').style.display = 'block';
-      document.querySelector('#waiting').style.display = 'none';
-      circle.querySelector('#percent').style.display = 'none';
-      circle.querySelector('span').style.display = 'none';
-      */
-
     const overScreenMessage = document.getElementById('overScreenMessageData');
-    if (overScreenMessage) { overScreenMessage.textContent = getTranslate('over-screen-message-data'); }
+    if (overScreenMessage) { 
+      overScreenMessage.textContent = getTranslate('over-screen-message-data'); 
+    }
     const overScreen = document.getElementById('overScreen');
-    if (overScreen) { system.show(overScreen); }
+    if (overScreen) { 
+      system.show(overScreen); 
+    }
   }
 
   if (status === 'Disconnect') {
