@@ -610,14 +610,14 @@ function getutctimestamp() {
  * @desc login call odApiClient.auth.auth
  */
 export function login(provider, args={}) {
-  window.od.connectLoader.connect();
-
   // add missing data to the login query
   args.utctimestamp = getutctimestamp(); 	// to profiler
+
+
   // if userGeolocation is enabled
   if (userGeolocation)
-	// add geolocalisation dict
-        args.geolocation = userGeolocation.getCurrentGeolocation();	// add geolocalisation
+	  // add geolocalisation dict
+      args.geolocation = userGeolocation.getCurrentGeolocation();	// add geolocalisation
 
   return odApiClient.auth
     .auth(null, provider, args)
@@ -632,7 +632,7 @@ export function login(provider, args={}) {
         && Number.isInteger(result.result.expire_in)
       ) {
         window.od.currentUser = result.result;
-	window.od.connectLoader.editStatus(result.message);
+	      window.od.connectLoader.editStatus(result.message);
         const expire_refresh_token = result.result.expire_in * 750;
         setTimeout(ctrlRefresh_user_token, expire_refresh_token);
         getUserInfo().then(
@@ -681,12 +681,6 @@ export function runAppsOrDesktop() {
 }
 
 export function auth(provider, args={}) {
-  window.od.connectLoader.connect();
-  
-  let geolocation={};
-  if (userGeolocation) // userGeolocation is optionnal
-	geolocation = userGeolocation.getCurrentGeolocation();
-  args.geolocation = geolocation;
   return odApiClient.auth
     .auth(null, provider, args || {})
     .fail(({ status_dict }) => {
