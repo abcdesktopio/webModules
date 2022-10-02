@@ -124,7 +124,10 @@ export const open = function () {
           window.open("https://www.abcdesktop.io", "abcdesktop.io", strWindowFeatures );
           return;
         case 'support-tab':
-          window.open(GLOBAL_SUPPORT_URL, 'abcdesktop.io');
+          const hidenSpanForUrlSupportGlobalValue = document.getElementById('hiden-span-for-url-support-global-value');
+          if (hidenSpanForUrlSupportGlobalValue && hidenSpanForUrlSupportGlobalValue.innerText) {
+            window.open(hidenSpanForUrlSupportGlobalValue.innerText, 'abcdesktop.io');
+          }
           return;
         default:
           showFunction = () => { console.error('No tab found'); };

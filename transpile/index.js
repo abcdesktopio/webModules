@@ -177,6 +177,8 @@ async function userInterface() {
 
   // isIndexPage, isDemoPage, isLoginSessionPage)
   await Promise.all([
+
+    // demo page is 
     applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true, false),
     applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexSessionHtmlFile, true, false, true),
     applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false, false),
@@ -228,6 +230,7 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
     isLoginSessionPage
   };
 
+  console.log( 'create html page ' + pathHtmlFile );
   await fs.promises.writeFile(pathHtmlFile, Mustache.render(mustacheFile, view));
 }
 
