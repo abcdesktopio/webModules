@@ -339,8 +339,8 @@ export function initApplist() {
         'launcher:applist request call error',
         'error',
       );
-      window.od.connectLoader.showError(
-        'Service API unavailable. Applications list failed. Please try to reload',
+      welcomeSystem.showError(
+        'Service API unavailable. Applications list failed. Please try to reload'
       );
     });
 }
@@ -374,8 +374,8 @@ export function initUserApplist() {
         'launcher:applist request call error',
         'error',
       );
-      window.od.connectLoader.showError(
-        'Service unavailable. Applications list failed. Please try to reload',
+      welcomeSystem.showError(
+        'Service unavailable. Applications list failed. Please try to reload'
       );
     });
 }
@@ -479,7 +479,11 @@ export function auth_sessionexpired() {
   console.debug('function auth_sessionexpired');
   console.info('Your session has expired');
   window.od.connectLoader.hide();
-  if (system.show(document.getElementById('overScreen'))) { window.od.connectLoader.hide(); } else window.location.reload();
+  if (system.show(document.getElementById('overScreen'))) { 
+    window.od.connectLoader.hide(); 
+  } else {
+    window.location.reload();
+  }
 }
 
 export function refresh_usertoken() {
@@ -776,7 +780,7 @@ export function showLoginError(result) {
 }
 
 export function showError(message) {
-  window.od.connectLoader.showError(message);
+  welcomeSystem.showError(message);
   welcomeSystem.open();
 }
 

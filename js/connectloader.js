@@ -21,8 +21,6 @@ import * as ocuaparser from './ocuaparser.js';
 import * as system from './system.js';
 import { getTranslate } from './languages.js';
 
-let circle;
-export var statusText;
 
 /**
  * @function init
@@ -30,11 +28,6 @@ export var statusText;
  * @desc Init HTML element circle.
  */
 export const init = function () {
-  circle = document.getElementById('c100');
-  statusText = document.getElementById('statusText');
-  document.querySelector('#connectloader').addEventListener('click', () => {
-    window.od.broadway.connect();
-  });
   document.addEventListener('broadway.connected', 	broadwayconnected);
   document.addEventListener('broadway.disconnected', 	broadwaydisconnected);
 };
@@ -79,13 +72,9 @@ export const editStatus = function (status) {
 
   if (status === 'Connection') {
     welcomeSystem.close();
-    if (ocuaparser.isSoundSupported()) { 
-      document.querySelector('#connectSound').play(); 
-    }
   }
 
   if (status === 'Normal') {
-    document.querySelector('#connectloader').style.display = 'none';
     welcomeSystem.close();
     if (ocuaparser.isSoundSupported()) {
       const connectSound = document.querySelector('#connectSound');
@@ -127,26 +116,4 @@ export const editStatus = function (status) {
   if (status === 'Failed') {
     console.error(status);
   }
-};
-
-/**
- * @function close
- * @returns {void}
- * @desc Close connect loader
- *
- */
-export const close = function () {
-  welcomeSystem.showMessage('');
-};
-
-export const hide = function () {
-  document.querySelector('#reconnect').style.display = 'none';
-  document.querySelector('#connectloader').style.display = 'none';
-  document.querySelector('#waiting').style.display = 'none';
-  circle.querySelector('#percent').style.display = 'none';
-  circle.querySelector('span').style.display = 'none';
-};
-
-export const showError = function (error) {
-  welcomeSystem.showError(error);
 };

@@ -24,7 +24,7 @@ import * as languages from './languages.js';
 const welcomeSystem = (function () {
   const managers = {};
   let $ui;
-  let $statusText;
+  let statusText;
 
   return new (class exported {
     constructor() {
@@ -32,40 +32,30 @@ const welcomeSystem = (function () {
     }
 
     init() {
-      $statusText = $('#statusText');
+      statusText = document.getElementById('statusText');
       $ui = $('#loginScreen');
       const self = this;
       return odApiClient.auth.getauthconfig()
         .done(
           (config) => {
             if (config) { 
-		    self.applyConfig(config); 
-	    } else { 
-		    window.od.connectLoader.showError('API Service return undefined config. Please fix the od.config configuration file.'); 
-	    }
+		          self.applyConfig(config); 
+	          } else { 
+		          this.showError('API Service return undefined config. Please fix the od.config configuration file.'); 
+	          }
           },
         )
         .fail(
           () => {
-            window.od.connectLoader.showError('API Service is unreachable, bad gateway. Please try to reload.');
+            this.showError('API Service is unreachable, bad gateway. Please try to reload.');
           },
         );
     }
 
-    applydemoConfig() {
-  	if (window.location.host == 'demo.abcdesktop.io') {
-		// add specific code here
-		// nothing to do 
-        }
-    }
 
     applyConfig(config) {
       const self = this;
       const onlogin = function () { self.onlogin(); };
-      
-      // set demo.abcdesktop.io conf
-      // gtag and statusText
-      self.applydemoConfig();
 
       managers.sharing = new auth.SharingAuthManager('sharing', '#connectShare', {}, onlogin);
 
@@ -89,7 +79,8 @@ const welcomeSystem = (function () {
               break;
           }
 
-          if (manager) managers[manager.name] = manager;
+          if (manager) 
+            managers[manager.name] = manager;
         }
       }
     }
@@ -108,27 +99,69 @@ const welcomeSystem = (function () {
       // removeClass is need
       // if previous message was an error messsage
       // the message class stay in error
-      $statusText.removeClass();
+      statusText.classList.remove('error');
 
       if (message) {
-        $statusText.html(message).show();
+        let spantextstatusText = document.getElementById('spantextstatusText');
+        if (spantextstatusText) {
+          // update message
+          spantextstatusText.innerText = message;
+        }
       } else {
-        $statusText.removeClass();
-        $statusText.html('').hide();
+        statusText.classList.remove();
+        statusText.style.display='none';
       }
     }
 
     showStatus(message) {
-      const msg = `<img src="${window.od.net.urlrewrite('img/ring.svg')}" /><span>${message}</span>`;
-      this.showMessage(msg);
+
+      if (!message) {
+        statusText.classList.remove();
+        statusText.style.display='none';
+        return;
+      }
+
+      if (statusText) {
+        
+        if (message.length > 2 && message.charAt(1) == '.') {
+          let f = message[0].toLowerCase();
+          if ( 'abc'.includes(f) ) {
+              // imgsrc = `img/${f}.svg`;
+              message = message.substring(2);
+              message = message.charAt(0).toLowerCase() + message.slice(1);
+          }
+        }
+
+        // create if not exist
+        let spantextstatusText = document.getElementById('spantextstatusText');
+        if (!spantextstatusText) {
+          spantextstatusText = document.createElement('span');
+          spantextstatusText.id = 'spantextstatusText';
+          spantextstatusText.innerText = message;
+          statusText.appendChild(spantextstatusText);
+        }
+        spantextstatusText.innerText = message;
+
+        let imgsrc='img/ring.svg';
+        let ringstatusimg = document.getElementById('spantextstatusImg');
+        if (!ringstatusimg) {
+          ringstatusimg = document.createElement('img');
+          ringstatusimg.src = window.od.net.urlrewrite(imgsrc);
+          ringstatusimg.id = 'spantextstatusImg';
+          statusText.prepend(ringstatusimg);
+        }
+
+        // test for futur usage
+        if (!ringstatusimg.src)
+            // repaint for futur usage
+            ringstatusimg.setAttribute("src",  window.od.net.urlrewrite(imgsrc) );
+      }
+
     }
 
     showError(message) {
-      $statusText.addClass('error').html(message);
-    }
-
-    getStatus() {
-      $statusText.text();
+      statusText.classList.add('error');
+      statusText.innerText = message;
     }
 
     login(managerName, providerName) {
@@ -144,23 +177,23 @@ const welcomeSystem = (function () {
       const manager = managers[managerName];
       if (manager) {
         const provider = manager.getDefaultProvider();
-        if (provider) { providerName = provider.name; }
+        if (provider) { 
+          providerName = provider.name;
+        }
       }
       return providerName;
     }
 
     onlogin() {
       this.showStatus('Loading...');
-      for (const name in managers) managers[name].close();
+      for (const name in managers) 
+        managers[name].close();
     }
 
     open() {
       $ui.show();
-      if (window.od.sharing === true && managers.sharing) {
-        managers.sharing.open();
-      } else {
-        for (const name in managers) managers[name].open();
-      }
+      for (const name in managers) 
+        managers[name].open();
     }
   })();
 }());

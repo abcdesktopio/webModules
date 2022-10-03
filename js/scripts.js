@@ -84,16 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
   setupbeforeuserloginin();
 
   // check if query string contains auth params. parseUrl call
-  const bInitContinue = parseUrl();
+  // const bInitContinue = parseUrl();
 
   // init i18l load json files
   languages.init();
 
   // Init basic event click for welcome window THEN call init
-  welcomeSystem.init().always(
-    () => {
-      if (bInitContinue) { init(); }
-    },
+  welcomeSystem.init().always( () => {
+      init(); 
+    }
   );
 });
 
@@ -133,7 +132,7 @@ function setupbeforeuserloginin() {
   // Init basic event for message window
   windowMessage.init();
 
-  // Init HTML element circle.
+  // Init event to show login and status progression
   connectLoader.init();
 
   // init error message
@@ -470,22 +469,19 @@ function init() {
     }
     */
 
-  const parsedQueryString = parseQueryString();
-  let { provider } = parsedQueryString;
-  const { manager } = parsedQueryString;
+  // const parsedQueryString = parseQueryString();
+  // let { provider } = parsedQueryString;
+  // const { manager } = parsedQueryString;
 
   console.debug('function script::logmein.tryReconnect()');
 
   // try to restor previous user context
   logmein.restoreUserContext().fail(() => {
     console.info('no user previous context, running standart welcome');
-    // Check if querySting contains autologin parameters
-    if (manager === 'implicit') {
-      // no auth is required
-      if (!provider) { provider = welcomeSystem.getDefaultProviderName(manager); }
-      welcomeSystem.login(manager, provider);
-    } else { welcomeSystem.open(); }
+    welcomeSystem.open();
   });
+
+
 
   $('.window').mousedown(function () { system.activeWindow(this); });
 

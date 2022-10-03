@@ -119,8 +119,7 @@ export class ExplicitAuthManager extends AuthManager {
       //
       // No provider has been found
       // 
-      // Check if metaexplicit manager exists
-      // Check if metadirectory provider exixts 
+      // Check if metaexplicit manager exists, with metadirectory provider defined 
       //
       const metaexplicit_manager = this.parents['metaexplicit'];
       if (!metaexplicit_manager || !metaexplicit_manager.getProvider('metadirectory') )
