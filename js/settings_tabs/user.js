@@ -162,11 +162,24 @@ async function setName() {
 
     try {
       const labels = await launcher.getLabels();
-      for (const label of labels) {
-        const btnLabel = document.createElement('button');
-        btnLabel.className = 'btn btn-secondary btn-label';
-        btnLabel.innerText = label;
-        wrapperLabels.appendChild( btnLabel );
+      if (Array.isArray( labels )) {
+        for (const label of labels) {
+          const btnLabel = document.createElement('button');
+          btnLabel.className = 'btn btn-secondary btn-label';
+          if (typeof label === 'string') 
+            btnLabel.innerText = label;
+          btnLabel.setAttribute( 'title', "Tooltip on top" );
+          wrapperLabels.appendChild( btnLabel );
+        }
+      }
+      else {
+        for (const [key, value] of Object.entries(labels)) {
+          const btnLabel = document.createElement('button');
+          btnLabel.className = 'btn btn-secondary btn-label';
+          btnLabel.innerText = key;
+          btnLabel.setAttribute( 'title', value );
+          wrapperLabels.appendChild( btnLabel );
+        }
       }
 
       if (labels.length === 0) {
