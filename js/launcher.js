@@ -322,15 +322,7 @@ export function initApplist() {
         );
         return;
       }
-
-      if (window.od.isShared) {
-        for (let i = 0; i < result.length; i++) {
-          if (result[i].launch === 'frontendjs.skype') {
-            result.splice(i, 1);
-          }
-        }
-      }
-
+      
       window.od.applist = result;
     })
     .fail(() => {
@@ -380,93 +372,6 @@ export function initUserApplist() {
     });
 }
 
-/**
- * @function share_login
- * @global
- * @params {string} email
- * @params {string} token
- * @return {void}
- * @desc Login for users using sharing.
- */
-export function share_login(email, token) {
-  console.debug('function share_login');
-  /*
-    return odApiClient.user.shareLogin(email, token)
-        .done(function (result) {
-            if (typeof result === 'undefined') {
-                notificationSystem.displayNotification('Share access', 'access failed', 'error');
-                return;
-            }
-            var message = (result.result.share == 'rw') ? "full access" : "view only";
-            welcomeSystem.close();
-            notificationSystem.displayNotification('Shared access', 'Shared access mode is ' + message, 'info');
-            window.od.currentUser = {...window.od.currentUser, ...result.result};
-            console.debug(result);
-            // window.od.setup();
-            window.od.broadway.setview_only((result.result.share == 'ro'));
-            window.od.broadway.connect();
-        })
-        .fail(function (status, error, result) {
-            if (status == 200)
-                window.od.connectLoader.showError(result.error);
-            else
-                notificationSystem.displayNotification('Share', 'launcher:share_login request call error', 'error');
-        });
-    */
-}
-
-/**
- * @function share
- * @global
- * @params {string} email
- * @params {string} shared
- * @params {callback} callback
- * @return {void}
- * @desc Login for users using sharing.
- */
-export function share(email, shared, callback) {
-  console.debug('function share');
-  /*
-    var apicall = odApiClient.user.share(email, shared, window.location.protocol + '//' + window.location.hostname + "/?sharedtoken=");
-    if (callback) {
-        apicall
-            .done(function (result) {
-                if (typeof result === 'undefined') {
-                    callback('error', 'Email can not be send');
-                }
-                else {
-                    callback('success', result.result.message);
-                }
-            })
-            .fail(function (_, error) {
-                callback('error', 'Email can not be send - error: ' + error);
-            });
-    }
-    return apicall;
-    */
-}
-
-export function support(callback) {
-  /*
-    var apicall = odApiClient.user.support(window.redirectwindow.location.protocol + '//' + window.location.hostname + "/?sharedtoken=");
-    if (callback) {
-        apicall
-            .done(function (result) {
-                if (typeof result === 'undefined') {
-                    callback('error', 'Email can not be send');
-                }
-                else {
-                    callback('success', result.result.message);
-                }
-            })
-            .fail(function (_, error) {
-                callback('error', 'Email can not be send - error: ' + error);
-            });
-    }
-    return apicall;
-    */
-}
-
 export function explicitLogin(provider, userid, password, loginsessionid) {
   return login(provider, { userid, password, loginsessionid });
 }
@@ -478,12 +383,7 @@ export function implicitLogin(provider) {
 export function auth_sessionexpired() {
   console.debug('function auth_sessionexpired');
   console.info('Your session has expired');
-  window.od.connectLoader.hide();
-  if (system.show(document.getElementById('overScreen'))) { 
-    window.od.connectLoader.hide(); 
-  } else {
-    window.location.reload();
-  }
+  system.show(document.getElementById('overScreen'));
 }
 
 export function refresh_usertoken() {
@@ -516,10 +416,7 @@ export function refresh_usertoken() {
         && Number.isInteger(result.result.expire_in)
       ) {
         const expire_refresh_token = result.result.expire_in * 750; // retry before 3/4 of expire time
-        console.info(
-          `User Token updated successful, next call in ${expire_refresh_token
-          } ms`,
-        );
+        console.info(`User Token updated successful, next call in ${expire_refresh_token} ms`);
         setTimeout(ctrlRefresh_user_token, expire_refresh_token);
         return deferred.promise();
       }
@@ -616,7 +513,6 @@ export function login(provider, args={}) {
   // add missing data to the login query
   args.utctimestamp = getutctimestamp(); 	// to profiler
 
-
   // if userGeolocation is enabled
   if (userGeolocation)
 	  // add geolocalisation dict
@@ -624,40 +520,24 @@ export function login(provider, args={}) {
 
   return odApiClient.auth
     .auth(null, provider, args)
-    .fail( ( jqXHR, textStatus, errorThrown ) => {
-      console.error( 'odApiClient.auth.auth.fail');
-      showLoginError(jqXHR);
-    })
     .then((result) => {
-      if (
-        result.status == 200
-        && result.result
-        && Number.isInteger(result.result.expire_in)
-      ) {
-        window.od.currentUser = result.result;
-	      window.od.connectLoader.editStatus(result.message);
-        const expire_refresh_token = result.result.expire_in * 750;
-        setTimeout(ctrlRefresh_user_token, expire_refresh_token);
-        getUserInfo().then(
-          (userinfo) => {
-            if (userinfo && userinfo.name && userinfo.provider) {
-              console.debug('login:getUserInfo userinfo is valid object ');
-              window.od.currentUser = {
-                ...window.od.currentUser,
-                ...userinfo,
-              };
-            } else {
-              console.error('login:getUserInfo failed');
-            }
-          },
-          () => {
-            console.error('login:getUserInfo failed');
-          },
-        );
-        runAppsOrDesktop();
-      } else showLoginError(result);
-    });
+      if ( result.status == 200  && result.result ) {
+          window.od.currentUser = result.result;
+          window.od.connectLoader.editStatus(result.message);
+          /*
+          let expire_refresh_token = 360*750; // default value if not set
+          if (Number.isInteger(result.result.expire_in))
+            expire_refresh_token = result.result.expire_in * 750;
+          setTimeout(ctrlRefresh_user_token, expire_refresh_token);
+          */
+        } else { 
+          Promise.reject(result);
+        }
+      });
 }
+
+
+
 
 /**
  * @function runAppsOrDesktop

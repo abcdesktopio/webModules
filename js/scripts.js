@@ -54,8 +54,7 @@ window.od.getmimeforfile = launcher.getmimeforfile;
 
 window.od.broadway = null;
 window.od.applist = null;
-window.od.isShared = false;
-window.od.listprinter = launcher.listprinter;
+
 
 // Permit external call from test module
 // There entry point use window.od call from external scripts
@@ -454,25 +453,7 @@ function init() {
   // check if we are running inside the orange android
   // Application webview
   window.isAndroidApplicationMode = ocuaparser.isAbcDesktopAndroidApplication();
-  /**
-    // check if shared token or not
-    if ( !isShared() ) {
-        console.info( 'function script:init: not a shared login');
-        console.debug( 'function script::logmein.tryReconnect()');
-        logmein.restoreUserContext().fail(function () {
-            console.info( 'function script:init:logmein.tryReconnect has no user context');
-            welcomeSystem.open();
-        });
-    } else {
-        console.info( 'function script:init: welcomeSystem.open()');
-        welcomeSystem.open();
-    }
-    */
-
-  // const parsedQueryString = parseQueryString();
-  // let { provider } = parsedQueryString;
-  // const { manager } = parsedQueryString;
-
+  
   console.debug('function script::logmein.tryReconnect()');
 
   // try to restor previous user context

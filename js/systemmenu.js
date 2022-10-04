@@ -544,12 +544,11 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
  * @desc Send to MongoDB a save of current user's Dock.
  */
 export const saveMenu = function () {
-  if (!window.od.isShared) {
-    const myMenu = document.querySelectorAll('#docklist li');
-    myMenuApps = [];
-    for (let i = 0; i < myMenu.length; i++) myMenuApps.push(myMenu[i].attributes.launch.value);
-    launcher.set('dock', myMenuApps);
-  }
+  const myMenu = document.querySelectorAll('#docklist li');
+  myMenuApps = [];
+  for (let i = 0; i < myMenu.length; i++) 
+    myMenuApps.push(myMenu[i].attributes.launch.value);
+  launcher.set('dock', myMenuApps);
 };
 
 export const internalLoadMenu = function (apps) {

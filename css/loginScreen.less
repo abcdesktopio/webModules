@@ -115,6 +115,116 @@
   background-size: 25px;
 }
 
+
+
+@keyframes animatedshake-account {
+  10%, 90% {
+    transform: translate3d(-3px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+    background-size: 25px;
+    background: url(../../../img/welcome/account-danger.svg) no-repeat 350px;
+  }
+  
+  20%, 80% {
+    transform: translate3d(5px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+    background-size: 25px;
+    background: url(../../../img/welcome/account-danger.svg) no-repeat 350px;
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-8px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+    background-size: 25px;
+    background: url(../../../img/welcome/account-danger.svg) no-repeat 350px;
+  }
+
+  40%, 60% {
+    transform: translate3d(5px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+    background-size: 25px;
+    background: url(../../../img/welcome/account-danger.svg) no-repeat 350px;
+  }
+}
+
+@keyframes animatedshake-key {
+  10%, 90% {
+    transform: translate3d(-3px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+    background-size: 25px;
+    background: url(../../../img/welcome/key-danger.svg) no-repeat 350px;
+  }
+  
+  20%, 80% {
+    transform: translate3d(5px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+    background-size: 25px;
+    background: url(../../../img/welcome/key-danger.svg) no-repeat 350px;
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-8px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+    background-size: 25px;
+    background: url(../../../img/welcome/key-danger.svg) no-repeat 350px;
+  }
+
+  40%, 60% {
+    transform: translate3d(5px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+    background-size: 25px;
+    background: url(../../../img/welcome/key-danger.svg) no-repeat 350px;
+  }
+}
+
+
+@keyframes animatedshake {
+  10%, 90% {
+    transform: translate3d(-3px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+  }
+  
+  20%, 80% {
+    transform: translate3d(5px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-8px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+  }
+
+  40%, 60% {
+    transform: translate3d(5px, 0, 0);
+    color: @danger;
+    border-bottom: 1px solid @danger;
+  }
+}
+
+
+
+.authent-window #authent-window-user-password,
+#loginScreen #cuid.error {
+  animation: animatedshake 1s both;
+  background-size: 25px;
+}
+
+.authent-window #authent-window-user-password,
+#loginScreen #ADpassword.error {
+  animation: animatedshake 1s both;
+}
+
 .authent-window input[type="text"],
 .authent-window input[type="password"],
 .authent-window input[type="mail"],

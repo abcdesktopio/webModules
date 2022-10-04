@@ -15,12 +15,11 @@ import * as windowMessage from './windowMessage.js';
 import * as launcher from './launcher.js';
 
 export class AuthManager {
-  constructor(name, ui, config, onlogin, parents) {
+  constructor(name, ui, config, managers) {
     this.name = name;
     this.$ui = $(ui);
     this.providers = {};
-    this.onlogin = onlogin;
-    this.parents = parents
+    this.managers = managers;
     this.initProviders(config.providers || {});
   }
 
@@ -53,13 +52,11 @@ export class AuthManager {
   manageLogin(providerName) {
     const provider = this.getProvider(providerName);
     if (!provider) return false;
-
-    if (this.onlogin) this.onlogin(this, provider);
     return this.login(provider);
   }
 
   login(provider) {
-
+    this.closeManagers();
   }
 
   open() {
@@ -69,12 +66,29 @@ export class AuthManager {
   close() {
     this.$ui.hide();
   }
+
+  closeManagers() {
+    for (const name in this.managers) 
+        this.managers[name].close();
+  }
+
+  openManagers() {
+    for (const name in this.managers) 
+      this.managers[name].open();
+  }
+
+  showLoginError( result ) {
+    launcher.showLoginError(result);
+  }
+
 }
 
 
+
+
 export class MetaExplicitAuthManager extends AuthManager {
-  constructor(name, ui, config, onlogin, parents) {
-    super(name, ui, config, onlogin, parents);
+  constructor(name, ui, config, managers ) {
+    super(name, ui, config, managers );
     this.default_domain = config.default_domain;
 
     const self = this;
@@ -87,9 +101,10 @@ export class MetaExplicitAuthManager extends AuthManager {
 }
 
 export class ExplicitAuthManager extends AuthManager {
-  constructor(name, ui, config, onlogin, parents) {
-    super(name, ui, config, onlogin, parents);
+  constructor(name, ui, config, managers ) {
+    super(name, ui, config, managers);
     this.default_domain = config.default_domain;
+    this.controls = [ '#cuid', '#ADpassword' ]; // user input 
 
     const self = this;
     $('form', this.$ui).submit((e) => {
@@ -99,7 +114,14 @@ export class ExplicitAuthManager extends AuthManager {
     });
   }
 
+  removeControlErrorClass() {
+    this.controls.forEach( element => { $(element).removeClass( 'error' ) });
+  }
+
   manageLogin(providerName) {
+    // remove error class for each user input
+    this.removeControlErrorClass();
+
     if (!providerName) {
       providerName = this.parseUsername()[0] || this.default_domain;
     }
@@ -119,15 +141,13 @@ export class ExplicitAuthManager extends AuthManager {
       //
       // No provider has been found
       // 
-      // Check if metaexplicit manager exists, with metadirectory provider defined 
+      // if metaexplicit manager exists, with metadirectory provider defined 
+      // if not the auth request will failed
       //
-      const metaexplicit_manager = this.parents['metaexplicit'];
-      if (!metaexplicit_manager || !metaexplicit_manager.getProvider('metadirectory') )
-	        launcher.showLoginError({ message: 'Invalid domain' });
+      console.info('you are running an auth explicit with no provider define');
     } 
 
     const provider = this.getProvider(providerName);
-    if (this.onlogin) this.onlogin(this, provider);
     return this.login(provider);
   }
 
@@ -158,16 +178,55 @@ export class ExplicitAuthManager extends AuthManager {
     const pswd = this.getPassword();
     const loginsessionid = this.getLoginSessionid();
 
-    if (user[1] && pswd) {
-      this.$ui.hide();
-      launcher.explicitLogin(providername, user[1], pswd, loginsessionid );
-    } else {
-      launcher.showLoginError({ message: 'Invalid credentials' });
-    }
+    // do not hide now
+    // this.$ui.hide();
+    // hide only in auth.then to reduce paint
+
+    return launcher.explicitLogin(providername, user[1], pswd, loginsessionid )
+    .then( (result) => { 
+      // hide all managers ( and the providers )
+      this.closeManagers();
+      // Call next createdesktop process
+      this.thenlogin( result ); 
+    })
+    .fail( (e) => {
+      // if the error message is not catched
+      if (!this.showLoginError(e))
+        // call the default parent showLoginError
+        super.showLoginError(e);
+    });
   }
 
   onsubmit() {
-    this.manageLogin(this.getDomain());
+    return this.manageLogin(this.getDomain());
+  }
+
+
+  showLoginError( result ) {
+    let matcherror = false;
+    let errorroutedict = {
+      'No authentication provider can be found': { controls: [ '#cuid' ], matcherror: true },
+      'kerberos credentitials validation failed Major (851968): Unspecified GSS failure.  Minor code may provide more information, Minor (2529638936)': { controls: [ '#ADpassword' ], matcherror: true },
+      'kerberos credentitials validation failed Major (851968): Unspecified GSS failure.  Minor code may provide more information, Minor (2529638918)': { controls: [ '#cuid' ], matcherror: true },
+      'Invalid credentials':  { controls: [ '#ADpassword' ], matcherror: true },
+      'Invalid domain':  { controls: [ '#cuid' ], matcherror: false },
+      'Unsafe credentials': { controls: [ '#cuid', '#ADpassword' ], matcherror: false }
+    };
+
+    if (result) {
+      if (result.error && result.error.error && result.error.status == 401) {
+        let message = result.error.error;
+        console.error( message );
+        for( var key in errorroutedict) {
+          if (message.startsWith( key )) {
+            errorroutedict[key].controls.forEach( c => $(c).addClass( 'error' ) );
+            matcherror = errorroutedict[key].matcherror;
+            break;
+          }
+        }
+      }
+    }
+    return matcherror;
   }
 }
 
@@ -192,76 +251,39 @@ export class LoginButtonAuthManager extends AuthManager {
 
     return super.createProvider(config);
   }
+
+  openDialog(url) {
+    document.location = url;
+  }
+
 }
 
 export class ImplicitAuthManager extends LoginButtonAuthManager {
   login(provider) {
+    // ImplicitAuthManager can use a redirect 
+    // for SSL Client certificat for example
     if (provider.dialog_url)
       this.openDialog(provider.dialog_url);
     else
-      launcher.implicitLogin(provider.name);
-  }
-  openDialog(url) {
-    document.location = url;
+      return launcher.implicitLogin(provider.name)
+      .then( (result) => { 
+        // hide all managers ( and the providers )
+        this.closeManagers();
+        // Call next createdesktop process
+        this.thenlogin( result ); 
+      })
+      .fail( (e) => {
+        this.showLoginError(e);
+      });
   }
 }
 
 export class ExternalAuthManager extends LoginButtonAuthManager {
   login(provider) {
-    const current = window.Cookies.get('auth_provider');
-    if (current && current !== provider.name) {
-      windowMessage.open(
-        provider.displayname,
-        `You have already created your workspace with ${current} connect, if you change the connection, a new workspace will be created.`, 'yn', provider.name,
-        function () { this.openDialog(provider.dialog_url); },
-      );
-    } else if (this.isCredential()) {
-      launcher.launchDesktop();
-    } else {
+    if (provider.dialog_url)
       this.openDialog(provider.dialog_url);
+    else {
+      this.showLoginError({ status: 500, message: 'no dialog_url defined in external provider, configuration file error' });
     }
-
-    return true;
-  }
-
-  openDialog(url) {
-    document.location = url;
-  }
-
-  isCredential() {
-    return (window.Cookies.get('type') && window.Cookies.get('token'));
-  }
-}
-
-export class SharingAuthManager extends AuthManager {
-  constructor(name, ui, config, onlogin, parents) {
-    super(name, ui, config, onlogin, parents);
-
-    const self = this;
-    $('form', this.$ui).submit((e) => {
-      self.onsubmit();
-      e.preventDefault();
-      return false;
-    });
-  }
-
-  login(provider) {
-    const email_rex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
-    const email = $('#loginScreen #connectShare #sharemail').val().toLowerCase();
-
-    if (email_rex.test(email)) {
-      const token = document.location.search.replace('?sharedtoken=', '');
-      launcher.share_login(email, token);
-    } else {
-      launcher.showLoginError({ message: 'Invalid email' });
-    }
-  }
-
-  open() {
-    if (window.od.isShared === true) super.open();
-  }
-
-  onsubmit() {
-    this.login('any');
   }
 }

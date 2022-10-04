@@ -329,11 +329,8 @@ export function init(home, user) {
   const ua = new window.UAParser(navigator.userAgent);
   /* hide home and show user */
 
-  // Provider settings only if user is not a shared access users
-  if (!window.od.isShared) {
-    setProvider();
-  }
-
+  // set provider
+  setProvider();
   // set name
   setName();
   // set browser

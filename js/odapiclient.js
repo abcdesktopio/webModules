@@ -100,10 +100,6 @@ const odApiClient = new (class ODApiClient {
         return client.sendRequest('user/getlocation');
       }
 
-      shareLogin(email, token) {
-        return client.sendRequest('user/sharelogin', { email, token });
-      }
-
       share(email, shared) {
         return client.sendRequest('user/share', {
           email,

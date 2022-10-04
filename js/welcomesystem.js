@@ -20,11 +20,13 @@ import * as launcher from './launcher.js';
 import odApiClient from './odapiclient.js';
 import * as auth from './auth.js';
 import * as languages from './languages.js';
+import * as logmein from './logmein.js';
 
 const welcomeSystem = (function () {
   const managers = {};
   let $ui;
   let statusText;
+  let projectName;
 
   return new (class exported {
     constructor() {
@@ -34,6 +36,10 @@ const welcomeSystem = (function () {
     init() {
       statusText = document.getElementById('statusText');
       $ui = $('#loginScreen');
+      // read projectName from document
+      projectName = document.getElementById('projectName');
+      projectName = (projectName) ? projectName.innerText : 'abcdesktop';
+
       const self = this;
       return odApiClient.auth.getauthconfig()
         .done(
@@ -55,10 +61,7 @@ const welcomeSystem = (function () {
 
     applyConfig(config) {
       const self = this;
-      const onlogin = function () { self.onlogin(); };
-
-      managers.sharing = new auth.SharingAuthManager('sharing', '#connectShare', {}, onlogin);
-
+      
       for (const i in config.managers) {
         const cfg = config.managers[i];
         let manager = null;
@@ -66,16 +69,22 @@ const welcomeSystem = (function () {
         if (cfg.providers && cfg.providers.length) {
           switch (cfg.name) {
             case 'external':
-              manager = new auth.ExternalAuthManager(cfg.name, '#connectGP', cfg, onlogin, managers);
+              manager = new auth.ExternalAuthManager(cfg.name, '#connectGP', cfg, managers);
               break;
             case 'metaexplicit':
-                manager = new auth.MetaExplicitAuthManager(cfg.name, '#metaactiveDirectory', cfg, onlogin, managers);
-                break;
+              manager = new auth.MetaExplicitAuthManager(cfg.name, '#metaactiveDirectory', cfg, managers);
+              manager.thenlogin = self.thenlogin
+              manager.faillogin = self.faillogin
+              break;
             case 'explicit':
-              manager = new auth.ExplicitAuthManager(cfg.name, '#activeDirectory', cfg, onlogin, managers);
+              manager = new auth.ExplicitAuthManager(cfg.name, '#activeDirectory', cfg, managers);
+              manager.thenlogin = self.thenlogin
+              manager.faillogin = self.faillogin
               break;
             case 'implicit':
-              manager = new auth.ImplicitAuthManager(cfg.name, '#connectGP', cfg, onlogin, managers);
+              manager = new auth.ImplicitAuthManager(cfg.name, '#connectGP', cfg, managers);
+              manager.thenlogin = self.thenlogin
+              manager.faillogin = self.faillogin
               break;
           }
 
@@ -114,22 +123,31 @@ const welcomeSystem = (function () {
     }
 
     showStatus(message) {
-
       if (!message) {
         statusText.classList.remove();
         statusText.style.display='none';
         return;
       }
+      if (message === 'Normal')
+        message = 'c.Normal';
+
 
       if (statusText) {
-        
+        let f;
         if (message.length > 2 && message.charAt(1) == '.') {
-          let f = message[0].toLowerCase();
+          f = message[0].toLowerCase();
           if ( 'abc'.includes(f) ) {
               // imgsrc = `img/${f}.svg`;
               message = message.substring(2);
-              message = message.charAt(0).toLowerCase() + message.slice(1);
+              message = message.charAt(0).toUpperCase() + message.slice(1);
           }
+
+          if (f === 'c') f='abc';
+          if (f === 'b') f='ab';
+          if (message === 'Normal') {
+            message = 'desktop';
+          }
+
         }
 
         // create if not exist
@@ -137,10 +155,20 @@ const welcomeSystem = (function () {
         if (!spantextstatusText) {
           spantextstatusText = document.createElement('span');
           spantextstatusText.id = 'spantextstatusText';
-          spantextstatusText.innerText = message;
           statusText.appendChild(spantextstatusText);
         }
         spantextstatusText.innerText = message;
+
+        if (f) {
+          let spanabctextstatusText = document.getElementById('spanabctextstatusText');
+          if (!spanabctextstatusText) {
+            spanabctextstatusText = document.createElement('span');
+            spanabctextstatusText.id = 'spanabctextstatusText';
+            spanabctextstatusText.classList.add('abccreatedesktopstatus');
+            statusText.insertBefore(spanabctextstatusText, spantextstatusText );
+          }
+          spanabctextstatusText.innerText = f + ' ' ;
+        }
 
         let imgsrc='img/ring.svg';
         let ringstatusimg = document.getElementById('spantextstatusImg');
@@ -164,30 +192,16 @@ const welcomeSystem = (function () {
       statusText.innerText = message;
     }
 
-    login(managerName, providerName) {
-      const manager = managers[managerName];
-      if (manager) {
-        const provider = manager.getProvider(providerName);
-        manager.login(provider);
-      }
+    thenlogin() {
+      logmein.restoreUserContext()
+      .fail( (e) => {
+          launcher.showLoginError( e );
+        } 
+      );
     }
 
-    getDefaultProviderName(managerName) {
-      let providerName;
-      const manager = managers[managerName];
-      if (manager) {
-        const provider = manager.getDefaultProvider();
-        if (provider) { 
-          providerName = provider.name;
-        }
-      }
-      return providerName;
-    }
-
-    onlogin() {
-      this.showStatus('Loading...');
-      for (const name in managers) 
-        managers[name].close();
+    faillogin(e) {
+      launcher.showLoginError( e );
     }
 
     open() {
@@ -195,6 +209,7 @@ const welcomeSystem = (function () {
       for (const name in managers) 
         managers[name].open();
     }
+
   })();
 }());
 export default welcomeSystem;

@@ -53,7 +53,7 @@ export const init = function () {
 /**
  * @function restoreUserContext
  * @returns {void}
- * @desc try to get file in .run/start.txt user home directory, if success container is ready
+ * @desc launcher.getUserInfo(), if success container is ready
  *
  */
 export const restoreUserContext = function () {
@@ -71,8 +71,8 @@ export const restoreUserContext = function () {
           ...window.od.currentUser,
           ...userinfo,
         };
-        launcher.refresh_usertoken();
         launcher.runAppsOrDesktop();
+        launcher.refresh_usertoken();
       } else {
         console.debug('function logmein:restoreUserContext return null user info');
         authDeferred.reject('Service returned invalid user info');
