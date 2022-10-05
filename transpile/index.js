@@ -219,6 +219,7 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
     modules: modulesConf.modules,
     scripts,
     projectName: uiConf.name,
+    projectNameSplitedHTML: uiConf.projectNameSplitedHTML,
     urlcannotopensession: uiConf.urlcannotopensession,
     urlusermanual: uiConf.urlusermanual,
     urlusersupport: uiConf.urlusersupport,

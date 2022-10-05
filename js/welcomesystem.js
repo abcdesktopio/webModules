@@ -27,6 +27,7 @@ const welcomeSystem = (function () {
   let $ui;
   let statusText;
   let projectName;
+  let stages=[ 'a', 'b', 'c', 'd' ];
 
   return new (class exported {
     constructor() {
@@ -37,7 +38,7 @@ const welcomeSystem = (function () {
       statusText = document.getElementById('statusText');
       $ui = $('#loginScreen');
       // read projectName from document
-      projectName = document.getElementById('projectName');
+      projectName = document.getElementById('loginScreenProjectNameSplited');
       projectName = (projectName) ? projectName.innerText : 'abcdesktop';
 
       const self = this;
@@ -58,6 +59,32 @@ const welcomeSystem = (function () {
         );
     }
 
+    clearLoginProjetNameTitle() {
+      stages.forEach(element => {
+        let loginScreenProjectNameSplitedStage = document.getElementById('projectNameSplitedStage'+element);
+        if (loginScreenProjectNameSplitedStage)
+          loginScreenProjectNameSplitedStage.classList.remove('abccreatedesktopstatus');
+      });
+    }
+
+    updateLoginProjetNameTitle( charStatus ) {
+      if (charStatus) {
+        if (charStatus==='e') {
+          this.clearLoginProjetNameTitle();
+        }
+        else {
+          stages.forEach(element => {
+            if (element <= charStatus) {
+              let loginScreenProjectNameSplitedStage = document.getElementById('projectNameSplitedStage'+element);
+              // check if class already exist to reduve paint
+              if (!loginScreenProjectNameSplitedStage.classList.contains('abccreatedesktopstatus'))
+                // the class does not exist, add it
+                loginScreenProjectNameSplitedStage.classList.add('abccreatedesktopstatus');
+            } } );
+        }
+      }
+
+    }
 
     applyConfig(config) {
       const self = this;
@@ -73,23 +100,19 @@ const welcomeSystem = (function () {
               break;
             case 'metaexplicit':
               manager = new auth.MetaExplicitAuthManager(cfg.name, '#metaactiveDirectory', cfg, managers);
-              manager.thenlogin = self.thenlogin
-              manager.faillogin = self.faillogin
               break;
             case 'explicit':
               manager = new auth.ExplicitAuthManager(cfg.name, '#activeDirectory', cfg, managers);
-              manager.thenlogin = self.thenlogin
-              manager.faillogin = self.faillogin
               break;
             case 'implicit':
               manager = new auth.ImplicitAuthManager(cfg.name, '#connectGP', cfg, managers);
-              manager.thenlogin = self.thenlogin
-              manager.faillogin = self.faillogin
               break;
           }
 
-          if (manager) 
+          if (manager) {
+            manager.thenlogin = self.thenlogin;
             managers[manager.name] = manager;
+          }
         }
       }
     }
@@ -123,14 +146,15 @@ const welcomeSystem = (function () {
     }
 
     showStatus(message) {
+
       if (!message) {
         statusText.classList.remove();
         statusText.style.display='none';
         return;
       }
-      if (message === 'Normal')
-        message = 'c.Normal';
 
+      if (message === 'Normal')
+        this.updateLoginProjetNameTitle( 'd' );
 
       if (statusText) {
         let f;
@@ -138,16 +162,10 @@ const welcomeSystem = (function () {
           f = message[0].toLowerCase();
           if ( 'abc'.includes(f) ) {
               // imgsrc = `img/${f}.svg`;
+              this.updateLoginProjetNameTitle(f);
               message = message.substring(2);
               message = message.charAt(0).toUpperCase() + message.slice(1);
           }
-
-          if (f === 'c') f='abc';
-          if (f === 'b') f='ab';
-          if (message === 'Normal') {
-            message = 'desktop';
-          }
-
         }
 
         // create if not exist
@@ -159,16 +177,7 @@ const welcomeSystem = (function () {
         }
         spantextstatusText.innerText = message;
 
-        if (f) {
-          let spanabctextstatusText = document.getElementById('spanabctextstatusText');
-          if (!spanabctextstatusText) {
-            spanabctextstatusText = document.createElement('span');
-            spanabctextstatusText.id = 'spanabctextstatusText';
-            spanabctextstatusText.classList.add('abccreatedesktopstatus');
-            statusText.insertBefore(spanabctextstatusText, spantextstatusText );
-          }
-          spanabctextstatusText.innerText = f + ' ' ;
-        }
+        
 
         let imgsrc='img/ring.svg';
         let ringstatusimg = document.getElementById('spantextstatusImg');

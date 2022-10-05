@@ -1,5 +1,6 @@
 {
   "name": "abcdesktop.io",
+  "projectNameSplitedHTML": "<span id='projectNameSplitedStagea'>a</span><span id='projectNameSplitedStageb'>b</span><span id='projectNameSplitedStagec'>c</span><span id='projectNameSplitedStaged'>desktop</span>",
   "colors": [
     {
       "name": "@primary",

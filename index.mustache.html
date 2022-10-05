@@ -144,12 +144,13 @@
 
     <div id="loginScreen">
         <div id="content">
-		<h1 id="projectName">{{ projectName }}</h1>
+		    <h1 id="loginScreenProjectNameSplited">{{{ projectNameSplitedHTML }}}</h1>
             <p id="statusText"></p>
             <div id="activeDirectory">
                 <form>
-                    <!--
-                        The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) is limited to 256 characters in the Active Directory schema.
+                    <!-- 
+                        The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) 
+                        is limited to 256 characters in the Active Directory schema.
                         However, for backward compatibility the limit is 20 characters.
                         Len( domain ) = 253
                         Len('\') = 1
@@ -158,13 +159,13 @@
                     -->
 		    {{^isLoginSessionPage}}
                     <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="Login"><br>
-		    <input id="loginsessionid" type="hidden" value="" ><br>
+		            <input id="loginsessionid" type="hidden" value="" ><br>
 		    {{/isLoginSessionPage}}
 		    {{#isLoginSessionPage}}
-		    <input id="cuid" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly"><br>
-		    <!-- loginsessionid is used to check that the user in cuid input value did not change with the previous request -->
-		    <!-- in case if the http request id formated manually --> 
-		    <input id="loginsessionid" type="hidden" value="{{ loginsessionid }}" ><br>
+		            <input id="cuid" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly"><br>
+		            <!-- loginsessionid is used to check that the user in cuid input value did not change with the previous request -->
+		            <!-- in case if the http request id formated manually --> 
+		            <input id="loginsessionid" type="hidden" value="{{ loginsessionid }}" ><br>
 		    {{/isLoginSessionPage}}
                     <!--
                     The userPassword attribute has maximum length 128 and format UTF-8.
