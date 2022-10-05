@@ -168,7 +168,6 @@ async function setName() {
           btnLabel.className = 'btn btn-secondary btn-label';
           if (typeof label === 'string') 
             btnLabel.innerText = label;
-          btnLabel.setAttribute( 'title', "Tooltip on top" );
           wrapperLabels.appendChild( btnLabel );
         }
       }
