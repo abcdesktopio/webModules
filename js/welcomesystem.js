@@ -26,20 +26,16 @@ const welcomeSystem = (function () {
   const managers = {};
   let $ui;
   let statusText;
-  let projectName;
   let stages=[ 'a', 'b', 'c', 'd' ];
 
   return new (class exported {
     constructor() {
-      this.broadcast = launcher.broadcastwindowslist;
+
     }
 
     init() {
       statusText = document.getElementById('statusText');
       $ui = $('#loginScreen');
-      // read projectName from document
-      projectName = document.getElementById('loginScreenProjectNameSplited');
-      projectName = (projectName) ? projectName.innerText : 'abcdesktop';
 
       const self = this;
       return odApiClient.auth.getauthconfig()
@@ -52,8 +48,7 @@ const welcomeSystem = (function () {
 	          }
           },
         )
-        .fail(
-          () => {
+        .fail( (result) => {
             this.showError('API Service is unreachable, bad gateway. Please try to reload.');
           },
         );
@@ -96,23 +91,24 @@ const welcomeSystem = (function () {
         if (cfg.providers && cfg.providers.length) {
           switch (cfg.name) {
             case 'external':
-              manager = new auth.ExternalAuthManager(cfg.name, '#connectGP', cfg, managers);
+              manager = new auth.ExternalAuthManager(cfg.name, '#connectGP', cfg);
               break;
             case 'metaexplicit':
-              manager = new auth.MetaExplicitAuthManager(cfg.name, '#metaactiveDirectory', cfg, managers);
+              manager = new auth.MetaExplicitAuthManager(cfg.name, '#metaactiveDirectory', cfg);
               break;
             case 'explicit':
-              manager = new auth.ExplicitAuthManager(cfg.name, '#activeDirectory', cfg, managers);
+              manager = new auth.ExplicitAuthManager(cfg.name, '#activeDirectory', cfg);
               break;
             case 'implicit':
-              manager = new auth.ImplicitAuthManager(cfg.name, '#connectGP', cfg, managers);
+              manager = new auth.ImplicitAuthManager(cfg.name, '#connectGP', cfg);
               break;
           }
 
           if (manager) {
-            manager.thenlogin = self.thenlogin;
+            manager.welcomeui=this; // allow a manager to call welcomeui 
             managers[manager.name] = manager;
           }
+          
         }
       }
     }
@@ -123,8 +119,9 @@ const welcomeSystem = (function () {
          * @desc Close the window.
          */
     close() {
+      this.closeManagers();
       $ui.addClass('hide');
-      setTimeout(() => { $ui.hide(); }, 1500);
+      setTimeout(() => { $ui.hide(); }, 1000);
     }
 
     showMessage(message) {
@@ -152,9 +149,6 @@ const welcomeSystem = (function () {
         statusText.style.display='none';
         return;
       }
-
-      if (message === 'Normal')
-        this.updateLoginProjetNameTitle( 'd' );
 
       if (statusText) {
         let f;
@@ -202,10 +196,14 @@ const welcomeSystem = (function () {
     }
 
     thenlogin() {
-      logmein.restoreUserContext()
-      .fail( (e) => {
-          launcher.showLoginError( e );
-        } 
+      logmein.createUserContext()
+      .then( (result) => {
+        this.updateLoginProjetNameTitle( 'd' );
+        this.showStatus(result.message);
+      } )
+      .fail( (result)  => {
+          launcher.showLoginError( result );
+        }
       );
     }
 
@@ -215,9 +213,20 @@ const welcomeSystem = (function () {
 
     open() {
       $ui.show();
+      this.openManagers();
+    }
+
+    closeManagers() {
+      for (const name in managers) 
+          managers[name].close();
+    }
+  
+    openManagers() {
       for (const name in managers) 
         managers[name].open();
     }
+  
+
 
   })();
 }());

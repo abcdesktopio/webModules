@@ -68,17 +68,19 @@ export class AuthManager {
   }
 
   closeManagers() {
-    for (const name in this.managers) 
-        this.managers[name].close();
+    this.welcomeui.closeManagers();
   }
 
   openManagers() {
-    for (const name in this.managers) 
-      this.managers[name].open();
+    this.welcomeui.openManagers();
   }
 
   showLoginError( result ) {
     launcher.showLoginError(result);
+  }
+
+  thenlogin( result ) {
+    this.welcomeui.thenlogin(result);
   }
 
 }
@@ -87,8 +89,8 @@ export class AuthManager {
 
 
 export class MetaExplicitAuthManager extends AuthManager {
-  constructor(name, ui, config, managers ) {
-    super(name, ui, config, managers );
+  constructor(name, ui, config ) {
+    super(name, ui, config );
     this.default_domain = config.default_domain;
 
     const self = this;
@@ -101,8 +103,8 @@ export class MetaExplicitAuthManager extends AuthManager {
 }
 
 export class ExplicitAuthManager extends AuthManager {
-  constructor(name, ui, config, managers ) {
-    super(name, ui, config, managers);
+  constructor(name, ui, config ) {
+    super(name, ui, config );
     this.default_domain = config.default_domain;
     this.controls = [ '#cuid', '#ADpassword' ]; // user input 
 
@@ -119,7 +121,8 @@ export class ExplicitAuthManager extends AuthManager {
   }
 
   manageLogin(providerName) {
-    // remove error class for each user input
+    // remove error class for each user input 
+    // cuid and ADPassword
     this.removeControlErrorClass();
 
     if (!providerName) {
@@ -214,8 +217,8 @@ export class ExplicitAuthManager extends AuthManager {
     };
 
     if (result) {
-      if (result.error && result.error.error && result.error.status == 401) {
-        let message = result.error.error;
+      if (result.error && result.status == 401) {
+        let message = result.error;
         console.error( message );
         for( var key in errorroutedict) {
           if (message.startsWith( key )) {

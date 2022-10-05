@@ -174,10 +174,10 @@ window.od.setupafteruserloginin = function () {
   // need user token
   launcher.initUserApplist()
     .done(initApplistcallback)
-    .fail( (err) => { 
+    .fail( ({ status, error }) => { 
       console.error( 'initUserApplist failed' ); 
-      console.error( err ); 
-    } );
+      console.error( error ); 
+    });
 
   // Add event listener for buttons share window.
   shareSystem.init();

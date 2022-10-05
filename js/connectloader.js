@@ -29,7 +29,7 @@ import { getTranslate } from './languages.js';
  */
 export const init = function () {
   document.addEventListener('broadway.connected', 	broadwayconnected);
-  document.addEventListener('broadway.disconnected', 	broadwaydisconnected);
+  document.addEventListener('broadway.disconnected',broadwaydisconnected);
 };
 
 /**
@@ -67,7 +67,7 @@ export const editStatus = function (status) {
   } catch (e) {
     console.error(e);
   }
-
+  console.log('connect loader status: ' + status );
   welcomeSystem.showStatus(status);
 
   if (status === 'Connection') {

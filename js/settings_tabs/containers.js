@@ -335,12 +335,12 @@ const initTaskManager = () => getContainers()
     refreshIsActive = true;
     runRefresh();
   })
-  .fail((_, error, result) => {
+  .fail((result) => {
     if (notificationSystem) {
       if (result.status === 200) {
         notificationSystem.displayNotification('List containers', result.error, (result.status === 401) ? 'deny' : 'error');
       } else {
-        notificationSystem.displayNotification('List containers', error, 'error');
+        notificationSystem.displayNotification('List containers', result.error, 'error');
       }
     }
   });

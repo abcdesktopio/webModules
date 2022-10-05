@@ -245,19 +245,16 @@ const odApiClient = new (class ODApiClient {
   }
 
   sendRequest(method, args) {
-    function getErrorResponse(result, status, xhr) {
-      const status_ex = (xhr && xhr.status) ? xhr.status : status;
-      const status_dict = { status: xhr.status, error: result };
+    function getErrorResponse(message, status, xhr) {
+      
       if (xhr.responseJSON) {
-        if (xhr.responseJSON.message) { status_dict.message = xhr.responseJSON.message; }
-        if (xhr.responseJSON.status)  { status_dict.status = xhr.responseJSON.status; }
+        if (xhr.responseJSON.message) { message = xhr.responseJSON.message; }
+        if (xhr.responseJSON.status)  { status  = xhr.responseJSON.status;  }
       }
 
       return {
-        status,
-        status_ex,
-        status_dict,
-        error: result,
+        status: status,
+        error: message,
       };
     }
 
@@ -279,7 +276,6 @@ const odApiClient = new (class ODApiClient {
     return $.ajax(options)
       .then((result, status, xhr) => {
         const deferred = $.Deferred();
-
         if (!result) {
           deferred.resolve(result);
         } else if ((result.status && result.status === 500) || result.error) {
@@ -294,7 +290,6 @@ const odApiClient = new (class ODApiClient {
         }
         return deferred.promise();
       },
-
       (xhr, status, error) => {
         const deferred = $.Deferred();
         deferred.reject(getErrorResponse(error, status, xhr));

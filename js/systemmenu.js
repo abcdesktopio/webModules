@@ -58,7 +58,7 @@ function clickDockActive() {
 export const init = function () { 
   if (!document.getElementById('dock')) {
     enable = false;
-    console.log('searchZone is disabled');
+    console.warning('searchZone is disabled');
     return;
   }
 
@@ -259,7 +259,7 @@ let getWihndowListIsPending = false;
  * @desc Show context menu (right clic).
 */
 export const showContextmenu = function (status, element) {
-  console.log('showContextmenu');
+  console.debug('showContextmenu');
   system.show(window.contextmenu);
   if (status === true) {
     if (!getWihndowListIsPending) {
@@ -354,7 +354,7 @@ export const showContextmenu = function (status, element) {
 };
 
 function getListWidApp(app) {
-  console.log('getListWidApp');
+  console.debug('getListWidApp');
   const listWid = [];
   for (let i = 0; i < windowList.length; i++) {
     const win = windowList[i];
@@ -372,9 +372,8 @@ function getListWidApp(app) {
  * @desc Called by broadcastSystem when an application window is opened or closed.
  */
 export const updateWindowList = function (data) {
-  console.log('systemmenu updateWindowList')
+  console.debug('systemmenu updateWindowList')
   // Check if systemMenu has been initialized
-  console.log('updateWindowList');
   if (!enable) return;
   windowList = data;
   const docklist = Array.from(document.querySelectorAll('#docklist li'));
@@ -400,7 +399,7 @@ export const updateWindowList = function (data) {
  * @desc Update status of dock's applications who as started.
  */
 export const appStarted = function (data) {
-  console.log('appStarted');
+  console.debug('appStarted');
   // console.debug( 'appStarted');
   let isPresent = false;
   let isActive = false;
@@ -553,7 +552,7 @@ export const saveMenu = function () {
 
 export const internalLoadMenu = function (apps) {
   const docklist = document.getElementById('docklist');
-  console.log( "number of application in dock is " + apps.length);
+  console.debug( "number of application in dock is " + apps.length);
   // if apps is empty
   // then add all application with showinview 'dock'
   if (apps.length === 0) {
@@ -598,14 +597,14 @@ export const internalLoadMenu = function (apps) {
   
   launcher.getwindowslist()
     .then((msg) => {
-      console.log( 'launcher.getwindowslist response' );
+      console.debug( 'launcher.getwindowslist response' );
       updateWindowList(msg.data);
       const docklist = document.getElementById('docklist');
       const childs = Array.from(docklist.children);
       tryReduceDock(docklist, childs);
       // Now init app is done
       // let's bind event in always
-      console.log('now binding addEventListener window.list');
+      console.debug('now binding addEventListener window.list');
       broadcastEvent.addEventListener('proc.started',({ detail: { procStarted } }) => appStarted(procStarted));
       broadcastEvent.addEventListener('proc.killed', ({ detail: { procKilled  } }) => appKilled(procKilled));
       broadcastEvent.addEventListener('window.list', ({ detail: { windowList  } }) => updateWindowList(windowList));
@@ -620,7 +619,7 @@ export const internalLoadMenu = function (apps) {
  */
 export const loadMenu = function () {
   const apps = [];
-  console.log( "loadMenu" );
+  console.debug( "loadMenu" );
   if (!window.od.applist)
     console.warn( 'loadMenu is trying to read undefined data from window.od.applist' );
   launcher.get('dock')

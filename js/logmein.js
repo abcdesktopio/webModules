@@ -71,8 +71,8 @@ export const restoreUserContext = function () {
           ...window.od.currentUser,
           ...userinfo,
         };
+        launcher.initRefreshUsertoken();
         launcher.runAppsOrDesktop();
-        launcher.refresh_usertoken();
       } else {
         console.debug('function logmein:restoreUserContext return null user info');
         authDeferred.reject('Service returned invalid user info');
@@ -84,6 +84,39 @@ export const restoreUserContext = function () {
     },
   );
 };
+
+
+/**
+ * @function restoreUserContext
+ * @returns {void}
+ * @desc launcher.getUserInfo(), if success container is ready
+ *
+ */
+ export const createUserContext = function () {
+  console.debug('function logmein:restoreUserContext');
+
+  // call getUserInfo
+  // to check credentials
+  return launcher.getUserInfo().then(
+    (userinfo) => {
+      console.debug('function logmein:createUserContext:getUserInfo.then()');
+      if (userinfo && userinfo.name && userinfo.provider) {
+        console.debug('logmein:createUserContext:getUserInfo userinfo is valid object ');
+        window.od.currentUser = {
+          ...window.od.currentUser,
+          ...userinfo,
+        };
+        launcher.initRefreshUsertoken();
+        return launcher.runAppsOrDesktop();
+      } else {
+        console.error('function logmein:createUserContext return null user info');
+        Promise.reject({status:'500', message:' getUserInfo() returns invalid data:' + userinfo});
+      }
+    }
+  );
+};
+
+
 
 /**
  * @function parseQueryString

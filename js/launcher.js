@@ -142,12 +142,8 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
         element.setAttribute('container_id', result.result.container_id);
       }
     })
-    .fail(({ error, status_dict }) => {
-      let msg_info;
-      let mstatus = error.status || status_dict.status || 500;
-      let message = error.error  || status_dict.error  || JSON.stringify(status_dict);
-      msg_info = `${mstatus}: ${message}`;
-
+    .fail(({ status, error }) => {
+      let msg_info = `${status}: ${error}`;
       notificationSystem.displayNotification('Application', msg_info, 'error');
 
       if (element instanceof HTMLLIElement) {
@@ -184,8 +180,8 @@ export function getLogs(callback) {
       }
       callback(result);
     })
-    .fail(() => {
-      console.error('No response data from odApiClient.composer.getLogs');
+    .fail(({ status, error }) => {
+      console.error(status, error);
     });
 }
 
@@ -325,14 +321,12 @@ export function initApplist() {
       
       window.od.applist = result;
     })
-    .fail(() => {
+    .fail(({ status, error }) => {
+      console.error(status, error);
       notificationSystem.displayNotification(
         'applist',
-        'launcher:applist request call error',
+         error,
         'error',
-      );
-      welcomeSystem.showError(
-        'Service API unavailable. Applications list failed. Please try to reload'
       );
     });
 }
@@ -359,15 +353,12 @@ export function initUserApplist() {
       }
       window.od.applist = result.result;
     })
-    .fail(() => {
+    .fail(({ status, error }) => {
       console.error('list application failed');
       notificationSystem.displayNotification(
         'applist',
-        'launcher:applist request call error',
+        error,
         'error',
-      );
-      welcomeSystem.showError(
-        'Service unavailable. Applications list failed. Please try to reload'
       );
     });
 }
@@ -523,7 +514,6 @@ export function login(provider, args={}) {
     .then((result) => {
       if ( result.status == 200  && result.result ) {
           window.od.currentUser = result.result;
-          window.od.connectLoader.editStatus(result.message);
           /*
           let expire_refresh_token = 360*750; // default value if not set
           if (Number.isInteger(result.result.expire_in))
@@ -536,8 +526,18 @@ export function login(provider, args={}) {
       });
 }
 
-
-
+/**
+ * @function initRefreshUsertoken
+ * @global
+ * @return {void}
+ * @desc login call refresh_usertoken after user.expire_in
+ */
+export function initRefreshUsertoken() {
+  let expire_refresh_token = 360*750; // default value if not set
+  if (Number.isInteger(window.od.currentUser.expire_in))
+      expire_refresh_token = window.od.currentUser.expire_in * 750;
+  setTimeout(refresh_usertoken, expire_refresh_token);
+}
 
 /**
  * @function runAppsOrDesktop
@@ -618,8 +618,8 @@ export function launchnewDesktopInstance(
 
         if (result.error) {
           errorDescription = {
-            message: result.error.error,
-            status: result.error.status,
+            message: result.error,
+            status: result.status,
           };
         } else {
           errorDescription = result;
@@ -634,27 +634,15 @@ export function launchnewDesktopInstance(
 }
 
 export function showLoginError(result) {
-  let msg_info = '';
-  let mstatus=500;
-  let message='General failure, login error';
+  let msg_info = "500: General failure, login error";
   if (result) {
-	  console.log( "showLoginError" );
-    console.log( result );
-    try {
-      if (!result.error) result.error = {};
-      if (!result.status_dict)  result.status_dict = {};
-      if (!result.status_dict.status) result.status_dict.status={}
-      mstatus = result.error.status || result.status_ex || result.status || result.status_dict.status ||  500; 
-      message = result.error.error  || result.status_dict.error || result.status_dict.status.error || result.message || JSON.stringify(result);
-      msg_info = `${mstatus}: ${message}`;
-    } catch (error) {
-      console.error(error);
-    }
+    if (!result.error)   result.error = 'General failure, unkown error';
+    if (!result.status)  result.status= 500;
+    msg_info = `${result.status}: ${result.error}`;
   }
   else {
 	  console.log( "showLoginError result is undefined" );
   }
-  msg_info = `${mstatus}: ${message}`;
   console.log( msg_info );
   showError(msg_info);
 }
@@ -680,7 +668,7 @@ class LoginProgress {
       .done((result) => {
         self.onDone(result);
       })
-      .fail(() => {
+      .fail(({ result }) => {
         self.onFail();
       });
   }
@@ -696,7 +684,7 @@ class LoginProgress {
       } else {
         this.bar += '.';
       }
-      window.od.connectLoader.editStatus(`${this.message}${this.bar}`);
+      welcomeSystem.showStatus(`${this.message}${this.bar}`);
     }
     this.next();
   }
@@ -862,13 +850,9 @@ export function stopContainer(podname, container_id, dislay_name) {
         );
       }
     })
-    .fail(({ status, error, status_dict }) => {
+    .fail(({ status, error }) => {
       if (notificationSystem) {
-        if (status == 200) {
-          notificationSystem.displayNotification('Kill', status_dict.error, 'error');
-        } else {
           notificationSystem.displayNotification('Kill', error, 'error');
-        }
       }
     });
 }
@@ -985,8 +969,8 @@ export function getStream() {
         return result;
       }
     })
-    .fail(({ status_dict }) => {
-      console.error(status_dict);
+    .fail(({ status, error }) => {
+      console.error(error);
     });
 }
 
@@ -1006,8 +990,8 @@ export function destroyStream() {
         return result;
       }
     })
-    .fail(({ status_dict }) => {
-      console.error(status_dict);
+    .fail(({ status, error }) => {
+      console.error(error);
     });
 }
 
