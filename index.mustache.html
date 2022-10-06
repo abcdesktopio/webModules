@@ -159,7 +159,7 @@
                     -->
 		    {{^isLoginSessionPage}}
                     <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="Login"><br>
-		            <input id="loginsessionid" type="hidden" value="" ><br>
+		            <input id="loginsessionid" type="hidden" value=""><br>
 		    {{/isLoginSessionPage}}
 		    {{#isLoginSessionPage}}
 		            <input id="cuid" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly"><br>
@@ -183,13 +183,13 @@
                 </p>
             </div>
 	
-	    {{^isDemoPage}}
+            {{^isDemoPage}}
             <div id="connectGP">
                 <ul>
                     <li id="login-facebook">
                         <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
                     </li>
-		            <li id="login-github">
+                    <li id="login-github">
                         <a id="connect-with-github" href="#">Sign-in with Github</a>
                     </li>
                     <li id="login-google">
@@ -204,10 +204,10 @@
                     <li id="login-anonymous">
                         <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
                     </li>
-		    <li id="login-orangeconnect">
+            <li id="login-orangeconnect">
                         <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
                     </li>
-		    <li id="login-sslclient">
+            <li id="login-sslclient">
                         <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
                     </li>
                     <li id="login-sslclient-directory">
@@ -215,10 +215,10 @@
                     </li>
                 </ul>
             </div>
-	    {{/isDemoPage}}
+            {{/isDemoPage}}
 
-	    {{#isDemoPage}}
-	        <div id="connectGP" class="container">
+            {{#isDemoPage}}
+            <div id="connectGP" class="container">
                 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                     <div class="col">
                         <div class="card mb-4 shadow-sm">
@@ -256,7 +256,7 @@
                                             <li id="login-sslclient">
                                                 <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
                                             </li>
-					                        <li id="login-sslclient-directory">
+                                            <li id="login-sslclient-directory">
                                                 <a id="connect-with-sslclient-directory" href="#">Sign-in with SSL client certificat and query directory services</a>
                                             </li>
                                         </ul>
@@ -271,7 +271,7 @@
                             <div id="alarm" class="card-header">
                                 <h4 class="my-0 fw-normal">
                                     <span class="badge bg-primary rounded-pill">2</span>
-                                     10 minutes to use
+                                    10 minutes to use
                                 </h4>
                             </div>
                             <div class="card-body">
@@ -287,7 +287,7 @@
                             <div id="cleanup" class="card-header">
                                 <h4 class="my-0 fw-normal">
                                     <span class="badge bg-primary rounded-pill">3</span>
-                                     Data clean up
+                                    Data clean up
                                 </h4>
                             </div>
                             <div class="card-body">
@@ -298,12 +298,11 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="bg-light p-5 rounded" id="title-instance">
                     <p class="lead">
                         This abcdesktop instance is a quick example to illustrate how the abcdesktop.io project works.
                     </p>
-			        <div class="list-group">
+                    <div class="list-group">
                         <a href="#connectOpenid" class="list-group-item list-group-item-action flex-column align-items-start">
                             <p class="mb-1">
                                 <span class="badge bg-primary rounded-pill">1</span> 
@@ -313,13 +312,13 @@
                         </a>
 
                         <a href="#alarm" class="list-group-item list-group-item-action flex-column align-items-start">
-	                    <p class="mb-2">
+                            <p class="mb-2">
                                 <span class="badge bg-primary rounded-pill">2</span> 
                                 Your abcdesktop is ready to run for 10 minutes.
                             </p>
-	                    <p class="mb-1">
+                            <p class="mb-1">
                                 <img src="img/people-fill.svg">Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.<br>
-	                        <img src="img/lock.svg">The security policy for Internet network prevents requests from your abcdesktop being allowed.
+                                <img src="img/lock.svg">The security policy for Internet network prevents requests from your abcdesktop being allowed.
                             </p>
                             <small>To hear sound, just click on the sound icon.</small><br>
                             <small>To printer a file on your local printer, select the default printer "Desktop_PDF_Printer".</small><br>
@@ -334,12 +333,11 @@
                             </p>
                         </a>
                     </div>
-		        </div>
-                
+                </div>
             </div>
-	    {{/isDemoPage}}
+            {{/isDemoPage}}
 
-	    <div id="connectShare">
+            <div id="connectShare">
                 <p id="connect-share-message">Connect now with your email address to work with your copartner</p>
                 <form>
                     <input id="sharemail" placeholder="Your mail address" type="mail"><br>
@@ -347,9 +345,9 @@
                 </form>
             </div>
         </div>
-
     </div>
-    <audio id="connectSound" src="/sound/connexion.mp3"> </audio>
+
+    <audio id="connectSound" src="/sound/connexion.mp3"></audio>
     <div class="removeapp">
         <img src="img/menu/minus.svg" alt="">
     </div>
