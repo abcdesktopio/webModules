@@ -246,16 +246,24 @@ const odApiClient = new (class ODApiClient {
 
   sendRequest(method, args) {
     function getErrorResponse(message, status, xhr) {
-      
-      if (xhr.responseJSON) {
-        if (xhr.responseJSON.message) { message = xhr.responseJSON.message; }
-        if (xhr.responseJSON.status)  { status  = xhr.responseJSON.status;  }
-      }
 
-      return {
-        status: status,
-        error: message,
-      };
+      if (xhr) {
+
+        // prevent reverse proxy reponse
+        // could return a html data
+        // read by default whr status if exist 
+        if (xhr.statusText) { message = xhr.statusText; }
+        if (xhr.status)     { status  = xhr.status;  }
+
+        // read xhr.responseJSON 
+        // should get more detail than xhr
+        if (xhr.responseJSON) {
+          if (xhr.responseJSON.message) { message = xhr.responseJSON.message; }
+          if (xhr.responseJSON.status)  { status  = xhr.responseJSON.status;  }
+        }
+      }
+  
+      return { 'status': status, 'error': message };
     }
 
     const options = {
