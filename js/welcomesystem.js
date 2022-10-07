@@ -25,7 +25,6 @@ import * as logmein from './logmein.js';
 const welcomeSystem = (function () {
   const managers = {};
   let $ui;
-  let statusText;
   let stages=[ 'a', 'b', 'c', 'd' ];
 
   return new (class exported {
@@ -34,7 +33,6 @@ const welcomeSystem = (function () {
     }
 
     init() {
-      statusText = document.getElementById('statusText');
       $ui = $('#loginScreen');
 
       const self = this;
@@ -124,94 +122,94 @@ const welcomeSystem = (function () {
       setTimeout(() => { $ui.hide(); }, 1000);
     }
 
-    showMessage(message) {
-      // removeClass is need
-      // if previous message was an error messsage
-      // the message class stay in error
-      statusText.classList.remove('error');
-
-      if (message) {
-        let spantextstatusText = document.getElementById('spantextstatusText');
-        if (spantextstatusText) {
-          // update message
-          spantextstatusText.innerText = message;
-        }
-      } else {
-        statusText.classList.remove();
-        statusText.style.display='none';
-      }
-    }
-
     showStatus(message) {
+
+      let statusText = document.getElementById('statusText');
+      // if statusText does not exist return
+      if (!statusText)  return;
 
       if (!message) {
         statusText.classList.remove();
         statusText.style.display='none';
         return;
       }
-
-      if (statusText) {
-        let f;
-        if (message.length > 2 && message.charAt(1) == '.') {
-          f = message[0].toLowerCase();
-          if ( 'abc'.includes(f) ) {
-              // imgsrc = `img/${f}.svg`;
-              this.updateLoginProjetNameTitle(f);
-              message = message.substring(2);
-              message = message.charAt(0).toUpperCase() + message.slice(1);
-          }
-        }
-
-        // create if not exist
-        let spantextstatusText = document.getElementById('spantextstatusText');
-        if (!spantextstatusText) {
-          spantextstatusText = document.createElement('span');
-          spantextstatusText.id = 'spantextstatusText';
-          statusText.appendChild(spantextstatusText);
-        }
-        spantextstatusText.innerText = message;
-
-        
-
-        let imgsrc='img/ring.svg';
-        let ringstatusimg = document.getElementById('spantextstatusImg');
-        if (!ringstatusimg) {
-          ringstatusimg = document.createElement('img');
-          ringstatusimg.src = window.od.net.urlrewrite(imgsrc);
-          ringstatusimg.id = 'spantextstatusImg';
-          statusText.prepend(ringstatusimg);
-        }
-
-        // test for futur usage
-        if (!ringstatusimg.src)
-            // repaint for futur usage
-            ringstatusimg.setAttribute("src",  window.od.net.urlrewrite(imgsrc) );
+      else {
+        if (statusText.style.display!='block')
+          statusText.style.display='block';
       }
+
+      let f;
+      if (message.length > 2 && message.charAt(1) == '.') {
+        f = message[0].toLowerCase();
+        if ( 'abc'.includes(f) ) {
+            this.updateLoginProjetNameTitle(f);
+            message = message.substring(2);
+            message = message.charAt(0).toUpperCase() + message.slice(1);
+        }
+      }
+
+      // create if not exist
+      let spantextstatusText = document.getElementById('spantextstatusText');
+      if (!spantextstatusText) {
+        spantextstatusText = document.createElement('span');
+        spantextstatusText.id = 'spantextstatusText';
+        statusText.appendChild(spantextstatusText);
+      }
+      spantextstatusText.innerText = message;
+      // spantextstatusText.innerHTML = message + '<br>' + spantextstatusText.innerHTML;
+      
+      let imgsrc='img/ring.svg';
+      let ringstatusimg = document.getElementById('spantextstatusImg');
+      if (!ringstatusimg) {
+        ringstatusimg = document.createElement('img');
+        ringstatusimg.src = window.od.net.urlrewrite(imgsrc);
+        ringstatusimg.id = 'spantextstatusImg';
+        statusText.prepend(ringstatusimg);
+      }
+
+      // test for futur usage
+      if (!ringstatusimg.src)
+          // repaint for futur usage
+          ringstatusimg.setAttribute("src",  window.od.net.urlrewrite(imgsrc) );
 
     }
 
     showError(message) {
+      let statusText = document.getElementById('statusText');
+      // if statusText does not exist return
+      if (!statusText)  return;
       statusText.classList.add('error');
       statusText.innerText = message;
     }
 
-    thenlogin() {
+    clearstatusText(message) {
+      let statusText = document.getElementById('statusText');
+      // if statusText does not exist return
+      if (!statusText)  return;
+      statusText.classList.remove('error');
+      statusText.innerText = (message) ? message : '';
+    }
+
+    thenlogin(result) {
+      this.showStatus(result.message);
       logmein.createUserContext()
       .then( (result) => {
         this.updateLoginProjetNameTitle( 'd' );
         this.showStatus(result.message);
       } )
       .fail( (result)  => {
-          launcher.showLoginError( result );
-        }
-      );
+        this.clearLoginProjetNameTitle();
+        launcher.showLoginError( result );
+      } );
     }
 
-    faillogin(e) {
-      launcher.showLoginError( e );
+    faillogin(result) {
+      this.clearLoginProjetNameTitle();
+      launcher.showLoginError( result );
     }
 
     open() {
+      this.clearLoginProjetNameTitle();
       $ui.show();
       this.openManagers();
     }

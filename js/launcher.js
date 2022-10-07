@@ -520,6 +520,7 @@ export function login(provider, args={}) {
             expire_refresh_token = result.result.expire_in * 750;
           setTimeout(ctrlRefresh_user_token, expire_refresh_token);
           */
+          return result;
         } else { 
           Promise.reject(result);
         }
@@ -684,6 +685,7 @@ class LoginProgress {
       } else {
         this.bar += '.';
       }
+      console.log(`${this.message}${this.bar}`);
       welcomeSystem.showStatus(`${this.message}${this.bar}`);
     }
     this.next();

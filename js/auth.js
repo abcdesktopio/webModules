@@ -181,9 +181,12 @@ export class ExplicitAuthManager extends AuthManager {
     const pswd = this.getPassword();
     const loginsessionid = this.getLoginSessionid();
 
-    // do not hide now
+    // do not hide now  
     // this.$ui.hide();
     // hide only in auth.then to reduce paint
+    // this.welcomeui.clearstatusText();
+    this.welcomeui.showStatus('Starting authentification');
+    this.welcomeui.clearLoginProjetNameTitle();
 
     return launcher.explicitLogin(providername, user[1], pswd, loginsessionid )
     .then( (result) => { 
@@ -193,6 +196,7 @@ export class ExplicitAuthManager extends AuthManager {
       this.thenlogin( result ); 
     })
     .fail( (e) => {
+      this.welcomeui.showStatus('');
       // if the error message is not catched
       if (!this.showLoginError(e))
         // call the default parent showLoginError
@@ -208,6 +212,8 @@ export class ExplicitAuthManager extends AuthManager {
   showLoginError( result ) {
     let matcherror = false;
     let errorroutedict = {
+      'Unsafe login credentials': { controls: [ '#ADpassword' ], matcherror: true },
+      'Unsafe password credentials': { controls: [ '#cuid' ], matcherror: true },
       'No authentication provider can be found': { controls: [ '#cuid' ], matcherror: true },
       'kerberos credentitials validation failed Major (851968): Unspecified GSS failure.  Minor code may provide more information, Minor (2529638936)': { controls: [ '#ADpassword' ], matcherror: true },
       'kerberos credentitials validation failed Major (851968): Unspecified GSS failure.  Minor code may provide more information, Minor (2529638918)': { controls: [ '#cuid' ], matcherror: true },
