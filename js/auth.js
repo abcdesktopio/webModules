@@ -185,18 +185,19 @@ export class ExplicitAuthManager extends AuthManager {
     // this.$ui.hide();
     // hide only in auth.then to reduce paint
     // this.welcomeui.clearstatusText();
-    this.welcomeui.showStatus('Starting authentification');
+    this.welcomeui.showStatus('Starting authentification...');
     this.welcomeui.clearLoginProjetNameTitle();
-
+    this.closeManagers();
     return launcher.explicitLogin(providername, user[1], pswd, loginsessionid )
     .then( (result) => { 
       // hide all managers ( and the providers )
-      this.closeManagers();
+      // this.closeManagers();
       // Call next createdesktop process
       this.thenlogin( result ); 
     })
     .fail( (e) => {
       this.welcomeui.showStatus('');
+      this.openManagers();
       // if the error message is not catched
       if (!this.showLoginError(e))
         // call the default parent showLoginError
