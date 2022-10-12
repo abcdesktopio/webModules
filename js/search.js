@@ -74,14 +74,9 @@ export const init = function () {
         // Press ESCAPE : End search
         if (e.keyCode === 27) {
           close();
-        } else if (this.value !== '') {
-          if (this.value == 'tipsinfo') {
-            hideAppZone();
-            hideFileZone();
-            hideCloseZone();
-            tipsinfo.open();
-            return;
-          }
+        } 
+        // if value is not empty
+        else if (this.value !== '') {
           const pattern = new RegExp(`^${this.value}`, 'i');
           const apps = window.od.applist.filter((app) => (
             typeof app.keyword === 'string'
