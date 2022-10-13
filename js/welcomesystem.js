@@ -42,12 +42,12 @@ const welcomeSystem = (function () {
             if (config) { 
 		          self.applyConfig(config); 
 	          } else { 
-		          this.showError('API Service return undefined config. Please fix the od.config configuration file.'); 
+		          this.showError({ status:500, error:'API Service return undefined config. Please fix the od.config configuration file.' } ); 
 	          }
           },
         )
         .fail( (result) => {
-            this.showError('API Service is unreachable, bad gateway. Please try to reload.');
+            this.showError( { status:500, error:'API Service is unreachable, bad gateway. Please try to reload.' } );
           },
         );
     }
@@ -174,12 +174,13 @@ const welcomeSystem = (function () {
 
     }
 
-    showError(message) {
+    showError(result) {
       let statusText = document.getElementById('statusText');
       // if statusText does not exist return
       if (!statusText)  return;
+      statusText.style.display='block';
       statusText.classList.add('error');
-      statusText.innerText = message;
+      statusText.innerText = result.error;
     }
 
     clearstatusText(message) {
@@ -199,13 +200,13 @@ const welcomeSystem = (function () {
       } )
       .fail( (result)  => {
         this.clearLoginProjetNameTitle();
-        launcher.showLoginError( result );
+        this.showError( result );
       } );
     }
 
     faillogin(result) {
       this.clearLoginProjetNameTitle();
-      launcher.showLoginError( result );
+      this.showError( result );
     }
 
     open() {

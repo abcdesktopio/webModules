@@ -390,12 +390,8 @@ export function refresh_usertoken() {
   // Refresh the current Auth token
   odApiClient.auth
     .refreshtoken(args)
-    .fail(({ status_dict }) => {
-      showError(
-        status_dict.error
-        || status_dict.message
-        || 'General failure, no response from refresh token',
-      );
+    .fail((result) => {
+      showError(result);
       auth_sessionexpired();
     })
     .then((result, xhr) => {
@@ -419,12 +415,8 @@ export function refresh_desktoptoken(app) {
   // Refresh the current Auth token
   odApiClient.composer
     .refreshdesktoptoken(app)
-    .fail(({ status_dict }) => {
-      showError(
-        status_dict.error
-        || status_dict.message
-        || 'General failure, no response from refresh token',
-      );
+    .fail((result) => {
+      showError(result);
       auth_sessionexpired();
     })
     .then((result, xhr) => {
@@ -625,16 +617,17 @@ export function launchnewDesktopInstance(
         } else {
           errorDescription = result;
         }
-
         showLoginError(errorDescription);
       });
   } catch (e) {
     progress.stop();
-    showError(e);
+    showError( { status:500, error:e } );
   }
 }
 
 export function showLoginError(result) {
+  showError(result);
+  /*
   let msg_info = "500: General failure, login error";
   if (result) {
     if (!result.error)   result.error = 'General failure, unkown error';
@@ -646,10 +639,11 @@ export function showLoginError(result) {
   }
   console.log( msg_info );
   showError(msg_info);
+  */
 }
 
-export function showError(message) {
-  welcomeSystem.showError(message);
+export function showError(result) {
+  welcomeSystem.showError(result);
   welcomeSystem.open();
 }
 

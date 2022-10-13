@@ -76,7 +76,7 @@ export class AuthManager {
   }
 
   showLoginError( result ) {
-    launcher.showLoginError(result);
+    this.welcomeui.showError(result);
   }
 
   thenlogin( result ) {
@@ -185,7 +185,7 @@ export class ExplicitAuthManager extends AuthManager {
     // this.$ui.hide();
     // hide only in auth.then to reduce paint
     // this.welcomeui.clearstatusText();
-    this.welcomeui.showStatus('Starting authentification...');
+    this.welcomeui.clearstatusText('Starting authentification...');
     this.welcomeui.clearLoginProjetNameTitle();
     this.closeManagers();
     return launcher.explicitLogin(providername, user[1], pswd, loginsessionid )
