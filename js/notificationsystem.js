@@ -44,7 +44,7 @@ let currentNotif = 0;
  * // Personnal icon
  */
 export const displayNotification = function (title, desc, type, img, url, duration) {
-  const mydelay = (duration) || 3000;
+  const mydelay = (duration) || 5000;
   if (currentNotif >= 6) {
     currentNotif = 0;
   }
