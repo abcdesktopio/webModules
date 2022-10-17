@@ -131,6 +131,7 @@ const welcomeSystem = (function () {
       if (!message) {
         statusText.classList.remove();
         statusText.style.display='none';
+        statusText.innerHTML = ''; 
         return;
       }
       else {
@@ -175,20 +176,26 @@ const welcomeSystem = (function () {
     }
 
     showError(result) {
-      let statusText = document.getElementById('statusText');
+      // get statusText 
       // if statusText does not exist return
-      if (!statusText)  return;
+      let statusText = document.getElementById('statusText');
+      if (!statusText)  
+        return;
+      // remove all content img and text
+      // display only text error with error class
       statusText.style.display='block';
       statusText.classList.add('error');
-      statusText.innerText = result.error;
+      statusText.innerHTML = result.error;
     }
 
-    clearstatusText(message) {
+    clearstatusText() {
       let statusText = document.getElementById('statusText');
       // if statusText does not exist return
       if (!statusText)  return;
+      // remove class error
       statusText.classList.remove('error');
-      statusText.innerText = (message) ? message : '';
+      // remove all content img and text
+      statusText.innerHTML = ''; 
     }
 
     thenlogin(result) {
