@@ -596,7 +596,7 @@ export const internalLoadMenu = function (apps) {
   
   launcher.getwindowslist()
     .then((msg) => {
-      console.debug( 'launcher.getwindowslist response' );
+      // console.debug( 'launcher.getwindowslist response' );
       updateWindowList(msg.data);
       const docklist = document.getElementById('docklist');
       const childs = Array.from(docklist.children);
