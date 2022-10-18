@@ -372,7 +372,7 @@ function getListWidApp(app) {
  * @desc Called by broadcastSystem when an application window is opened or closed.
  */
 export const updateWindowList = function (data) {
-  console.debug('systemmenu updateWindowList')
+  // console.debug('systemmenu updateWindowList')
   // Check if systemMenu has been initialized
   if (!enable) return;
   windowList = data;
@@ -399,8 +399,7 @@ export const updateWindowList = function (data) {
  * @desc Update status of dock's applications who as started.
  */
 export const appStarted = function (data) {
-  console.debug('appStarted');
-  // console.debug( 'appStarted');
+  // console.debug('appStarted');
   let isPresent = false;
   let isActive = false;
 
@@ -619,7 +618,6 @@ export const internalLoadMenu = function (apps) {
  */
 export const loadMenu = function () {
   const apps = [];
-  console.debug( "loadMenu" );
   if (!window.od.applist)
     console.warn( 'loadMenu is trying to read undefined data from window.od.applist' );
   launcher.get('dock')
@@ -633,7 +631,7 @@ export const loadMenu = function () {
             // and application is not hideindock
             if (dockapplist[i] === element.launch && !element.hideindock) {
               // add entry in dock
-              console.log( 'adding ' +  element.launch + ' to apps' );
+              // console.log( 'adding ' +  element.launch + ' to apps' );
               apps.push(element);
             }
           });

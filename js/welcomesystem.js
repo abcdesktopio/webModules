@@ -191,7 +191,8 @@ const welcomeSystem = (function () {
     clearstatusText() {
       let statusText = document.getElementById('statusText');
       // if statusText does not exist return
-      if (!statusText)  return;
+      if (!statusText)  
+        return;
       // remove class error
       statusText.classList.remove('error');
       // remove all content img and text

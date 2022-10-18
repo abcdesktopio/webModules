@@ -372,8 +372,7 @@ export function implicitLogin(provider) {
 }
 
 export function auth_sessionexpired() {
-  console.debug('function auth_sessionexpired');
-  console.info('Your session has expired');
+  console.log('User token has expired');
   system.show(document.getElementById('overScreen'));
 }
 
@@ -402,8 +401,9 @@ export function refresh_usertoken() {
         && result.result
         && Number.isInteger(result.result.expire_in)
       ) {
+        window.od.currentUser.expire_in = result.result.expire_in;
         const expire_refresh_token = result.result.expire_in * 750; // retry before 3/4 of expire time
-        console.info(`User Token updated successful, next call in ${expire_refresh_token} ms`);
+        console.log(`User Token updated successful, next call in ${expire_refresh_token} ms`);
         setTimeout(ctrlRefresh_user_token, expire_refresh_token);
         return deferred.promise();
       }
@@ -517,19 +517,6 @@ export function login(provider, args={}) {
           Promise.reject(result);
         }
       });
-}
-
-/**
- * @function initRefreshUsertoken
- * @global
- * @return {void}
- * @desc login call refresh_usertoken after user.expire_in
- */
-export function initRefreshUsertoken() {
-  let expire_refresh_token = 360*750; // default value if not set
-  if (Number.isInteger(window.od.currentUser.expire_in))
-      expire_refresh_token = window.od.currentUser.expire_in * 750;
-  setTimeout(refresh_usertoken, expire_refresh_token);
 }
 
 /**

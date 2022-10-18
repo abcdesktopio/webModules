@@ -71,7 +71,7 @@ export const restoreUserContext = function () {
           ...window.od.currentUser,
           ...userinfo,
         };
-        launcher.initRefreshUsertoken();
+        launcher.refresh_usertoken();
         launcher.runAppsOrDesktop();
       } else {
         console.debug('function logmein:restoreUserContext return null user info');
@@ -106,11 +106,11 @@ export const restoreUserContext = function () {
           ...window.od.currentUser,
           ...userinfo,
         };
-        launcher.initRefreshUsertoken();
+        launcher.refresh_usertoken();
         return launcher.runAppsOrDesktop();
       } else {
         console.error('function logmein:createUserContext return null user info');
-        Promise.reject({status:'500', message:' getUserInfo() returns invalid data:' + userinfo});
+        Promise.reject({status:500, message:'getUserInfo() returns invalid data:' + userinfo});
       }
     }
   );
