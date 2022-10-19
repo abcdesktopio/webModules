@@ -364,24 +364,6 @@ function parseQueryString(str) {
   }, {});
 }
 
-function parseUrl() {
-  const queryparams = parseQueryString();
-
-  if (typeof queryparams === 'object') {
-    const { m } = queryparams;
-    if (m === 'error') {
-      windowMessage.open('Error', queryparams.message, queryparams.type, queryparams.status);
-      return false;
-    }
-    if (isCompatibleBrowser() === false) {
-      errorMessage.openNavMessage(whichBrowser.getBrowserInfo());
-      return false;
-    }
-    return true;
-  }
-  return false;
-}
-
 /**
  * @function setupisPCApp
  * @global
