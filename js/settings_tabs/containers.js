@@ -261,6 +261,11 @@ const buildLine = (row, container) => {
 const build = (containers = []) => {
   storageContainers = containers;
   const taskManager = document.getElementById('container-tab');
+  if (!taskManager) {
+    // the event come later and the windows has been closed
+    // nothing to do 
+    return;
+  }
   const taskManagerContainerInfos = taskManager.querySelector('div#task-manager-container-infos');
   const message = taskManager.querySelector('p.message');
 
