@@ -551,9 +551,9 @@ export const saveMenu = function () {
 
 export const internalLoadMenu = function (apps) {
   const docklist = document.getElementById('docklist');
-  console.debug( "number of application in dock is " + apps.length);
+  console.debug(`Adding ${apps.length} applications in the docklist element`);
   // if apps is empty
-  // then add all application with showinview 'dock'
+  // then add all applications with showinview 'dock'
   if (apps.length === 0) {
     for (let i = 0; i < window.od.applist.length; i++) {
       if (window.od.applist[i].showinview === 'dock') 

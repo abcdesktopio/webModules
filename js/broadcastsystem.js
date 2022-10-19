@@ -121,7 +121,7 @@ export const connect = () => {
 
 export const process_event = ( msg ) => {
 
-  console.log(`broadcastSystem:msgevent: ${msg.method}`);
+  // console.debug(`broadcastSystem:msgevent: ${msg.method}`);
 
   if (msg.method === 'hello') {
     broadcastEvent.dispatchEvent(

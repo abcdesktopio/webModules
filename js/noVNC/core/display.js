@@ -40,14 +40,14 @@ export default class Display {
             throw new Error("no getContext method");
         }
 
-        this._targetCtx = this._target.getContext('2d');
+        this._targetCtx = this._target.getContext('2d', { willReadFrequently: true});
 
         // the visible canvas viewport (i.e. what actually gets seen)
         this._viewportLoc = { 'x': 0, 'y': 0, 'w': this._target.width, 'h': this._target.height };
 
         // The hidden canvas, where we do the actual rendering
         this._backbuffer = document.createElement('canvas');
-        this._drawCtx = this._backbuffer.getContext('2d');
+        this._drawCtx = this._backbuffer.getContext('2d', { willReadFrequently: true} );
 
         this._damageBounds = { left: 0, top: 0,
                                right: this._backbuffer.width,

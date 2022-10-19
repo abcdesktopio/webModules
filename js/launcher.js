@@ -403,7 +403,7 @@ export function refresh_usertoken() {
       ) {
         window.od.currentUser.expire_in = result.result.expire_in;
         const expire_refresh_token = result.result.expire_in * 750; // retry before 3/4 of expire time
-        console.log(`User Token updated successful, next call in ${expire_refresh_token} ms`);
+        console.log(`User Token updated successfully, next call in ${expire_refresh_token} ms`);
         setTimeout(ctrlRefresh_user_token, expire_refresh_token);
         return deferred.promise();
       }

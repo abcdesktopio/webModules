@@ -30,6 +30,7 @@ const odApiClient = new (class ODApiClient {
           .then((res) => {
             const { jwt_user_token } = res.result;
             localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
+            console.debug( 'abcdesktop_jwt_user_token has been stored by auth request' )
             return res;
           });
       }
@@ -56,6 +57,7 @@ const odApiClient = new (class ODApiClient {
           .then((res) => {
             const { jwt_user_token } = res.result;
             localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
+            console.debug( 'abcdesktop_jwt_user_token has been stored by refreshtoken request' );
             return res;
           });
       }
@@ -74,6 +76,7 @@ const odApiClient = new (class ODApiClient {
             window.od.currentUser.name = name;
             window.od.currentUser.provider = provider;
             localStorage.setItem('abcdesktop_jwt_user_token', jwt_user_token);
+            console.debug( 'abcdesktop_jwt_user_token has been stored by a buildsecret request' )
             return res;
           });
       }
