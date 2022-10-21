@@ -63,11 +63,6 @@ window.od.test = window.test;
 window.od.docker_logoff = launcher.docker_logoff;
 // end of external call from test module
 
-// stream debug
-// REMOVE THIS AFTER DEBUG
-window.od.get_stream = launcher.get_stream;
-window.od.destroy_stream = launcher.destroy_stream;
-
 let lastTouchEnd = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -150,11 +145,6 @@ function setupbeforeuserloginin() {
   // Add event for dock's search bar and filter keycode for different feature.
   searchSystem.init();
 
-  // Init music player events.
-  // music.init();
-  // Init video player events.
-  // video.init();
-
   // Add an event listener pinch for resizing the resolution if device have a touchscreen.
   if (window.od.isTactile) {
     noDoubleTap();
@@ -213,10 +203,8 @@ window.od.setupafteruserloginin = function () {
   // call launcher.getkeyinfo
   tipsinfo.init();
 
+  // show user name in top left screen
   system.setUsername(window.od.currentUser.name);
-
-  // window.od.video = video;
-  // window.od.music = music;
 };
 
 function initApplistcallback() {
