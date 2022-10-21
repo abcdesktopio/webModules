@@ -173,16 +173,16 @@ document.addEventListener('speaker.webrtcState', async ({ detail: { available } 
 
 	if (promise !== undefined) {
   		promise.then(_ => {
-    			// Autoplay started!
-			 enableSoundIcon();
+    		// Autoplay started!
+			  enableSoundIcon();
   		}).catch(error => {
-			enableSoundIcon( 0 );
-			displayNotificationNoSound();
-    			// Autoplay was prevented.
-    			// Show a "Play" button so that user can start playback.
+			  enableSoundIcon( 0 );
+			  displayNotificationNoSound();
+    		// Autoplay was prevented.
+    		// Show a "Play" button so that user can start playback.
   		});
-	}
-    }
+	  }
+  }
 });
 
 
