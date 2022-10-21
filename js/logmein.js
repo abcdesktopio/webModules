@@ -66,7 +66,7 @@ export const restoreUserContext = function () {
     (userinfo) => {
       console.debug('function logmein:restoreUserContext:getUserInfo.then()');
       if (userinfo && userinfo.name && userinfo.provider) {
-        console.debug('logmein:restoreUserContext:getUserInfo userinfo is valid object ');
+        // console.debug('logmein:restoreUserContext:getUserInfo userinfo is valid object ');
         window.od.currentUser = {
           ...window.od.currentUser,
           ...userinfo,
@@ -74,7 +74,7 @@ export const restoreUserContext = function () {
         launcher.refresh_usertoken();
         launcher.runAppsOrDesktop();
       } else {
-        console.debug('function logmein:restoreUserContext return null user info');
+        // console.debug('function logmein:restoreUserContext return null user info');
         authDeferred.reject('Service returned invalid user info');
       }
       return authDeferred.promise();
@@ -106,7 +106,6 @@ export const restoreUserContext = function () {
           ...window.od.currentUser,
           ...userinfo,
         };
-        launcher.refresh_usertoken();
         return launcher.runAppsOrDesktop();
       } else {
         console.error('function logmein:createUserContext return null user info');
