@@ -19,6 +19,10 @@ import odApiClient from './odapiclient.js';
 import { broadcastEvent } from './broadcastevent.js';
 import userGeolocation from './geolocation.js';
 
+
+
+const jwt_retry_before_expire_time_in_milliseconds = 850;
+
 /**
  * @function getWindowsWidth
  * @global
@@ -402,9 +406,9 @@ export function refresh_usertoken() {
         && Number.isInteger(result.result.expire_in)
       ) {
         window.od.currentUser.expire_in = result.result.expire_in;
-        const expire_refresh_token = result.result.expire_in * 750; // retry before 3/4 of expire time
+        const expire_refresh_token = result.result.expire_in * jwt_retry_before_expire_time_in_milliseconds; // retry before 3/4 of expire time
         console.log(`User Token updated successfully, next call in ${expire_refresh_token} ms`);
-        setTimeout(ctrlRefresh_user_token, expire_refresh_token);
+        setTimeout(ctrlRefresh_usertoken, expire_refresh_token);
         return deferred.promise();
       }
       deferred.reject(xhr.status, 'API call Refresh token failed', result);
@@ -429,12 +433,10 @@ export function refresh_desktoptoken(app) {
         && result.result.expire_in
         && Number.isInteger(result.result.expire_in)
       ) {
-        window.od.currentUser.authorization = result.result.authorization;
-        const expire_refresh_token = result.result.expire_in * 750; // retry before 3/4 of expire time
-        console.info(
-          `Desktop Token updated successful, next call in ${expire_refresh_token
-          } ms`,
-        );
+        // not used 
+        // window.od.currentUser.authorization = result.result.authorization;
+        const expire_refresh_token = result.result.expire_in * jwt_retry_before_expire_time_in_milliseconds; // retry before 3/4 of expire time
+        console.info( `Desktop Token updated successful, next call in ${expire_refresh_token} ms`);
         setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
         return deferred.promise();
       }
@@ -458,7 +460,7 @@ function ctrlRefresh_token(callback, callback_arg) {
   }
 }
 
-function ctrlRefresh_user_token() {
+function ctrlRefresh_usertoken() {
   if (window.od.broadway.isConnected()) {
     refresh_usertoken();
   } else {
@@ -506,12 +508,10 @@ export function login(provider, args={}) {
     .then((result) => {
       if ( result.status == 200  && result.result ) {
           window.od.currentUser = result.result;
-          /*
-          let expire_refresh_token = 360*750; // default value if not set
+          let expire_refresh_token = 60*750; // default value if not set
           if (Number.isInteger(result.result.expire_in))
             expire_refresh_token = result.result.expire_in * 750;
-          setTimeout(ctrlRefresh_user_token, expire_refresh_token);
-          */
+          setTimeout(ctrlRefresh_usertoken, expire_refresh_token);
           return result;
         } else { 
           Promise.reject(result);
