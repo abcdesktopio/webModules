@@ -12,6 +12,7 @@
 */
 
 import * as launcher from './launcher.js';
+import * as notificationSystem from './notificationsystem.js';
 
 /**
  * @name clipboard
@@ -20,8 +21,6 @@ import * as launcher from './launcher.js';
 
 let cparea;
 let localclip = '';
-
-
 
 const initNavigatorPermission = function (acceptcuttext, sendcuttext) {
   if (!acceptcuttext && !sendcuttext ) {
@@ -62,6 +61,7 @@ const initNavigatorPermission = function (acceptcuttext, sendcuttext) {
     Promise.all(promisePermissionsArray)
       .then(() => {
         if (navigator.clipboard && navigator.clipboard.readText) {
+          // handler start here 
           clipboardHandler();
         }
       });
@@ -75,11 +75,10 @@ const initNavigatorPermission = function (acceptcuttext, sendcuttext) {
  * @desc Init events for clipboard.
  */
 export const init = function () {
- 
-
-  // Keep this code, it should works, but it does not
+  // we keep this code commented but it should works, but it does not
   // This section does not work
   // clipboardchange is never received, why ?
+  //
   // if (navigator && navigator.clipboard && navigator.clipboard.addEventListener)
   // 	navigator.clipboard.addEventListener( "clipboardchange", clipboardEventHandler );
   // same as previous
@@ -87,23 +86,24 @@ export const init = function () {
   //                    console.log('Clipboard contents changed');
   //    });
   //
-
-  
-  launcher.getenv().then( (data) => {
-    // copypaste.style.display is hidden by default
-    if (data && data.env) {
-      const noacceptcuttext = (data.env.ACCEPTCUTTEXT === 'disabled');
-      const nosendcuttext   = (data.env.SENDCUTTEXT   === 'disabled');
-      if ( noacceptcuttext )  { console.info('ACCEPTCUTTEXT is disabled by env, in the desktop'); }
-      if ( nosendcuttext )    { console.info('SENDCUTTEXT is disabled by env, in the desktop');   }
-      if ( noacceptcuttext && nosendcuttext ) {
-        // nothing to do
-        console.info('All clipboard CUTTEXT features are disabled by env, no clipboard icon on top');
-        return;
-      }
-      
-      const copypaste = document.getElementById('copypaste');
-      if (copypaste) {
+  //
+  const copypaste = document.getElementById('copypaste');
+  if (copypaste) {
+    launcher.getenv().then( (data) => {
+      // copypaste.style.display is hidden by default
+      if (data && data.env) {
+        const noacceptcuttext = (data.env.ACCEPTCUTTEXT === 'disabled');
+        const nosendcuttext   = (data.env.SENDCUTTEXT   === 'disabled');
+        if ( noacceptcuttext )  { console.info('ACCEPTCUTTEXT is disabled by env, in the desktop'); }
+        if ( nosendcuttext )    { console.info('SENDCUTTEXT is disabled by env, in the desktop');   }
+        if ( noacceptcuttext && nosendcuttext ) {
+          // nothing to do
+          console.info('All clipboard CUTTEXT features are disabled by env, no clipboard icon on top');
+          // filerservice is disabled 
+          notificationSystem.displayNotification('Clipboard', 'All clipboard CUT TEXT features are disabled on your desktop by your administrator', 'deny', undefined, undefined, 9000 );
+          return;
+        }
+        
         initNavigatorPermission( !noacceptcuttext, !nosendcuttext );
         copypaste.style.display = 'block';  // show copypaste	icon
         cparea = copypaste.querySelector('textarea');
@@ -124,8 +124,8 @@ export const init = function () {
           copypaste.querySelector('#send').addEventListener('click', () => { sendClipboard(); });
         }
       }
-    }
-  });
+    });
+  }
 };
 
 function clipboardHandler() {
