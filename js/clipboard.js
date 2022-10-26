@@ -13,6 +13,7 @@
 
 import * as launcher from './launcher.js';
 import * as notificationSystem from './notificationsystem.js';
+import * as languages from './languages.js';
 
 /**
  * @name clipboard
@@ -100,7 +101,7 @@ export const init = function () {
           // nothing to do
           console.info('All clipboard CUTTEXT features are disabled by env, no clipboard icon on top');
           // filerservice is disabled 
-          notificationSystem.displayNotification('Clipboard', 'All clipboard CUT TEXT features are disabled on your desktop by your administrator', 'deny', undefined, undefined, 9000 );
+          notificationSystem.displayNotification(  languages.getTranslate('clipboard'), languages.getTranslate('clipboard-disabled') , 'deny', undefined, undefined, -1 );
           return;
         }
         
