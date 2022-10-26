@@ -22,11 +22,11 @@
  * @name NotificationSystem
  * @module
  */
-
 import { broadcastEvent } from './broadcastevent.js';
 import * as languages from './languages.js';
 
 let currentNotif = 0;
+const default_max_duration_in_milliseconds = 5000;
 
 /**
  * @function displayNotification
@@ -44,7 +44,7 @@ let currentNotif = 0;
  * // Personnal icon
  */
 export const displayNotification = function (title, desc, type, img, url, duration) {
-  const mydelay = (duration) || 5000;
+  let mydelay = (duration) || default_max_duration_in_milliseconds;
   if (currentNotif >= 6) {
     currentNotif = 0;
   }
@@ -77,6 +77,24 @@ export const displayNotification = function (title, desc, type, img, url, durati
   img = window.od.net.urlrewrite(img);
   if (url) { url = window.od.net.urlrewrite(url); }
   currentNotif++;
+
+  // update duration 
+  // if the message has been already show and if this is an unlimited show
+  if (mydelay < 0) {
+    let already_show_delay_in_milliseconds;
+    already_show_delay_in_milliseconds = localStorage.getItem(desc);
+    if (already_show_delay_in_milliseconds === null)
+      localStorage.setItem(desc,default_max_duration_in_milliseconds);
+    else {
+      already_show_delay_in_milliseconds = parseInt(already_show_delay_in_milliseconds);
+      if (already_show_delay_in_milliseconds <= 0) 
+        return;
+      mydelay = already_show_delay_in_milliseconds;
+      // show four times
+      already_show_delay_in_milliseconds = already_show_delay_in_milliseconds - default_max_duration_in_milliseconds/4;
+      localStorage.setItem(desc,already_show_delay_in_milliseconds);
+    }
+  }
 
   const notif = {
     img,
@@ -154,9 +172,9 @@ export const showNotification = function (notif) {
       .forEach((close) => close.click(() => $(`#${close.data('notif')}`).hide('slide', { direction: 'right' })));
     const notificationElt = $(`#notification${currentNotif}`);
     notificationElt.show('slide', { direction: 'right' });
-    setTimeout(() => {
-      notificationElt.hide('slide', { direction: 'right' });
-    }, notif.delay);
+    if (notif.delay > 0) {
+      setTimeout(() => { notificationElt.hide('slide', { direction: 'right' }); }, notif.delay);
+    }
   }
 };
 
@@ -166,7 +184,7 @@ broadcastEvent.addEventListener('hello', ({ detail: { user } }) => {
   // by user.photo ? `data:;base64, ${user.photo}` : '../img/top/place-available.svg';
   // the image format depend on ldap storage attribut value
   const picture = user.photo ? `data:;base64,${user.photo}` : window.od.net.urlrewrite('../img/top/place-available.svg');
-  displayNotification(user.name, 'Connected', '', picture);
+  displayNotification(user.name, languages.getTranslate('connected'), '', picture);
 });
 
 broadcastEvent.addEventListener('bye', ({ detail: { user } }) => {
@@ -175,5 +193,5 @@ broadcastEvent.addEventListener('bye', ({ detail: { user } }) => {
   // by user.photo ? `data:;base64, ${user.photo}` : '../img/top/place-available.svg';
   // the image format depend on ldap storage attribut value
   const picture = user.photo ? `data:;base64,${user.photo}` : window.od.net.urlrewrite('../img/top/place-available.svg');
-  displayNotification(user.name, 'Disconnected', '', picture);
+  displayNotification(user.name, languages.getTranslate('disconnected'), '', picture);
 });
