@@ -132,6 +132,9 @@
     "connectAD": "Se connecter",
     "link-open-session": "Je ne peux pas ouvrir ma session",
     "over-screen-message-data": "Votre desktop est fermé.",
+    "over-screen-message-data-please": "Vous pouvez",
+    "over-screen-message-data-reload": "recharger",
+    "over-screen-message-data-this-page": "cette page.",
     "title-authentication-window": "Authentification",
     "fileZoneTitle": "Fichiers",
     "appZoneTitle": "Applications",
@@ -141,5 +144,9 @@
     "issue-summary": "Objet",
     "issue-description": "Description",
     "issue-cancel-button": "Annuler",
-    "issue-send-button" : "Envoyer"
+    "issue-send-button" : "Envoyer",
+    "clipboard": "Presse-Papier",
+    "clipboard-disabled": "Les fonctionalités de copier-coller sont désactivées par votre administateur",
+    "connected": "connecté",
+    "disconnected": "déconnecté" 
 }

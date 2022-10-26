@@ -104,6 +104,18 @@ export const editStatus = function (status) {
     if (overScreenMessage) { 
       overScreenMessage.textContent = getTranslate('over-screen-message-data'); 
     }
+    const overScreenMessageDataPlease = document.getElementById('overScreenMessageDataPlease');
+    if (overScreenMessageDataPlease) { 
+      overScreenMessageDataPlease.textContent = getTranslate('over-screen-message-data-please'); 
+    }
+    const overScreenMessageDataReload = document.getElementById('overScreenMessageDataReload');
+    if (overScreenMessageDataReload) { 
+      overScreenMessageDataReload.textContent = getTranslate('over-screen-message-data-reload'); 
+    }
+    const overScreenMessageDatathisPage = document.getElementById('overScreenMessageDatathisPage');
+    if (overScreenMessageDatathisPage) { 
+      overScreenMessageDatathisPage.textContent = getTranslate('over-screen-message-data-this-page'); 
+    }
     const overScreen = document.getElementById('overScreen');
     if (overScreen) { 
       system.show(overScreen); 

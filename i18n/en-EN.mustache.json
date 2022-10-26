@@ -132,11 +132,18 @@
     "connectAD": "Sign in",
     "link-open-session": "I can't open my session",
     "over-screen-message-data": "Your abcdesktop session has been disconnected.",
+    "over-screen-message-data-please": "Please",
+    "over-screen-message-data-reload": "reload",
+    "over-screen-message-data-this-page": "this page.",
     "title-authentication-window": "Authentication",
     "fileZoneTitle": "Files",
     "appZoneTitle": "Applications",
     "user-label-not-found": "No label found",
     "issue-header-message":"Sumbit a new issue",
     "issue-cancel-button": "Cancel",
-    "issue-send-button" : "Send"
+    "issue-send-button" : "Send",
+    "clipboard": "Clipboard",
+    "clipboard-disabled": "All clipboard copy and paste features are disabled by your administrator",
+    "connected": "connected",
+    "disconnected": "disconnected" 
 }
