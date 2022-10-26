@@ -603,7 +603,7 @@ export const internalLoadMenu = function (apps) {
       tryReduceDock(docklist, childs);
       // Now init app is done
       // let's bind event in always
-      console.debug('now binding addEventListener window.list');
+      // console.debug('now binding addEventListener window.list');
       broadcastEvent.addEventListener('proc.started',({ detail: { procStarted } }) => appStarted(procStarted));
       broadcastEvent.addEventListener('proc.killed', ({ detail: { procKilled  } }) => appKilled(procKilled));
       broadcastEvent.addEventListener('window.list', ({ detail: { windowList  } }) => updateWindowList(windowList));
