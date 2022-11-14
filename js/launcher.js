@@ -433,8 +433,9 @@ export function refresh_desktoptoken(app) {
         && result.result.expire_in
         && Number.isInteger(result.result.expire_in)
       ) {
-        // not used 
-        // window.od.currentUser.authorization = result.result.authorization;
+	// store desktop token in window.od.currentUser.authorization
+	// to requestSpawnerAPI
+        window.od.currentUser.authorization = result.result.authorization;
         const expire_refresh_token = result.result.expire_in * jwt_retry_before_expire_time_in_milliseconds; // retry before 3/4 of expire time
         console.info( `Desktop Token updated successful, next call in ${expire_refresh_token} ms`);
         setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
@@ -583,10 +584,10 @@ export function launchnewDesktopInstance(
           window.od.currentUser.target_ip = result.result.target_ip;
           window.od.currentUser.vncpassword = result.result.vncpassword;
           window.od.currentUser.authorization = result.result.authorization;
-	        window.od.currentUser.websocketrouting = result.result.websocketrouting;
+	  window.od.currentUser.websocketrouting = result.result.websocketrouting;
           window.od.currentUser.websockettcpport = result.result.websockettcpport;
           window.od.currentUser.pulseaudiotcpport = 4714;
-	        setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
+	  setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
           connectReady();
         } else {
           showLoginError(result);
