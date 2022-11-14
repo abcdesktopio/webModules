@@ -41,7 +41,6 @@
     "commander": "^5.0.0",
     "fs-extra": "^9.0.1",
     "minify": "^5.1.1",
-    "multispinner": "^0.2.1",
     "mustache": "^4.1.0",
     "node-addon-api": "^3.1.0",
     "node-gyp-build": "^4.2.3",
