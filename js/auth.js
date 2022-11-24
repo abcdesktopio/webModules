@@ -213,15 +213,19 @@ export class ExplicitAuthManager extends AuthManager {
 
   showLoginError( result ) {
     let matcherror = false;
+    // The error message can be  'Invalid credentials' or  'InvalidCredentials'
+    // different response string from kerberos, ldap bind execption class
+    // message are always compare using lowercase
     let errorroutedict = {
       'Unsafe login credentials': { controls: [ '#ADpassword' ], matcherror: true },
       'Unsafe password credentials': { controls: [ '#cuid' ], matcherror: true },
       'No authentication provider can be found': { controls: [ '#cuid' ], matcherror: true },
       'kerberos credentitials validation failed Major (851968): Unspecified GSS failure.  Minor code may provide more information, Minor (2529638936)': { controls: [ '#ADpassword' ], matcherror: true },
       'kerberos credentitials validation failed Major (851968): Unspecified GSS failure.  Minor code may provide more information, Minor (2529638918)': { controls: [ '#cuid' ], matcherror: true },
-      'Invalid credentials':  { controls: [ '#ADpassword' ], matcherror: true },
-      'Invalid domain':  { controls: [ '#cuid' ], matcherror: false },
-      'Unsafe credentials': { controls: [ '#cuid', '#ADpassword' ], matcherror: false }
+      'Invalid credentials':  { controls: [ '#cuid', '#ADpassword' ], matcherror: false },
+      'invalidCredentials' :  { controls: [ '#cuid', '#ADpassword' ], matcherror: false },
+      'Invalid domain':       { controls: [ '#cuid' ], matcherror: false },
+      'Unsafe credentials':   { controls: [ '#cuid', '#ADpassword' ], matcherror: false }
     };
 
     if (result) {
@@ -229,7 +233,7 @@ export class ExplicitAuthManager extends AuthManager {
         let message = result.error;
         console.error( message );
         for( var key in errorroutedict) {
-          if (message.startsWith( key )) {
+          if (message.toLowerCase().startsWith( key.toLowerCase() )) {
             errorroutedict[key].controls.forEach( c => $(c).addClass( 'error' ) );
             matcherror = errorroutedict[key].matcherror;
             break;
