@@ -213,10 +213,13 @@ export class ExplicitAuthManager extends AuthManager {
 
   showLoginError( result ) {
     let matcherror = false;
+    // For old error format
     // The error message can be  'Invalid credentials' or  'InvalidCredentials'
     // different response string from kerberos, ldap bind execption class
     // message are always compare using lowercase
+    // The new error format is is Exception class name
     let errorroutedict = {
+      // old error format 
       'Unsafe login credentials': { controls: [ '#ADpassword' ], matcherror: true },
       'Unsafe password credentials': { controls: [ '#cuid' ], matcherror: true },
       'No authentication provider can be found': { controls: [ '#cuid' ], matcherror: true },
@@ -225,7 +228,12 @@ export class ExplicitAuthManager extends AuthManager {
       'Invalid credentials':  { controls: [ '#cuid', '#ADpassword' ], matcherror: false },
       'invalidCredentials' :  { controls: [ '#cuid', '#ADpassword' ], matcherror: false },
       'Invalid domain':       { controls: [ '#cuid' ], matcherror: false },
-      'Unsafe credentials':   { controls: [ '#cuid', '#ADpassword' ], matcherror: false }
+      'Invalid dn':           { controls: [ '#cuid' ], matcherror: true },
+      'Unsafe credentials':   { controls: [ '#cuid', '#ADpassword' ], matcherror: false },
+      // new error format
+      // next release 3.0 error format 
+      'LDAPInvalidCredentialsResult': { controls: [ '#cuid','#ADpassword' ], matcherror: true },
+      'LDAPInvalidDNSyntaxResult': { controls: [ '#cuid' ], matcherror: true }
     };
 
     if (result) {
