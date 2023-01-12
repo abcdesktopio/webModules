@@ -247,25 +247,36 @@ const odApiClient = new (class ODApiClient {
   }
 
   sendRequest(method, args) {
-    function getErrorResponse(message, status, xhr) {
-
+    function getErrorResponse(result, status, xhr) {
+      let response_message = "unknow error";
+      let response_status = 500;
+      if (result) {
+	  if (result.status) {
+	  	if (result.error)
+	      		return result;
+		if (!result.message) {
+            		result.error = result.message;
+			return result;
+		}
+	  }
+      }
+	    
       if (xhr) {
-
         // prevent reverse proxy reponse
         // could return a html data
-        // read by default whr status if exist 
-        if (xhr.statusText) { message = xhr.statusText; }
-        if (xhr.status)     { status  = xhr.status;  }
+        // read by default xhr status if exist 
+        if (xhr.statusText) { response_message = xhr.statusText; }
+        if (xhr.status)     { response_status  = xhr.status;  }
 
         // read xhr.responseJSON 
         // should get more detail than xhr
         if (xhr.responseJSON) {
-          if (xhr.responseJSON.message) { message = xhr.responseJSON.message; }
-          if (xhr.responseJSON.status)  { status  = xhr.responseJSON.status;  }
+          if (xhr.responseJSON.error) { response_message = xhr.responseJSON.message; }
+          if (xhr.responseJSON.status){ response_status  = xhr.responseJSON.status;  }
         }
       }
   
-      return { 'status': status, 'error': message };
+      return { 'status': response_status, 'error': response_message };
     }
 
     const options = {
