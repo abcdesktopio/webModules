@@ -26,7 +26,7 @@ import { broadcastEvent } from './broadcastevent.js';
 import * as languages from './languages.js';
 
 let currentNotif = 0;
-const default_max_duration_in_milliseconds = 5000;
+const default_max_duration_in_milliseconds = 3000;
 
 /**
  * @function displayNotification
