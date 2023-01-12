@@ -590,22 +590,12 @@ export function launchnewDesktopInstance(
 	  setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
           connectReady();
         } else {
-          showLoginError(result);
+          showError(result);
         }
       })
       .fail((result) => {
-        let errorDescription;
         progress.stop();
-
-        if (result.error) {
-          errorDescription = {
-            message: result.error,
-            status: result.status,
-          };
-        } else {
-          errorDescription = result;
-        }
-        showLoginError(errorDescription);
+        showError(result);
       });
   } catch (e) {
     progress.stop();
