@@ -273,20 +273,6 @@ export function set(key, value) {
 }
 
 /**
- * @function setCollection
- * @global
- * @params {string} key
- * @params {object} value
- * @params {callback} onsuccess
- * @params {callback} onerror
- * @return {void}
- * @desc Insert value inside collection in MongoDB.
- */
-export function setCollection(key, value) {
-  return odApiClient.store.setCollection({ key, value });
-}
-
-/**
  * @function getCollection
  * @global
  * @params {string} key
