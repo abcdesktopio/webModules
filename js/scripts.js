@@ -573,7 +573,7 @@ function setFullScreenUI() {
  */
 function setupTopMenu() {
   $('#top #top-right div').bind('click', function () {
-    if (this.id === 'printer' && !printer.hasFiles) {
+    if (this.id === 'printer') {
       return;
     }
 

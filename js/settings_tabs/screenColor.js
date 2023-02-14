@@ -276,7 +276,7 @@ function deleteImg(numberImgToDelete) {
       .slice(0, numberImgToDelete) // Select the first images
       .map(([img]) => img) // Create one dims array by keeping images names
       .map((img) => launcher
-        .requestFileAPI('DELETE', `/home/balloon/.wallpapers/${img}`)
+        .requestFileAPI('DELETE', `~/.wallpapers/${img}`)
         .then(system.checkError)
         .then((res) => res.json())
         .catch((e) => {
@@ -324,7 +324,7 @@ function setSizePicturesBlock() {
  */
 function getBase64Uri(myFilename) {
   return launcher
-    .requestFileAPI('GET', `/home/balloon/.wallpapers/${myFilename}`)
+    .requestFileAPI('GET', `~/.wallpapers/${myFilename}`)
     .then(system.checkError)
     .then((res) => res.blob())
     .then((blob) => new Promise((resolve, reject) => {
@@ -379,7 +379,7 @@ async function buildListWallpapersElement() {
   }
 
   const images = await launcher
-    .fileAPIListDirectory('/home/balloon/.wallpapers')
+    .fileAPIListDirectory('~/.wallpapers')
     .then(system.checkError)
     .then((res) => res.json());
 
@@ -479,7 +479,7 @@ function buildDropzoneEvents() {
   });
 
   myDropzone.on('sending', (file, xhr, formData) => {
-    formData.append('fullPath', '/home/balloon/.wallpapers');
+    formData.append('fullPath', '~/.wallpapers');
   });
 
   myDropzone.on('success', () => {
