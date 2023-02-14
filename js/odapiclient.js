@@ -124,10 +124,6 @@ const odApiClient = new (class ODApiClient {
         return client.sendRequest('store/set', { key, value });
       }
 
-      setCollection(key, value) {
-        return client.sendRequest('store/setcollection', { key, value });
-      }
-
       getCollection(key) {
         return client.sendRequest('store/getcollection', { key });
       }
