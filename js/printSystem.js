@@ -74,6 +74,6 @@ export const doPrint = (file) => {
 
 broadcastEvent.addEventListener('printer.new', ({ detail: { data } }) => {
   if (data && data.newfile === true) {
-    doPrint(`/home/balloon/${data.path}`);
+    doPrint(`~/${data.path}`);
   }
 });
