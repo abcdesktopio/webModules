@@ -35,13 +35,17 @@ checkTranspile:
 		cd ./transpile && yarn install; \
 	fi
 
+
+install:
+	npm install
+	cp node_modules/xterm/lib/xterm.js ./js
+	cp node_modules/xterm-addon-attach/lib/xterm-addon-attach.js ./js
+	cp node_modules/xterm-addon-fit/lib/xterm-addon-fit.js .js
+	cp node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js ./js
+
 xterm:
 	echo "Build xterm..."
-	if [ ! -d "./xterm/node_modules" ]; then \
-		cd ./xterm && yarn install && node build.js; \
-	else \
-		cd ./xterm && node build.js; \
-	fi
+	# npm install
 
 svg:
 	cd ./transpile && node index.js --svg
