@@ -64,11 +64,6 @@
       "defer": false
     },
     {
-      "src": "xterm/dist/client-bundle.js",
-      "indexPageOnly": true,
-      "defer": true
-    },
-    {
       "src": "js/janus.js",
       "indexPageOnly": false,
       "defer": false
@@ -77,6 +72,26 @@
       "src": "js/mustache.js",
       "indexPageOnly": false,
       "defer": false
+    },
+    {
+      "src": "node_modules/xterm/lib/xterm.js",
+      "indexPageOnly": false,
+      "defer": true
+    },
+    {
+      "src": "node_modules/xterm-addon-attach/lib/xterm-addon-attach.js",
+      "indexPageOnly": false,
+      "defer": true
+    },
+    {
+      "src": "node_modules/xterm-addon-fit/lib/xterm-addon-fit.js",
+      "indexPageOnly": false,
+      "defer": true
+    },
+    {
+      "src": "node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js",
+      "indexPageOnly": false,
+      "defer": true
     }
   ]
 }
