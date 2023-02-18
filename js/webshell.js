@@ -11,12 +11,14 @@
 * Software description: cloud native desktop service
 */
 
-
 import * as system from './system.js';
-import '../node_modules/xterm/lib/xterm.js';
-import '../node_modules/xterm-addon-attach/lib/xterm-addon-attach.js';
+
+/*
+import '../node_modules/xterm/lib/xterm.js';  
 import '../node_modules/xterm-addon-fit/lib/xterm-addon-fit.js';
 import '../node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js';
+import '../node_modules/xterm-addon-attach/lib/xterm-addon-attach.js';
+*/
 
 
 /**
