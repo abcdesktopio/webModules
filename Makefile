@@ -37,7 +37,7 @@ checkTranspile:
 
 
 untranspile:
-	cd ./transpile && npn uninstall prebuild
+	cd ./transpile && yarn remove prebuild
 
 install:
 	npm install
