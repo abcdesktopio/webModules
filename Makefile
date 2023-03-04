@@ -36,6 +36,9 @@ checkTranspile:
 	fi
 
 
+untranspile:
+	cd ./transpile && npn uninstall prebuild
+
 install:
 	npm install
 	# cp node_modules/xterm/lib/xterm.js ./js
