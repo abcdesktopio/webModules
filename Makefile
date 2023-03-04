@@ -37,7 +37,10 @@ checkTranspile:
 
 
 untranspile:
-	cd ./transpile && yarn remove prebuild
+	cd ./transpile
+	yarn remove prebuild
+	yarn remove prebuild-install 
+	yarn remove node-gyp-build 
 
 install:
 	npm install
