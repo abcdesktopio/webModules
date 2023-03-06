@@ -23,7 +23,8 @@
   "author": "kecsou",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
-  "@babel/core": "^7.11.1",
+  "dependencies": {
+    "@babel/core": "^7.11.1",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
