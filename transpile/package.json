@@ -39,13 +39,13 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "browserify": "^16.5.2",
     "commander": "^5.0.0",
-    "fs-extra": "^9.0.1",
+    "fs-extra": "^11.1.0",
     "minify": "^5.1.1",
-    "mustache": "^4.1.0",
-    "node-addon-api": "^3.1.0",
-    "node-gyp-build": "^4.2.3",
-    "prebuild-install": "^6.1.1",
-    "regenerator-runtime": "^0.13.7"
+    "mustache": "^4.2.0",
+    "node-addon-api": "^6.0.0",
+    "node-gyp-build": "^4.6.0",
+    "prebuild-install": "^7.1.1 ",
+    "regenerator-runtime": "^0.13.11"
   },
   "devDependencies": {
     "prebuild": "^10.0.1"
