@@ -289,9 +289,11 @@ async function buildJSProductionFiles() {
 }
 // #endregion build js for production
 
+
 // #region run
 async function run() {
   console.time('Total duration');
+  console.log('Options: ', program.opts());
 
   try {
     await fs.promises.access(pathUIConf, fs.constants.F_OK);
@@ -304,22 +306,32 @@ async function run() {
 
   const promises = [];
 
-  if (program.svg) {
+  if (program.opts().svg) {
+    console.log( 'creating svg files' );
     promises.push(buildSvg(colors));
   }
-
-  if (program.css) {
-    promises.push(buildCss(colors));
+  else {
+    console.log( 'svg files are disabled' );
   }
 
-  if (program.userInterface && program.prod) { // Prevent of access index.html at the same time
+  if (program.opts().css) {
+    console.log( 'creating css files' );
+    promises.push(buildCss(colors));
+  }
+  else {
+    console.log( 'css files are disabled' );
+  }
+
+  if (program.opts().userInterface && program.opts().prod) { // Prevent of access index.html at the same time
     await userInterface();
     await buildJSProductionFiles();
   } else {
-    if (program.userInterface) {
+    if (program.opts().userInterface) {
+      console.log( 'creating userInterface files' );
       promises.push(userInterface());
     }
-    else if (program.prod) {
+    else if (program.opts().prod) {
+      console.log( 'creating prod files' );
       promises.push(buildJSProductionFiles());
     }
   }
@@ -327,6 +339,7 @@ async function run() {
   await Promise.all(promises);
   console.timeEnd('Total duration');
 }
+
 
 run()
   .catch(console.error);
