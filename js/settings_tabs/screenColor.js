@@ -24,7 +24,6 @@ import * as CP  from '../color-picker.js';
 let firstAppear = true;
 let acceptfileservice= false;
 let defaultColor = '#6ec6f0';
-let colorPicker;
 
 const sizeDivColor = { offsetHeight: 0, offsetWidth: 0 };
 const MAX_COLOR = 8;
@@ -112,8 +111,6 @@ function saveColors() {
 	  if (datacolor)
 		colorFront.push(datacolor);
 	}
-	console.log( 'colorFront=');
-	console.log( colorFront );
 	return launcher.set('colors', colorFront);
   }
 }
@@ -166,7 +163,6 @@ function buildColorsDiv(colors) {
   }
 
   colors.forEach((color) => {
-    console.log( 'adding ' + color );
     const newBlockColor = buildColorDiv(color);
     colorList.appendChild(newBlockColor);
   });
@@ -272,14 +268,10 @@ function addColorsControls() {
   imgShowResetColor.addEventListener('click', () => {
     resetToDefaultColorsSection();
   });
-
   divImgShowResetColor.appendChild(imgShowResetColor);
   
 
-  // const colorInput = document.getElementById('color_input');
-  const colorList = document.getElementById('color-list');
-
-  colorPicker = new window.CP(imgShowPickerColor);
+  let colorPicker = new window.CP(divImgShowPickerColor);
   colorPicker.on(	'stop', 
 	  	function (r, g, b, a) { 
 			this.source.value = this.color(r, g, b, a);
@@ -287,6 +279,7 @@ function addColorsControls() {
   		}
   );
 
+  const colorList = document.getElementById('color-list');
   if (colorList) {
     colorList.appendChild(divImgShowPickerColor);
     colorList.appendChild(divImgShowResetColor);
