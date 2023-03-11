@@ -19,7 +19,7 @@ import * as notificationSystem from '../notificationsystem.js';
 import * as system from '../system.js';
 import { broadcastEvent } from '../broadcastevent.js';
 import { settingsEvents } from '../settingsevents.js';
-import * as CP  from '../color-picker.js';
+import * as CP  from '../../node_modules/@taufik-nurrohman/color-picker/index.js';
 
 let firstAppear = true;
 let acceptfileservice= false;
