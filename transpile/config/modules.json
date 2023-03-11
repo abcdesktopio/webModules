@@ -74,6 +74,11 @@
       "defer": false
     },
     {
+      "src": "node_modules/@taufik-nurrohman/color-picker/index.js",
+      "indexPageOnly": false,
+      "defer": false
+    },
+    {
       "src": "node_modules/xterm/lib/xterm.js",
       "indexPageOnly": false,
       "defer": true
