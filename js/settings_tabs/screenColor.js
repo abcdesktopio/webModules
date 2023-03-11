@@ -19,10 +19,12 @@ import * as notificationSystem from '../notificationsystem.js';
 import * as system from '../system.js';
 import { broadcastEvent } from '../broadcastevent.js';
 import { settingsEvents } from '../settingsevents.js';
+import * as CP  from '../color-picker.js';
 
 let firstAppear = true;
 let acceptfileservice= false;
 let defaultColor = '#6ec6f0';
+let colorPicker;
 
 const sizeDivColor = { offsetHeight: 0, offsetWidth: 0 };
 const MAX_COLOR = 8;
@@ -102,7 +104,18 @@ function setBackgroundColor(color) {
  * @desc Save color list in mongo
  */
 function saveColors() {
-  return launcher.set('colors', listColor);
+  let colorList = document.getElementById('color-list');
+  if (colorList) {
+	let colorFront = new Array();
+	for( let i=0; i<colorList.children.length; ++i) {
+	  let datacolor = colorList.children[i].getAttribute('data-color');
+	  if (datacolor)
+		colorFront.push(datacolor);
+	}
+	console.log( 'colorFront=');
+	console.log( colorFront );
+	return launcher.set('colors', colorFront);
+  }
 }
 
 /**
@@ -111,7 +124,7 @@ function saveColors() {
  * @desc Allow to get the user's color list
  */
 function getColors() {
-  return launcher.getkeyinfo('colors');
+  return launcher.get('colors');
 }
 
 /**
@@ -134,29 +147,10 @@ function buildColorDiv(color) {
   colorDiv.className = 'colors_blocks';
   colorDiv.dataset.color = color;
   colorDiv.style.background = color;
-  colorDiv.dataset.is_saved = true;
   colorDiv.addEventListener('click', () => {
-    if (
-      listColor.indexOf(colorDiv.dataset.color) !== -1
-      && colorDiv.dataset.is_saved === 'false'
-    ) {
-      return;
-    }
-
-    if (listColor.length < MAX_COLOR) {
-      listColor.push(colorDiv.dataset.color);
-    } else {
-      for (let i = 1; i < listColor.length; i++) {
-        listColor[i - 1] = listColor[i];
-      }
-      listColor[listColor.length - 1] = colorDiv.dataset.color;
-    }
-
-    colorDiv.dataset.is_saved = true;
     saveColors();
     setBackgroundColor(colorDiv.dataset.color);
   });
-
   return colorDiv;
 }
 
@@ -165,22 +159,23 @@ function buildColorDiv(color) {
  * @return {void}
  * @desc Create a div (block) which will be insert into colors section.
  */
-function buildColorsDiv() {
+function buildColorsDiv(colors) {
   const colorList = document.getElementById('color-list');
   if (!colorList) {
     return;
   }
 
-  listColor.forEach((color) => {
-    const addButton = colorList.children[colorList.children.length - 1];
+  colors.forEach((color) => {
+    console.log( 'adding ' + color );
     const newBlockColor = buildColorDiv(color);
-
-    colorList.replaceChild(newBlockColor, addButton);
-    colorList.appendChild(addButton);
+    colorList.appendChild(newBlockColor);
   });
 
-  sizeDivColor.clientHeight = colorList.children[1].clientHeight;
-  sizeDivColor.clientWidth = colorList.children[1].clientWidth;
+  //const addButton = colorList.children[colorList.children.length - 1];
+  //colorList.appendChild(addButton);
+
+  //sizeDivColor.clientHeight = colorList.children[1].clientHeight;
+  //sizeDivColor.clientWidth = colorList.children[1].clientWidth;
 }
 
 /**
@@ -191,29 +186,29 @@ function buildColorsDiv() {
  * The first element is deleted and the new one is added to the end.
  * The new list of color is save in mongodb.
  */
-function addColorBlock() {
-  const colorInput = document.getElementById('color_input');
-  const colorList = document.getElementById('color-list');
+function addColorBlock( newColor ) {
+  //const colorInput = document.getElementById('color_input');
+  //const lasteBlock = colorList.children[colorList.children.length - 3];
 
-  const defaultColor = '#4A4A4A';
-  const lasteBlock = colorList.children[colorList.children.length - 2];
 
-  if (lasteBlock.dataset.is_saved === 'false') {
-    colorInput.click();
-  } else {
-    if (colorList.children.length >= MAX_COLOR) {
-      const firstBlock = colorList.children[1];
-      colorList.removeChild(firstBlock);
-    }
-
-    const newBlockColor = buildColorDiv(defaultColor);
-    newBlockColor.dataset.is_saved = false;
-    const addButton = colorList.children[colorList.children.length - 1];
-    colorList.replaceChild(newBlockColor, addButton);
-    colorList.appendChild(addButton);
-    colorInput.click();
-    saveColors();
+  let colorList = document.getElementById('color-list');
+  if (colorList) {
+	let lencolorList = colorList.children.length -2 -1;
+        for( let i=0; i<lencolorList; ++i) {
+                  colorList.children[i].setAttribute('data-color', colorList.children[i+1].getAttribute('data-color') );
+		  colorList.children[i].dataset.color = colorList.children[i+1].dataset.color ;
+  		  colorList.children[i].style.background = colorList.children[i+1].dataset.color;
+        }
+	colorList.children[lencolorList].setAttribute('data-color', newColor );
+        colorList.children[lencolorList].dataset.color = newColor;
+        colorList.children[lencolorList].style.background = newColor;
   }
+   
+  //const newBlockColor = buildColorDiv( newColor );
+  //const addButton = colorList.children[colorList.children.length - 1];
+  //colorList.replaceChild(newBlockColor, addButton);
+  //colorList.appendChild(addButton);
+  saveColors();
 }
 
 /**
@@ -223,17 +218,40 @@ function addColorBlock() {
  */
 function buildColorsSection() {
   getColors().done((res) => {
-    if (res.status === 200) {
-      listColor = res.id;
-      buildColorsDiv();
+    if ( res && res.status && res.status === 200) {
+      if ( Array.isArray(res.result) && res.result.length > 1 ) {
+      	listColor = res.result;
+      	buildColorsDiv( listColor );
+      	addColorsControls();
+      } else {
+	resetToDefaultColorsSection();
+      }
     } else {
-      getDefaultColors().then((res) => {
-        listColor = res.id;
-        buildColorsDiv();
-      });
-    }
+	resetToDefaultColorsSection();
+    }	  
+  }).catch( (res) => { 
+	resetToDefaultColorsSection();
   });
+}
 
+function resetToDefaultColorsSection() {
+  let colorList = document.getElementById('color-list');
+  if (colorList) {
+	// clear all
+	while( colorList.hasChildNodes() )
+	  colorList.childNodes[0].remove();
+
+  	getDefaultColors().then((res) => {
+        	listColor = res.id;
+        	buildColorsDiv(listColor);
+        	addColorsControls();
+		saveColors()
+  	});
+  }
+}
+
+
+function addColorsControls() {
   const divImgShowPickerColor = document.createElement('div');
   divImgShowPickerColor.id = 'div_img_show_picker_color';
   divImgShowPickerColor.className = 'colors_blocks';
@@ -241,26 +259,40 @@ function buildColorsSection() {
   const imgShowPickerColor = document.createElement('img');
   imgShowPickerColor.src = window.od.net.urlrewrite('img/settings/add.svg');
   imgShowPickerColor.id = 'img_show_picker_color';
+  divImgShowPickerColor.appendChild(imgShowPickerColor);
 
-  const colorInput = document.getElementById('color_input');
-  const colorList = document.getElementById('color-list');
-  colorInput.addEventListener('input', function () {
-    if (listColor.indexOf(this.value) === -1) {
-      const lastChild = colorList.children[colorList.children.length - 2];
-      lastChild.style.background = this.value;
-      lastChild.dataset.color = this.value;
-    }
+  
+  const divImgShowResetColor = document.createElement('div');
+  divImgShowResetColor.id = 'div_img_show_reset_color';
+  divImgShowResetColor.className = 'colors_blocks';
+
+  const imgShowResetColor = document.createElement('img');
+  imgShowResetColor.src = window.od.net.urlrewrite('img/settings/reset.svg');
+  imgShowResetColor.id = 'img_show_reset_color';
+  imgShowResetColor.addEventListener('click', () => {
+    resetToDefaultColorsSection();
   });
 
-  imgShowPickerColor.ontouchend = addColorBlock;
-  imgShowPickerColor.onclick = addColorBlock;
+  divImgShowResetColor.appendChild(imgShowResetColor);
+  
 
-  divImgShowPickerColor.appendChild(imgShowPickerColor);
+  // const colorInput = document.getElementById('color_input');
+  const colorList = document.getElementById('color-list');
+
+  colorPicker = new window.CP(imgShowPickerColor);
+  colorPicker.on(	'stop', 
+	  	function (r, g, b, a) { 
+			this.source.value = this.color(r, g, b, a);
+			addColorBlock( this.source.value );
+  		}
+  );
 
   if (colorList) {
     colorList.appendChild(divImgShowPickerColor);
+    colorList.appendChild(divImgShowResetColor);
   }
 }
+
 // #endregion colors
 
 // #region pictures
