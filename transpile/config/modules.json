@@ -34,11 +34,6 @@
       "defer": false
     },
     {
-      "src": "js/farbtastic.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
       "src": "js/js.cookie.js",
       "indexPageOnly": false,
       "defer": false
@@ -74,7 +69,7 @@
       "defer": false
     },
     {
-      "src": "node_modules/@taufik-nurrohman/color-picker/index.js",
+      "src": "js/color-picker.js",
       "indexPageOnly": false,
       "defer": false
     },
