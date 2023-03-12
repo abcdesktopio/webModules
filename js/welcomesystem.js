@@ -185,7 +185,7 @@ const welcomeSystem = (function () {
       // display only text error with error class
       statusText.style.display='block';
       statusText.classList.add('error');
-      statusText.innerHTML = result.error;
+      statusText.innerText = result.error;
     }
 
     clearstatusText() {
