@@ -69,11 +69,6 @@
       "defer": false
     },
     {
-      "src": "js/color-picker.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
       "src": "node_modules/xterm/lib/xterm.js",
       "indexPageOnly": false,
       "defer": true
