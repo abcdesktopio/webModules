@@ -148,13 +148,17 @@ function buildColorDiv(color,index) {
   colorDiv.addEventListener('click', (e) => {
     const inputColorElement = document.getElementById(e.target.id);
     setBackgroundColor(inputColorElement.value);
+    e.preventDefault(); //Cancel Events
   });
 
+  /*
   colorDiv.addEventListener('change', (e) => {
     saveColors();
     const inputColorElement = document.getElementById(e.target.id);
     setBackgroundColor(inputColorElement.value);
   });
+  */
+
   return colorDiv;
 }
 
@@ -173,12 +177,6 @@ function buildColorsDiv(colors) {
     const newBlockColor = buildColorDiv(color,index);
     colorList.appendChild(newBlockColor);
   });
-
-  //const addButton = colorList.children[colorList.children.length - 1];
-  //colorList.appendChild(addButton);
-
-  //sizeDivColor.clientHeight = colorList.children[1].clientHeight;
-  //sizeDivColor.clientWidth = colorList.children[1].clientWidth;
 }
 
 /**
@@ -190,28 +188,17 @@ function buildColorsDiv(colors) {
  * The new list of color is save in mongodb.
  */
 function addColorBlock( newColor ) {
-  const colorInput = document.getElementById('color_input');
-  //const lasteBlock = colorList.children[colorList.children.length - 3];
-
-
   let colorList = document.getElementById('color-list');
   if (colorList) {
-	let lencolorList = colorList.children.length -2 -1;
-        for( let i=0; i<lencolorList; ++i) {
-                  colorList.children[i].setAttribute('data-color', colorList.children[i+1].getAttribute('data-color') );
-		  colorList.children[i].dataset.color = colorList.children[i+1].dataset.color ;
-  		  colorList.children[i].style.background = colorList.children[i+1].dataset.color;
+	let lencolorList = colorList.children.length -3 -1;
+	let i=0;
+        for( ; i<lencolorList; ++i) {
+                  colorList.children[i].value = colorList.children[i+1].value;
+		  colorList.children[i].id = 'colorinput' + i;
         }
-	colorList.children[lencolorList].setAttribute('data-color', newColor );
-        colorList.children[lencolorList].dataset.color = newColor;
-        colorList.children[lencolorList].style.background = newColor;
+	colorList.children[i].value = colorList.children[i+1].value;
+        colorList.children[i].id = 'colorinput' + i;
   }
-   
-  //const newBlockColor = buildColorDiv( newColor );
-  //const addButton = colorList.children[colorList.children.length - 1];
-  //colorList.replaceChild(newBlockColor, addButton);
-  //colorList.appendChild(addButton);
-  saveColors();
 }
 
 /**
@@ -253,42 +240,34 @@ function resetToDefaultColorsSection() {
   }
 }
 
-function colorInputClick(e) {
-  const colorInput = document.getElementById('color_input');
-  if ( colorInput )
-	colorInput.click();
-  colorInput.addEventListener('change', (e) => {
-     colorInputChange(e);
-  });
-}
-
-
-function colorInputChange(e) {
-   console.log( 'colorInputChange');
-   console.log(e);
-    const colorInput = document.getElementById('color_input');
-   addColorBlock( colorInput.value );
-}
-
-
 
 function addColorsControls() {
-  /*
-  const divImgShowPickerColor = document.createElement('div');
-  divImgShowPickerColor.id = 'div_img_show_picker_color';
-  divImgShowPickerColor.className = 'colors_blocks';
+  
+  const inputShowPickerColor = document.createElement('input');
+  inputShowPickerColor.type='color';
+  inputShowPickerColor.id='inputShowPickerColor';
+  // inputShowPickerColor.style.display = 'none';
+  inputShowPickerColor.style.width   = '0px';
+  inputShowPickerColor.style.heighit = '0px'
+  inputShowPickerColor.style.visibility = 'hidden';
+  inputShowPickerColor.addEventListener('change', (e) => {
+    const inputColorElement = document.getElementById(e.target.id);
+    setBackgroundColor(inputColorElement.value);
+    addColorBlock( inputColorElement.value );
+    saveColors();
+  });
 
-  const labelShowPickerColor = document.createElement('label');
-  labelShowPickerColor.id = 'labelShowPickerColor';
-  labelShowPickerColor.setAttribute( 'for', 'color_input' ); 
- 	
-  const imgShowPickerColor = document.createElement('img');
+  const imgShowPickerColor = document.createElement('input');
   imgShowPickerColor.src = window.od.net.urlrewrite('img/settings/add.svg');
   imgShowPickerColor.id = 'img_show_picker_color';
-  labelShowPickerColor.appendChild( imgShowPickerColor );
-  divImgShowPickerColor.appendChild( labelShowPickerColor );
-  // imgShowPickerColor.addEventListener('click', () => { colorInputClick(); });
-  */
+  imgShowPickerColor.type='image';
+  imgShowPickerColor.className = 'colors_blocks';
+
+  imgShowPickerColor.addEventListener('click', () => { 
+	  let inputShowPickerColor = document.getElementById( 'inputShowPickerColor' );
+	  inputShowPickerColor.click();
+  });
+  
 
   const inputImgShowResetColor = document.createElement('input');
   inputImgShowResetColor.id = 'inputImgShowResetColor';
@@ -301,6 +280,8 @@ function addColorsControls() {
  
   const colorList = document.getElementById('color-list');
   if (colorList) {
+    colorList.appendChild(inputShowPickerColor);
+    colorList.appendChild(imgShowPickerColor);	  
     colorList.appendChild(inputImgShowResetColor);
   }
 }
