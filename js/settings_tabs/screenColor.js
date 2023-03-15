@@ -66,7 +66,6 @@ function getBackgroundType() {
 }
 
 // #region colors
-let listColor = [];
 
 /**
  * @function saveCurrentColor
@@ -174,6 +173,8 @@ function buildColorsDiv(colors) {
   }
 
   colors.forEach((color,index) => {
+    if (index >= MAX_COLOR) 
+	  return;
     const newBlockColor = buildColorDiv(color,index);
     colorList.appendChild(newBlockColor);
   });
@@ -210,7 +211,7 @@ function buildColorsSection() {
   getColors().done((res) => {
     if ( res && res.status && res.status === 200) {
       if ( Array.isArray(res.result) && res.result.length > 1 ) {
-      	listColor = res.result;
+      	let listColor = res.result;
       	buildColorsDiv( listColor );
       	addColorsControls();
       } else {
@@ -232,7 +233,7 @@ function resetToDefaultColorsSection() {
 	  colorList.childNodes[0].remove();
 
   	getDefaultColors().then((res) => {
-        	listColor = res.id;
+        	let listColor = res.id;
         	buildColorsDiv(listColor);
         	addColorsControls();
 		saveColors()
