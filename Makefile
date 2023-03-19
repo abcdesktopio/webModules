@@ -32,7 +32,7 @@ help:
 
 checkTranspile:
 	if [ ! -d "./transpile/node_modules" ]; then \
-		cd ./transpile && yarn install; \
+		cd ./transpile && yarn install --network-timeout 600000; \
 	fi
 
 
