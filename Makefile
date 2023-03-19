@@ -46,10 +46,6 @@ install:
 	# cp node_modules/xterm-addon-fit/lib/xterm-addon-fit.js .js
 	# cp node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js ./js
 
-xterm:
-	echo "Build xterm..."
-	# npm install
-
 svg:
 	cd ./transpile && node index.js --svg
 
@@ -63,28 +59,13 @@ oneCss: checkTranspile
 	cd ./transpile && node index.js --oneCss
 
 uiAndAssets: checkTranspile
-	if [ ! -d "./xterm/dist" ]; then \
-		$(MAKE) -B xterm; \
-	fi
-
-	cd ./transpile \
-	&& node index.js --svg --css --user-interface
+	cd ./transpile && node index.js --svg --css --user-interface
 
 prodWithoutVersion: checkTranspile
-	if [ ! -d "./xterm/dist" ]; then \
-		$(MAKE) -B xterm; \
-	fi
-
-	cd ./transpile \
-	&& node index.js --svg --css --user-interface --prod
+	cd ./transpile && node index.js --svg --css --user-interface --prod
 
 prod: checkTranspile version
-	if [ ! -d "./xterm/dist" ]; then \
-		$(MAKE) -B xterm; \
-	fi
-
-	cd ./transpile \
-	&& node index.js --svg --css --user-interface --prod \
+	cd ./transpile && node index.js --svg --css --user-interface --prod 
 
 dev: uiAndAssets version
 
@@ -95,9 +76,7 @@ updatejs:
 
 clean:
 	rm -rf transpile/node_modules | true
-	rm -rf xterm/node_modules | true
 	rm -rf ./utils/node_modules | true
-	rm -rf xterm/dist | true
 	rm -rf css/css-dist | true
 	rm -rf build | true
 	rm -f app.html | true
