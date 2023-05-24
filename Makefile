@@ -40,7 +40,8 @@ untranspile:
 	cd ./transpile && yarn remove prebuild && yarn remove prebuild-install && yarn remove node-gyp-build 
 
 install:
-	npm install
+	yarn install
+	cd transpile && yarn install
 	# cp node_modules/xterm/lib/xterm.js ./js
 	# cp node_modules/xterm-addon-attach/lib/xterm-addon-attach.js ./js
 	# cp node_modules/xterm-addon-fit/lib/xterm-addon-fit.js .js
