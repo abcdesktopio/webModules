@@ -23,7 +23,8 @@ import {
   makeLibFiles,
 } from './production-transformer.js';
 
-import { replaceInFileAsync } from './helper.js';
+import { callReplaceWorker } from './helper.js';
+// import { replaceInFileAsync } from './helper.js';
 
 const { program } = createRequire(import.meta.url)('commander');
 
@@ -64,6 +65,38 @@ const pathImg = path.resolve(path.join('..', 'img'));
 const patternNamei18nFiles = /\.mustache\.json$/i;
 
 // #region svg
+
+/**
+ *
+ * @param {string} root
+ */
+async function* getSvgImages(root = '') {
+  const dirents = await fs.promises.readdir(root, { withFileTypes: true });
+  const files = [];
+  const directories = [];
+
+  for (const dirent of dirents) {
+    if (dirent.isSymbolicLink()) {
+      continue;
+    }
+
+    const filename = `${root}/${dirent.name}`;
+
+    if (dirent.isDirectory()) {
+      directories.push(filename);
+    } else if (dirent.isFile()
+      && path.extname(filename) === '.svg') {
+      files.push(filename);
+    }
+  }
+
+  yield* files;
+
+  for (const directory of directories) {
+    yield* getSvgImages(directory);
+  }
+}
+
 
 /**
  *
@@ -122,7 +155,9 @@ async function buildSvg(colors = []) {
 
   const awaitingUpdateSvgs = [];
   for await (const svgImage of walkSvgImages(pathImg)) {
-    const awaiting = replaceInFileAsync(svgImage, currentSvgColor, newSvgColor);
+    // const awaiting = replaceInFileAsync(svgImage, currentSvgColor, newSvgColor);
+    console.log( svgImage, currentSvgColor, newSvgColor);
+    const awaiting = callReplaceWorker(svgImage, currentSvgColor, newSvgColor);
     awaitingUpdateSvgs.push(awaiting);
   }
   await Promise.all(awaitingUpdateSvgs);
@@ -175,6 +210,7 @@ async function userInterface() {
 
   const [uiConf, modulesConf] = await Promise.all([awaitingUIConf, awaitingModulesConf]);
 
+  console.log( uiConf );
   // isIndexPage, isDemoPage, isLoginSessionPage)
   await Promise.all([
 
