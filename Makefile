@@ -14,7 +14,7 @@ ifndef VERBOSE
 .SILENT:
 endif
 
-all: version xterm prod
+all: version prod
 
 version:
 	$(shell ./mkversion.sh)
