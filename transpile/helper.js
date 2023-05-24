@@ -20,8 +20,12 @@ import fs from 'fs/promises';
 import util from 'util';
 import path from 'path';
 import browserify from 'browserify';
+import { Worker } from 'worker_threads';
 
-const transpileNative = createRequire(import.meta.url)('node-gyp-build')(process.cwd());
+// const transpileNative = createRequire(import.meta.url)('node-gyp-build')(process.cwd());
+
+const dirname = path.resolve();
+const pathWorker = path.join(dirname, 'replaceWorker.js');
 
 /**
  * 
@@ -36,6 +40,41 @@ export async function writeAppJSFile(scriptBasePath, outPath) {
   const bufferAppJSFile = await util.promisify(b.bundle).call(b);
   return fs.writeFile(outPath, bufferAppJSFile);
 }
+
+
+/**
+ *
+ * @param {string} str
+ * @param {string} searchValue
+ * @param {string} replaceValue
+ * @returns {Promise<void>}
+ * @desc Allow to create a worker which will replace a provided searched value by an other provided replace value in a given file
+ */
+export function callReplaceWorker(filename, searchValue, replaceValue) {
+  return new Promise((resolve, reject) => {
+    try {
+      const workerData = {
+        filename,
+        searchValue,
+        replaceValue,
+      };
+
+      const worker = new Worker(pathWorker, { workerData });
+
+      worker.on('exit', () => {
+        resolve();
+      });
+
+      worker.on('error', (err) => {
+        console.error(err);
+        reject(err);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 
 /**
  * 
@@ -56,6 +95,6 @@ export function replaceInFileAsync(filePath, from, to) {
   if (typeof to !== 'string') {
     throw new TypeError('to must be a string');
   }
-
+  console.log( 'replaceInFileAsync ', filePath, from, to ); 
   return transpileNative.replaceInFileAsync(filePath, from, to);
 }
