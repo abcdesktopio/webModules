@@ -3,21 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "install": "prebuild-install --runtime napi || node-gyp rebuild",
-    "rebuild": "node-gyp rebuild",
-    "prebuild": "prebuild --runtime napi --all --strip --verbose",
-    "upload": "prebuild --runtime napi --upload ${GITHUB_TOKEN}"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/abcdesktopio/webModules.git"
-  },
-  "binary": {
-    "napi_versions": [
-      2,
-      3
-    ]
   },
   "keywords": [],
   "author": "kecsou",
@@ -42,12 +30,6 @@
     "fs-extra": "^11.1.0",
     "minify": "^9.2.0",
     "mustache": "^4.2.0",
-    "node-addon-api": "^6.0.0",
-    "node-gyp-build": "^4.6.0",
-    "prebuild-install": "^7.1.1 ",
     "regenerator-runtime": "^0.13.11"
-  },
-  "devDependencies": {
-    "prebuild": "^10.0.1"
   }
 }
