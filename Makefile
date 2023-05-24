@@ -35,10 +35,6 @@ checkTranspile:
 		cd ./transpile && yarn install --network-timeout 600000; \
 	fi
 
-
-untranspile:
-	cd ./transpile && yarn remove prebuild && yarn remove prebuild-install && yarn remove node-gyp-build 
-
 install:
 	npm install
 	# cp node_modules/xterm/lib/xterm.js ./js
