@@ -66,6 +66,14 @@ window.od.docker_logoff = launcher.docker_logoff;
 let lastTouchEnd = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  if (typeof document.body.style.zoom   === "undefined") { 
+	  console.log('document.body.style.zoom is undefined');
+  }
+  else {
+  	document.body.style.zoom = 0.8;
+  }
+
   // Init window.od.net functions
   // add network low level url rewrite call
   // build the object window.od.net.funct*
@@ -431,7 +439,6 @@ function init() {
     console.info('no user previous context, running standart welcome');
     welcomeSystem.open();
   });
-
 
 
   $('.window').mousedown(function () { system.activeWindow(this); });
