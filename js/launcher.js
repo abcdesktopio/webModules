@@ -172,6 +172,8 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
  * @desc Get user's information (name,containerid, userid,sessionid,provider...).
  */
 export function getUserInfo() {
+  //const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
+  //console.debug( 'user.whoami() token=' + abcdesktop_jwt_user_token);
   return odApiClient.user.whoami();
 }
 
@@ -567,6 +569,7 @@ export function launchnewDesktopInstance(
           && Number.isInteger(result.result.expire_in)
         ) {
           const expire_refresh_token = result.result.expire_in * 750;
+	  window.od.currentUser.protocol = result.result.protocol || 'vnc';
           window.od.currentUser.target_ip = result.result.target_ip;
           window.od.currentUser.vncpassword = result.result.vncpassword;
           window.od.currentUser.authorization = result.result.authorization;
@@ -681,6 +684,7 @@ class LoginProgress {
  */
 export function docker_logoff() {
   return logout().always((logoutresult) => {
+    window.od.currentUser = null;
     window.Cookies.remove('abcdesktop_token', { path: '/API' });
     window.Cookies.remove('abcdesktop_host');
     // Do not reload the default page if manager and provider is defined
@@ -1266,9 +1270,12 @@ export function setBackgroundImage(image) {
   ]).then((res) => res[1]);
 }
 
-export function setDefaultImage() {
-  return requestSpawnerAPI('setDefaultImage');
-}
+//
+// deprecated
+// export function setDefaultImage() {
+//  return requestSpawnerAPI('setDefaultImage');
+// }
+//
 
 export function getDesktop(key) {
   return requestSpawnerAPI('getDesktop', { key }, 'GET');
