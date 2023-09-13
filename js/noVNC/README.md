@@ -65,10 +65,14 @@ Please tweet [@noVNC](http://www.twitter.com/noVNC) if you do.
 ### Features
 
 * Supports all modern browsers including mobile (iOS, Android)
-* Supported VNC encodings: raw, copyrect, rre, hextile, tight, tightPNG
+* Supported authentication methods: none, classical VNC, RealVNC's
+  RSA-AES, Tight, VeNCrypt Plain, XVP, Apple's Diffie-Hellman,
+  UltraVNC's MSLogonII
+* Supported VNC encodings: raw, copyrect, rre, hextile, tight, tightPNG,
+  ZRLE, JPEG
 * Supports scaling, clipping and resizing the desktop
 * Local cursor rendering
-* Clipboard copy/paste
+* Clipboard copy/paste with full Unicode support
 * Translations
 * Touch gestures for emulating common mouse actions
 * Licensed mainly under the [MPL 2.0](http://www.mozilla.org/MPL/2.0/), see
@@ -203,10 +207,12 @@ See [AUTHORS](AUTHORS) for a (full-ish) list of authors.  If you're not on
 that list and you think you should be, feel free to send a PR to fix that.
 
 * Core team:
-    * [Joel Martin](https://github.com/kanaka)
     * [Samuel Mannehed](https://github.com/samhed) (Cendio)
-    * [Solly Ross](https://github.com/DirectXMan12) (Red Hat / OpenStack)
     * [Pierre Ossman](https://github.com/CendioOssman) (Cendio)
+
+* Previous core contributors:
+    * [Joel Martin](https://github.com/kanaka) (Project founder)
+    * [Solly Ross](https://github.com/DirectXMan12) (Red Hat / OpenStack)
 
 * Notable contributions:
     * UI and Icons : Pierre Ossman, Chris Gordon

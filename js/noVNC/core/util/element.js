@@ -28,5 +28,12 @@ export function clientToElement(x, y, elem) {
     } else {
         pos.y = y - bounds.top;
     }
+    // if zoom value is set 
+    if (!isNaN(document.body.style.zoom)) {
+       // take care dive by zero
+       let zoom = (document.body.style.zoom === 0) ? 1 : document.body.style.zoom;
+       pos.x = pos.x / zoom;
+       pos.y = pos.y / zoom;
+    }
     return pos;
 }
