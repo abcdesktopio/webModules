@@ -267,7 +267,6 @@ export const showContextmenu = function (status, element) {
       launcher.getwindowslist()
         .then((msg) => {
           const cloneContexmenue = system.removeAllChilds(window.contextmenu, false);
-
           for (const { wm_class, id, title } of msg.data) {
             if (wm_class === element.attributes.launch.value) {
               const divider = document.createElement('li');
@@ -318,11 +317,16 @@ export const showContextmenu = function (status, element) {
           window.contextmenu.parentNode.replaceChild(cloneContexmenue, window.contextmenu);
           window.contextmenu = cloneContexmenue;
 
-          window.contextmenu.style.top = `${yMousePosition - window.contextmenu.offsetHeight}px`;
-          if (window.innerWidth - xMousePosition < cloneContexmenue.clientWidth) {
+	  const offsetHeight = document.getElementById('dock').clientHeight;
+	  const elementrect =  element.getBoundingClientRect();
+	  const menu_top = elementrect.y - offsetHeight; 
+	  window.contextmenu.style.top = menu_top + 'px';
+
+          // if (window.innerWidth - xMousePosition < cloneContexmenue.clientWidth) {
+	  if (window.innerWidth - elementrect.x < cloneContexmenue.clientWidth) {
             window.contextmenu.style.right = '0px';
           } else {
-            window.contextmenu.style.left = `${xMousePosition}px`;
+            window.contextmenu.style.left = elementrect.x + 'px';
             window.contextmenu.style.right = 'initial';
           }
 
@@ -339,14 +343,12 @@ export const showContextmenu = function (status, element) {
     });
 
     cloneContextMenu.appendChild(open);
-    cloneContextMenu.style.top = `${yMousePosition - window.contextmenu.offsetHeight}px`;
-    cloneContextMenu.style.left = `${xMousePosition}px`;
-    if (window.innerWidth - xMousePosition < window.contextmenu.clientWidth) {
-      cloneContextMenu.style.left = `${xMousePosition - window.contextmenu.clientWidth}px`;
-    } else {
-      cloneContextMenu.style.left = `${xMousePosition}px`;
-      cloneContextMenu.style.right = 'initial';
-    }
+    const elementrect =  element.getBoundingClientRect();
+    const offsetHeight = document.getElementById('dock').clientHeight;
+    const menu_top = elementrect.y - offsetHeight/2;
+    cloneContextMenu.style.top = menu_top + 'px';
+    cloneContextMenu.style.left = elementrect.x + 'px';
+    cloneContextMenu.style.right = 'initial';
 
     window.contextmenu.parentNode.replaceChild(cloneContextMenu, window.contextmenu);
     window.contextmenu = cloneContextMenu;
