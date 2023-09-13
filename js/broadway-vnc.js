@@ -453,7 +453,6 @@ export default function BroadwayVNC() {
       // 
       // set default background
       rfb._screen.style.background = '#6ec6f0';
-
       rfb._screenSize = function () {
         const h = this._screen.offsetHeight - getTopAndDockHeight();
         return {
@@ -461,11 +460,21 @@ export default function BroadwayVNC() {
           h,
         };
       };
+      
+      // Is a boolean indicating if the remote session should be clipped to its container. 
+      // When disabled scrollbars will be shown to handle the resulting overflow. Disabled by default.
+      rfb.clipViewport = true;
 
       // Permit RFB autoresize
+      // indicating if a request to resize the remote session
+      // should be sent whenever the container changes dimensions.
       rfb.resizeSession = true;
 
       // Permit RFB viewport
+      // indicating if the remote session should be scaled
+      // locally so it fits its container. When disabled it will be centered
+      // if the remote session is smaller than its container, or handled
+      // according to `clipViewport` if it is larger.
       rfb.scaleViewport = true;
 
     } catch (exc) {
