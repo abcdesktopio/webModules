@@ -586,7 +586,8 @@ async function setCurrentImage() {
   if (code === 200) {
     await launcher.setBackgroundImage(currentImg);
   } else if (code === 404) {
-    console.info('No current image found');
+    // nothing to do 
+    // console.info('No current image found');
   } else {
     console.error('Unknow error for getCurrentImg');
   }
@@ -621,7 +622,10 @@ const handlerResize = () => {
         await setCurrentImage();
       }
     } catch (e) {
-      if (e && e.status != 200)
+      if (e.status === 404)
+	// nothing to do 
+     	return;
+      if (e.status != 200)
       	console.error(e);
     }
   }, 200);
