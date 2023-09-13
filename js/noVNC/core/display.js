@@ -15,7 +15,7 @@ export default class Display {
         this._drawCtx = null;
 
         this._renderQ = [];  // queue drawing actions for in-oder rendering
-        this._flushPromise = null;
+        this._flushing = false;
 
         // the full frame buffer (logical canvas) size
         this._fbWidth = 0;
@@ -61,6 +61,10 @@ export default class Display {
 
         this._scale = 1.0;
         this._clipViewport = false;
+
+        // ===== EVENT HANDLERS =====
+
+        this.onflush = () => {}; // A flush request has finished
     }
 
     // ===== PROPERTIES =====
@@ -302,14 +306,9 @@ export default class Display {
 
     flush() {
         if (this._renderQ.length === 0) {
-            return Promise.resolve();
+            this.onflush();
         } else {
-            if (this._flushPromise === null) {
-                this._flushPromise = new Promise((resolve) => {
-                    this._flushResolve = resolve;
-                });
-            }
-            return this._flushPromise;
+            this._flushing = true;
         }
     }
 
@@ -518,11 +517,9 @@ export default class Display {
             }
         }
 
-        if (this._renderQ.length === 0 &&
-            this._flushPromise !== null) {
-            this._flushResolve();
-            this._flushPromise = null;
-            this._flushResolve = null;
+        if (this._renderQ.length === 0 && this._flushing) {
+            this._flushing = false;
+            this.onflush();
         }
     }
 }

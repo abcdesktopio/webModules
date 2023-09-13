@@ -31,7 +31,10 @@ export default class HextileDecoder {
                 return false;
             }
 
-            let subencoding = sock.rQpeek8();
+            let rQ = sock.rQ;
+            let rQi = sock.rQi;
+
+            let subencoding = rQ[rQi];  // Peek
             if (subencoding > 30) {  // Raw
                 throw new Error("Illegal hextile subencoding (subencoding: " +
                             subencoding + ")");
@@ -62,7 +65,7 @@ export default class HextileDecoder {
                         return false;
                     }
 
-                    let subrects = sock.rQpeekBytes(bytes).at(-1);
+                    let subrects = rQ[rQi + bytes - 1];  // Peek
                     if (subencoding & 0x10) {  // SubrectsColoured
                         bytes += subrects * (4 + 2);
                     } else {
@@ -76,7 +79,7 @@ export default class HextileDecoder {
             }
 
             // We know the encoding and have a whole tile
-            sock.rQshift8();
+            rQi++;
             if (subencoding === 0) {
                 if (this._lastsubencoding & 0x01) {
                     // Weird: ignore blanks are RAW
@@ -86,36 +89,42 @@ export default class HextileDecoder {
                 }
             } else if (subencoding & 0x01) {  // Raw
                 let pixels = tw * th;
-                let data = sock.rQshiftBytes(pixels * 4, false);
                 // Max sure the image is fully opaque
                 for (let i = 0;i <  pixels;i++) {
-                    data[i * 4 + 3] = 255;
+                    rQ[rQi + i * 4 + 3] = 255;
                 }
-                display.blitImage(tx, ty, tw, th, data, 0);
+                display.blitImage(tx, ty, tw, th, rQ, rQi);
+                rQi += bytes - 1;
             } else {
                 if (subencoding & 0x02) {  // Background
-                    this._background = new Uint8Array(sock.rQshiftBytes(4));
+                    this._background = [rQ[rQi], rQ[rQi + 1], rQ[rQi + 2], rQ[rQi + 3]];
+                    rQi += 4;
                 }
                 if (subencoding & 0x04) {  // Foreground
-                    this._foreground = new Uint8Array(sock.rQshiftBytes(4));
+                    this._foreground = [rQ[rQi], rQ[rQi + 1], rQ[rQi + 2], rQ[rQi + 3]];
+                    rQi += 4;
                 }
 
                 this._startTile(tx, ty, tw, th, this._background);
                 if (subencoding & 0x08) {  // AnySubrects
-                    let subrects = sock.rQshift8();
+                    let subrects = rQ[rQi];
+                    rQi++;
 
                     for (let s = 0; s < subrects; s++) {
                         let color;
                         if (subencoding & 0x10) {  // SubrectsColoured
-                            color = sock.rQshiftBytes(4);
+                            color = [rQ[rQi], rQ[rQi + 1], rQ[rQi + 2], rQ[rQi + 3]];
+                            rQi += 4;
                         } else {
                             color = this._foreground;
                         }
-                        const xy = sock.rQshift8();
+                        const xy = rQ[rQi];
+                        rQi++;
                         const sx = (xy >> 4);
                         const sy = (xy & 0x0f);
 
-                        const wh = sock.rQshift8();
+                        const wh = rQ[rQi];
+                        rQi++;
                         const sw = (wh >> 4) + 1;
                         const sh = (wh & 0x0f) + 1;
 
@@ -124,6 +133,7 @@ export default class HextileDecoder {
                 }
                 this._finishTile(display);
             }
+            sock.rQi = rQi;
             this._lastsubencoding = subencoding;
             this._tiles--;
         }

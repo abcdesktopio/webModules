@@ -76,8 +76,12 @@ export default class TightDecoder {
             return false;
         }
 
-        let pixel = sock.rQshiftBytes(3);
-        display.fillRect(x, y, width, height, pixel, false);
+        const rQi = sock.rQi;
+        const rQ = sock.rQ;
+
+        display.fillRect(x, y, width, height,
+                         [rQ[rQi], rQ[rQi + 1], rQ[rQi + 2]], false);
+        sock.rQskipBytes(3);
 
         return true;
     }
@@ -312,7 +316,7 @@ export default class TightDecoder {
             return null;
         }
 
-        let data = sock.rQshiftBytes(this._len, false);
+        let data = sock.rQshiftBytes(this._len);
         this._len = 0;
 
         return data;
