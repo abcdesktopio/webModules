@@ -38,6 +38,7 @@ const osImg = {
   'Ubuntu': '../img/ubuntu.svg',
   'Windows': '../img/windows.svg',
   'Mac OS': '../img/apple.svg',
+  'macOS': '../img/apple.svg',
   'iOS': '../img/apple.svg',
   'Android': '../img/android.svg',
 };
