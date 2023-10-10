@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	  console.log('document.body.style.zoom is undefined');
   }
   else {
-  	document.body.style.zoom = 0.8;
+  	document.body.style.zoom = 1;
   }
 
   // Init window.od.net functions
