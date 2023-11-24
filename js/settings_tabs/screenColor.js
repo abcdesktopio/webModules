@@ -505,7 +505,7 @@ function buildDropzoneEvents() {
   });
 
   myDropzone.on('sending', (file, xhr, formData) => {
-    formData.append('fullPath', '~/.wallpapers');
+    formData.append('fullPath', '~/.wallpapers/' + file.name );
   });
 
   myDropzone.on('success', () => {
