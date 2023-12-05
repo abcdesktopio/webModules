@@ -33,7 +33,8 @@ export const init = function () {
     playpause = document.getElementById('playpause');
     progress = document.getElementById('progressBar');
     icon = document.querySelector('#music img');
-    playpause.addEventListener('click', togglePlay);
+    if (playpause)
+      playpause.addEventListener('click', togglePlay);
 
     // Update progress bar everysecond
     _this.addEventListener('timeupdate', updateProgress, false);
