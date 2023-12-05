@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	  console.log('document.body.style.zoom is undefined');
   }
   else {
-  	document.body.style.zoom = 1;
+  	document.body.style.zoom = 0.8;
   }
 
   // Init window.od.net functions
@@ -233,7 +233,6 @@ function initApplistcallback() {
 
 
 function usb_requestDevice() { 
-
   // navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
   // vendorId : 1321
   navigator.usb.requestDevice({ filters: [] })
@@ -256,8 +255,11 @@ function usb_getDevices() {
 }
 
 function odinit() {
-  window.od.net = {};
+  // defines 
+  // window.od.net netwotk for url rewrite
+  // window.od.usb for usb devices
 
+  window.od.net = {};
   window.od.usb = {};
   window.od.usb_requestDevice = usb_requestDevice;
   window.od.usb_getDevices = usb_getDevices;
