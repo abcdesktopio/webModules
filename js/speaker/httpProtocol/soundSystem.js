@@ -34,7 +34,7 @@ export const setSoundLevel = function (_level) {
  *
  */
 export const init = function () {
-  music.init();
+  // music.init();
   volumelvl = document.getElementById('volume_level');
   if (volumelvl) {
     volumelvl.value = 0;
