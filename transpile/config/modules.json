@@ -4,12 +4,12 @@
   ],
   "scripts": [
     {
-      "src": "js/adapter.min.js",
+      "src": "js/adapter.js",
       "indexPageOnly": false,
       "defer": false
     },
     {
-      "src": "js/jquery-3.5.1.min.js",
+      "src": "js/jquery-3.7.1.min.js",
       "indexPageOnly": false,
       "defer": false
     },
