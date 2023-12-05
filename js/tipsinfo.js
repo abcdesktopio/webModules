@@ -12,7 +12,7 @@
 */
 
 /**
- * @name AboutSystem
+ * @name tipsinfo
  * @module
  */
 
