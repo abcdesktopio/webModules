@@ -43,7 +43,7 @@ function open(jsonParameters, callback = () => { }) {
 
   wsbroadcast.onopen = () => {
     // console.log('wsbroadcast.open');
-    console.log(jsonParameters);
+    // console.log(jsonParameters);
     wsbroadcast.send(jsonParameters);
   };
 
