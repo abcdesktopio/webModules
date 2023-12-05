@@ -1306,6 +1306,10 @@ export function configurePulse(destinationIp, port) {
   return requestSpawnerAPI('configurePulse', { destinationIp, port }, 'PUT');
 }
 
+export function isPulseAvailable(k) {
+  return requestSpawnerAPI('isPulseAvailable', null, 'GET');
+}
+
 export async function getWebModulesVersion() {
   if (window.od.currentUser.webModulesVersion === undefined) {
     const response = await fetch(window.od.net.urlrewrite('version.json'));
