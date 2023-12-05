@@ -19,7 +19,6 @@ import * as connectLoader from './connectloader.js';
 import welcomeSystem from './welcomesystem.js';
 import * as launcher from './launcher.js';
 import * as shareSystem from './shareSystem.js';
-import * as mailSystem from './mailSystem.js';
 import * as quickSupport from './quickSupport.js';
 import * as logmein from './logmein.js';
 import * as searchSystem from './search.js';
@@ -37,6 +36,7 @@ import * as menu from './menu.js';
 import * as system from './system.js';
 import * as settings from './settings.js';
 import * as tipsinfo from './tipsinfo.js';
+import * as welcomeinfo from './welcomeinfo.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
 import * as systemMenu from './systemmenu.js';
@@ -90,6 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // init i18l load json files
   languages.init();
+
+  // init welcomeinfo to show 
+  welcomeinfo.init();
 
   // Init basic event click for welcome window THEN call init
   welcomeSystem.init().always( () => {
@@ -197,10 +200,6 @@ window.od.setupafteruserloginin = function () {
   // Init a dropzone on document.documentElement with Dropzone lib
   upload.init();
 
-  // init mail
-  // call launcher.getkeyinfo
-  mailSystem.init();
-
   // load menu from od.config file
   // call launcher.getkeyinfo("menuconfig")
   // Add an event listener for close , logoff and cancel buttons to the menu
@@ -213,6 +212,7 @@ window.od.setupafteruserloginin = function () {
 
   // show user name in top left screen
   system.setUsername(window.od.currentUser.name);
+
 };
 
 function initApplistcallback() {
@@ -222,7 +222,7 @@ function initApplistcallback() {
     .then( (data) => { 
       // console.log( data ); 
       if (data)
-        console.log( 'generateDesktopFiles mimetype database updated ' + data.code )
+        console.debug( 'generateDesktopFiles mimetype database updated ' + data.code )
       systemMenu.init(); 
     })
     .catch( (err) => {
@@ -231,8 +231,37 @@ function initApplistcallback() {
     });
 }
 
+
+function usb_requestDevice() { 
+
+  // navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
+  // vendorId : 1321
+  navigator.usb.requestDevice({ filters: [] })
+  .then(device => {
+    console.log(device.productName);      // "Arduino Micro"
+    console.log(device.manufacturerName); // "Arduino LLC"
+  })
+  .catch(error => { console.error(error); });
+
+}
+
+function usb_getDevices() {
+  // Get all connected USB devices the website has been granted access to.
+  navigator.usb.getDevices().then(devices => {
+    devices.forEach(device => {
+      console.log(device.productName);      // "Arduino Micro"
+      console.log(device.manufacturerName); // "Arduino LLC"
+    });
+  });
+}
+
 function odinit() {
   window.od.net = {};
+
+  window.od.usb = {};
+  window.od.usb_requestDevice = usb_requestDevice;
+  window.od.usb_getDevices = usb_getDevices;
+
   window.od.net.urlrewrite = function (url) {
     if (typeof window.DanaUrl === 'function') {
       url = window.DanaUrl(url);
@@ -426,13 +455,12 @@ function isCompatibleBrowser() {
  * If user use Android app and make windows draggable.
  */
 function init() {
-  console.info('function script:init()');
-
+  // console.info('function script:init()');
   // check if we are running inside the orange android
   // Application webview
   window.isAndroidApplicationMode = ocuaparser.isAbcDesktopAndroidApplication();
   
-  console.debug('function script::logmein.tryReconnect()');
+  // console.debug('function script::logmein.tryReconnect()');
 
   // try to restor previous user context
   logmein.restoreUserContext().fail(() => {
@@ -675,6 +703,7 @@ function setupTopMenu() {
   const audioplayer = document.getElementById('audioplayer');
   $('#top #top-right #speakers #volume_level')
     .on('input', function () {
+      
       if (this.value > 0 && audioplayer.paused)
       {
         audioplayer.play();
@@ -683,6 +712,7 @@ function setupTopMenu() {
       {
         audioplayer.pause();
       }
+      
       audioplayer.volume = this.value;
       speaker.updateIconVolumLevel();
     });
