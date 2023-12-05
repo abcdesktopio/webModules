@@ -31,7 +31,7 @@ let _m = _authProvider;
  *
  */
 export const isLogmein = function () {
-  console.debug('function logmein:isLogmein');
+  // console.debug('function logmein:isLogmein');
   console.debug(`logmein:isLogmein isLogmein=${_isLogmein}`);
   return _isLogmein;
 };
@@ -57,14 +57,14 @@ export const init = function () {
  *
  */
 export const restoreUserContext = function () {
-  console.debug('function logmein:restoreUserContext');
+  // console.debug('function logmein:restoreUserContext');
 
   const authDeferred = $.Deferred();
   // call getUserInfo
   // to check credentials
   return launcher.getUserInfo().then(
     (userinfo) => {
-      console.debug('function logmein:restoreUserContext:getUserInfo.then()');
+      // console.debug('function logmein:restoreUserContext:getUserInfo.then()');
       if (userinfo && userinfo.name && userinfo.provider) {
         // console.debug('logmein:restoreUserContext:getUserInfo userinfo is valid object ');
         window.od.currentUser = {
@@ -93,13 +93,12 @@ export const restoreUserContext = function () {
  *
  */
  export const createUserContext = function () {
-  console.debug('function logmein:restoreUserContext');
-
+  // console.debug('function logmein:restoreUserContext');
   // call getUserInfo
   // to check credentials
   return launcher.getUserInfo().then(
     (userinfo) => {
-      console.debug('function logmein:createUserContext:getUserInfo.then()');
+      // console.debug('function logmein:createUserContext:getUserInfo.then()');
       if (userinfo && userinfo.name && userinfo.provider) {
         console.debug('logmein:createUserContext:getUserInfo userinfo is valid object ');
         window.od.currentUser = {
