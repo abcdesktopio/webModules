@@ -1,6 +1,5 @@
-<!DOCTYPE html>
+<!doctype html>
 <html dir="ltr" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -45,7 +44,6 @@
 
     <!-- jquery css -->
     <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
-    <link rel="stylesheet" href="css/jquery.json-viewer.css" type="text/css" />
 
     {{#isIndexPage}}
     	<!-- this is an index page -->
@@ -73,7 +71,6 @@
     <link rel="stylesheet" href="css/css-dist/music.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/video.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/share.css" type="text/css" />
-    <link rel="stylesheet" href="css/css-dist/mailSystem.css" type="text/css" />
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css" />
 
     <!--
@@ -96,7 +93,7 @@
 </head>
 
 <body>
-    
+
 {{#isDemoPage}}
 	<!-- cookie warning Consent -->
 	<div id="cookieConsent" class="fixed-bottom p-4">
@@ -154,6 +151,7 @@
     <div id="loginScreen">
         <div id="content">
 		    <h1 id="loginScreenProjectNameSplited">{{{ projectNameSplitedHTML }}}</h1>
+            <div class="highlight" id="welcomeinfo"></div>
             <p id="statusText"></p>
             <div id="activeDirectory">
                 <form>
@@ -360,15 +358,7 @@
     <div class="removeapp">
         <img src="img/menu/minus.svg" alt="">
     </div>
-    
-    <div class="window" id="mailFrame">
-        <div class="control">
-            <div id="logo"></div>
-            <div class="window-title">Mail</div>
-            <div class="close"></div>
-        </div>
-        <iframe sandbox="allow-scripts allow-same-origin allow-popups" src=""></iframe>
-    </div>
+
     <div id="fullbcg">
         <div class="window" id="navMessage">
             <p>Oops, your web browser <span id="currentNav"></span> is no longer supported. Please upgrade to a modern,
@@ -506,7 +496,7 @@
             <div id="copypaste" class="keep" title="Copy / Paste" style="display: none;">
                 <img id="ico" src="../img/top/copypaste.svg" alt="" />
                 <ul class="drop-down">
-                    <textarea placeholder="Clipboard"></textarea>
+                    <textarea id="clipboardtext" placeholder="Clipboard"></textarea>
                     <button id="send"><img src="../img/top/send.svg"></button>
                 </ul>
             </div>
@@ -522,6 +512,8 @@
                 <img src="../img/wrench.svg" alt="" />
             </div>
             -->
+            
+            <!-- 
             <div id="music" class="keep" title="Music">
                 <audio id="audioplayer" type="audio/mp3" codecs="mp3"></audio>
                 <img src="../img/top/music.svg" alt="" />
@@ -535,15 +527,21 @@
                     <input id="progressBar" type="range" min="0" value="0" step="0.1">
                 </ul>
             </div>
+            -->
+            
             <div id="speakers" class="keep" title="Sound">
+                <!-- <video id="audioplayer" style="display: none;" autoplay/></video> -->
+                <audio id="audioplayer" type="audio/mp3" codecs="mp3"></audio>
                 <img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="" />
                 <ul class="drop-down">
                     <input id="volume_level" type="range" orient="vertical" min="0" max="1" step="0.01" value="0">
                 </ul>
             </div>
+
             <div id="fullscreen" title="Fullscreen" state="false">
                 <img src="img/top/fullscreen.svg" alt="">
             </div>
+
             {{#isIndexPage}}
                 <div class="img_top" id="name">
                     <img src="img/top/menu.svg" title="Settings" alt="">
@@ -604,9 +602,8 @@
             </div>
         </div>
         <form action="javascript:void(0);">
-            <div id="title"><img src="img/top/share.svg"><span id="share-window-title-text">Share your desktop with your
-                    contact just by email address</span></div>
-            <input id="email" placeholder="target@email.com" type="mail">
+            <div id="title"><img src="img/top/share.svg"><span id="share-window-title-text">Share your desktop with your contact just by email address</span></div>
+            <input id="email" placeholder="target@email.com" type="mail" autocomplete="off">
             <div class="button" id="viewOnly">View Only</div>
             <div class="button" id="fullAccess">Full Access</div>
         </form>
@@ -676,6 +673,7 @@
             <div class="button" id="cancel">Cancel</div>
         </div>
     </div>
+
     <!-- 
     <div id="chatWindow" class="window">
         <div class="control">
