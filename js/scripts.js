@@ -67,13 +67,6 @@ let lastTouchEnd = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  if (typeof document.body.style.zoom   === "undefined") { 
-	  console.log('document.body.style.zoom is undefined');
-  }
-  else {
-  	document.body.style.zoom = 0.8;
-  }
-
   // Init window.od.net functions
   // add network low level url rewrite call
   // build the object window.od.net.funct*
@@ -99,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
       init(); 
     }
   );
+
 });
 
 /**
@@ -107,8 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
  * @desc Init modules that are not required before the user logs on.
  */
 function setupbeforeuserloginin() {
-  // Init events on body
+  // init events on body
   initGlobalEvents();
+
+  // init zoom value
+  initZoom();
 
   // Parsing current URI and provide isLogmein with Boolean for auto login
   logmein.init();
@@ -119,7 +116,6 @@ function setupbeforeuserloginin() {
     // console.log('allowCookies not found');
     system.show(document.getElementById('cookieConsent'));
   }
-
 
   // init geolocation 
   userGeolocation.init();
@@ -214,6 +210,24 @@ window.od.setupafteruserloginin = function () {
   system.setUsername(window.od.currentUser.name);
 
 };
+
+
+function initZoom() {
+  if (typeof document.body.style.zoom === "undefined") { 
+	  console.log('document.body.style.zoom is undefined');
+  }
+  else {
+    launcher.getkeyinfo('zoom').done((msg) => {
+      if (msg && msg.id && msg.id) {
+        let zoom = msg.id;
+        if ( !isNaN(zoom)) {
+          console.log('document.body.style.zoom is ', zoom);
+          document.body.style.zoom = zoom;
+        }
+      }
+    });
+  }
+}
 
 function initApplistcallback() {
   // console.info( 'initApplistcallback' );
