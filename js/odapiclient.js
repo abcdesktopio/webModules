@@ -243,18 +243,19 @@ const odApiClient = new (class ODApiClient {
   }
 
   sendRequest(method, args) {
+
     function getErrorResponse(result, status, xhr) {
       let response_message = "unknow error";
       let response_status = 500;
       if (result) {
-	  if (result.status) {
-	  	if (result.error)
+	      if (result.status) {
+	  	    if (result.error)
 	      		return result;
-		if (!result.message) {
-            		result.error = result.message;
-			return result;
-		}
-	  }
+		      if (!result.message) {
+            result.error = result.message;
+			      return result;
+		      }
+	      }
       }
 	    
       if (xhr) {
@@ -267,7 +268,9 @@ const odApiClient = new (class ODApiClient {
         // read xhr.responseJSON 
         // should get more detail than xhr
         if (xhr.responseJSON) {
-          if (xhr.responseJSON.error) { response_message = xhr.responseJSON.message; }
+          if (xhr.responseJSON.error) { response_message = xhr.responseJSON.error; }
+          if (xhr.responseJSON.exception) { response_message = xhr.responseJSON.exception; }
+          if (xhr.responseJSON.message) { response_message = xhr.responseJSON.message; }
           if (xhr.responseJSON.status){ response_status  = xhr.responseJSON.status;  }
         }
       }
