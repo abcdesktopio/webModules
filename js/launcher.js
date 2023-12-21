@@ -917,6 +917,30 @@ export async function getPyosVersion() {
   return window.od.currentUser.pyosVersion;
 }
 
+
+export function coturn_rtcconfiguration() {
+  return odApiClient.webrtc
+    .coturn_rtcconfiguration()
+    .done((result) => {
+      if (typeof result === 'undefined' || result.status !== 200) {
+        if (notificationSystem) {
+          notificationSystem.displayNotification(
+            'Stream',
+            'Unexpected error can not get RTP Stream',
+            'error',
+          );
+        }
+      } else {
+        return result;
+      }
+    })
+    .fail(({ status, error }) => {
+      console.error(error);
+    });
+}
+
+
+
 export function getStream() {
   return odApiClient.webrtc
     .get_stream()

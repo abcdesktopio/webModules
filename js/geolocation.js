@@ -50,7 +50,7 @@ const userGeolocation = (function () {
         }
 
         function geolocation_error(err) {
-                console.warn(`ERROR(${err.code}): ${err.message}`);
+                // console.warn(`warning geolocation (${err.code}): ${err.message}`);
         }
 
         navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_error, options);

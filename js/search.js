@@ -134,7 +134,7 @@ export const init = function () {
           abortController = new AbortController();
           launcher
             .filesearch(this.value, abortController)
-            .then(({ data: files }) => {
+	    .then(({ data: files }) => {
               const fragment = document.createDocumentFragment();
               for (const file of files) {
                 if (fileZone.children.length <= 30) {

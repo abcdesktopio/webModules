@@ -628,6 +628,10 @@ function setupTopMenu() {
       return;
     }
 
+    if (this.id === 'speakers') {
+      speaker.enablePlaySound();
+    }
+
     const hasSelected = $(this).hasClass('selected');
     if (!$(this).hasClass('keep')) {
       closeTopRightDropDowns();
@@ -716,10 +720,11 @@ function setupTopMenu() {
     }
   });
 
-  const audioplayer = document.getElementById('audioplayer');
   $('#top #top-right #speakers #volume_level')
     .on('input', function () {
-      
+      const audioplayer = document.getElementById('audioplayer');
+      if (!audioplayer)
+	    return;
       if (this.value > 0 && audioplayer.paused)
       {
         audioplayer.play();

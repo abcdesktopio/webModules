@@ -12,7 +12,7 @@
     },
     {
       "name": "@tertiary",
-      "value": "#6EC6F0"
+      "value": "#00BCD4"
     },
     {
       "name": "@quaternary",
@@ -40,7 +40,7 @@
     },
     {
       "name": "@light",
-      "value": "#FFFFFF"
+      "value": "#F1F1F1"
     },
     {
       "name": "@dark",

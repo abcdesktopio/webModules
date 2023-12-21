@@ -144,6 +144,11 @@ const odApiClient = new (class ODApiClient {
     })();
 
     this.webrtc = new (class coreClient {
+
+      coturn_rtcconfiguration() {
+	return client.sendRequest('webrtc/coturn_rtcconfiguration', {});
+      }
+
       get_stream() {
         return client.sendRequest('webrtc/get_stream', {});
       }

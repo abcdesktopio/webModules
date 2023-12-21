@@ -259,7 +259,7 @@ let getWihndowListIsPending = false;
  * @desc Show context menu (right clic).
 */
 export const showContextmenu = function (status, element) {
-  console.debug('showContextmenu');
+  // console.debug('showContextmenu');
   system.show(window.contextmenu);
   if (status === true) {
     if (!getWihndowListIsPending) {
@@ -356,7 +356,7 @@ export const showContextmenu = function (status, element) {
 };
 
 function getListWidApp(app) {
-  console.debug('getListWidApp');
+  // console.debug('getListWidApp');
   const listWid = [];
   for (let i = 0; i < windowList.length; i++) {
     const win = windowList[i];
