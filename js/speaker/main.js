@@ -21,9 +21,6 @@ import { broadcastEvent } from '../broadcastevent.js';
 import * as notificationSystem from '../notificationsystem.js';
 
 
-var default_peer_id = 'front.abcdesktop';
-
-
 var default_constraints = {video: false, audio: true};
 var connect_attempts = 0;
 var peer_connection;
