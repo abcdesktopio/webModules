@@ -605,7 +605,7 @@ function toggleFullScreen() {
  * @desc set fullscreen User Interface.
  */
 function setFullScreenUI() {
-  console.log('setFullScreenUI');
+  // console.log('setFullScreenUI');
   if (!document.fullscreenElement && !document.mozFullScreenElement
       && !document.webkitFullscreenElement && !document.msFullscreenElement) {
     $('#fullscreen img').attr('src', 'img/top/fullscreen.svg');
