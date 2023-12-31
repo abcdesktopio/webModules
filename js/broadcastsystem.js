@@ -38,7 +38,7 @@ function open(jsonParameters, callback = () => { }) {
   // wsbroadcast.binaryType = "arraybuffer";
   
   wsbroadcast.onerror = () => {
-    console.info('Failed to connect to broadcast service');
+    console.error('Failed to connect to broadcast service');
   };
 
   wsbroadcast.onopen = () => {
@@ -162,14 +162,13 @@ export const process_event = ( msg ) => {
     );
   }
   if (msg.method === 'printer.new') {
-    console.log('printer', msg);
     broadcastEvent.dispatchEvent(
       new CustomEvent('printer.new', { detail: { data: msg.data } }),
     );
   }
 
   if (msg.method === 'download') {
-    console.log('download', msg);
+    // console.log('download', msg);
     const {
       files: [file],
     } = msg.data;
@@ -213,7 +212,7 @@ export const process_event = ( msg ) => {
   }
 
   if (msg.method === 'ocrun') {
-    console.log(msg.data);
+    // console.log(msg.data);
     broadcastEvent.dispatchEvent(
       new CustomEvent('ocrun', { detail: { data_dict: msg.data } }),
     );
