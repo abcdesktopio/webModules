@@ -1,5 +1,11 @@
 # webModules
 
+
+## About this repository
+
+webModules repository contains the HTML/JS files for the abcdesktop website.
+
+
 ## To get more informations
 
 Please, read the public documentation web site:
