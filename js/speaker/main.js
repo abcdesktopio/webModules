@@ -82,8 +82,10 @@ const configureSpeaker = async () => {
             console.log('Sound is disable in your configuration file');
       });
     }
-    else
-      displayNotificationNoSound('Please use secure https to enable sound');
+    else { 
+      console.log('Please use secure https to enable WebRTC sound feature');
+      displayNotificationNoSound('Please use secure https to enable WebRTC sound');
+    }
   }
 }
 
