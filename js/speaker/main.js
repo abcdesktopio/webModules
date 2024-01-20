@@ -16,18 +16,25 @@
  * with a GStreamer app. Runs only in passive mode, i.e., responds to offers
  * with answers, exchanges ICE candidates, and streams.
  */
+
+
+/*
+ * Origin source code 
+ * https://github.com/centricular/gstwebrtc-demos/blob/master/sendrecv/js/webrtc.js
+ *
+ */
+
 import * as launcher from '../launcher.js';
 import { broadcastEvent } from '../broadcastevent.js';
 import * as notificationSystem from '../notificationsystem.js';
 
-
-var default_constraints = {video: false, audio: true};
+var constraints = { video: false, audio: false }; // will be overswrite by json call
 var connect_attempts = 0;
 var peer_connection;
 var send_channel;
 var ws_conn;
-// Promise for local stream after constraints are approved by the user
-var local_stream_promise;
+var local_stream_promise; // Promise for local stream after constraints are approved by the user
+var inboundStream = null;
 
 const state = {
   soundIsEnabled: false,
@@ -62,19 +69,17 @@ const configureSpeaker = async () => {
             launcher.coturn_rtcconfiguration().done(
               (msg) => { 
                 state.rtc_configuration = msg.result;
-                //  state.rtc_configuration = { 
-		            // iceServers: [ 
-                // { urls: "stun:stun.l.google.com:19302"},
-                // { urls: "turn:nturn.pepins.net:3478", username: "username2", credential: "superkey2"} 
-                // ] 
-                // };
-                console.log(state.rtc_configuration );
                 // state.rtc_configuration = { iceServers: [ {urls: "stun:stun.l.google.com:19302"} ] };
-                launcher.isPulseAvailable().then((res) => {
-                  if (res.status === 200) {
-                      websocketServerConnect();
-                  }
-                });
+		launcher.getkeyinfo('webrtc.rtc_constraints').done(
+                  (msg) => {
+			constraints = msg.id;
+                	launcher.isPulseAvailable().then((res) => {
+                  	  if (res.status === 200) {
+                      		websocketServerConnect();
+                  	  }
+                	});
+		  }
+		);
               } 
             );
         }
@@ -122,6 +127,7 @@ export const updateIconVolumLevel = () => {
   }
   */
 };
+
 
 const setLevelSound = () => {
   const audio = document.getElementById('audioplayer');
@@ -236,8 +242,33 @@ function setError(text) {
   displayNotificationWebRTCError( text );
 }
 
-function setErrortoConsole(text) {
-  console.log(text);
+function handleSetRemoteDescriptionError(err) {
+  console.error(err);
+}
+
+function handleCreateAnswerError(err) {
+  console.error(err);
+}       
+
+function handleLocalStreamError(err) {
+  console.error(err);
+}       
+
+function handleGetUserMediaError(err) {
+  let error_message = "Error opening your camera and/or microphone"; // default value
+  switch (err.name) {
+    case "NotFoundError":
+      error_message = `${err.name} unable to open your call because no camera and/or microphone were found.`;
+      break;
+    case "SecurityError":
+    case "PermissionDeniedError":
+      // Do nothing; this is the same as the user canceling the call.
+      error_message = `${err.name} can not open camera and/or microphone`;
+      break;
+    default:
+      error_message = `Error opening your camera and/or microphone: ${err.message}`;
+  }
+  console.error(error_message);
 }
 
 
@@ -254,6 +285,7 @@ function resetVideo() {
   var videoElement = getVideoElement();
   videoElement.pause();
   videoElement.src = "";
+  inboundStream = null;
   videoElement.load();
 }
 
@@ -267,9 +299,9 @@ function onIncomingSDP(sdp) {
       local_stream_promise.then((stream) => {
           setStatus("Got local stream, creating answer");
           peer_connection.createAnswer()
-          .then(onLocalDescription).catch(setError);
-      }).catch(setError);
-  }).catch(setError);
+          .then(onLocalDescription).catch(handleCreateAnswerError);
+      }).catch(handleLocalStreamError);
+  }).catch(handleSetRemoteDescriptionError);
 }
 
 // Local description was set, send it to peer
@@ -314,12 +346,12 @@ function onServerMessage(event) {
               return;
           }
           if (!peer_connection)
-              createCall(null).then (generateOffer);
+              createCall(null).then(generateOffer);
           return;
       case "OFFER_REQUEST":
           // The peer wants us to set up and then send an offer
           if (!peer_connection)
-              createCall(null).then (generateOffer);
+              createCall(null).then(generateOffer);
           return;
       default:
           if (event.data.startsWith("ERROR")) {
@@ -377,8 +409,10 @@ function onServerError(event) {
 
 function getLocalStream() {
   // Add local stream
+  constraints = { video: true, audio: true, };
+  console.log( 'getLocalStream constraints=', JSON.stringify(constraints) );
   if (navigator.mediaDevices.getUserMedia) {
-      return navigator.mediaDevices.getUserMedia(default_constraints);
+      return navigator.mediaDevices.getUserMedia(constraints);
   } else {
       errorUserMediaHandler();
   }
@@ -418,10 +452,24 @@ function websocketServerConnect() {
 }
 
 function onRemoteTrack(event) {
+  
   if (getVideoElement().srcObject !== event.streams[0]) {
       console.log('Incoming webrtc stream');
       getVideoElement().srcObject = event.streams[0];
   }
+  
+  /*
+  let videoElem = getVideoElement();
+  if (ev.streams && ev.streams[0]) {
+    videoElem.srcObject = ev.streams[0];
+  } else {
+    if (!inboundStream) {
+      inboundStream = new MediaStream();
+      videoElem.srcObject = inboundStream;
+    }
+    inboundStream.addTrack(ev.track);
+  }
+  */
 }
 
 function errorUserMediaHandler() {
@@ -465,7 +513,7 @@ function createCall(msg) {
   // Reset connection attempts because we connected successfully
   connect_attempts = 0;
   console.log('Creating RTCPeerConnection');
-  console.log('rtc_configuration=', state.rtc_configuration);
+  console.log('rtc_configuration=', JSON.stringify(state.rtc_configuration) );
   peer_connection = new RTCPeerConnection(state.rtc_configuration);
   send_channel = peer_connection.createDataChannel('label', null);
   send_channel.onopen = handleDataChannelOpen;
@@ -478,9 +526,21 @@ function createCall(msg) {
   /* Send our video/audio to the other peer */
   local_stream_promise = getLocalStream().then((stream) => {
       console.log('Adding local stream');
-      peer_connection.addStream(stream);
+      // previous source code 
+      //   peer_connection.addStream(stream);
+      //  
+      // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addStream   
+      // RTCPeerConnection: addStream() method is deprecated, migrate to addTrack()
+      // note: do not use tracks.forEach  
+      //
+      // let tracks = stream.getTracks()
+      // for (const track of tracks) {
+      //	 console.log( 'adding track type=', track.kind);
+      //   peer_connection.addTrack(track);
+      // }
+      peer_connection.addStream(stream); 
       return stream;
-  }).catch(setErrortoConsole); // catch no local stream microphone or access is denied by user
+  }).catch(handleGetUserMediaError); // catch no local stream microphone or access is denied by user
 
   if (msg != null && !msg.sdp) {
       console.log("WARNING: First message wasn't an SDP message!?");
