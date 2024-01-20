@@ -939,8 +939,6 @@ export function coturn_rtcconfiguration() {
     });
 }
 
-
-
 export function getStream() {
   return odApiClient.webrtc
     .get_stream()
