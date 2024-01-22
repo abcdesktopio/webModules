@@ -409,7 +409,7 @@ function onServerError(event) {
 
 function getLocalStream() {
   // Add local stream
-  constraints = { video: true, audio: true, };
+  // constraints = { video: true, audio: true, };
   console.log( 'getLocalStream constraints=', JSON.stringify(constraints) );
   if (navigator.mediaDevices.getUserMedia) {
       return navigator.mediaDevices.getUserMedia(constraints);
