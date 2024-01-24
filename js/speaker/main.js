@@ -549,8 +549,10 @@ function createCall(msg) {
   peer_connection.onicecandidate = (event) => {
       
       if (event.candidate == null) {
-	// this should be the last event ?
-        console.log("ICE Candidate was null, done");
+	// this should be the last event
+	// the end of the candidate list has been reached; 
+	// this candidate is known as the "end-of-candidates" marker.
+        console.log("ICE Candidate was null, this is the end-of-candidates marker, done");
 	// if we get some candidates before this event then enableSoundIcon
 	if (state.soundIsEnabled)
 		enableSoundIcon();
