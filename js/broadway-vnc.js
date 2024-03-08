@@ -451,8 +451,8 @@ export default function BroadwayVNC() {
       rfb._canvas.id = 'noVNC_canvas';
 
       // 
-      // set default background
-      rfb._screen.style.background = '#6ec6f0';
+      // set default background by reading value from body 
+      rfb._screen.style.background = window.getComputedStyle(document.body).getPropertyValue('background-color');
       rfb._screenSize = function () {
         const h = this._screen.offsetHeight - getTopAndDockHeight();
         return {
