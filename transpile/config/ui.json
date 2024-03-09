@@ -3,6 +3,10 @@
   "projectNameSplitedHTML": "<span id='projectNameSplitedStagea'>a</span><span id='projectNameSplitedStageb'>b</span><span id='projectNameSplitedStagec'>c</span><span id='projectNameSplitedStaged'>desktop</span>",
   "colors": [
     {
+      "name": "@x11bgcolor",
+      "value": "#6EC6F0"
+    },
+    {
       "name": "@primary",
       "value": "#474B55"
     },
@@ -32,7 +36,7 @@
     },
     {
       "name": "@info",
-      "value": "#527EDB"
+      "value": "#6EC6F0"
     },
     {
       "name": "@warning",
