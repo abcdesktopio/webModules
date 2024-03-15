@@ -184,7 +184,8 @@ broadcastEvent.addEventListener('hello', ({ detail: { user } }) => {
   // by user.photo ? `data:;base64, ${user.photo}` : '../img/top/place-available.svg';
   // the image format depend on ldap storage attribut value
   const picture = user.photo ? `data:;base64,${user.photo}` : window.od.net.urlrewrite('../img/top/place-available.svg');
-  displayNotification(user.name, languages.getTranslate('connected'), '', picture);
+  displayNotification(user.name, '', '', picture);
+  // displayNotification(user.name, languages.getTranslate('connected'), '', picture);
 });
 
 broadcastEvent.addEventListener('bye', ({ detail: { user } }) => {
