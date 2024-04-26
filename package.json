@@ -1,6 +1,6 @@
 {
   "name": "webModules",
-  "version": "1.0.0",
+  "version": "3.2.1",
   "main": "index.js",
   "repository": "git@github.com:abcdesktopio/webModules.git",
   "author": "kecsou <kevin.voyer.developpeur@gmail.com>",
@@ -13,6 +13,7 @@
     "@xterm/addon-attach": "^0.11.0",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/addon-web-links": "^0.11.0",
-    "@xterm/addon-webgl": "^0.18.0"
+    "@xterm/addon-webgl": "^0.18.0",
+    "webrtc-adapter": "^9.0.1"
   }
 }

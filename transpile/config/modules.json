@@ -4,7 +4,7 @@
   ],
   "scripts": [
     {
-      "src": "js/adapter.js",
+      "src": "node_modules/webrtc-adapter/out/adapter.js",
       "indexPageOnly": false,
       "defer": false
     },
