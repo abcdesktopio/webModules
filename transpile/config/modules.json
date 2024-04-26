@@ -59,27 +59,22 @@
       "defer": false
     },
     {
-      "src": "js/mustache.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
-      "src": "node_modules/xterm/lib/xterm.js",
+      "src": "node_modules/@xterm/xterm/lib/xterm.js",
       "indexPageOnly": false,
       "defer": true
     },
     {
-      "src": "node_modules/xterm-addon-attach/lib/xterm-addon-attach.js",
+      "src": "node_modules/@xterm/addon-attach/lib/addon-attach.js",
       "indexPageOnly": false,
       "defer": true
     },
     {
-      "src": "node_modules/xterm-addon-fit/lib/xterm-addon-fit.js",
+      "src": "node_modules/@xterm/addon-fit/lib/addon-fit.js",
       "indexPageOnly": false,
       "defer": true
     },
     {
-      "src": "node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js",
+      "src": "node_modules/@xterm/addon-web-links/lib/addon-web-links.js",
       "indexPageOnly": false,
       "defer": true
     }
