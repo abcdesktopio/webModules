@@ -49,7 +49,7 @@
       "defer": false
     },
     {
-      "src": "js/ua-parser.min.js",
+      "src": "node_modules/ua-parser-js/dist/ua-parser.min.js",
       "indexPageOnly": false,
       "defer": false
     },

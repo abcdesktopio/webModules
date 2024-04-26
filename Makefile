@@ -67,9 +67,9 @@ prod: checkTranspile version
 dev: uiAndAssets version
 
 updatejs:
-	rm  js/ua-parser.min.js | true
-	wget -O js/ua-parser.min.js https://raw.githubusercontent.com/faisalman/ua-parser-js/master/dist/ua-parser.min.js
-
+	#rm  js/ua-parser.min.js | true
+	#wget -O js/ua-parser.min.js https://raw.githubusercontent.com/faisalman/ua-parser-js/master/dist/ua-parser.min.js
+	echo "please use package.json"
 
 clean:
 	rm -rf transpile/node_modules | true
