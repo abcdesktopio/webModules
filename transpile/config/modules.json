@@ -59,6 +59,11 @@
       "defer": false
     },
     {
+      "src": "js/mustache.js",
+      "indexPageOnly": false,
+      "defer": false
+    },
+    {
       "src": "node_modules/@xterm/xterm/lib/xterm.js",
       "indexPageOnly": false,
       "defer": true
