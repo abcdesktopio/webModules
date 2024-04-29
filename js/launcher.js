@@ -516,15 +516,11 @@ export function login(provider, args={}) {
  */
 export function runAppsOrDesktop() {
   const url = new URL(window.location.href);
-  const app = url.searchParams
-    ? url.searchParams.get('app')
-    : url.getParameter('app');
-  const args = url.searchParams
-    ? url.searchParams.get('args')
-    : url.getParameter('args');
+  const app = url.searchParams.get('app');
+  const args = url.searchParams.get('args');
   // abcdesktopinstancetypecallback is launchMetappli or launchDesktop
   let abcdesktopinstancetypecallback;
-  if (app !== undefined && app !== '') {
+  if (app && app !== '') {
     abcdesktopinstancetypecallback = odApiClient.composer.launchMetappli;
   } else {
     abcdesktopinstancetypecallback = odApiClient.composer.launchDesktop;
