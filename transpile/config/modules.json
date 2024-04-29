@@ -9,37 +9,37 @@
       "defer": false
     },
     {
-      "src": "js/jquery-3.7.1.min.js",
+      "src": "node_modules/jquery/dist/jquery.min.js",
       "indexPageOnly": false,
       "defer": false
     },
     {
-      "src": "js/jquery-ui.min.js",
+      "src": "node_modules/jquery-ui/dist/jquery-ui.min.js",
       "indexPageOnly": false,
       "defer": false
     },
     {
-      "src": "js/bootstrap.min.js",
+      "src": "node_modules/bootstrap/dist/js/bootstrap.min.js",
       "indexPageOnly": false,
       "defer": false
     },
     {
-      "src": "js/bootstrap-table.min.js",
+      "src": "node_modules/bootstrap-table/dist/bootstrap-table.min.js",
       "indexPageOnly": true,
       "defer": false
     },
     {
-      "src": "js/bootbox.min.js",
+      "src": "node_modules/bootbox/dist/bootbox.min.js",
       "indexPageOnly": false,
       "defer": false
     },
     {
-      "src": "js/js.cookie.js",
+      "src": "node_modules/js-cookie/dist/js.cookie.min.js",
       "indexPageOnly": false,
       "defer": false
     },
     {
-      "src": "js/dropzone.js",
+      "src": "node_modules/dropzone/dist/dropzone-min.js",
       "indexPageOnly": false,
       "defer": false
     },
@@ -54,12 +54,7 @@
       "defer": false
     },
     {
-      "src": "js/url.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
-      "src": "js/mustache.js",
+      "src": "node_modules/mustache/mustache.min.js",
       "indexPageOnly": false,
       "defer": false
     },
