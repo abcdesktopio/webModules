@@ -681,9 +681,10 @@ class LoginProgress {
 export function docker_logoff() {
   return logout().always((logoutresult) => {
     // always delete jwt_user_token
-    localStorage.removeItem('abcdesktop_jwt_user_token');
+    // odapi does the localStorage.removeItem('abcdesktop_jwt_user_token');
+    // 
     window.od.currentUser = null;
-    //window.Cookies.remove('abcdesktop_token', { path: '/API' });
+    window.Cookies.remove('abcdesktop_token', { path: '/API' });
     // remove loadbalancing cookie
     window.Cookies.remove('abcdesktop_host');
     // Do not reload the default page if manager and provider is defined
