@@ -58,7 +58,7 @@ function clickDockActive() {
 export const init = function () { 
   if (!document.getElementById('dock')) {
     enable = false;
-    console.warning('searchZone is disabled');
+    console.log('dock is disabled');
     return;
   }
 
@@ -493,8 +493,8 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
   }
 
   // look for the applications myapptolaunch
-  const myapptolaunch =  window.od.applist.find(
-    ({ launch }) => clickedApp.attributes.launch.value === launch
+  const myapptolaunch =  window.od.applist.find( 
+	({ launch }) => clickedApp.attributes.launch.value === launch
   );
 
   // myapptolaunch is found, check properties
@@ -505,13 +505,14 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
       clickedApp.setAttribute('state', 'started');
       $(clickedApp).find('img.appLoader')
         .addClass('appLoaderDock');
-    } else if (myapptolaunch.execmode === 'frontendjs' || !myapptolaunch) {
+    } else 
+      if (myapptolaunch.execmode === 'frontendjs') {
       switch (clickedApp.attributes.launch.value) {
-        case 'frontendjs.phone':
-          // phone.open();
-          break;
+        // case 'frontendjs.phone':
+        // phone.open();
+        //  break;
         case 'frontendjs.webshell':
-          webshell.open(clickedApp.attributes.launch.value);
+          webshell.open();
           break;
         default:
           errorMessage.open();
@@ -537,6 +538,46 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
     // speaker.letsPlaySound();
   }
 };
+
+
+
+function launchmyapp( myapptolaunch ) {
+  if (myapptolaunch) {
+
+    // Plank doesn't support ENV in desktopfile
+    // [System:206] Unable to use application/file '/home/fry/.local/share/applications/frontendjs.webshell.desktop' for execution.
+    // 
+    // overwrite execmode if image attribut starts by 'frontendjs.'
+    if (myapptolaunch.image.startsWith('frontendjs.'))
+	  myapptolaunch.execmode = 'frontendjs'
+
+    if (myapptolaunch.execmode === 'builtin') {
+      launcher.launch(myapptolaunch.launch, '');
+    } 
+    else 
+    if (myapptolaunch.execmode === 'frontendjs') {
+      switch (myapptolaunch.image) {
+        case 'frontendjs.phone':
+          // phone.open();
+          break;
+        case 'frontendjs.webshell':
+          webshell.open();
+          break;
+        default:
+          errorMessage.open();
+          break;
+      }
+    } 
+    else {
+      // This myapptolaunch is a container image
+      // launchDockerApplication();
+      launcher.ocrun( myapptolaunch );
+    }
+  }
+}
+
+broadcastEvent.addEventListener('ocrun',  ( { detail: { data_dict } } ) => launchmyapp( data_dict ) );
+
 
 /**
  * @function saveMenu
