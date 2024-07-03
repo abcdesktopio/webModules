@@ -191,10 +191,11 @@ export const init = function () {
               }
             })
             .catch((e) => {
-              if (e.message
-                && e.message !== 'The user aborted a request.') {
-                console.error(e);
-              }
+	      // nothing to do 
+	      // e.code  should be equal to 20
+	      // e.message 
+	      // 'The user aborted a request.' 
+	      // 'signal is aborted without reason'
             });
         } else {
           if (abortController) {
