@@ -1350,4 +1350,4 @@ export function getListScret() {
 }
 
 broadcastEvent.addEventListener('container',	({ detail: { container } }) => containerNotificationInfo(container));
-broadcastEvent.addEventListener('ocrun', 	({ detail: { data_dict } }) => ocrun(data_dict));
+// broadcastEvent.addEventListener('ocrun', 	({ detail: { data_dict } }) => ocrun(data_dict));
