@@ -304,7 +304,6 @@ function buildHistoryList(loginHistory, user) {
     return {
       date: `<span style="white-space: nowrap;">${login.date}</span>`,
       ipaddr: login.ipaddr,
-      node: login.node || 'N/A',
       useragent: `
         <div class="row">
           <div class="align-self-center col-xl-2 col-lg-2 col-md-3 col-sm-3 d-md-block d-sm-block d-none">
