@@ -28,8 +28,6 @@ import * as secrets from './secrets.js';
 let myMenuApps;
 let enable = true;
 let windowList = [];
-let xMousePosition = 0;
-let yMousePosition = 0;
 
 /**
  * @function clickDockActive
@@ -146,10 +144,6 @@ export const init = function () {
 
   clicklistener();
   mouselistener();
-  document.getElementById('dock').onmousemove = function (e) {
-    xMousePosition = e.clientX;
-    yMousePosition = e.clientY;
-  };
   window.contextmenu = document.getElementById('contextmenu');
 };
 
@@ -322,7 +316,6 @@ export const showContextmenu = function (status, element) {
 	  const menu_top = elementrect.y - offsetHeight; 
 	  window.contextmenu.style.top = menu_top + 'px';
 
-          // if (window.innerWidth - xMousePosition < cloneContexmenue.clientWidth) {
 	  if (window.innerWidth - elementrect.x < cloneContexmenue.clientWidth) {
             window.contextmenu.style.right = '0px';
           } else {
@@ -588,7 +581,8 @@ export const saveMenu = function () {
 
 export const internalLoadMenu = function (apps) {
   const docklist = document.getElementById('docklist');
-  console.debug(`Adding ${apps.length} applications in the docklist element`);
+  
+  
   // if apps is empty
   // then add all applications with showinview 'dock'
   if (apps.length === 0) {
