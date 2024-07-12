@@ -661,14 +661,12 @@ export const loadMenu = function () {
     .done((msg) => {
       if (msg && msg.status === 200 && msg.result) {
         const dockapplist = msg.result;
-        console.log( 'user dock application list is ' +  dockapplist );
         for (let i = 0; i < dockapplist.length; i++) {
           window.od.applist.forEach(element => {
             // if dock application exist data[i] === element.launch
             // and application is not hideindock
             if (dockapplist[i] === element.launch && !element.hideindock) {
               // add entry in dock
-              // console.log( 'adding ' +  element.launch + ' to apps' );
               apps.push(element);
             }
           });
