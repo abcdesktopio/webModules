@@ -449,7 +449,7 @@ export default function BroadwayVNC() {
       // set an id to the RFB canvas
       // after the constructor
       rfb._canvas.id = 'noVNC_canvas';
-
+      rfb.qualityLevel = 8;
       // 
       // set default background by reading value from body 
       rfb._screen.style.background = window.getComputedStyle(document.body).getPropertyValue('background-color');
