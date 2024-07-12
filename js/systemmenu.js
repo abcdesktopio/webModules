@@ -543,18 +543,12 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
 
 function launchmyapp( myapptolaunch ) {
   if (myapptolaunch) {
-
-    // Plank doesn't support ENV in desktopfile
-    // [System:206] Unable to use application/file '/home/fry/.local/share/applications/frontendjs.webshell.desktop' for execution.
-    // 
-    // overwrite execmode if image attribut starts by 'frontendjs.'
-    if (myapptolaunch.image.startsWith('frontendjs.'))
-	  myapptolaunch.execmode = 'frontendjs'
-
+    // this application is inside oc.user image 
     if (myapptolaunch.execmode === 'builtin') {
       launcher.launch(myapptolaunch.launch, '');
     } 
     else 
+    // this application is front HTML/JS
     if (myapptolaunch.execmode === 'frontendjs') {
       switch (myapptolaunch.image) {
         case 'frontendjs.phone':
