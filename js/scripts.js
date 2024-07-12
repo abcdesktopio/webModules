@@ -236,7 +236,7 @@ function initApplistcallback() {
     .then( (data) => { 
       // console.log( data ); 
       if (data)
-        console.debug( 'generateDesktopFiles mimetype database updated ' + data.code )
+     	 console.debug( 'generateDesktopFiles mimetype database done with status', data.code );
       systemMenu.init(); 
     })
     .catch( (err) => {
