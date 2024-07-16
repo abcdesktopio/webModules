@@ -699,6 +699,26 @@ div.button {
   top: 5px;
 }
 
+#top #top-right #zoom input[type="text"] {
+  width: 28px;
+  background: @primary;
+  color: @light;
+}
+
+#top #top-right #zoom input[type="range"] {
+  margin-bottom: 5px;
+}
+
+#top #top-right #zoom li {
+  display: flex;
+  gap: 10px;
+  color: @light;
+}
+
+#top #top-right #zoom li img{
+  margin: 0;
+}
+
 #top #top-right #copypaste textarea {
   min-height: 80px;
   max-width: 210px;
@@ -1054,6 +1074,34 @@ div.button {
 }
 #top #top-right #share .drop-down:before {
   border-bottom-color: @primary;
+  border-width: 8px;
+  margin-left: -8px;
+}
+
+#top #top-right #zoom .drop-down {
+  width: 200px;
+  margin-left: -160px;
+}
+
+#top #top-right #zoom .drop-down:after,
+#top #top-right #zoom .drop-down:before {
+  bottom: 100%;
+  left: 85%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+#top #top-right #zoom .drop-down:after {
+  border-bottom-color: @secondary;
+  border-width: 9px;
+  margin-left: -9px;
+}
+#top #top-right #zoom .drop-down:before {
+  border-bottom-color: @secondary;
   border-width: 8px;
   margin-left: -8px;
 }
