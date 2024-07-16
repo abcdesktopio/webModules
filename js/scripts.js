@@ -490,15 +490,15 @@ function init() {
   // setup menu
   setupTopMenu();
 
+  // setup the ability to change the zoom value
+  setupZoomValueChange();
+
   // set fullscreen option callback in top menu
   $('#fullscreen').on('click', () => { toggleFullScreen(); });
   // event then fullscreenchange
   // can be a mouse click event or an escape key event
   // set fullscreen option icon [] or #
   document.onfullscreenchange = setFullScreenUI;
-
-  // enable time at the top
-  system.horloge('time');
 
   // enable drag and drap applications
   drag();
@@ -822,5 +822,44 @@ function initAllowCookies() {
       window.Cookies.set('allowCookies', 'true', { path: '/', expires: 7 });
       system.hide(document.getElementById('cookieConsent'));
     });
+  }
+}
+
+/**
+ * @function setupZoomValueChange
+ * @global
+ * @return {void}
+ * @desc Changes the page zoom value 
+ */
+function setupZoomValueChange(){
+  var zoomValue = document.querySelector("#zoomValue");
+  var zoomRange = document.querySelector("#zoom_range");
+  var range_min = zoomRange.min;
+  var range_max = zoomRange.max;
+  var sliding = false;
+
+  zoomValue.value = zoomRange.value;
+  zoomRange.addEventListener("input", (event) => {
+      zoomValue.value = event.target.value;
+      sliding = true;
+  });
+  zoomRange.addEventListener("change", (event) => {
+      document.body.style.zoom = event.target.value;
+      sliding = false;
+  });
+
+  if(!sliding){
+      zoomValue.addEventListener("change", (event) => { 
+          let inputValue = event.target.value;
+          if(inputValue<range_min){
+              inputValue = range_min
+          }
+          if(inputValue>range_max){
+              inputValue = range_max
+          }
+          zoomValue.value = inputValue
+          zoomRange.value = inputValue;
+          document.body.style.zoom = inputValue;
+      });
   }
 }
