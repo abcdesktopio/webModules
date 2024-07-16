@@ -138,7 +138,7 @@ function addListener() {
             return;
           }
 
-          const appStoreCloseButton = appStoreWindow.querySelector('button[class="bootbox-close-button close"]');
+          const appStoreCloseButton = appStoreWindow.querySelector('.bootbox-close-button');
 
           if (appStoreCloseButton) {
             appStoreCloseButton.click();
