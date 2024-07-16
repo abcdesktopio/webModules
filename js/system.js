@@ -16,31 +16,6 @@ import { broadcastEvent } from './broadcastevent.js';
 import * as secrets from './secrets.js';
 
 /**
- * @function horloge
- * @param  {object} el HTML element
- * @return {void}
- * @desc Init horloge
- */
-export function horloge(el) {
-  let elhtml = document.getElementById(el);
-
-  function actualiser() {
-    const date = new Date();
-    let str = date.getHours();
-    const min = date.getMinutes();
-    str += `:${min < 10 ? '0' : ''}${min}`;
-    if (elhtml) {
-      const p = document.createElement('p');
-      p.innerText = str;
-      elhtml = removeAllChilds(elhtml);
-      elhtml.appendChild(p);
-    }
-  }
-  actualiser();
-  setInterval(actualiser, 60000);
-}
-
-/**
  * @function activeWindow
  * @global
  * @params {object} elem HTML element
