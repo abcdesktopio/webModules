@@ -19,7 +19,7 @@
       "defer": false
     },
     {
-      "src": "node_modules/bootstrap/dist/js/bootstrap.min.js",
+      "src": "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
       "indexPageOnly": false,
       "defer": false
     },

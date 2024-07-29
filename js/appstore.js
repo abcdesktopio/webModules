@@ -41,6 +41,8 @@ function openTab(tabId) {
       execmode,
       secrets_requirement,
       displayname,
+      sha_id,
+      created,
     } of window.od.applist
   ) {
 
@@ -78,6 +80,12 @@ function openTab(tabId) {
       imageLock.className = 'app-lock-icon';
       imageLock.src = 'img/lock.svg';
 
+      li.setAttribute('data-bs-toggle', 'tooltip');
+      li.setAttribute('data-bs-html', 'true');
+      li.setAttribute('data-bs-title', `<b class="tooltipTitle">Launch :</b> ${launch}<br>
+                                        <b class="tooltipTitle">ID :</b> ${sha_id}<br>
+                                        <b class="tooltipTitle">Created :</b> ${created}`);
+
       li.appendChild(wrapperIcon);
       li.appendChild(p);
       li.appendChild(divAppLoader);
@@ -90,6 +98,12 @@ function openTab(tabId) {
   parentAppList.replaceChild(clone, appListContainer);
   enableDrag();
   addListener();
+
+   // Initialize Bootstrap tooltips
+   const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+   tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+     new bootstrap.Tooltip(tooltipTriggerEl);
+   });
 }
 
 /**
