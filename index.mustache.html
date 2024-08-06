@@ -69,8 +69,8 @@
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css">
 
     <!--
-    <link rel="stylesheet" href="css/css-dist/chatLync.css" type="text/css" />
-    <link rel="stylesheet" href="css/css-dist/emoticons.css" type="text/css" />
+    <link rel="stylesheet" href="css/css-dist/chatLync.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/emoticons.css" type="text/css">
     -->
     
     {{#isDemoPage}}
@@ -137,7 +137,7 @@
             <noscript>
                 <p>
                     {{{ projectName }}} uses JavaScript. Either your browser doesn't support JavaScript, or it's currently switched off.
-                    <br/>
+                    <br>
                 </p>
             </noscript>
         </div>
@@ -173,7 +173,7 @@
                     The userPassword attribute has maximum length 128 and format UTF-8.
                     -->
                     <input id="ADpassword" placeholder="Password" type="password" maxlength="128" autocomplete="current-password"><br>
-                    <input type="submit" class="button" id="connectAD" value="Sign in"></input>
+                    <input type="submit" class="button" id="connectAD" value="Sign in">
                     {{#urlcannotopensession}}
                         <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
                     {{/urlcannotopensession}}
@@ -278,7 +278,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="col">
-                                    <img id="icon-alarm" src="img/alarm.svg" loading="lazy" />
+                                    <img id="icon-alarm" src="img/alarm.svg" alt="alarm-icon" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -294,7 +294,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="col">
-                                    <img id="icon-trash" src="img/trash.svg" loading="lazy" />
+                                    <img id="icon-trash" src="img/trash.svg" alt="trash-icon" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -319,9 +319,9 @@
                                 Your abcdesktop is ready to run for 10 minutes.
                             </p>
                             <p class="mb-1">
-                                <img src="img/people-fill.svg" loading="lazy" />
+                                <img src="img/people-fill.svg" alt="people-fill-icon" loading="lazy">
 				Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.<br>
-                                <img src="img/lock.svg" loading="lazy" />
+                                <img src="img/lock.svg" alt="lock-icon" loading="lazy">
 				The security policy for Internet network prevents requests from your abcdesktop being allowed.
                             </p>
                             <small>To hear sound, just click on the sound icon.</small><br>
@@ -344,7 +344,7 @@
             <div id="connectShare">
                 <p id="connect-share-message">Connect now with your email address to work with your copartner</p>
                 <form>
-                    <input id="sharemail" placeholder="Your mail address" type="mail"><br>
+                    <input id="sharemail" placeholder="Your mail address" type="email"><br>
                     <input type="submit" class="button" value="Start sharing" id="startSharing">
                 </form>
             </div>
@@ -353,7 +353,7 @@
 
     <audio id="connectSound" src="/sound/connexion.mp3"></audio>
     <div class="removeapp">
-        <img src="img/menu/minus.svg" alt="" loading="lazy" />
+        <img src="img/menu/minus.svg" alt="minus-icon" loading="lazy">
     </div>
 
     <div id="fullbcg">
@@ -363,29 +363,29 @@
             </p>
             <p>Find the lastest versions of our supported browsers below.</p>
             <div class="navs">
-		<img src="img/google-chrome.svg" loading="lazy" />
+		<img src="img/google-chrome.svg" alt="google-chrome-icon" loading="lazy">
                 <p>Google Chrome 41</p>
 		<a target="_blank" href="https://www.google.fr/chrome/browser/desktop/">Download</a>
             </div>
             <div class="navs">
-		<img src="img/firefox-icons.svg" loading="lazy" />
+		<img src="img/firefox-icons.svg" alt="firefox-icon" loading="lazy">
                 <p>Mozilla Firefox 36</p>
                 <a target="_blank" href="https://www.mozilla.org/fr/firefox/new/">Download</a>
             </div>
             <div class="navs">
-		<img src="img/internetexplorer.svg" loading="lazy" />
+		<img src="img/internetexplorer.svg" alt="internet-explorer-icon" loading="lazy">
                 <p>Internet Explorer 11</p>
                 <a target="_blank" href="http://windows.microsoft.com/fr-fr/internet-explorer/download-ie">Download</a>
             </div>
             <p>Our developers are using Google Chrome and you recommend this browser for these performances.</p>
             <div id="btnIgnore">
-		    <img src="img/error/bug.svg" alt="" loading="lazy" />
+		    <img src="img/error/bug.svg" alt="bug-icon" loading="lazy">
 		    Ignore and accept the eventual bugs
-		    <img src="img/error/arrow.svg" alt="" loading="lazy" />
+		    <img src="img/error/arrow.svg" alt="arrow-icon" loading="lazy">
             </div>
         </div>
         <div class="window" id="IEMessage">
-            <img style="position: relative;left: 50%;margin-left: -128px" src="img/error/stop.png" loading="lazy" />
+            <img style="position: relative;left: 50%;margin-left: -128px" src="img/error/stop.png" alt="stop" loading="lazy">
             <p>
                 <b>Oops</b>, your Internet Explorer is running in Compatibility Mode emulating IE 
                 <span id='version'></span>. Please turn off Compatibility mode or use supported browser.
@@ -462,22 +462,22 @@
                     </svg>
                 </div>
                 <div id="shell" class="keep" title="Shell">
-                    <img src="../img/top/shell.svg" alt="" loading="lazy" />
+                    <img src="../img/top/shell.svg" alt="shell-icon" loading="lazy">
                 </div>
             {{/isIndexPage}}
             <div id="upload" class="keep" title="Upload">
-                <img src="../img/top/upload.svg" alt="" loading="lazy" />
+                <img src="../img/top/upload.svg" alt="upload-icon" loading="lazy">
                 <ul class="drop-down"></ul>
             </div>
 
             <!-- zoom cursor dropdown -->
             <div id="zoom" title="Zoom" class="keep">
-                <img src="../img/top/zoom-in.svg" alt="" loading="lazy">
+                <img src="../img/top/zoom-in.svg" alt="zoom-icon" loading="lazy">
                 <ul class="drop-down">
                     <li>
-                        <img src="../img/top/dash-circle.svg" alt="" loading="lazy">
-                        <input type="range" id="zoom_range" name="zoom_range" min="0.5" max="4" value="1" step="0.1" />
-                        <img src="../img/top/plus-circle.svg" alt="" loading="lazy">
+                        <img src="../img/top/dash-circle.svg" alt="dash-circle-icon" loading="lazy">
+                        <input type="range" id="zoom_range" name="zoom_range" min="0.5" max="4" value="1" step="0.1">
+                        <img src="../img/top/plus-circle.svg" alt="plus-circle-icon" loading="lazy">
                     </li>
                     <li>
                         <p class="placestate">Currrent zoom : <input type="text" id="zoomValue" name="zoomValue"></p>
@@ -487,30 +487,30 @@
 
 	        <!-- printer is hidden by default -->
             <div id="printer" title="Printer"  style="display: none;" >
-                <img src="../img/top/printer_None.svg" alt="" loading="lazy" />
+                <img src="../img/top/printer_None.svg" alt="printer-icon" loading="lazy">
                 <ul class="drop-down"></ul>
             </div>
             <!--
                 <div id="topMail" class="keep" title="Mail">
-                    <img id="ico" src="../img/top/mail.svg" alt="" />
+                    <img id="ico" src="../img/top/mail.svg" alt="mail-icon">
                 </div>
             -->
             {{#isIndexPage}}
             <div id="top-issue-container" class="keep" title="Issue">
-                <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" loading="lazy" />
+                <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
             </div>
 
             <div class="keep" title="Placement">
-                <img draggable="false" launch="placement" id="placement" src="img/top/placement.svg" loading="lazy" />
+                <img draggable="false" launch="placement" id="placement" src="img/top/placement.svg" alt="placement-icon" loading="lazy">
             </div>
             {{/isIndexPage}}
 
             <div id="copypaste" class="keep" title="Copy / Paste" style="display: none;">
-                <img id="ico" src="../img/top/copypaste.svg" alt="" loading="lazy" />
+                <img id="ico" src="../img/top/copypaste.svg" alt="copy-paste-icon" loading="lazy">
                 <ul class="drop-down">
                     <textarea id="clipboardtext" placeholder="Clipboard"></textarea>
                     <button id="send">
-		    	<img src="../img/top/send.svg" loading="lazy" />
+		    	<img src="../img/top/send.svg" alt="send-icon" loading="lazy">
 		    </button>
                 </ul>
             </div>
@@ -544,17 +544,17 @@
             <div id="speakers" class="keep" title="Sound">
 		<video id="audioplayer" style="display: none;" autoplay></video>
 		<!-- <video id="audioplayer" autoplay playsinline></video> -->
-                <img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="" loading="lazy" />
+                <img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="speakers-icon" loading="lazy">
                 <ul class="drop-down">
                     <input id="volume_level" type="range" orient="vertical" min="0" max="1" step="0.01" value="0">
                 </ul>
             </div>
             <div id="fullscreen" title="Fullscreen" state="false">
-                <img src="img/top/fullscreen.svg" alt="" loading="lazy" />
+                <img src="img/top/fullscreen.svg" alt="fullscreen-icon" loading="lazy">
             </div>
             {{#isIndexPage}}
                 <div class="img_top" id="name">
-                    <img src="img/top/menu.svg" title="Settings" alt="" loading="lazy" />
+                    <img src="img/top/menu.svg" title="Settings" alt="menu-icon" loading="lazy">
                     <ul id="mainmenu" class="drop-down">
                         <li>
                             <div class="state" id='settings'></div>
@@ -613,18 +613,18 @@
         </div>
         <form action="javascript:void(0);">
             <div id="title">
-		<img src="img/top/share.svg" loading="lazy" />
+		<img src="img/top/share.svg" alt="share-icon" loading="lazy">
 	    	<span id="share-window-title-text">Share your desktop with your contact just by email address</span>
 	    </div>
-            <input id="email" placeholder="target@email.com" type="mail" autocomplete="off">
+            <input id="email" placeholder="target@email.com" type="email" autocomplete="off">
             <div class="button" id="viewOnly">View Only</div>
             <div class="button" id="fullAccess">Full Access</div>
         </form>
     </div>
     <div class="window" id="windowMessage">
-        <img id="old" src="img/error/o-bug.svg" loading="lazy" />
-        <img id="to" src="img/error/to.svg" loading="lazy" />
-        <img id="new" src="img/error/o-bug.svg" loading="lazy" />
+        <img id="old" src="img/error/o-bug.svg" alt="o-bug-icon" loading="lazy">
+        <img id="to" src="img/error/to.svg" alt="to-icon" loading="lazy">
+        <img id="new" src="img/error/o-bug.svg" alt="o-bug-icon" loading="lazy">
         <span id="title">Error Message</span>
         <div id="content">
             <p class="message" id="message">
@@ -648,7 +648,7 @@
             <div class="close"></div>
         </div>
         <div class="content">
-            <img src="img/error/shape.svg" alt="" loading="lazy" />
+            <img src="img/error/shape.svg" alt="shape-icon" loading="lazy">
             <div class="message">
                 <p>
                     Anonymous users cannot acces to this feature<br> Please authenticate with your account.
@@ -727,7 +727,7 @@
             </div>
         </div>
         <div class="content">
-            <img src="img/reconnection.svg" alt="" loading="lazy" />
+            <img src="img/reconnection.svg" alt="reconnection-icon" loading="lazy">
             <div class="message">
                 <p id="restart-message">
                     Are you sure you want to restart the cloud computer?
@@ -749,7 +749,7 @@
         <template id='issue-window-template'>
             <h3 id='issue-header-message' class="text-center">Sumbit a new issue</h3>
             <div class="container w-100 h-75 d-flex justify-content-center flex-column">  
-              <input id="issue-summary" placeholder="Summary" />
+              <input id="issue-summary" placeholder="Summary">
               <textarea id="issue-description" class="h-50" placeholder="Your report"></textarea>
             </div>
         </template>
@@ -763,11 +763,11 @@
         <template id='settings-window-title-template'>
             <div class="settings-title">
                 <div id="settings-back-button">
-			<img src="img/settings/back.svg" loading="lazy" />
+			<img src="img/settings/back.svg" alt="back-icon" loading="lazy">
 		</div>
                 <h5 id="settings-title"></h5>
                 <div class="searchSection">
-                    <input id="input-search-section" class="d-sm-block d-none" type="text" aria-describedby="basic-addon1" />
+                    <input id="input-search-section" class="d-sm-block d-none" type="text" aria-describedby="basic-addon1">
                 </div>
             </div>
         </template>
@@ -775,49 +775,49 @@
             <div class="tab" id="panel-settings">
                 <div class="tab-header" tab="system-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/information.svg" loading="lazy" />
+                        <img src="img/settings/information.svg" alt="information-icon" loading="lazy">
                         <span id="settings-system-title">System </span>
                         <span id="settings-system-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">System informations</span>
                     </div>
                 </div>
                 <div class="tab-header" tab="user-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/whoami.svg" loading="lazy" />
+                        <img src="img/settings/whoami.svg" alt="whoami-icon" loading="lazy">
                         <span id="settings-user-title">User </span>
                         <span id="settings-user-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">User informations</span>
                     </div>
                 </div>
                 <div class="tab-header" tab="localisation-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/whereami.svg" loading="lazy" />
+                        <img src="img/settings/whereami.svg" alt="whereami-icon" loading="lazy">
                         <span id="settings-location-title">Location </span>
                         <span id="settings-location-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Location informations</span>
                     </div>
                 </div>
                 <div class="tab-header" tab="logs-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/logs.svg" loading="lazy" />
+                        <img src="img/settings/logs.svg" alt="logs-icon" loading="lazy">
                         <span id="settings-logs-title">Logs</span>
                         <span id="settings-logs-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">System logs</span>
                     </div>
                 </div>
                 <div class="tab-header" tab="speedtest-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/speedtest.svg" loading="lazy" />
+                        <img src="img/settings/speedtest.svg" alt="speedtest-icon" loading="lazy">
                         <span id="settings-speedTest-title">SpeedTest </span>
                         <span id="settings-speedTest-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Network speed</span>
                     </div>
                 </div>
                 <div class="tab-header" tab="screen-background-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/paint-palette.svg" loading="lazy" />
+                        <img src="img/settings/paint-palette.svg" alt="paint-palette-icon" loading="lazy">
                         <span id="settings-background-title">Screen color</span>
                         <span id="settings-background-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Color to use</span>
                     </div>
                 </div>
                 <div class="tab-header" tab="container-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/docker.svg" loading="lazy" />
+                        <img src="img/settings/docker.svg" alt="docker-icon" loading="lazy">
                         <span id="settings-containers-title">Containers</span>
                         <span id="settings-containers-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Tasks manager</span>
                     </div>
@@ -825,7 +825,7 @@
                 {{#urlopensourceproject}}
                 <div class="tab-header" tab="opensource-tab">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/open-source.svg" loading="lazy" />
+                        <img src="img/settings/open-source.svg" alt="open-source-icon" loading="lazy">
                         <span id="settings-about-title">Open Source</span>
                         <span id="settings-about-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">
                             {{{ projectName }}}
@@ -865,7 +865,7 @@
                             <div class='card-container col-xl-4 col-lg-4'>
                                 <div class="card">
                                     <div class="card-body">
-                                        <h6 id="settings-system-view-infos-front" class="card-title">Special title treatment</h5>
+                                        <h6 id="settings-system-view-infos-front" class="card-title">Special title treatment</h6>
                                         <p>Date: </p>
                                         <p>Version: </p>
                                     </div>
@@ -1154,7 +1154,7 @@
                                 <div class="card-body">
                                     <div id="list_background_img" class="d-flex justify-content-center">
                                         <div type="file" id="drop_background_div" class="pictures_blocks">
-                                            <img id="drop_background" title="Drag your image here." src="img/settings/add.svg" loading="lazy" />
+                                            <img id="drop_background" title="Drag your image here." src="img/settings/add.svg" alt="add-icon" loading="lazy">
                                         </div>
                                     </div>
                                 </div>
@@ -1169,7 +1169,7 @@
                     <div class="wrap"></div>
                 </div>
                 <div id="task-manager-container-infos">
-                    <hr />
+                    <hr>
                     <p id="task-manager-container-infos-current-container"></p>
                     <div id="task-manager-container-logs"></div>
                     <div id="task-manager-container-env">
@@ -1210,37 +1210,37 @@
                 <div id="nav">
                     <div id="office" class="button">
                         <div>
-                            <img src="img/appstore/doc.svg" loading="lazy" />
+                            <img src="img/appstore/doc.svg" alt="doc-icon" loading="lazy">
                             <p id="appstore-office-title" class="app-type d-none d-sm-block">Office</p>
                         </div>
                     </div>
                     <div id="games" class="button">
                         <div>
-                            <img src="img/appstore/gamepad.svg" loading="lazy" />
+                            <img src="img/appstore/gamepad.svg" alt="gamepad-icon" loading="lazy">
                             <p id="appstore-game-title" class="app-type d-none d-sm-block">Games</p>
                         </div>
                     </div>
                     <div id="graphics" class="button">
                         <div>
-                            <img src="img/appstore/design.svg" loading="lazy" />
+                            <img src="img/appstore/design.svg" alt="design-icon" loading="lazy">
                             <p id="appstore-graphics-title" class="app-type d-none d-sm-block">Graphics</p>
                         </div>
                     </div>
                     <div id="utilities" class="button">
                         <div>
-                            <img src="img/appstore/utils.svg" loading="lazy" />
+                            <img src="img/appstore/utils.svg" alt="utils-icon" loading="lazy">
                             <p id="appstore-utilities-title" class="app-type d-none d-sm-block">Utilities</p>
                         </div>
                     </div>
                     <div id="development" class="button">
                         <div>
-                            <img src="img/appstore/dev.svg" loading="lazy" />
+                            <img src="img/appstore/dev.svg" alt="dev-icon" loading="lazy">
                             <p id="appstore-dev-title" class="app-type d-none d-sm-block">Development</p>
                         </div>
                     </div>
                     <div id="education" class="button">
                         <div>
-                            <img src="img/appstore/education.svg" loading="lazy" />
+                            <img src="img/appstore/education.svg" alt="education-icon" loading="lazy">
                             <p id="appstore-education-title" class="app-type d-none d-sm-block">Education</p>
                         </div>
                     </div>
@@ -1281,7 +1281,7 @@
             <div class=" container w-100">
                 <div class="row">
                   <div class="col-xl-2 col-lg-2 col-md-2 d-xl-block d-lg-block d-md-block d-none">
-                    <img class="logoff-img-window" src="img/top/logout.svg" loading="lazy" />
+                    <img class="logoff-img-window" src="img/top/logout.svg" alt="logout-icon" loading="lazy">
                   </div>
                   <div class="col-10 d-flex align-items-center">
                     <span id="log-off-warning-question"></span>
@@ -1305,9 +1305,9 @@
             </div>
         </div>
         <div id="cg">
-            <a target="_blank">Privacy</a>
-            <a target="_blank">Terms & Policies</a>
-            <a target="_blank">Cookies</a>
+            <a href="#" target="_blank">Privacy</a>
+            <a href="#" target="_blank">Terms & Policies</a>
+            <a href="#" target="_blank">Cookies</a>
         </div>
     </div>
 
@@ -1331,7 +1331,7 @@
         <div id="ps-entries">
             <div id="head">
                 <div class="line_icon">
-			<img style="height: 20px;margin-left: 2px;margin-top: 2px;" src="../img/top/settings_inverted.svg" alt="" loading="lazy" />
+			<img style="height: 20px;margin-left: 2px;margin-top: 2px;" src="../img/top/settings_inverted.svg" alt="settings-inverted-icon" loading="lazy">
 		</div>
                 <div class="line_name">Name</div>
                 <div class="line_kill">x</div>
@@ -1350,10 +1350,10 @@
     <div id="dock">
         <ul id="docklist">
             <li launch="keyboard" class="only-mobile" id="keyboard">
-		    <img src="img/kb.svg" loading="lazy" />
+		    <img src="img/kb.svg" alt="kb-icon" loading="lazy">
 	    </li>
         </ul>
-        <input type="text" id="searchBar" name="searchBar" />
+        <input type="text" id="searchBar" name="searchBar">
     </div>
     <!-- searchZone -->
     <div id="searchZone">
