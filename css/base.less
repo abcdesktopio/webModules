@@ -703,6 +703,7 @@ div.button {
   width: 28px;
   background: @primary;
   color: @light;
+  border: none;
 }
 
 #top #top-right #zoom input[type="range"] {
@@ -749,6 +750,7 @@ div.button {
   height: 20px;
   width: 20px;
   margin-top: 5px;
+  margin-left: 5px;
   pointer-events: none;
 }
 
@@ -1128,10 +1130,15 @@ div.button {
   border-width: 9px;
   margin-left: -9px;
 }
+
 #top #top-right #copypaste .drop-down:before {
   border-bottom-color: @secondary;
   border-width: 8px;
   margin-left: -8px;
+}
+
+#top #top-right #copypaste .ul li {
+  display: contents;
 }
 
 #top #top-right #connection .drop-down {
