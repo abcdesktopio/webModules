@@ -16,6 +16,18 @@ jobs:
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: build index.html file
+        run: |
+          make install
+          make updatejs
+          make dev
+
+      - name: HTML5Validator
+        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+        with:
+          root: ./index.html
+          css: true
+
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
