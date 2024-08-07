@@ -11,12 +11,12 @@
 
     <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
          Remove this if you use the .htaccess -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Responsive meta tag settings 
          To ensure proper rendering and touch zooming for all devices
     -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
 
     <!-- Apple iOS Safari settings -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -131,7 +131,7 @@
     html attributes which attempt to disable text suggestions on the
     on-screen keyboard. Let's hope Chrome implements the ime-mode
     style for example -->
-    <textarea id="noVNC_keyboardinput" autocapitalize="off" autocomplete="off" spellcheck="false" tabindex="-1"></textarea>
+    <textarea id="noVNC_keyboardinput" autocapitalize="off" autocomplete="off" spellcheck="false" enterkeyhint="Enter" tabindex="-1"></textarea>
     <div style="display: none;" id="loader">
         <div id="dot-container">
             <noscript>
@@ -160,7 +160,7 @@
                         maxlength = 253 + 1 + 20 = 274 
                     -->
 		    {{^isLoginSessionPage}}
-                    <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="Login"><br>
+                    <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="on"><br>
 		            <input id="loginsessionid" type="hidden" value=""><br>
 		    {{/isLoginSessionPage}}
 		    {{#isLoginSessionPage}}
@@ -471,7 +471,7 @@
             </div>
 
             <!-- zoom cursor dropdown -->
-            <div id="zoom" title="Zoom" class="keep">
+            <div id="zoom" title="Zoom" class="no-mobile keep">
                 <img src="../img/top/zoom-in.svg" alt="zoom-icon" loading="lazy">
                 <ul class="drop-down">
                     <li>
@@ -497,21 +497,23 @@
             -->
             {{#isIndexPage}}
             <div id="top-issue-container" class="keep" title="Issue">
-                <img draggable="false" launch="issue" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
+                <img draggable="false" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
             </div>
 
             <div class="keep" title="Placement">
-                <img draggable="false" launch="placement" id="placement" src="img/top/placement.svg" alt="placement-icon" loading="lazy">
+                <img draggable="false" id="placement" src="img/top/placement.svg" alt="placement-icon" loading="lazy">
             </div>
             {{/isIndexPage}}
 
             <div id="copypaste" class="keep" title="Copy / Paste" style="display: none;">
                 <img id="ico" src="../img/top/copypaste.svg" alt="copy-paste-icon" loading="lazy">
                 <ul class="drop-down">
-                    <textarea id="clipboardtext" placeholder="Clipboard"></textarea>
-                    <button id="send">
-		    	<img src="../img/top/send.svg" alt="send-icon" loading="lazy">
-		    </button>
+                    <li>
+                        <textarea id="clipboardtext" placeholder="Clipboard"></textarea>
+                        <button id="send">
+                            <img src="../img/top/send.svg" alt="send-icon" loading="lazy">
+                        </button>
+                    </li>
                 </ul>
             </div>
             <!-- deprecated since release 2.x
@@ -546,10 +548,12 @@
 		<!-- <video id="audioplayer" autoplay playsinline></video> -->
                 <img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="speakers-icon" loading="lazy">
                 <ul class="drop-down">
-                    <input id="volume_level" type="range" orient="vertical" min="0" max="1" step="0.01" value="0">
+                    <li>
+                        <input id="volume_level" type="range" style="writing-mode: vertical-lr;" min="0" max="1" step="0.01" value="0">
+                    </li>
                 </ul>
             </div>
-            <div id="fullscreen" title="Fullscreen" state="false">
+            <div id="fullscreen" title="Fullscreen">
                 <img src="img/top/fullscreen.svg" alt="fullscreen-icon" loading="lazy">
             </div>
             {{#isIndexPage}}
@@ -625,8 +629,8 @@
         <img id="old" src="img/error/o-bug.svg" alt="o-bug-icon" loading="lazy">
         <img id="to" src="img/error/to.svg" alt="to-icon" loading="lazy">
         <img id="new" src="img/error/o-bug.svg" alt="o-bug-icon" loading="lazy">
-        <span id="title">Error Message</span>
-        <div id="content">
+        <span id="errorTitle">Error Message</span>
+        <div id="errorContent">
             <p class="message" id="message">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -638,7 +642,7 @@
             <div id="reload" class="reload highlight">
                 Continue
             </div>
-            <div id="cancel" class="cancel">
+            <div id="cancelReload" class="cancel">
                 Cancel
             </div>
         </div>
@@ -667,10 +671,8 @@
         </div>
         <div class="error-container">
             <h1>{{{ projectName }}}</h1>
-            <h2>
-                <p id="error-container-message-first-part">Thanks for exploring {{{ projectName }}}</p>
-                <p id="error-container-message-second-part">Remember, this is still in progress</p>
-            </h2>
+            <h2 id="error-container-message-first-part">Thanks for exploring {{{ projectName }}}</h2>
+            <h2 id="error-container-message-second-part">Remember, this is still in progress</h2>
         </div>
     </div>
     <div id="supportWindow" class="window">
@@ -1340,7 +1342,7 @@
         </div>
     </div>
 
-    <iframe style="display:none;" id="framePDF" src="" frameborder="0"></iframe>
+    <iframe style="display:none; border:0;" id="framePDF" src="url"></iframe>
 
     <!-- context menu -->
     <ul id="contextmenu"></ul>
@@ -1349,9 +1351,9 @@
     <!-- dock -->
     <div id="dock">
         <ul id="docklist">
-            <li launch="keyboard" class="only-mobile" id="keyboard">
-		    <img src="img/kb.svg" alt="kb-icon" loading="lazy">
-	    </li>
+            <li class="only-mobile" id="keyboard">
+		        <img src="img/kb.svg" alt="kb-icon" loading="lazy">
+	        </li>
         </ul>
         <input type="text" id="searchBar" name="searchBar">
     </div>
@@ -1359,10 +1361,14 @@
     <div id="searchZone">
         <div id="closeZone"></div>
         <ul id="fileZone">
-            <p id="fileZoneTitle">Files</p>
+            <li>
+                <p id="fileZoneTitle">Files</p>
+            </li>
         </ul>
         <ul id="appZone">
-            <p id="appZoneTitle">Applications</p>
+            <li>
+                <p id="appZoneTitle">Applications</p>
+            </li>
         </ul>
     </div>
     {{/isIndexPage}}

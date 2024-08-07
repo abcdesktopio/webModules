@@ -412,7 +412,7 @@ function parseQueryString(str) {
  * @desc Show or Hide the virtual keyboard if the device is a touch device.
  */
 function setupisPCApp() {
-  if (ocuaparser.isTouch() || navigator.maxTouchPoints > 0) { $('.only-mobile').css('display', 'inline-block'); } else { $('.only-mobile').css('display', 'none'); }
+  if (ocuaparser.isTouch() || navigator.maxTouchPoints > 0) { $('.only-mobile').css('display', 'inline-block'); $('.no-mobile').css('display', 'none');} else { $('.only-mobile').css('display', 'none'); $('.no-mobile').css('display', 'inline-block');}
 }
 
 /**

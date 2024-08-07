@@ -331,6 +331,9 @@ export function initApplist() {
  * @desc Init applist from pyos.
  */
 export function initUserApplist() {
+  document.getElementById("keyboard").setAttribute("launch", "keyboard")
+  document.getElementById("placement").setAttribute("launch", "placement")
+  document.getElementById("top-issue").setAttribute("launch", "issue")
   return odApiClient.composer
     .getUserAppList()
     .done((result) => {
