@@ -19,6 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: install build dependencies
+        run: ./install_build_dependencies.sh
+
       - name: build index.html file
         run: |
           make install
