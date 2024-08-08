@@ -28,17 +28,16 @@ jobs:
           make updatejs
           make dev
 
+      - name: move index.html and css to test to tmp directory
+        run: |
+          mkdir tmp
+          mv index.html tmp/index.html
+          cp -r css tmp/
+
       - name: HTML5Validator
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
-          root: ./
-          blacklist: app.html
-                     app.session.mustache.html
-                     demo.html
-                     description.html
-                     description.mustache.html
-                     index.mustache.html
-                     index.session.mustache.html
+          root: ./tmp
           css: true
 
       - name: Repository Dispatch
