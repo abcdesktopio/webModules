@@ -51,7 +51,7 @@ function getScreenInfos() {
 
 export function init(home, tab) {
   system.hide(home);
-  const overview = tab.querySelector('#overview');
+  const overview = tab.querySelector('#system-overview');
 
   if (!firstAppear) {
     system.show(tab);
@@ -59,7 +59,7 @@ export function init(home, tab) {
   }
 
   firstAppear = false;
-  system.removeAllChilds(document.getElementById('overview'));
+  system.removeAllChilds(document.getElementById('system-overview'));
 
   launcher.getWebModulesVersion()
     .then((version) => {
