@@ -31,7 +31,14 @@ jobs:
       - name: HTML5Validator
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
-          root: ./index.html
+          root: ./
+          blacklist: app.html
+                     app.session.mustache.html
+                     demo.html
+                     description.html
+                     description.mustache.html
+                     index.mustache.html
+                     index.session.mustache.html
           css: true
 
       - name: Repository Dispatch
