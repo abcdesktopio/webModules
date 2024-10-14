@@ -1,4 +1,8 @@
 {
+    "login-desktopfeatures-comment": "Seules les applications éphémères exploitent les ressources du desktop. Les applications de type Pod sont indépendantes et sont pas limitées par les ressources du desktop",
+    "login-desktopfeatures": "Ressources",
+    "login-loginlabel": "Identifiant",
+    "login-passwordlabel": "Mot de passe",
     "connect-with-github": "Se connecter avec Github",
     "connect-with-facebook": "Se connecter avec Facebook",
     "connect-with-google": "Se connecter avec Google",
