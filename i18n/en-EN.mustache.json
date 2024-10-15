@@ -1,4 +1,8 @@
 {
+    "login-desktopfeatures-comment": "Only ephemeral applications are using desktop ressources. Distributed Pod applications aren't limited by desktop ressrouces", 
+    "login-desktopfeatures": "Resources",
+    "login-loginlabel": "Login",
+    "login-passwordlabel": "Password",
     "connect-with-github": "Sign-in with Github account",
     "connect-with-facebook": "Sign-in with Facebook account",
     "connect-with-google": "Sign-in with Google account",
