@@ -836,23 +836,25 @@ function initAllowCookies() {
  * @desc Changes the page zoom value 
  */
 function setupZoomValueChange(){
-  var zoomValue = document.querySelector("#zoomValue");
-  var zoomRange = document.querySelector("#zoom_range");
-  var range_min = zoomRange.min;
-  var range_max = zoomRange.max;
-  var sliding = false;
+  let zoomValue = document.getElementById("zoomValue");
+  let zoomRange = document.getElementById("zoom_range");
 
-  zoomValue.value = zoomRange.value;
-  zoomRange.addEventListener("input", (event) => {
+  if ( zoomValue && zoomRange ) {
+    let range_min = zoomRange.min;
+    let range_max = zoomRange.max;
+    let sliding = false;
+
+    zoomValue.value = zoomRange.value;
+    zoomRange.addEventListener("input", (event) => {
       zoomValue.value = event.target.value;
       sliding = true;
-  });
-  zoomRange.addEventListener("change", (event) => {
+    });
+    zoomRange.addEventListener("change", (event) => {
       document.body.style.zoom = event.target.value;
       sliding = false;
-  });
+    });
 
-  if(!sliding){
+    if(!sliding){
       zoomValue.addEventListener("change", (event) => { 
           let inputValue = event.target.value;
           if(inputValue<range_min){
@@ -865,5 +867,6 @@ function setupZoomValueChange(){
           zoomRange.value = inputValue;
           document.body.style.zoom = inputValue;
       });
+    }
   }
 }
