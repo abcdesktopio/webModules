@@ -5,6 +5,7 @@
     <meta name="description" content="{{ projectName }}">
     <meta name="keywords" content="{{ projectName }}">
     <title>{{ projectName }}</title>
+    
     {{#isLoginSessionPage}}
     <base href="{{{ base_url }}}">
     {{/isLoginSessionPage}}
@@ -41,13 +42,13 @@
     <link rel="stylesheet" href="node_modules/jquery-ui/dist/themes/ui-lightness/jquery-ui.css" type="text/css">
 
     {{#isIndexPage}}
-    	<!-- this is an index page -->
-        <link rel="stylesheet" href="css/css-dist/settings.css" type="text/css">
-        <link rel="stylesheet" href="css/css-dist/tipsinfo.css" type="text/css">
-        <link rel="stylesheet" href="css/css-dist/screenRecord.css" type="text/css">
-        <link rel="stylesheet" href="node_modules/@xterm/xterm/css/xterm.css" type="text/css">
-        <link rel="stylesheet" href="css/css-dist/appstore.css" type="text/css">
-        <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css" type="text/css">
+    <!-- this is an index page -->
+    <link rel="stylesheet" href="css/css-dist/settings.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/tipsinfo.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/screenRecord.css" type="text/css">
+    <link rel="stylesheet" href="node_modules/@xterm/xterm/css/xterm.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/appstore.css" type="text/css">
+    <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css" type="text/css">
 	<!-- end of dedicated index page -->
     {{/isIndexPage}}
 
@@ -67,11 +68,6 @@
     <link rel="stylesheet" href="css/css-dist/video.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/share.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css">
-
-    <!--
-    <link rel="stylesheet" href="css/css-dist/chatLync.css" type="text/css">
-    <link rel="stylesheet" href="css/css-dist/emoticons.css" type="text/css">
-    -->
     
     {{#isDemoPage}}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -145,213 +141,224 @@
 
     <div id="loginScreen">
         <div id="content">
-		    <h1 id="loginScreenProjectNameSplited">{{{ projectNameSplitedHTML }}}</h1>
-            <div class="highlight" id="welcomeinfo"></div>
-            <p id="statusText"></p>
-            <div id="activeDirectory">
-                <form>
-                    <!-- 
-                        The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) 
-                        is limited to 256 characters in the Active Directory schema.
-                        However, for backward compatibility the limit is 20 characters.
-                        Len( domain ) = 253
-                        Len('\') = 1
-                        Len(SAMAccountName) = 20
-                        maxlength = 253 + 1 + 20 = 274 
-                    -->
-		    {{^isLoginSessionPage}}
-                    <input id="cuid" placeholder="Login" type="text" maxlength="274" autocomplete="on"><br>
-		            <input id="loginsessionid" type="hidden" value=""><br>
-		    {{/isLoginSessionPage}}
-		    {{#isLoginSessionPage}}
-		            <input id="cuid" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly"><br>
-		            <!-- loginsessionid is used to check that the user in cuid input value did not change with the previous request -->
-		            <!-- in case if the http request id formated manually --> 
-		            <input id="loginsessionid" type="hidden" value="{{ loginsessionid }}" ><br>
-		    {{/isLoginSessionPage}}
-                    <!--
-                    The userPassword attribute has maximum length 128 and format UTF-8.
-                    -->
-                    <input id="ADpassword" placeholder="Password" type="password" maxlength="128" autocomplete="current-password"><br>
-                    <input type="submit" class="button" id="connectAD" value="Sign in">
-                    {{#urlcannotopensession}}
-                        <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
-                    {{/urlcannotopensession}}
-                </form>
-                <p id="login-auth-requirement">To access to this service you need to be identified. If you use
-                    {{{ projectName }}} from a personal
-                    computer which does not belong to the company, remember to close your browser and to delete file
-                    attachments saved on the hard disk when you are done. In case of issues, call your usual support.
-                </p>
-            </div>
-	
-            {{^isDemoPage}}
-            <div id="connectGP">
-                <ul>
-                    <li id="login-facebook">
-                        <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
-                    </li>
-                    <li id="login-github">
-                        <a id="connect-with-github" href="#">Sign-in with Github</a>
-                    </li>
-                    <li id="login-google">
-                        <a id="connect-with-google" href="#">Sign-in with Google</a>
-                    </li>
-                    <li id="login-orange">
-                        <a id="connect-with-orange" href="#">Sign-in with Orange</a>
-                    </li>
-                    <li id="login-mobileorange">
-                        <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
-                    </li>
-                    <li id="login-anonymous">
-                        <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
-                    </li>
-            <li id="login-orangeconnect">
-                        <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
-                    </li>
-            <li id="login-sslclient">
-                        <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
-                    </li>
-                    <li id="login-sslclient-directory">
-                        <a id="connect-with-sslclient-directory" href="#">Sign-in with SSL client certificat query directory</a>
-                    </li>
-                </ul>
-            </div>
-            {{/isDemoPage}}
+	        <h1 id="loginScreenProjectNameSplited">{{{ projectNameSplitedHTML }}}</h1>
+            <div id="loginScreenContent">
+                <div id="additionnalloginScreencontent">
+                    <div class="highlight" id="welcomeinfo"></div>
+                    <div id="desktopfeatures">
+                        <div class="form-group">
+                            <label class="form-label" id="login-desktopfeatures" for="desktopfeaturesul">Desktop features</label>
+                            <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-1 shadow-sm" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);" id="desktopfeaturesul"></ul>
+                            <p class="form-comment" id="login-desktopfeatures-comment"></p>
+                        </div>
+                    </div>
+                </div>
+                <p id="statusText"></p>
+                <div id="activeDirectory">
+                    <form>
+                        <!-- 
+                            The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) 
+                            is limited to 256 characters in the Active Directory schema.
+                            However, for backward compatibility the limit is 20 characters.
+                            Len( domain ) = 253
+                            Len('\') = 1
+                            Len(SAMAccountName) = 20
+                            maxlength = 253 + 1 + 20 = 274 
+                        -->
+                        <div class="form-group" id="form-group-login" >
+                            <label class="form-label" id="login-loginlabel" for="cuid">Login</label>
+                            {{^isLoginSessionPage}}
+                                <input id="cuid" class="form-control" placeholder="Login" type="text" maxlength="274" autocomplete="on">
+                                <input id="loginsessionid" type="hidden" value="">
+                            {{/isLoginSessionPage}}
+                            {{#isLoginSessionPage}}
+                                <input id="cuid" class="form-control" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly">
+                                <!-- loginsessionid is used to check that the user in cuid input value did not change with the previous request -->
+                                <!-- in case if the http request id formated manually --> 
+                                <input id="loginsessionid" type="hidden" value="{{ loginsessionid }}">
+                            {{/isLoginSessionPage}}
+                        </div>
+                        <div class="form-group" id="form-group-password" >
+                            <label class="form-label" id="login-passwordlabel" for="ADpassword">Password</label> 
+                            <!-- The userPassword attribute has maximum length 128 and format UTF-8. -->
+                            <input id="ADpassword" class="form-control" placeholder="Password" type="password" maxlength="128" autocomplete="current-password">
+                        </div>	
+			<div class="form-group" id="form-group-submit">
+                            <button type="submit" class="btn btn-primary" id="connectAD">Sign in</button>
+                            {{#urlcannotopensession}}
+                               <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
+                            {{/urlcannotopensession}}
+                        </div>
 
-            {{#isDemoPage}}
-            <div id="connectGP" class="container">
-                <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-                    <div class="col">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header">
-                                    <h4 class="my-0 fw-normal">
-                                        <span class="badge bg-primary rounded-pill">1</span> 
-                                        OAuth 2.0
-                                    </h4>
+                    </form>
+                    <p class="form-comment" id="login-auth-requirement">
+                        To access to this service you need to be identified. If you use {{{ projectName }}} from a personal computer which does not belong to the company, 
+                        remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.
+                    </p>
+                </div>
+        
+                {{^isDemoPage}}
+                <div id="connectGP">
+                    <ul>
+                        <li id="login-facebook">
+                            <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
+                        </li>
+                        <li id="login-github">
+                            <a id="connect-with-github" href="#">Sign-in with Github</a>
+                        </li>
+                        <li id="login-google">
+                            <a id="connect-with-google" href="#">Sign-in with Google</a>
+                        </li>
+                        <li id="login-orange">
+                            <a id="connect-with-orange" href="#">Sign-in with Orange</a>
+                        </li>
+                        <li id="login-mobileorange">
+                            <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
+                        </li>
+                        <li id="login-anonymous">
+                            <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
+                        </li>
+                        <li id="login-orangeconnect">
+                            <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
+                        </li>
+                        <li id="login-sslclient">
+                            <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
+                        </li>
+                        <li id="login-sslclient-directory">
+                            <a id="connect-with-sslclient-directory" href="#">Sign-in with SSL client certificat query directory</a>
+                        </li>
+                    </ul>
+                </div>
+                {{/isDemoPage}}
+
+                {{#isDemoPage}}
+                <div id="connectGP" class="container">
+                    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                        <div class="col">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header">
+                                        <h4 class="my-0 fw-normal">
+                                            <span class="badge bg-primary rounded-pill">1</span> 
+                                            OAuth 2.0
+                                        </h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col">
+                                        <div id="connectOpenid">
+                                            <ul>
+                                                <li id="login-facebook">
+                                                    <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
+                                                </li>
+                                                <li id="login-github">
+                                                    <a id="connect-with-github" href="#">Sign-in with Github</a>
+                                                </li>
+                                                <li id="login-google">
+                                                    <a id="connect-with-google" href="#">Sign-in with Google</a>
+                                                </li>
+                                                <li id="login-orange">
+                                                    <a id="connect-with-orange" href="#">Sign-in with Orange</a>
+                                                </li>
+                                                <li id="login-mobileorange">
+                                                    <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
+                                                </li>
+                                                <li id="login-anonymous">
+                                                    <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
+                                                </li>
+                                                <li id="login-orangeconnect">
+                                                    <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
+                                                </li>
+                                                <li id="login-sslclient">
+                                                    <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
+                                                </li>
+                                                <li id="login-sslclient-directory">
+                                                    <a id="connect-with-sslclient-directory" href="#">Sign-in with SSL client certificat and query directory services</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <div class="col">
-                                    <div id="connectOpenid">
-                                        <ul>
-                                            <li id="login-facebook">
-                                                <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
-                                            </li>
-                                            <li id="login-github">
-                                                <a id="connect-with-github" href="#">Sign-in with Github</a>
-                                            </li>
-                                            <li id="login-google">
-                                                <a id="connect-with-google" href="#">Sign-in with Google</a>
-                                            </li>
-                                            <li id="login-orange">
-                                                <a id="connect-with-orange" href="#">Sign-in with Orange</a>
-                                            </li>
-                                            <li id="login-mobileorange">
-                                                <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
-                                            </li>
-                                            <li id="login-anonymous">
-                                                <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
-                                            </li>
-                                            <li id="login-orangeconnect">
-                                                <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
-                                            </li>
-                                            <li id="login-sslclient">
-                                                <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
-                                            </li>
-                                            <li id="login-sslclient-directory">
-                                                <a id="connect-with-sslclient-directory" href="#">Sign-in with SSL client certificat and query directory services</a>
-                                            </li>
-                                        </ul>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="card mb-4 shadow-sm">
+                                <div id="alarm" class="card-header">
+                                    <h4 class="my-0 fw-normal">
+                                        <span class="badge bg-primary rounded-pill">2</span>
+                                        10 minutes to use
+                                    </h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col">
+                                        <img id="icon-alarm" src="img/alarm.svg" alt="alarm-icon" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="card mb-4 shadow-sm">
+                                <div id="cleanup" class="card-header">
+                                    <h4 class="my-0 fw-normal">
+                                        <span class="badge bg-primary rounded-pill">3</span>
+                                        Data clean up
+                                    </h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col">
+                                        <img id="icon-trash" src="img/trash.svg" alt="trash-icon" loading="lazy">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col">
-                        <div class="card mb-4 shadow-sm">
-                            <div id="alarm" class="card-header">
-                                <h4 class="my-0 fw-normal">
-                                    <span class="badge bg-primary rounded-pill">2</span>
-                                    10 minutes to use
-                                </h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="col">
-                                    <img id="icon-alarm" src="img/alarm.svg" alt="alarm-icon" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="card mb-4 shadow-sm">
-                            <div id="cleanup" class="card-header">
-                                <h4 class="my-0 fw-normal">
-                                    <span class="badge bg-primary rounded-pill">3</span>
-                                    Data clean up
-                                </h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="col">
-                                    <img id="icon-trash" src="img/trash.svg" alt="trash-icon" loading="lazy">
-                                </div>
-                            </div>
+                    <div class="bg-light p-5 rounded" id="title-instance">
+                        <p class="lead">
+                            This abcdesktop instance is a quick example to illustrate how the abcdesktop.io project works.
+                        </p>
+                        <div class="list-group">
+                            <a href="#connectOpenid" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <p class="mb-1">
+                                    <span class="badge bg-primary rounded-pill">1</span> 
+                                    Choose an OpenID Connect provider to sign-in
+                                </p>
+                                <small>LDAP authentification provider or Active Directory authentification provider is not defined for this instance</small>
+                            </a>
+
+                            <a href="#alarm" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <p class="mb-2">
+                                    <span class="badge bg-primary rounded-pill">2</span> 
+                                    Your abcdesktop is ready to run for 10 minutes.
+                                </p>
+                                <p class="mb-1">
+                                    <img src="img/people-fill.svg" alt="people-fill-icon" loading="lazy">
+                    Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.<br>
+                                    <img src="img/lock.svg" alt="lock-icon" loading="lazy">
+                    The security policy for Internet network prevents requests from your abcdesktop being allowed.
+                                </p>
+                                <small>To hear sound, just click on the sound icon.</small><br>
+                                <small>To printer a file on your local printer, select the default printer "Desktop_PDF_Printer".</small><br>
+                                <small>To upload a file just use a drag and drop into your web browser's  window.</small><br>
+                                <small>To download a file, start the filemanager, select your file, and choose "Download for Desktop" option.</small><br>
+                            </a>
+
+                            <a href="#cleanup" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <p class="mb-1">
+                                    <span class="badge bg-primary rounded-pill">3</span> 
+                                    Garbage collector clean up all your datas desktop
+                                </p>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="bg-light p-5 rounded" id="title-instance">
-                    <p class="lead">
-                        This abcdesktop instance is a quick example to illustrate how the abcdesktop.io project works.
-                    </p>
-                    <div class="list-group">
-                        <a href="#connectOpenid" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <p class="mb-1">
-                                <span class="badge bg-primary rounded-pill">1</span> 
-                                Choose an OpenID Connect provider to sign-in
-                            </p>
-                            <small>LDAP authentification provider or Active Directory authentification provider is not defined for this instance</small>
-                        </a>
+                {{/isDemoPage}}
 
-                        <a href="#alarm" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <p class="mb-2">
-                                <span class="badge bg-primary rounded-pill">2</span> 
-                                Your abcdesktop is ready to run for 10 minutes.
-                            </p>
-                            <p class="mb-1">
-                                <img src="img/people-fill.svg" alt="people-fill-icon" loading="lazy">
-				Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.<br>
-                                <img src="img/lock.svg" alt="lock-icon" loading="lazy">
-				The security policy for Internet network prevents requests from your abcdesktop being allowed.
-                            </p>
-                            <small>To hear sound, just click on the sound icon.</small><br>
-                            <small>To printer a file on your local printer, select the default printer "Desktop_PDF_Printer".</small><br>
-                            <small>To upload a file just use a drag and drop into your web browser's  window.</small><br>
-                            <small>To download a file, start the filemanager, select your file, and choose "Download for Desktop" option.</small><br>
-                        </a>
-
-                        <a href="#cleanup" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <p class="mb-1">
-                                <span class="badge bg-primary rounded-pill">3</span> 
-                                Garbage collector clean up all your datas desktop
-                            </p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {{/isDemoPage}}
-
-            <div id="connectShare">
-                <p id="connect-share-message">Connect now with your email address to work with your copartner</p>
-                <form>
-                    <input id="sharemail" placeholder="Your mail address" type="email"><br>
-                    <input type="submit" class="button" value="Start sharing" id="startSharing">
-                </form>
             </div>
         </div>
     </div>
 
     <audio id="connectSound" src="/sound/connexion.mp3"></audio>
+
     <div class="removeapp">
         <img src="img/menu/minus.svg" alt="minus-icon" loading="lazy">
     </div>
@@ -471,6 +478,7 @@
             </div>
 
             <!-- zoom cursor dropdown -->
+            <!--
             <div id="zoom" title="Zoom" class="no-mobile keep">
                 <img src="../img/top/zoom-in.svg" alt="zoom-icon" loading="lazy">
                 <ul class="drop-down">
@@ -484,6 +492,7 @@
                     </li>
                 </ul>
             </div>
+            -->
 
 	        <!-- printer is hidden by default -->
             <div id="printer" title="Printer"  style="display: none;" >
@@ -491,10 +500,11 @@
                 <ul class="drop-down"></ul>
             </div>
             <!--
-                <div id="topMail" class="keep" title="Mail">
-                    <img id="ico" src="../img/top/mail.svg" alt="mail-icon">
-                </div>
+            <div id="topMail" class="keep" title="Mail">
+                <img id="ico" src="../img/top/mail.svg" alt="mail-icon">
+            </div>
             -->
+
             {{#isIndexPage}}
             <div id="top-issue-container" class="keep" title="Issue">
                 <img draggable="false" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
@@ -516,42 +526,15 @@
                     </li>
                 </ul>
             </div>
-            <!-- deprecated since release 2.x
-                <div id="share" class="keep" title="Share your desktop">
-                    <img src="../img/top/video-meeting_inverted.png" alt="" />
-                    <div id="nb">0</div>
-                </div>
-            -->
-
-            <!-- deprecated since release 2.x
-            <div id="support" title="Quick support">
-                <img src="../img/wrench.svg" alt="" />
-            </div>
-            -->
-            <!--
-                <div id="music" class="keep" title="Music">
-                <audio id="audioplayer" type="audio/mp3" codecs="mp3"></audio>
-                <img src="../img/top/music.svg" alt="" />
-                <ul class="drop-down">
-                    <div id="ctrl">
-                        <div id=musicBack></div>
-                        <div id=playpause class="play"></div>
-                        <div id=musicNext></div>
-                    </div>
-                    <div id="audioName"></div>
-                    <input id="progressBar" type="range" min="0" value="0" step="0.1">
-                </ul>
-            </div>
-            -->
             <div id="speakers" class="keep" title="Sound">
-		<video id="audioplayer" style="display: none;" autoplay></video>
-		<!-- <video id="audioplayer" autoplay playsinline></video> -->
-                <img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="speakers-icon" loading="lazy">
-                <ul class="drop-down">
-                    <li>
-                        <input id="volume_level" type="range" style="writing-mode: vertical-lr;" min="0" max="1" step="0.01" value="0">
-                    </li>
-                </ul>
+		    <video id="audioplayer" style="display: none;" autoplay></video>
+		    <!-- <video id="audioplayer" autoplay playsinline></video> -->
+            <img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="speakers-icon" loading="lazy">
+            <ul class="drop-down">
+                <li>
+                    <input id="volume_level" type="range" style="writing-mode: vertical-lr;" min="0" max="1" step="0.01" value="0">
+                </li>
+            </ul>
             </div>
             <div id="fullscreen" title="Fullscreen">
                 <img src="img/top/fullscreen.svg" alt="fullscreen-icon" loading="lazy">
@@ -573,7 +556,7 @@
                         <!-- <li><div class="state" id='clogs'></div><p class="placestate">Logs</p></li> -->
                         <li class="divider"></li>
                         <!-- not yet avaliable not supported 
-			<li>
+			            <li>
                             <div class="state" id='grabmouse'></div>
                             <p id="grabmouse-name" class="placestate">Grab pointer for gaming</p>
                         </li>
