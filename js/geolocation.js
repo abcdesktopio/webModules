@@ -43,10 +43,7 @@ const userGeolocation = (function () {
         function geolocation_success(pos) {
                 var crd = pos.coords;
                 currentgeolocation = crd;
-                console.log('Your current position is:');
-                console.log(`Latitude : ${crd.latitude}`);
-                console.log(`Longitude: ${crd.longitude}`);
-                console.log(`More or less ${crd.accuracy} meters.`);
+                console.log(`Your current position is latitude : ${crd.latitude} longitude: ${crd.longitude} more or less ${crd.accuracy} meters.`);
         }
 
         function geolocation_error(err) {
