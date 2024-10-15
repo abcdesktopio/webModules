@@ -37,6 +37,7 @@ import * as system from './system.js';
 import * as settings from './settings.js';
 import * as tipsinfo from './tipsinfo.js';
 import * as welcomeinfo from './welcomeinfo.js';
+import * as desktopfeatures from './desktopfeatures.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
 import * as systemMenu from './systemmenu.js';
@@ -86,6 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // init welcomeinfo to show 
   welcomeinfo.init();
+
+  // init desktopfeatures to show
+  desktopfeatures.init();
 
   // Init basic event click for welcome window THEN call init
   welcomeSystem.init().always( () => {

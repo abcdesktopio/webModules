@@ -25,6 +25,7 @@ import * as logmein from './logmein.js';
 const welcomeSystem = (function () {
   const managers = {};
   let $ui;
+  let $additionnalmanagerui;
   let stages=[ 'a', 'b', 'c', 'd' ];
 
   return new (class exported {
@@ -34,6 +35,7 @@ const welcomeSystem = (function () {
 
     init() {
       $ui = $('#loginScreen');
+      $additionnalmanagerui  = $('#additionnalloginScreencontent');
 
       const self = this;
       return odApiClient.auth.getauthconfig()
@@ -119,7 +121,8 @@ const welcomeSystem = (function () {
     close() {
       this.closeManagers();
       $ui.addClass('hide');
-      setTimeout(() => { $ui.hide(); }, 1000);
+      // take time to read message during reconnect process
+      setTimeout(() => { $ui.hide(); }, 400);
     }
 
     showStatus(message) {
@@ -223,12 +226,15 @@ const welcomeSystem = (function () {
       this.openManagers();
     }
 
-    closeManagers() {
-      for (const name in managers) 
+    closeManagers() {	    
+       $additionnalmanagerui.addClass('hide');
+       $additionnalmanagerui.hide(); 
+       for (const name in managers) 
           managers[name].close();
     }
   
     openManagers() {
+      $additionnalmanagerui.show();
       for (const name in managers) 
         managers[name].open();
     }

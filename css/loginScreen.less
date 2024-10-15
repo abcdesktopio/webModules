@@ -73,6 +73,7 @@
   margin-top: 5%;
   color: @light;
   user-select: text;
+  width: 70%;
 }
 
 #loginScreen h1 {
@@ -83,8 +84,11 @@
   font-weight: normal;
 }
 
+#loginScreen #loginScreenContent {
+}
+
 #loginScreen p {
-  font-size: 20px;
+  font-size: large;
   margin: 0px;
   padding: 0px;
 }
@@ -103,20 +107,11 @@
   vertical-align: bottom;
 }
 
-.authent-window #authent-window-user-id,
-#loginScreen #cuid {
-  background: url(../../../img/welcome/account.svg) no-repeat 350px;
-  background-size: 25px;
+#loginScreen .form-comment {
+  font-size: small;
+  text-align: justify;
+  margin-top: 1rem;
 }
-
-.authent-window #authent-window-user-password,
-#loginScreen #ADpassword {
-  background: url(../../../img/welcome/key.svg) no-repeat 350px;
-  background-size: 25px;
-}
-
-
-
 @keyframes animatedshake-account {
   10%, 90% {
     transform: translate3d(-3px, 0, 0);
@@ -212,6 +207,28 @@
   }
 }
 
+#loginScreen #desktopfeatures {
+  display: none;
+}
+
+
+.authent-window #authent-window-user-id,
+#loginScreen #cuid {
+  // background: url(../../../img/welcome/account.svg) no-repeat 350px;
+  // background-size: 25px;
+  max-width: 450px;
+  color: @light;
+  background: @primary;
+}
+
+.authent-window #authent-window-user-password,
+#loginScreen #ADpassword {
+  // background: url(../../../img/welcome/key.svg) no-repeat 350px;
+  // background-size: 25px;
+  max-width: 450px;
+  color: @light;
+  background: @primary;
+}
 
 
 .authent-window #authent-window-user-password,
@@ -223,47 +240,6 @@
 .authent-window #authent-window-user-password,
 #loginScreen #ADpassword.error {
   animation: animatedshake 1s both;
-}
-
-.authent-window input[type="text"],
-.authent-window input[type="password"],
-.authent-window input[type="mail"],
-#loginScreen input[type="text"],
-#loginScreen input[type="password"],
-#loginScreen input[type="mail"] {
-  cursor: text;
-  background: none;
-  border: none;
-  border-bottom: 1px solid @light;
-  max-width: 380px;
-  width: 100%;
-  height: 35px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  padding-bottom: 5px;
-  color: @light;
-  font-size: 16px;
-  outline: none;
-}
-
-.authent-window input[type="text"]:focus,
-.authent-window input[type="password"]:focus,
-.authent-window input[type="mail"]:focus,
-#loginScreen input[type="text"]:focus,
-#loginScreen input[type="password"]:focus,
-#loginScreen input[type="mail"]:focus {
-  border-bottom: 1px solid @tertiary;
-}
-
-#loginScreen input[type="submit"] {
-  width: 100px;
-  height: 30px;
-  background: @tertiary;
-  border: none;
-  color: @light;
-  font-size: 16px;
-  cursor: pointer;
-  float: left;
 }
 
 #loginScreen ::-webkit-input-placeholder {
@@ -293,33 +269,23 @@
   -webkit-text-fill-color: @light !important;
 }
 
+#loginScreen #additionnalloginScreencontent,
 #loginScreen #activeDirectory,
-#loginScreen #connectGP,
-#loginScreen #connectShare {
+#loginScreen #connectGP {
   display: none;
   margin-top: 5%;
   box-sizing: border-box;
   user-select: text;
 }
 
-#loginScreen #activeDirectory p {
-  font-size: 14px;
-  margin-top: 10px;
-  text-align: justify;
-  max-width: 600px;
-}
-
 #loginScreen #activeDirectory a {
   color: @light;
   text-decoration: underline;
-  float: left;
-  line-height: 40px;
   margin-left: 10px;
 }
 
-#loginScreen #activeDirectory form {
-  margin-bottom: 70px;
-  min-width: 380px;
+.form-group {
+   margin-top: 2rem;
 }
 
 #loginScreen #connectGP ul {
@@ -352,11 +318,6 @@
   font-weight: bold;
   text-align: left;
   margin-left: 50px;
-}
-
-#loginScreen #connectShare form {
-  margin-top: 40px;
-  min-width: 380px;
 }
 
 #loginScreen #connectGP #login-facebook {

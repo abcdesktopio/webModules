@@ -477,6 +477,21 @@ function getutctimestamp() {
 }
 
 
+function get_abcdesktop_desktop_features( args ) {
+  // if desktopfeatures is enabled 
+  // add features in args
+  const div_desktopfeatures = document.getElementById('desktopfeatures');
+  if (div_desktopfeatures && div_desktopfeatures.features) 
+	args['features']= div_desktopfeatures.features;
+  // if userGeolocation is enabled
+  // add geolocation in args
+  if (userGeolocation)
+      args['geolocation'] = userGeolocation.getCurrentGeolocation(); // add geolocalisation dict
+  // utctimestamp is always enabled
+  // add utctimestamp to the login query
+  args['utctimestamp'] = getutctimestamp();        // to profiler
+}
+
 
 /**
  * @function login
@@ -487,13 +502,8 @@ function getutctimestamp() {
  * @desc login call odApiClient.auth.auth
  */
 export function login(provider, args={}) {
-  // add missing data to the login query
-  args.utctimestamp = getutctimestamp(); 	// to profiler
-
-  // if userGeolocation is enabled
-  if (userGeolocation)
-	  // add geolocalisation dict
-      args.geolocation = userGeolocation.getCurrentGeolocation();	// add geolocalisation
+  // add feature to args
+  get_abcdesktop_desktop_features(args);
 
   return odApiClient.auth
     .auth(null, provider, args)
