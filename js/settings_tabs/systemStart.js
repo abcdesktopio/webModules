@@ -51,7 +51,6 @@ function getScreenInfos() {
 
 export function init(home, tab) {
   system.hide(home);
-  const overview = tab.querySelector('#system-overview');
 
   if (!firstAppear) {
     system.show(tab);
@@ -59,7 +58,12 @@ export function init(home, tab) {
   }
 
   firstAppear = false;
-  system.removeAllChilds(document.getElementById('system-overview'));
+
+  const systemoverview = document.getElementById('system-overview');
+  if (systemoverview) {
+  	system.removeAllChilds( systemoverview );
+	systemoverview.appendChild(getWrapperCard('JWT token', window.od.currentUser.authorization, 'col-12'));
+  }
 
   launcher.getWebModulesVersion()
     .then((version) => {
@@ -175,13 +179,13 @@ export function init(home, tab) {
 
         fragment.appendChild(getWrapperCard(titleValue, textValue));
       }
-      overview.appendChild(fragment);
+      const systemoverview = document.getElementById('system-overview');
+      if (systemoverview)
+      	systemoverview.appendChild(fragment);
     });
 
   // Display
   getScreenInfos();
-
-  overview.appendChild(getWrapperCard('JWT token', window.od.currentUser.authorization, 'col-12'));
   system.show(tab);
 
   /**
