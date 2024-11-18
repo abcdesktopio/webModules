@@ -276,16 +276,17 @@ export class LoginButtonAuthManager extends AuthManager {
   }
 
   openDialog(url) {
+    // update state with features dict
     const div_desktopfeatures = document.getElementById('desktopfeatures');
     if (div_desktopfeatures && div_desktopfeatures.features) {
         let features = div_desktopfeatures.features;
         if (features) {
                 let myurl = URL.parse(url)
                 let urlsearch = new URLSearchParams( myurl.search );
-                urlsearch.set('state', features );
+		let b64features = btoa(JSON.stringify(features));
+                urlsearch.set('state', b64features );
                 myurl.search = urlsearch.toString();
 		url = myurl.toString();
-
         }
     }
     document.location = url;
