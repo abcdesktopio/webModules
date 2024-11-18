@@ -291,9 +291,6 @@ export class LoginButtonAuthManager extends AuthManager {
     document.location = url;
   }
 
-
-  }
-
 }
 
 export class ImplicitAuthManager extends LoginButtonAuthManager {
