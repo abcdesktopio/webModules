@@ -52,7 +52,7 @@ jobs:
       - name: HTML5Validator
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
-          root: webModules/
+          root: /home/runner/work/webModules/webModules
           css: true
           blacklist: js
 
