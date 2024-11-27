@@ -9,6 +9,7 @@ on: [push, pull_request]
 env: 
   imagetag: ${{ github.head_ref || github.ref_name || 'dev' }}
   branch: ${{ github.head_ref || github.ref_name || 'dev' }}
+  node_version: '20'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -23,8 +24,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: install build dependencies
-        run: ./install_build_dependencies.sh
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+
+      - name: install yarn
+        run: npm install -g yarn
+
+      # - name: install build dependencies
+      #  run: ./install_build_dependencies.sh
 
       - name: build index.html file
         run: |
@@ -71,6 +80,6 @@ jobs:
             BASE_IMAGE_RELEASE=22.04
             BASE_IMAGE=ubuntu
             BRANCH=${{ env.branch }}
-            NODE_MAJOR=20
+            NODE_MAJOR=${{ env.node_version }}
           tags: |
             abcdesktopio/oc.nginx:${{ env.imagetag }}
