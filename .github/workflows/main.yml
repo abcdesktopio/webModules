@@ -44,6 +44,7 @@ jobs:
         with:
           root: ./tmp
           css: true
+          blacklist: js/noVNC
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
