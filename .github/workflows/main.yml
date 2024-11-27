@@ -37,14 +37,12 @@ jobs:
           mkdir tmp
           mv index.html tmp/index.html
           cp -r css tmp/
-          cp -r js tmp/
 
       - name: HTML5Validator
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
           root: ./tmp
           css: true
-          blacklist: js/noVNC/app/styles
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
