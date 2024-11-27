@@ -54,6 +54,7 @@ jobs:
         with:
           root: /home/runner/work/webModules/webModules
           css: true
+          # skip HTML5Validator for all mustache.html (template) files
           blacklist: index.mustache.html index.session.mustache.html app.session.mustache.html js node_modules rest identification tips 
 
       - name: Set up QEMU
