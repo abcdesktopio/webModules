@@ -1,6 +1,6 @@
 #!/bin/bash
-builddate=$(git log -1 --format=%cd --date=iso)
-# builddate=$(git log -1 --format=%cd)
+gitdate=$(git log -1 --format=%cd --date=iso)
+builddate=$(date --rfc-3339=seconds)
 lastcommit=$(git log -1 --format=%H)
 version=$(git rev-list --count HEAD)
-echo "{ \"date\": \"$builddate\", \"commit\": \"$lastcommit\", \"version\": \"$version\" }" > version.json
+echo "{ \"date\": \"$gitdate\", \"builddate\": \"$builddate\",  \"commit\": \"$lastcommit\", \"version\": \"$version\" }" > version.json
