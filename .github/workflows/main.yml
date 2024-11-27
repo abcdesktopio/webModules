@@ -54,7 +54,7 @@ jobs:
         with:
           root: /home/runner/work/webModules/webModules
           css: true
-          blacklist: js
+          blacklist: index.mustache.html js node_modules rest
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
