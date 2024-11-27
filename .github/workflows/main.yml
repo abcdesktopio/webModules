@@ -29,9 +29,11 @@ jobs:
         with:
           node-version: ${{ env.node_version }}
 
-      - name: install yarn
-        run: npm install -g yarn
-
+      - name: install modules
+        run: |
+          npm install --global less
+          npm install --global yarn
+          
       # - name: install build dependencies
       #  run: ./install_build_dependencies.sh
 
