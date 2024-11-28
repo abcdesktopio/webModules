@@ -24,7 +24,7 @@ git clone -b 3.3 https://github.com/abcdesktopio/webModules.git
 
 ### Update ui.json file
 
-Update your `ui.json` file.  `ui.json` is located in `var/webModules/transpile/config` directory.
+Update your `ui.json` file.  `ui.json` is located in `transpile/config` directory.
 
 
 ```bash
