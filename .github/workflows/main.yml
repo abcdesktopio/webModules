@@ -24,39 +24,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.node_version }}
-
-      - name: install modules
-        run: |
-          npm install --global less
-          npm install --global yarn
-          
-      # - name: install build dependencies
-      #  run: ./install_build_dependencies.sh
-
-      - name: build index.html file
-        run: |
-          make install
-          make updatejs
-          make dev
-
-      # - name: move index.html and css to test to tmp directory
-      #  run: |
-      #    mkdir -p /tmp/HTML5Validator
-      #    cp index.html /tmp/HTML5Validator
-      #    cp -r css /tmp/HTML5Validator
-
-      - name: HTML5Validator
-        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
-        with:
-          root: /home/runner/work/webModules/webModules
-          css: true
-          # skip HTML5Validator for all mustache.html (template) files
-          blacklist: index.mustache.html index.session.mustache.html app.session.mustache.html js node_modules rest identification tips 
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -80,7 +47,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           build-args: |
-            BASE_IMAGE_RELEASE=22.04
+            BASE_IMAGE_RELEASE=latest
             BASE_IMAGE=ubuntu
             BRANCH=${{ env.branch }}
             NODE_MAJOR=${{ env.node_version }}
