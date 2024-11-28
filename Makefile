@@ -79,3 +79,7 @@ clean:
 	rm -f app.html | true
 	rm -f app.js | true
 	rm -f index.html | true
+
+
+removebuildtools:
+	rm -rf .eslintrc.json .git .github .gitignore Dockerfile.* Makefile transpile package.json *.sh
