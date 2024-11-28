@@ -23,6 +23,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ env.branch }}
+          fetch-depth: 0
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -42,9 +45,9 @@ jobs:
       - name: Build and push builder image
         uses: docker/build-push-action@v5
         with:
-          file: Dockerfile
+          file: Dockerfile.builder
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           build-args: |
             BASE_IMAGE_RELEASE=latest
@@ -52,4 +55,21 @@ jobs:
             BRANCH=${{ env.branch }}
             NODE_MAJOR=${{ env.node_version }}
           tags: |
+            abcdesktopio/oc.nginx.builder:${{ env.imagetag }}
+
+      - name: Build and push oc.nginx image
+        uses: docker/build-push-action@v5
+        with:
+          file: Dockerfile
+          context: .
+          platforms: linux/amd64
+          push: true
+          build-args: |
+            BASE_IMAGE_RELEASE=${{ env.imagetag }}
+            BASE_IMAGE=abcdesktopio/oc.nginx.builder
+            BRANCH=${{ env.branch }}
+            TARGET=dev
+            NODE_MAJOR=${{ env.node_version }}
+          tags: |
             abcdesktopio/oc.nginx:${{ env.imagetag }}
+
