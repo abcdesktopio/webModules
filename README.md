@@ -10,9 +10,8 @@ Please, read the public documentation web site:
 ## Update and custom front end image
 
 ### Requirements 
-- docker command lien to build new image
-
-
+- `docker` command line to build new image
+- `kubectl` to apply new yaml file
 
 ### Clone default webmodules  
 
@@ -129,6 +128,16 @@ rojectNameSplitedStaged'>desktop</span>",
   "urlopensourceproject": "https://www.abcdesktop.io/"
 }
 ```
+
+##### Login progress
+
+Login progress is from HTML `span` tags
+
+```html
+<span id='projectNameSplitedStagea'>a</span><span id='projectNameSplitedStageb'>b</span><span id='projectNameSplitedStagec'>c</span><span id='p
+rojectNameSplitedStaged'>desktop</span>
+```
+
 
 #### Colors dictionary entries
 
