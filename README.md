@@ -134,8 +134,10 @@ rojectNameSplitedStaged'>desktop</span>",
 Login progress is from HTML `span` tags
 
 ```html
-<span id='projectNameSplitedStagea'>a</span><span id='projectNameSplitedStageb'>b</span><span id='projectNameSplitedStagec'>c</span><span id='p
-rojectNameSplitedStaged'>desktop</span>
+<span id='projectNameSplitedStagea'>a</span>
+<span id='projectNameSplitedStageb'>b</span>
+<span id='projectNameSplitedStagec'>c</span>
+<span id='projectNameSplitedStaged'>desktop</span>
 ```
 
 
