@@ -29,12 +29,14 @@ RUN /myenv/bin/html5validator index.html
 # Clean
 # remove unused web content files 
 RUN make removebuildtools
-
+RUN chmod -R 555 *
 # RUN cd /var/webModules/transpile && npm audit fix
 # RUN cd /var/webModules && npm i --package-lock-only && npm audit fix
 
 
 # --- START Build image ---
 FROM nginx
+# buildkit
+# COPY --from=builder --chmod=555 /var/webModules /usr/share/nginx/html
 COPY --from=builder /var/webModules /usr/share/nginx/html
 EXPOSE 80 
