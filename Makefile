@@ -14,6 +14,21 @@ ifndef VERBOSE
 .SILENT:
 endif
 
+ifndef NODE_MAJOR
+NODE_MAJOR=20
+endif
+
+ifndef BRANCH
+# display only the name of the current branch we are on
+BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+endif
+
+
+ifndef IMAGETAG
+IMAGETAG=3.3
+endif
+
+
 all: version prod
 
 version:
@@ -29,6 +44,17 @@ help:
 	@echo "oneCss         : Create one css file minified and use it in html instead of all css files."
 	@echo "prod           : Build xterm, create one css minified, use it in index.html, change svg @tertiary color."
 	@echo "clean          : Remove all transpiled css and minified js, and remove [node_modules] from user-interfaces [transpile, xterm, utils]."
+
+
+oc.nginx.builder:
+	echo NODE_VERSION=$(NODE_MAJOR)
+	docker build --no-cache --build-arg BASE_IMAGE_RELEASE=latest --build-arg BASE_IMAGE=ubuntu --build-arg BRANCH=$(BRANCH) --build-arg NODE_MAJOR=$(NODE_MAJOR)\
+	       -t abcdesktopio/oc.nginx.builder:$(IMAGETAG) -f Dockerfile.builder .
+
+oc.nginx:
+	docker build --build-arg BASE_IMAGE_RELEASE=3.3 --build-arg BASE_IMAGE=abcdesktopio/oc.nginx.builder --build-arg BRANCH=$(BRANCH) --build-arg NODE_MAJOR=$(NODE_VERSION) \
+	-t abcdesktopio/oc.nginx:$(IMAGETAG) -f Dockerfile .
+
 
 checkTranspile:
 	if [ ! -d "./transpile/node_modules" ]; then \
@@ -82,4 +108,4 @@ clean:
 
 
 removebuildtools:
-	rm -rf .eslintrc.json .git .github .gitignore Dockerfile.* Makefile transpile package.json *.sh
+	rm -rf .eslintrc.json .git .github .gitignore Dockerfile* Makefile transpile package.json yarn.lock *.sh
