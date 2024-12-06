@@ -24,7 +24,7 @@ RUN make $TARGET
 # create version.json file
 RUN ./mkversion.sh && cat version.json
 # run html5validator
-RUN /myenv/bin/html5validator index.html
+RUN /myenv/bin/html5validator index.html demo.html
 
 # Clean
 # remove unused web content files 
