@@ -628,6 +628,7 @@ function setFullScreenUI() {
  */
 function setupTopMenu() {
   $('#top #top-right div').bind('click', function () {
+
     if (this.id === 'printer') {
       return;
     }
@@ -718,6 +719,9 @@ function setupTopMenu() {
         requestInputLock();
         break;
 
+      case 'volume_level':
+        break;
+
       default:
         console.error(`Invalid menu entry ${this.children[0].id}`);
         break;
@@ -729,17 +733,9 @@ function setupTopMenu() {
       const audioplayer = document.getElementById('audioplayer');
       if (!audioplayer)
 	    return;
-      if (this.value > 0 && audioplayer.paused)
-      {
-        audioplayer.play();
-      }
-      if (Number(this.value) === 0 )
-      {
-        audioplayer.pause();
-      }
-      
-      audioplayer.volume = this.value;
-      speaker.updateIconVolumLevel();
+      const volume = Number(this.value);
+      speaker.updateIconVolumeLevel( volume );
+      speaker.updateVolumeLevel( volume );
     });
 
   $('#placement').click(() => {
