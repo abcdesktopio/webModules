@@ -4,6 +4,11 @@
   ],
   "scripts": [
     {
+      "src": "js/jsmpeg.min.js",
+      "indexPageOnly": false,
+      "defer": false
+    },
+    {
       "src": "node_modules/webrtc-adapter/out/adapter.js",
       "indexPageOnly": false,
       "defer": false
