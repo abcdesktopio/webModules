@@ -1341,7 +1341,7 @@ export function configurePulse(destinationIp, port) {
   return requestSpawnerAPI('configurePulse', { destinationIp, port }, 'PUT');
 }
 
-export function isPulseAvailable(k) {
+export function isPulseAvailable() {
   return requestSpawnerAPI('isPulseAvailable', null, 'GET');
 }
 
