@@ -76,7 +76,7 @@ export const updateVolumeLevel = async () => {
   	const volume = Number(volumeLevel.value);
 	if (jsmpeg) 
 	  jsmpeg.volume = volume;
-	console.log('updateVolumeLevel=', volume );
+	// console.log('updateVolumeLevel=', volume );
 	await speakeravailableConnect( volume );
   }
 }
