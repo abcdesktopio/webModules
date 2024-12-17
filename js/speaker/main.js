@@ -50,49 +50,36 @@ const speakeravailableConnect = async ( default_volume) => {
   
   if (jsmpeg === null) {
 	const url = getsound_ws_url();
-	console.log('create JSMpeg.Player with', url );
+	console.log('creating JSMpeg.Player with', url );
        	jsmpeg = new JSMpeg.Player( url, {} );
 	console.log('JSMpeg.Player created');
-	let volume = (default_volume === undefined ) ? 1 : default_volume;
-	jsmpeg.volume = volume;
   }
   else
-   	jsmpeg.volume = volume;
+  {
+	if (volume === 0 ) {
+		console.log( 'JSMpeg.Player destroying' );
+		jsmpeg.destroy();
+		jsmpeg = null;
+		console.log( 'JSMpeg.Player destroyed' );
+	}
+  }
+
+  if (jsmpeg)
+  	jsmpeg.volume = volume;
 
 }
 
 
-export const updateVolumeLevel = () => { 
+export const updateVolumeLevel = async () => { 
   const volumeLevel = document.getElementById('volume_level');
   if (volumeLevel) {
   	const volume = Number(volumeLevel.value);
-
 	if (jsmpeg) 
 	  jsmpeg.volume = volume;
-	
-	if (volume === 0) {
-		if ( jsmpeg != null ) {
-			jsmpeg.destroy();
-			jsmpeg = null;
-		}
-	}
-	else {
-  		// is pulse is available
-  		launcher.isPulseAvailable().then( (p) => {
-			speakeravailableConnect( volume );
-  		});
-	}
+	console.log('updateVolumeLevel=', volume );
+	await speakeravailableConnect( volume );
   }
 }
-
-
-export const destroyVolumeLevel = () => {
- 	 if ( jsmpeg != null ) {
-                        jsmpeg.destroy();
-                        jsmpeg = null;
-                }
-}
-
 
 export const init = () => {
   document.addEventListener('broadway.connected', configureSpeaker);
@@ -119,24 +106,13 @@ export const updateIconVolumeLevel = () => {
 };
 
 
-export const enableSoundIcon = (level) => {
-  const audio = document.getElementById('audioplayer');
-  if (audio) {
-      $('#speakers').css('display', 'block');
-      const volumeLevel = document.getElementById('volume_level');
-      volumeLevel.value = (Number.isInteger(level)) ? level : 1;
-  }
-};
 
 export const enablePlaySound = () => {
-  const audio = document.getElementById('audioplayer');
-  if (audio) {
-	  const volumeLevel = document.getElementById('volume_level');
-	  let volume = 1;
-	  if (volumeLevel)
-      	  	volume = volumeLevel.value;
-	  speakeravailableConnect( volume );
-  }
+  const volumeLevel = document.getElementById('volume_level');
+  let volume = 1;
+  if (volumeLevel)
+ 	volume = volumeLevel.value;
+  speakeravailableConnect( volume );
 };
 
 
