@@ -633,10 +633,6 @@ function setupTopMenu() {
       return;
     }
 
-    if (this.id === 'speakers') {
-      speaker.enablePlaySound();
-    }
-
     const hasSelected = $(this).hasClass('selected');
     if (!$(this).hasClass('keep')) {
       closeTopRightDropDowns();
