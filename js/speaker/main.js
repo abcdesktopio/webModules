@@ -145,6 +145,7 @@ function displayNotificationWebRTCError( msg )
 }
 
 broadcastEvent.addEventListener('speaker.available', async ({ detail: { available } }) => {
+  console.log( 'speaker.available', available );
   if (available) {
     speakeravailableConnect();
   }
