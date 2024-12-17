@@ -726,9 +726,6 @@ function setupTopMenu() {
 
   $('#top #top-right #speakers #volume_level')
     .on('input', function () {
-      const audioplayer = document.getElementById('audioplayer');
-      if (!audioplayer)
-	    return;
       const volume = Number(this.value);
       speaker.updateIconVolumeLevel( volume );
       speaker.updateVolumeLevel( volume );
