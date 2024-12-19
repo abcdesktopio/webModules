@@ -727,8 +727,7 @@ function setupTopMenu() {
   $('#top #top-right #speakers #volume_level')
     .on('input', function () {
       const volume = Number(this.value);
-      speaker.updateIconVolumeLevel( volume );
-      speaker.updateVolumeLevel( volume );
+      speaker.updateVolume( volume );
     });
 
   $('#placement').click(() => {
