@@ -9,11 +9,6 @@
       "defer": false
     },
     {
-      "src": "node_modules/webrtc-adapter/out/adapter.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
       "src": "node_modules/jquery/dist/jquery.min.js",
       "indexPageOnly": false,
       "defer": false
