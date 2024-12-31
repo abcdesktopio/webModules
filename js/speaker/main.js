@@ -30,8 +30,6 @@ import * as notificationSystem from '../notificationsystem.js';
 
 var jsmpeg = null;
 
-
-
 export const getsound_ws_url = () => {
   const path = `/sound?jwt_token=${window.od.currentUser.authorization}`;
   const url = window.od.net.getwsurl(path);
@@ -44,6 +42,17 @@ const configureSpeaker = async () => {
   //
   // launcher.isPulseAvailable().then( speakeravailableConnect ); 
 }
+
+const unconfigureSpeaker = async () => {
+  console.log( 'unconfigureSpeaker call' );
+  if (jsmpeg) {	
+  	console.log( 'JSMpeg.Player destroying' );
+  	jsmpeg.destroy();
+        jsmpeg = null;
+        console.log( 'JSMpeg.Player destroyed' );
+  }
+}
+
 
 const speakeravailableConnect = async ( default_volume) => {
   let volume = (default_volume === undefined ) ? 1 : default_volume;
@@ -70,20 +79,22 @@ const speakeravailableConnect = async ( default_volume) => {
 }
 
 
-export const updateVolumeLevel = async () => { 
-  const volumeLevel = document.getElementById('volume_level');
-  if (volumeLevel) {
-  	const volume = Number(volumeLevel.value);
-	if (jsmpeg) 
-	  jsmpeg.volume = volume;
-	// console.log('updateVolumeLevel=', volume );
-	await speakeravailableConnect( volume );
-  }
+export const updateVolumeLevel = async (volume) => { 
+  if (jsmpeg) 
+      jsmpeg.volume = volume;
+  await speakeravailableConnect( volume );
 }
 
-export const init = () => {
-  document.addEventListener('broadway.connected', configureSpeaker);
+export async function init() {
+  document.addEventListener('broadway.connected',    configureSpeaker);
+  document.addEventListener('broadway.disconnected', unconfigureSpeaker);
 };
+
+
+export async function updateVolume( volume ) {
+      updateIconVolumeLevel( volume );
+      updateVolumeLevel( volume );
+}
 
 export const updateIconVolumeLevel = () => {
   const volumeLevel = document.getElementById('volume_level');
@@ -104,18 +115,6 @@ export const updateIconVolumeLevel = () => {
     $('#speakers-logo').attr('src', srcImg);
   }
 };
-
-
-
-export const enablePlaySound = () => {
-  const volumeLevel = document.getElementById('volume_level');
-  let volume = 1;
-  if (volumeLevel)
- 	volume = volumeLevel.value;
-  speakeravailableConnect( volume );
-};
-
-
 
 function displayNotificationNoSound(notification_desc)
 {
@@ -150,3 +149,6 @@ broadcastEvent.addEventListener('speaker.available', async ({ detail: { availabl
     speakeravailableConnect();
   }
 });
+
+
+
