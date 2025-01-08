@@ -4,7 +4,7 @@
   ],
   "scripts": [
     {
-      "src": "js/jsmpeg.min.js",
+      "src": "node_modules/@cycjimmy/jsmpeg-player/dist/jsmpeg-player.esm.js",
       "indexPageOnly": false,
       "defer": false
     },
