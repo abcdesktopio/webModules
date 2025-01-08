@@ -14,8 +14,8 @@
 @import "@{global}";
 
 div#searchZone {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  justify-content: right;
   position: absolute;
   bottom: 55px;
   width: 100%;
@@ -83,7 +83,7 @@ div#searchZone p {
 
 #closeZone {
   display: none;
-  align-self: flex-end;
+  justify-self: right;
   height: 40px;
   width: 20px;
   background: url(../../../img/folder/close-white.svg) no-repeat center;
