@@ -64,6 +64,7 @@ checkTranspile:
 install:
 	yarn install
 	cd transpile && yarn install
+	cp "node_modules/@cycjimmy/jsmpeg-player/dist/jsmpeg-player.esm.js" ./js
 	# cp node_modules/xterm/lib/xterm.js ./js
 	# cp node_modules/xterm-addon-attach/lib/xterm-addon-attach.js ./js
 	# cp node_modules/xterm-addon-fit/lib/xterm-addon-fit.js .js
