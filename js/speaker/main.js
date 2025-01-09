@@ -38,7 +38,7 @@ export const getsound_ws_url = () => {
 }
 
 const configureSpeaker = async () => {
-  console.log( 'configureSpeaker call' );
+  // console.log( 'configureSpeaker call' );
   // The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page.
   //
   // launcher.isPulseAvailable().then( speakeravailableConnect ); 
