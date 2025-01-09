@@ -9,6 +9,7 @@
     "eslint": "^9.1.1"
   },
   "dependencies": {
+    "@cycjimmy/jsmpeg-player": "6.1.2",
     "@xterm/addon-attach": "^0.11.0",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/addon-web-links": "^0.11.0",
@@ -24,8 +25,6 @@
     "js-cookie": "^3.0.5",
     "mustache": "^4.2.0",
     "ua-parser-js": "^2.0.0",
-    "url": "^0.11.3",
-    "webrtc-adapter": "^9.0.1",
-    "@cycjimmy/jsmpeg-player": "6.1.2"
+    "url": "^0.11.3"
   }
 }
