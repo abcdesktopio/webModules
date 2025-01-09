@@ -4,11 +4,6 @@
   ],
   "scripts": [
     {
-      "src": "node_modules/@cycjimmy/jsmpeg-player/dist/jsmpeg-player.esm.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
       "src": "node_modules/jquery/dist/jquery.min.js",
       "indexPageOnly": false,
       "defer": false
