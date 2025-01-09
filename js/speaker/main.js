@@ -27,7 +27,7 @@
 import * as launcher from '../launcher.js';
 import { broadcastEvent } from '../broadcastevent.js';
 import * as notificationSystem from '../notificationsystem.js';
-import JSMpeg from '../../node_modules/@cycjimmy/jsmpeg-player/dist/jsmpeg-player.esm.js';
+import JSMpeg from '../jsmpeg-player.esm.js';
 
 var jsmpeg = null;
 
