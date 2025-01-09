@@ -112,7 +112,9 @@ async function transformHtml(htmlFileSourceAndOut) {
 async function transformAndCopyJSFile(legacyPath, opts, filename) {
   const timerLabel = `\t${legacyPath}`;
   console.time(timerLabel);
+  // console.log( `ensureDir(path.dirname(${legacyPath}))`);
   await ensureDir(path.dirname(legacyPath));
+  // console.log( `babelTransformFile(${filename}, opts)`);
   const { code } = await babelTransformFile(filename, opts);
   await fs.promises.writeFile(legacyPath, code);
   console.timeEnd(timerLabel);
@@ -159,6 +161,7 @@ export async function makeLibFiles() {
     }
     const legacyPath = path.join(legacyPathBase, path.relative(paths.main, filename));
     outFiles.push(`${legacyPath}`);
+    // console.log( `legacyPath=${legacyPath}` );
     awaitings.push(transformAndCopyJSFile(legacyPath, opts, filename));
   }
   await Promise.all(awaitings);

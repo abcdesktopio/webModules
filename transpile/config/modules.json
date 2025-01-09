@@ -4,11 +4,6 @@
   ],
   "scripts": [
     {
-      "src": "js/jsmpeg.min.js",
-      "indexPageOnly": false,
-      "defer": false
-    },
-    {
       "src": "node_modules/jquery/dist/jquery.min.js",
       "indexPageOnly": false,
       "defer": false

@@ -315,6 +315,7 @@ async function applyConfToMustacheJsonFiles(uiConf) {
 async function buildJSProductionFiles() {
   console.time('Build app.js file');
   try {
+    console.log('makeLibFiles');
     await makeLibFiles();
   } catch(error) {
     console.error(`Failure converting modules: ${error}`);
