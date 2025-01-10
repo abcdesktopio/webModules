@@ -16,7 +16,8 @@ Please, read the public documentation web site:
 ### Clone default webmodules  
 
 ```bash
-git clone -b 3.3 https://github.com/abcdesktopio/webModules.git
+BRANCH=3.5 
+git clone -b ${BRANCH} https://github.com/abcdesktopio/webModules.git
 ```
 
 ## Locate project and ui files 
