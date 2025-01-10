@@ -10,6 +10,7 @@ import {
 } from './launcher.js';
 import * as WebUtil from './noVNC/app/webutil.js';
 import KeyTable from './noVNC/core/input/keysym.js';
+import { MouseButtonMapper, XVNC_BUTTONS } from "./noVNC/core/mousebuttonmapper.js";
 import RFB from './noVNC/core/rfb.js';
 import keysyms from './noVNC/core/input/keysymdef.js';
 import Keyboard from './noVNC/core/input/keyboard.js';
@@ -201,6 +202,7 @@ export default function BroadwayVNC() {
     // Util.addEvent(window, 'load', this.keyboardinputReset);
     // Bind event for zoom
     //
+    /*
     keyboardinput = document.getElementById('noVNC_keyboardinput');
     if (!keyboardinput) return;
 
@@ -214,6 +216,7 @@ export default function BroadwayVNC() {
     keyboardinput.addEventListener('submit', () => false);
 
     document.documentElement.addEventListener('mousedown', this.keepVirtualKeyboard, true);
+    */
   };
 
   this.showVirtualKeyboard = function () {
@@ -266,116 +269,6 @@ export default function BroadwayVNC() {
     }
   };
 
-  this.keepVirtualKeyboard = function (event) {
-    const input = document.getElementById('noVNC_keyboardinput');
-
-    // Only prevent focus change if the virtual keyboard is active
-    if (document.activeElement != input) {
-      return;
-    }
-
-    // Only allow focus to move to other elements that need
-    // focus to function properly
-    if (event.target.form !== undefined) {
-      switch (event.target.type) {
-        case 'text':
-        case 'email':
-        case 'search':
-        case 'password':
-        case 'tel':
-        case 'url':
-        case 'textarea':
-        case 'select-one':
-        case 'select-multiple':
-          return;
-      }
-    }
-    event.preventDefault();
-  };
-
-  this.keyboardinputReset = function () {
-    const kbi = document.getElementById('noVNC_keyboardinput');
-    if (kbi) {
-      kbi.value = new Array(defaultKeyboardinputLen).join('_');
-      lastKeyboardinput = kbi.value;
-    }
-  };
-
-  this.keyEvent = function (keysym, code, down) {
-    if (window.od.broadway.rfb) { window.od.broadway.rfb.sendKey(keysym, code, down); }
-  };
-
-  // When normal keyboard events are left uncought, use the input events from
-  // the keyboardinput element instead and generate the corresponding key events.
-  // This code is required since some browsers on Android are inconsistent in
-  // sending keyCodes in the normal keyboard events when using on screen keyboards.
-  this.keyInput = (event) => {
-    if (!window.od.broadway.rfb) return;
-
-    const newValue = event.target.value;
-
-    if (!lastKeyboardinput) {
-      this.keyboardinputReset();
-    }
-
-    const oldValue = lastKeyboardinput;
-    let newLen;
-
-    try {
-      // Try to check caret position since whitespace at the end
-      // will not be considered by value.length in some browsers
-      newLen = Math.max(event.target.selectionStart, newValue.length);
-    } catch (err) {
-      // selectionStart is undefined in Google Chrome
-      newLen = newValue.length;
-    }
-    const oldLen = oldValue.length;
-
-    let backspaces;
-    let inputs = newLen - oldLen;
-    if (inputs < 0) {
-      backspaces = -inputs;
-    } else {
-      backspaces = 0;
-    }
-
-    // Compare the old string with the new to account for
-    // text-corrections or other input that modify existing text
-    let i;
-    for (i = 0; i < Math.min(oldLen, newLen); i++) {
-      if (newValue.charAt(i) != oldValue.charAt(i)) {
-        inputs = newLen - i;
-        backspaces = oldLen - i;
-        break;
-      }
-    }
-
-    // Send the key events
-    for (i = 0; i < backspaces; i++) {
-      window.od.broadway.rfb.sendKey(KeyTable.XK_BackSpace, 'Backspace');
-    }
-    for (i = newLen - inputs; i < newLen; i++) {
-      window.od.broadway.rfb.sendKey(keysyms.lookup(newValue.charCodeAt(i)));
-    }
-
-    // Control the text content length in the keyboardinput element
-    if (newLen > 2 * defaultKeyboardinputLen) {
-      this.keyboardinputReset();
-    } else if (newLen < 1) {
-      // There always have to be some text in the keyboardinput
-      // element with which backspace can interact.
-      this.keyboardinputReset();
-      // This sometimes causes the keyboard to disappear for a second
-      // but it is required for the android keyboard to recognize that
-      // text has been added to the field
-      event.target.blur();
-      // This has to be ran outside of the input handler in order to work
-      setTimeout(event.target.focus.bind(event.target), 0);
-    } else {
-      lastKeyboardinput = newValue;
-    }
-  };
-
   function sendevent(name) {
     try {
       const myevent = createNewEvent(name);
@@ -405,6 +298,25 @@ export default function BroadwayVNC() {
     }
   };
 
+  this.initMouseButtonMapper = function () {
+        const mouseButtonMapper = new MouseButtonMapper();
+
+        const settings = WebUtil.readSetting("mouseButtonMapper");
+        if (settings) {
+            mouseButtonMapper.load(settings);
+            return mouseButtonMapper;
+        }
+
+        mouseButtonMapper.set(0, XVNC_BUTTONS.LEFT_BUTTON);
+        mouseButtonMapper.set(1, XVNC_BUTTONS.MIDDLE_BUTTON);
+        mouseButtonMapper.set(2, XVNC_BUTTONS.RIGHT_BUTTON);
+        mouseButtonMapper.set(3, XVNC_BUTTONS.BACK_BUTTON);
+        mouseButtonMapper.set(4, XVNC_BUTTONS.FORWARD_BUTTON);
+        WebUtil.writeSetting("mouseButtonMapper", mouseButtonMapper.dump());
+
+        return mouseButtonMapper;
+    };
+
   this.isConnected = function (e) {
     if (rfb && rfb._rfbConnectionState) { return rfb._rfbConnectionState == 'connected'; }
     return false;
@@ -421,8 +333,8 @@ export default function BroadwayVNC() {
     let path;
     let url;
     let port;
+    let isPrimaryDisplay = true;
     password = window.od.currentUser.vncpassword;
-    this.keyboardinputReset();
 
     // set path value from window.od.currentUser.websocketrouting
     //
@@ -437,30 +349,42 @@ export default function BroadwayVNC() {
       path = `websockify?jwt_token=${window.od.currentUser.authorization}`;
     }
     url = window.od.net.getwsurl(path, window.od.currentUser.target_ip, port );
-   
+    const rfb_options = {
+      shared: true,
+      credentials: { password: password }
+    };   
     try {
-      rfb = null;
-      rfb = new RFB(document.body, url, {
-        repeaterID: WebUtil.getConfigVar('repeaterID', ''),
-        shared: WebUtil.getConfigVar('shared', true),
-        credentials: { password },
-      });
-      
+
+      rfb = new RFB(  document.getElementById('noVNC_container'),
+                      document.getElementById('noVNC_keyboardinput'),
+                      url,
+                      {
+                            shared: true,
+                            credentials: { password: password }
+                      },
+                      isPrimaryDisplay );
+
+      rfb.enableWebRTC=false;
+
+      rfb.mouseButtonMapper = this.initMouseButtonMapper();
+
       // set an id to the RFB canvas
       // after the constructor
       rfb._canvas.id = 'noVNC_canvas';
       rfb.qualityLevel = 8;
+      
       // 
       // set default background by reading value from body 
       rfb._screen.style.background = window.getComputedStyle(document.body).getPropertyValue('background-color');
-      rfb._screenSize = function () {
+      
+      /*rfb._screenSize = function () {
         const h = this._screen.offsetHeight - getTopAndDockHeight();
         return {
           w: this._screen.offsetWidth,
           h,
         };
       };
-      
+      */
       // Is a boolean indicating if the remote session should be clipped to its container. 
       // When disabled scrollbars will be shown to handle the resulting overflow. Disabled by default.
       rfb.clipViewport = true;
