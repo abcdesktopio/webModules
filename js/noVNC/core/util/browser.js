@@ -77,76 +77,101 @@ export const hasScrollbarGutter = _hasScrollbarGutter;
  * It's better to use feature detection than platform detection.
  */
 
-/* OS */
-
 export function isMac() {
-    return !!(/mac/i).exec(navigator.platform);
+    return navigator && !!(/mac/i).exec(navigator.platform);
 }
 
 export function isWindows() {
-    return !!(/win/i).exec(navigator.platform);
+    return navigator && !!(/win/i).exec(navigator.platform);
+}
+
+export function isLinux() {
+    return navigator && !!(/linux/i).exec(navigator.platform)
 }
 
 export function isIOS() {
-    return (!!(/ipad/i).exec(navigator.platform) ||
+    return navigator &&
+           (!!(/ipad/i).exec(navigator.platform) ||
             !!(/iphone/i).exec(navigator.platform) ||
             !!(/ipod/i).exec(navigator.platform));
 }
 
-export function isAndroid() {
-    /* Android sets navigator.platform to Linux :/ */
-    return !!navigator.userAgent.match('Android ');
-}
-
-export function isChromeOS() {
-    /* ChromeOS sets navigator.platform to Linux :/ */
-    return !!navigator.userAgent.match(' CrOS ');
-}
-
-/* Browser */
-
 export function isSafari() {
-    return !!navigator.userAgent.match('Safari/...') &&
-           !navigator.userAgent.match('Chrome/...') &&
-           !navigator.userAgent.match('Chromium/...') &&
-           !navigator.userAgent.match('Epiphany/...');
+    return navigator && (navigator.userAgent.indexOf('Safari') !== -1 &&
+                         navigator.userAgent.indexOf('Chrome') === -1);
+}
+
+//is the client a desktop like operating system
+export function isDesktop() {
+    var userAgent = navigator.userAgent;
+    if (isIOS() || userAgent.indexOf("OculusBrowser") != -1 || userAgent.indexOf("SamsungBrowser") != -1) {
+        return false
+    } else if (userAgent.indexOf("Windows") != -1 || userAgent.indexOf("Mac") != -1 || userAgent.indexOf("X11") != -1 || userAgent.indexOf("Linux") != -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+// Returns IE version number if IE or older Edge browser
+export function isIE() {
+    var ua = window.navigator.userAgent;
+
+    // Test values; Uncomment to check result &
+
+    // IE 10
+    // ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
+
+    // IE 11
+    // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
+
+    // Edge 12 (Spartan)
+    // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
+
+    // Edge 13
+    // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
+
+    var msie = ua.indexOf('MSIE ');
+    var ie_ver = false;
+    if (msie > 0) {
+    // IE 10 or older => return version number
+        ie_ver = parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        ie_ver = parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+        // Edge (IE 12+) => return version number
+        ie_ver = parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    }
+
+    return ie_ver;
+}
+
+export function isChromiumBased() {
+    return (!!window.chrome);
 }
 
 export function isFirefox() {
-    return !!navigator.userAgent.match('Firefox/...') &&
-           !navigator.userAgent.match('Seamonkey/...');
+    return navigator && !!(/firefox/i).exec(navigator.userAgent);
 }
 
-export function isChrome() {
-    return !!navigator.userAgent.match('Chrome/...') &&
-           !navigator.userAgent.match('Chromium/...') &&
-           !navigator.userAgent.match('Edg/...') &&
-           !navigator.userAgent.match('OPR/...');
+export function supportsBinaryClipboard() {
+    //Safari does support the clipbaord API but has a lot of security restrictions
+    if (isSafari() || isFirefox()) { return false; }
+    return (navigator.clipboard && typeof navigator.clipboard.read === "function");
 }
 
-export function isChromium() {
-    return !!navigator.userAgent.match('Chromium/...');
+export function supportsPointerLock() {
+    //Older versions of edge do support browser lock, but seems to not behave as expected
+    //Disable on browsers that don't fully support or work as expected
+    if (isIOS() || isIE()) { return false; }
+    return (document.exitPointerLock);
 }
 
-export function isOpera() {
-    return !!navigator.userAgent.match('OPR/...');
-}
-
-export function isEdge() {
-    return !!navigator.userAgent.match('Edg/...');
-}
-
-/* Engine */
-
-export function isGecko() {
-    return !!navigator.userAgent.match('Gecko/...');
-}
-
-export function isWebKit() {
-    return !!navigator.userAgent.match('AppleWebKit/...') &&
-           !navigator.userAgent.match('Chrome/...');
-}
-
-export function isBlink() {
-    return !!navigator.userAgent.match('Chrome/...');
-}

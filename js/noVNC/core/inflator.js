@@ -14,8 +14,9 @@ export default class Inflate {
         this.strm = new ZStream();
         this.chunkSize = 1024 * 10 * 10;
         this.strm.output = new Uint8Array(this.chunkSize);
+        this.windowBits = 5;
 
-        inflateInit(this.strm);
+        inflateInit(this.strm, this.windowBits);
     }
 
     setInput(data) {
@@ -53,7 +54,7 @@ export default class Inflate {
         }
 
         if (this.strm.next_out != expected) {
-            throw new Error("Incomplete zlib block");
+            throw new Error("Incomplete zlib block, got " + this.strm.next_out + " expected " + expected);
         }
 
         return new Uint8Array(this.strm.output.buffer, 0, this.strm.next_out);

@@ -68,9 +68,6 @@ msgid "Password is required"
 msgstr "Şifre gerekli"
 
 #: ../vnc.html:89
-msgid "noVNC encountered an error:"
-msgstr "Bir hata oluştu:"
-
 #: ../vnc.html:99
 msgid "Hide/Show the control bar"
 msgstr "Denetim masasını Gizle/Göster"
@@ -286,3 +283,183 @@ msgstr "Vazgeç"
 #: ../vnc.html:329
 msgid "Canvas not supported."
 msgstr "Tuval desteklenmiyor."
+
+msgid "Failed to connect to server"
+msgstr "Sunucuyla bağlantı başarısız"
+
+msgid "Credentials are required"
+msgstr "Kimlik bilgileri gerekli"
+
+msgid "Drag"
+msgstr "Sürüklemek"
+
+msgid "Toggle Windows"
+msgstr "Windows'u Değiştir"
+
+msgid "Windows"
+msgstr "Pencereler"
+
+msgid "Quality:"
+msgstr "Kalite:"
+
+msgid "Compression level:"
+msgstr "Sıkıştırma seviyesi:"
+
+msgid "Show Dot when No Cursor"
+msgstr "İmleç Yokken Noktayı Göster"
+
+msgid "Version:"
+msgstr "Sürüm:"
+
+msgid "Username:"
+msgstr "Kullanıcı adı:"
+
+msgid "Send Credentials"
+msgstr "Kimlik Bilgilerini Gönder"
+
+msgid "Keys"
+msgstr "Anahtarlar"
+
+msgid "Game Cursor Mode"
+msgstr "Oyun İmleç Modu"
+
+msgid "Press Esc Key to Exit Pointer Lock Mode"
+msgstr "İşaretçi Kilidi Modundan Çıkmak için Esc Tuşuna Basın"
+
+msgid "Game Mode paused, click on screen to resume Game Mode."
+msgstr "Oyun Modu duraklatıldı, Oyun Moduna devam etmek için ekrana tıklayın."
+
+msgid "Clipboard Up"
+msgstr "Pano Yukarı"
+
+msgid "CLipboard Down"
+msgstr "Pano Aşağı"
+
+msgid "Clipboard Seamless"
+msgstr "Pano Sorunsuz"
+
+msgid "Prefer Local Cursor"
+msgstr "Yerel İmleci Tercih Et"
+
+msgid "Translate keyboard shortcuts"
+msgstr "Klavye kısayollarını çevir"
+
+msgid "Enable WebRTC UDP Transit"
+msgstr "WebRTC UDP Geçişini Etkinleştir"
+
+msgid "Enable WebP Compression"
+msgstr "WebP Sıkıştırmasını Etkinleştir"
+
+msgid "Enable Performance Stats"
+msgstr "Performans İstatistiklerini Etkinleştir"
+
+msgid "Enable Pointer Lock"
+msgstr "İşaretçi Kilidini Etkinleştir"
+
+msgid "IME Input Mode"
+msgstr "IME Giriş Modu"
+
+msgid "Show Virtual Keyboard Control"
+msgstr "Sanal Klavye Denetimini Göster"
+
+msgid "Toggle Control Panel via Keystrokes"
+msgstr "Kontrol Panelini Tuş Vuruşlarıyla Değiştir"
+
+msgid "Render Native Resolution"
+msgstr "Yerel Çözünürlüğü Oluştur"
+
+msgid "Keyboard Shortcuts"
+msgstr "Klavye kısayolları"
+
+msgid "Enable KasmVNC Keyboard Shortcuts"
+msgstr "KasmVNC Klavye Kısayollarını Etkinleştir"
+
+msgid "1 - Toggle Control Panel"
+msgstr "1 - Kontrol Panelini Değiştir"
+
+msgid "2 - Toggle Game Pointer Mode"
+msgstr "2 - Oyun İşaretçisi Modunu Değiştir"
+
+msgid "3 - Toggle Pointer Lock"
+msgstr "3 - İşaretçi Kilidini Değiştir"
+
+msgid "Stream Quality"
+msgstr "Akış Kalitesi"
+
+msgid "Preset Modes:"
+msgstr "Ön Ayarlı Modlar:"
+
+msgid "Static"
+msgstr "Statik"
+
+msgid "Low"
+msgstr "Düşük"
+
+msgid "Medium"
+msgstr "Orta"
+
+msgid "High"
+msgstr "Yüksek"
+
+msgid "Extreme"
+msgstr "Aşırı"
+
+msgid "Lossless"
+msgstr "kayıpsız"
+
+msgid "Custom"
+msgstr "Gelenek"
+
+msgid "Anti-Aliasing:"
+msgstr "Kenar Yumuşatma:"
+
+msgid "Auto Dynamic"
+msgstr "Otomatik Dinamik"
+
+msgid "Off"
+msgstr "Kapalı"
+
+msgid "On"
+msgstr "Açık"
+
+msgid "Dynamic Quality Min:"
+msgstr "Dinamik Kalite Min:"
+
+msgid "Dynamic Quality Max:"
+msgstr "Dinamik Kalite Maks:"
+
+msgid "Treat Lossless:"
+msgstr "Kayıpsız Tedavi Et:"
+
+msgid "Frame Rate:"
+msgstr "Kare hızı:"
+
+msgid "Video JPEG Quality:"
+msgstr "Video JPEG Kalitesi:"
+
+msgid "Video WEBP Quality:"
+msgstr "Video WEBP Kalitesi:"
+
+msgid "Video Area:"
+msgstr "Video Alanı:"
+
+msgid "Video Time:"
+msgstr "Video Süresi:"
+
+msgid "Video Out Time:"
+msgstr "Video Çıkış Süresi:"
+
+msgid "Video Mode Width:"
+msgstr "Video Modu Genişliği:"
+
+msgid "Video Mode Height:"
+msgstr "Video Modu Yüksekliği:"
+
+msgid "Documentation"
+msgstr "Belgeler"
+
+msgid "Drag Viewport"
+msgstr "Görüntü Penceresini Sürükleyin"
+
+msgid "KasmVNC encountered an error:"
+msgstr "KasmVNC bir hatayla karşılaştı:"

@@ -70,9 +70,6 @@ msgid "Password is required"
 msgstr "Je vyžadováno heslo"
 
 #: ../vnc.html:84
-msgid "noVNC encountered an error:"
-msgstr "noVNC narazilo na chybu:"
-
 #: ../vnc.html:94
 msgid "Hide/Show the control bar"
 msgstr "Skrýt/zobrazit ovládací panel"
@@ -292,3 +289,177 @@ msgstr "Odeslat heslo"
 #: ../vnc.html:312
 msgid "Cancel"
 msgstr "Zrušit"
+
+msgid "Credentials are required"
+msgstr "Jsou vyžadovány přihlašovací údaje"
+
+msgid "Drag"
+msgstr "Táhnout"
+
+msgid "Toggle Windows"
+msgstr "Přepnout Windows"
+
+msgid "Windows"
+msgstr "Okna"
+
+msgid "Quality:"
+msgstr "Kvalitní:"
+
+msgid "Compression level:"
+msgstr "Úroveň komprese:"
+
+msgid "Version:"
+msgstr "Verze:"
+
+msgid "Username:"
+msgstr "Uživatelské jméno:"
+
+msgid "Send Credentials"
+msgstr "Odeslat přihlašovací údaje"
+
+msgid "Keys"
+msgstr "klíče"
+
+msgid "Game Cursor Mode"
+msgstr "Režim herního kurzoru"
+
+msgid "Press Esc Key to Exit Pointer Lock Mode"
+msgstr "Stisknutím klávesy Esc ukončíte režim uzamčení ukazatele"
+
+msgid "Game Mode paused, click on screen to resume Game Mode."
+msgstr "Herní režim pozastaven, kliknutím na obrazovku obnovíte herní režim."
+
+msgid "Clipboard Up"
+msgstr "Schránka nahoru"
+
+msgid "CLipboard Down"
+msgstr "Schránka dolů"
+
+msgid "Clipboard Seamless"
+msgstr "Bezproblémová schránka"
+
+msgid "Prefer Local Cursor"
+msgstr "Upřednostňovat místní kurzor"
+
+msgid "Translate keyboard shortcuts"
+msgstr "Přeložit klávesové zkratky"
+
+msgid "Enable WebRTC UDP Transit"
+msgstr "Povolit WebRTC UDP Transit"
+
+msgid "Enable WebP Compression"
+msgstr "Povolit kompresi WebP"
+
+msgid "Enable Performance Stats"
+msgstr "Povolit statistiky výkonu"
+
+msgid "Enable Pointer Lock"
+msgstr "Povolit zámek ukazatele"
+
+msgid "IME Input Mode"
+msgstr "Režim vstupu IME"
+
+msgid "Show Virtual Keyboard Control"
+msgstr "Zobrazit ovládání virtuální klávesnice"
+
+msgid "Toggle Control Panel via Keystrokes"
+msgstr "Přepnout ovládací panel pomocí kláves"
+
+msgid "Render Native Resolution"
+msgstr "Vykreslit nativní rozlišení"
+
+msgid "Keyboard Shortcuts"
+msgstr "Klávesové zkratky"
+
+msgid "Enable KasmVNC Keyboard Shortcuts"
+msgstr "Povolit klávesové zkratky KasmVNC"
+
+msgid "1 - Toggle Control Panel"
+msgstr "1 - Přepnout ovládací panel"
+
+msgid "2 - Toggle Game Pointer Mode"
+msgstr "2 - Přepnout režim ukazatele hry"
+
+msgid "3 - Toggle Pointer Lock"
+msgstr "3 - Přepnout zámek ukazatele"
+
+msgid "Stream Quality"
+msgstr "Kvalita streamu"
+
+msgid "Preset Modes:"
+msgstr "Přednastavené režimy:"
+
+msgid "Static"
+msgstr "Statický"
+
+msgid "Low"
+msgstr "Nízký"
+
+msgid "Medium"
+msgstr "Střední"
+
+msgid "High"
+msgstr "Vysoký"
+
+msgid "Extreme"
+msgstr "Extrémní"
+
+msgid "Lossless"
+msgstr "bezeztrátový"
+
+msgid "Custom"
+msgstr "Zvyk"
+
+msgid "Anti-Aliasing:"
+msgstr "Anti aliasing:"
+
+msgid "Auto Dynamic"
+msgstr "Auto Dynamic"
+
+msgid "Off"
+msgstr "Vypnuto"
+
+msgid "On"
+msgstr "Na"
+
+msgid "Dynamic Quality Min:"
+msgstr "Minimální dynamická kvalita:"
+
+msgid "Dynamic Quality Max:"
+msgstr "Dynamická kvalita Max:"
+
+msgid "Treat Lossless:"
+msgstr "Zacházet bez ztráty:"
+
+msgid "Frame Rate:"
+msgstr "Snímková frekvence:"
+
+msgid "Video JPEG Quality:"
+msgstr "Kvalita videa JPEG:"
+
+msgid "Video WEBP Quality:"
+msgstr "Video WEBP kvalita:"
+
+msgid "Video Area:"
+msgstr "Oblast videa:"
+
+msgid "Video Time:"
+msgstr "Čas videa:"
+
+msgid "Video Out Time:"
+msgstr "Doba výstupu videa:"
+
+msgid "Video Mode Width:"
+msgstr "Šířka režimu videa:"
+
+msgid "Video Mode Height:"
+msgstr "Výška režimu videa:"
+
+msgid "Documentation"
+msgstr "Dokumentace"
+
+msgid "Drag Viewport"
+msgstr "Přetáhnout výřez"
+
+msgid "KasmVNC encountered an error:"
+msgstr "KasmVNC narazil na chybu:"

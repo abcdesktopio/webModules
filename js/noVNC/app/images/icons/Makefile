@@ -1,42 +1,42 @@
-BROWSER_SIZES := 16 24 32 48 64
-#ANDROID_SIZES := 72 96 144 192
-# FIXME: The ICO is limited to 8 icons due to a Chrome bug:
-#        https://bugs.chromium.org/p/chromium/issues/detail?id=1381393
-ANDROID_SIZES := 96 144 192
-WEB_ICON_SIZES := $(BROWSER_SIZES) $(ANDROID_SIZES)
+ICONS := \
+	368_kasm_logo_only_16x16.png \
+	368_kasm_logo_only_24x24.png \
+	368_kasm_logo_only_32x32.png \
+	368_kasm_logo_only_48x48.png \
+	368_kasm_logo_only_64x64.png
 
-#IOS_1X_SIZES := 20 29 40 76 # No such devices exist anymore
-IOS_2X_SIZES := 40 58 80 120 152 167
-IOS_3X_SIZES := 60 87 120 180
-ALL_IOS_SIZES := $(IOS_1X_SIZES) $(IOS_2X_SIZES) $(IOS_3X_SIZES)
+ANDROID_LAUNCHER := \
+	368_kasm_logo_only_48x48.png \
+	368_kasm_logo_only_-72x72.png \
+	368_kasm_logo_only_96x96.png \
+	368_kasm_logo_only_144x144.png \
+	368_kasm_logo_only_192x192.png
 
-ALL_ICONS := \
-	$(ALL_IOS_SIZES:%=novnc-ios-%.png) \
-	novnc.ico
+IPHONE_LAUNCHER := \
+	368_kasm_logo_only_60x60.png \
+	368_kasm_logo_only_120x120.png
+
+IPAD_LAUNCHER := \
+	368_kasm_logo_only_76x76.png \
+	368_kasm_logo_only_152x152.png
+
+ALL_ICONS := $(ICONS) $(ANDROID_LAUNCHER) $(IPHONE_LAUNCHER) $(IPAD_LAUNCHER)
 
 all: $(ALL_ICONS)
 
-# Our testing shows that the ICO file need to be sorted in largest to
-# smallest to get the apporpriate behviour
-WEB_ICON_SIZES_REVERSE := $(shell echo $(WEB_ICON_SIZES) | tr ' ' '\n' | sort -nr | tr '\n' ' ')
-WEB_BASE_ICONS := $(WEB_ICON_SIZES_REVERSE:%=novnc-%.png)
-.INTERMEDIATE: $(WEB_BASE_ICONS)
+368_kasm_logo_only_16x16.png: kasm-icon-sm.svg
+	convert -density 90 \
+		-background transparent "$<" "$@"
+368_kasm_logo_only_24x24.png: kasm-icon-sm.svg
+	convert -density 135 \
+		-background transparent "$<" "$@"
+368_kasm_logo_only_32x32.png: kasm-icon-sm.svg
+	convert -density 180 \
+		-background transparent "$<" "$@"
 
-novnc.ico: $(WEB_BASE_ICONS)
-	convert $(WEB_BASE_ICONS) "$@"
-
-# General conversion
-novnc-%.png: novnc-icon.svg
-	convert -depth 8 -background transparent \
-		-size $*x$* "$(lastword $^)" "$@"
-
-# iOS icons use their own SVG
-novnc-ios-%.png: novnc-ios-icon.svg
-	convert -depth 8 -background transparent \
-		-size $*x$* "$(lastword $^)" "$@"
-
-# The smallest sizes are generated using a different SVG
-novnc-16.png novnc-24.png novnc-32.png: novnc-icon-sm.svg
+368_kasm_logo_only_%.png: kasm-icon.svg
+	convert -density $$[`echo $* | cut -d x -f 1` * 90 / 48] \
+		-background transparent "$<" "$@"
 
 clean:
 	rm -f *.png

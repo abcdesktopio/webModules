@@ -71,9 +71,6 @@ msgid "Credentials are required"
 msgstr "Credenciais são obrigatórias"
 
 #: ../vnc.html:61
-msgid "noVNC encountered an error:"
-msgstr "O noVNC encontrou um erro:"
-
 #: ../vnc.html:71
 msgid "Hide/Show the control bar"
 msgstr "Esconder/mostrar a barra de controles"
@@ -297,3 +294,150 @@ msgstr "Enviar credenciais"
 #: ../vnc.html:295
 msgid "Cancel"
 msgstr "Cancelar"
+
+msgid "Keys"
+msgstr "Chaves"
+
+msgid "Game Cursor Mode"
+msgstr "Modo cursor do jogo"
+
+msgid "Press Esc Key to Exit Pointer Lock Mode"
+msgstr "Pressione a tecla Esc para sair do modo de bloqueio do ponteiro"
+
+msgid "Game Mode paused, click on screen to resume Game Mode."
+msgstr "Modo de jogo pausado, clique na tela para retomar o modo de jogo."
+
+msgid "Clipboard Up"
+msgstr "Área de transferência para cima"
+
+msgid "CLipboard Down"
+msgstr "Área de transferência para baixo"
+
+msgid "Clipboard Seamless"
+msgstr "Área de transferência perfeita"
+
+msgid "Prefer Local Cursor"
+msgstr "Preferir Cursor Local"
+
+msgid "Translate keyboard shortcuts"
+msgstr "Traduzir atalhos de teclado"
+
+msgid "Enable WebRTC UDP Transit"
+msgstr "Ativar trânsito UDP WebRTC"
+
+msgid "Enable WebP Compression"
+msgstr "Ativar compactação WebP"
+
+msgid "Enable Performance Stats"
+msgstr "Ativar estatísticas de desempenho"
+
+msgid "Enable Pointer Lock"
+msgstr "Ativar bloqueio do ponteiro"
+
+msgid "IME Input Mode"
+msgstr "Modo de entrada IME"
+
+msgid "Show Virtual Keyboard Control"
+msgstr "Mostrar controle de teclado virtual"
+
+msgid "Toggle Control Panel via Keystrokes"
+msgstr "Alternar painel de controle por meio de teclas"
+
+msgid "Render Native Resolution"
+msgstr "Renderizar resolução nativa"
+
+msgid "Keyboard Shortcuts"
+msgstr "Atalhos do teclado"
+
+msgid "Enable KasmVNC Keyboard Shortcuts"
+msgstr "Ativar atalhos de teclado KasmVNC"
+
+msgid "1 - Toggle Control Panel"
+msgstr "1 - Alternar painel de controle"
+
+msgid "2 - Toggle Game Pointer Mode"
+msgstr "2 - Alternar modo de ponteiro de jogo"
+
+msgid "3 - Toggle Pointer Lock"
+msgstr "3 - Alternar bloqueio do ponteiro"
+
+msgid "Stream Quality"
+msgstr "Qualidade da Transmissão"
+
+msgid "Preset Modes:"
+msgstr "Modos predefinidos:"
+
+msgid "Static"
+msgstr "Estático"
+
+msgid "Low"
+msgstr "Baixo"
+
+msgid "Medium"
+msgstr "Médio"
+
+msgid "High"
+msgstr "Alto"
+
+msgid "Extreme"
+msgstr "Extremo"
+
+msgid "Lossless"
+msgstr "Sem perdas"
+
+msgid "Custom"
+msgstr "Personalizado"
+
+msgid "Anti-Aliasing:"
+msgstr "Anti-Aliasing:"
+
+msgid "Auto Dynamic"
+msgstr "Auto Dinâmico"
+
+msgid "Off"
+msgstr "Desligado"
+
+msgid "On"
+msgstr "Sobre"
+
+msgid "Dynamic Quality Min:"
+msgstr "Qualidade dinâmica mínima:"
+
+msgid "Dynamic Quality Max:"
+msgstr "Qualidade dinâmica máxima:"
+
+msgid "Treat Lossless:"
+msgstr "Trate sem perdas:"
+
+msgid "Frame Rate:"
+msgstr "Taxa de quadros:"
+
+msgid "Video JPEG Quality:"
+msgstr "Qualidade JPEG de vídeo:"
+
+msgid "Video WEBP Quality:"
+msgstr "Qualidade WEBP de vídeo:"
+
+msgid "Video Area:"
+msgstr "Área de vídeo:"
+
+msgid "Video Time:"
+msgstr "Tempo do vídeo:"
+
+msgid "Video Out Time:"
+msgstr "Tempo de saída do vídeo:"
+
+msgid "Video Mode Width:"
+msgstr "Largura do modo de vídeo:"
+
+msgid "Video Mode Height:"
+msgstr "Altura do modo de vídeo:"
+
+msgid "Documentation"
+msgstr "Documentação"
+
+msgid "Drag Viewport"
+msgstr "Arrastar janela de visualização"
+
+msgid "KasmVNC encountered an error:"
+msgstr "KasmVNC encontrou um erro:"

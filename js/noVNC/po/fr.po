@@ -1,300 +1,354 @@
-# French translations for noVNC package
-# Traductions françaises du paquet noVNC.
-# Copyright (C) 2021 The noVNC Authors
-# This file is distributed under the same license as the noVNC package.
-# Jose <jose.matsuda@canada.ca>, 2021.
-# Lowxorx <lowxorx@lahan.fr>, 2022.
-#
-msgid ""
-msgstr ""
-"Project-Id-Version: noVNC 1.2.0\n"
-"Report-Msgid-Bugs-To: novnc@googlegroups.com\n"
-"POT-Creation-Date: 2020-07-03 16:11+0200\n"
-"PO-Revision-Date: 2022-04-25 23:40+0200\n"
-"Last-Translator: Lowxorx <lowxorx@lahan.fr>\n"
-"Language-Team: French\n"
-"Language: fr\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../app/ui.js:394
 msgid "Connecting..."
-msgstr "En cours de connexion..."
+msgstr "De liaison..."
 
-#: ../app/ui.js:401
 msgid "Disconnecting..."
-msgstr "Déconnexion en cours..."
+msgstr "Déconnexion..."
 
-#: ../app/ui.js:407
 msgid "Reconnecting..."
-msgstr "Reconnexion en cours..."
+msgstr "Reconnexion..."
 
-#: ../app/ui.js:412
 msgid "Internal error"
 msgstr "Erreur interne"
 
-#: ../app/ui.js:1008
 msgid "Must set host"
 msgstr "Doit définir l'hôte"
 
-#: ../app/ui.js:1090
 msgid "Connected (encrypted) to "
-msgstr "Connecté (chiffré) à "
+msgstr "Connecté (crypté) à"
 
-#: ../app/ui.js:1092
 msgid "Connected (unencrypted) to "
-msgstr "Connecté (non chiffré) à "
+msgstr "Connecté (non crypté) à"
 
-#: ../app/ui.js:1115
 msgid "Something went wrong, connection is closed"
-msgstr "Quelque chose s'est mal passé, la connexion a été fermée"
+msgstr "Quelque chose s'est mal passé, la connexion est fermée"
 
-#: ../app/ui.js:1118
 msgid "Failed to connect to server"
 msgstr "Échec de connexion au serveur"
 
-#: ../app/ui.js:1128
 msgid "Disconnected"
-msgstr "Déconnecté"
+msgstr "Débranché"
 
-#: ../app/ui.js:1143
 msgid "New connection has been rejected with reason: "
-msgstr "Une nouvelle connexion a été rejetée avec motif : "
+msgstr "La nouvelle connexion a été rejetée avec raison : "
 
-#: ../app/ui.js:1146
 msgid "New connection has been rejected"
-msgstr "Une nouvelle connexion a été rejetée"
+msgstr "La nouvelle connexion a été rejetée"
 
-#: ../app/ui.js:1181
 msgid "Credentials are required"
-msgstr "Les identifiants sont requis"
+msgstr "Les justificatifs sont obligatoires"
 
-#: ../vnc.html:74
-msgid "noVNC encountered an error:"
-msgstr "noVNC a rencontré une erreur :"
-
-#: ../vnc.html:84
 msgid "Hide/Show the control bar"
 msgstr "Masquer/Afficher la barre de contrôle"
 
-#: ../vnc.html:91
 msgid "Drag"
-msgstr "Faire glisser"
+msgstr "Glisser"
 
-#: ../vnc.html:91
 msgid "Move/Drag Viewport"
-msgstr "Déplacer/faire glisser le Viewport"
+msgstr "Déplacer/faire glisser la fenêtre"
 
-#: ../vnc.html:97
 msgid "Keyboard"
 msgstr "Clavier"
 
-#: ../vnc.html:97
 msgid "Show Keyboard"
 msgstr "Afficher le clavier"
 
-#: ../vnc.html:102
 msgid "Extra keys"
-msgstr "Touches supplémentaires"
+msgstr "Clés supplémentaires"
 
-#: ../vnc.html:102
 msgid "Show Extra Keys"
-msgstr "Afficher les touches supplémentaires"
+msgstr "Afficher les clés supplémentaires"
 
-#: ../vnc.html:107
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: ../vnc.html:107
 msgid "Toggle Ctrl"
 msgstr "Basculer Ctrl"
 
-#: ../vnc.html:110
 msgid "Alt"
 msgstr "Alt"
 
-#: ../vnc.html:110
 msgid "Toggle Alt"
 msgstr "Basculer Alt"
 
-#: ../vnc.html:113
 msgid "Toggle Windows"
-msgstr "Basculer Windows"
+msgstr "Basculer les fenêtres"
 
-#: ../vnc.html:113
 msgid "Windows"
-msgstr "Windows"
+msgstr "Les fenêtres"
 
-#: ../vnc.html:116
 msgid "Send Tab"
-msgstr "Envoyer l'onglet"
+msgstr "Onglet Envoyer"
 
-#: ../vnc.html:116
 msgid "Tab"
-msgstr "l'onglet"
+msgstr "Languette"
 
-#: ../vnc.html:119
 msgid "Esc"
 msgstr "Esc"
 
-#: ../vnc.html:119
 msgid "Send Escape"
-msgstr "Envoyer Escape"
+msgstr "Envoyer l'évasion"
 
-#: ../vnc.html:122
 msgid "Ctrl+Alt+Del"
-msgstr "Ctrl+Alt+Del"
+msgstr "Ctrl+Alt+Suppr"
 
-#: ../vnc.html:122
 msgid "Send Ctrl-Alt-Del"
-msgstr "Envoyer Ctrl-Alt-Del"
+msgstr "Envoyer Ctrl-Alt-Suppr"
 
-#: ../vnc.html:129
 msgid "Shutdown/Reboot"
 msgstr "Arrêter/Redémarrer"
 
-#: ../vnc.html:129
 msgid "Shutdown/Reboot..."
-msgstr "Arrêter/Redémarrer..."
+msgstr "Arrêt/Redémarrage..."
 
-#: ../vnc.html:135
 msgid "Power"
-msgstr "Alimentation"
+msgstr "Pouvoir"
 
-#: ../vnc.html:137
 msgid "Shutdown"
-msgstr "Arrêter"
+msgstr "Fermer"
 
-#: ../vnc.html:138
 msgid "Reboot"
 msgstr "Redémarrer"
 
-#: ../vnc.html:139
 msgid "Reset"
 msgstr "Réinitialiser"
 
-#: ../vnc.html:144 ../vnc.html:150
 msgid "Clipboard"
 msgstr "Presse-papiers"
 
-#: ../vnc.html:154
 msgid "Clear"
-msgstr "Effacer"
+msgstr "Clair"
 
-#: ../vnc.html:160
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: ../vnc.html:165 ../vnc.html:172
 msgid "Settings"
 msgstr "Paramètres"
 
-#: ../vnc.html:175
 msgid "Shared Mode"
 msgstr "Mode partagé"
 
-#: ../vnc.html:178
 msgid "View Only"
-msgstr "Afficher uniquement"
+msgstr "Affichage uniquement"
 
-#: ../vnc.html:182
 msgid "Clip to Window"
-msgstr "Clip à fenêtre"
+msgstr "Clip à la fenêtre"
 
-#: ../vnc.html:185
 msgid "Scaling Mode:"
-msgstr "Mode mise à l'échelle :"
+msgstr "Mode de mise à l'échelle :"
 
-#: ../vnc.html:187
 msgid "None"
 msgstr "Aucun"
 
-#: ../vnc.html:188
 msgid "Local Scaling"
-msgstr "Mise à l'échelle locale"
+msgstr " Mise à l'échelle locale "
 
-#: ../vnc.html:189
 msgid "Remote Resizing"
 msgstr "Redimensionnement à distance"
 
-#: ../vnc.html:194
 msgid "Advanced"
 msgstr "Avancé"
 
-#: ../vnc.html:197
 msgid "Quality:"
-msgstr "Qualité :"
+msgstr "Qualité:"
 
-#: ../vnc.html:201
 msgid "Compression level:"
-msgstr "Niveau de compression :"
+msgstr "Niveau de compression :"
 
-#: ../vnc.html:206
 msgid "Repeater ID:"
-msgstr "ID Répéteur :"
+msgstr "Identifiant du répéteur :"
 
-#: ../vnc.html:210
 msgid "WebSocket"
 msgstr "WebSocket"
 
-#: ../vnc.html:213
 msgid "Encrypt"
-msgstr "Chiffrer"
+msgstr "Crypter"
 
-#: ../vnc.html:216
 msgid "Host:"
-msgstr "Hôte :"
+msgstr "Héberger:"
 
-#: ../vnc.html:220
 msgid "Port:"
-msgstr "Port :"
+msgstr "Port:"
 
-#: ../vnc.html:224
 msgid "Path:"
-msgstr "Chemin :"
+msgstr "Chemin:"
 
-#: ../vnc.html:231
 msgid "Automatic Reconnect"
-msgstr "Reconnecter automatiquemen"
+msgstr "Reconnexion automatique"
 
-#: ../vnc.html:234
 msgid "Reconnect Delay (ms):"
-msgstr "Délai de reconnexion (ms) :"
+msgstr "Délai de reconnexion (ms) :"
 
-#: ../vnc.html:239
 msgid "Show Dot when No Cursor"
 msgstr "Afficher le point lorsqu'il n'y a pas de curseur"
 
-#: ../vnc.html:244
 msgid "Logging:"
-msgstr "Se connecter :"
+msgstr "Enregistrement:"
 
-#: ../vnc.html:253
 msgid "Version:"
-msgstr "Version :"
+msgstr "Version:"
 
-#: ../vnc.html:261
 msgid "Disconnect"
 msgstr "Déconnecter"
 
-#: ../vnc.html:280
 msgid "Connect"
 msgstr "Connecter"
 
-#: ../vnc.html:290
 msgid "Username:"
-msgstr "Nom d'utilisateur :"
+msgstr "Nom d'utilisateur:"
 
-#: ../vnc.html:294
 msgid "Password:"
-msgstr "Mot de passe :"
+msgstr "Mot de passe:"
 
-#: ../vnc.html:298
 msgid "Send Credentials"
 msgstr "Envoyer les identifiants"
 
-#: ../vnc.html:308
 msgid "Cancel"
 msgstr "Annuler"
+
+msgid "Keys"
+msgstr "Clés"
+
+msgid "Game Cursor Mode"
+msgstr "Mode curseur de jeu"
+
+msgid "Press Esc Key to Exit Pointer Lock Mode"
+msgstr "Appuyez sur la touche Échap pour quitter le mode de verrouillage du pointeur"
+
+msgid "Game Mode paused, click on screen to resume Game Mode."
+msgstr "Mode jeu en pause, cliquez sur l'écran pour reprendre le mode jeu."
+
+msgid "Clipboard Up"
+msgstr "Presse-papiers vers le haut"
+
+msgid "CLipboard Down"
+msgstr "Bloc-notes vers le bas"
+
+msgid "Clipboard Seamless"
+msgstr "Presse-papiers sans couture"
+
+msgid "Prefer Local Cursor"
+msgstr "Préférez le curseur local"
+
+msgid "Translate keyboard shortcuts"
+msgstr "Traduire les raccourcis clavier"
+
+msgid "Enable WebRTC UDP Transit"
+msgstr "Activer le transit WebRTC UDP"
+
+msgid "Enable WebP Compression"
+msgstr "Activer la compression WebP"
+
+msgid "Enable Performance Stats"
+msgstr "Activer les statistiques de performances"
+
+msgid "Enable Pointer Lock"
+msgstr "Activer le verrouillage du pointeur"
+
+msgid "IME Input Mode"
+msgstr "Mode d'entrée IME"
+
+msgid "Show Virtual Keyboard Control"
+msgstr "Afficher le contrôle du clavier virtuel"
+
+msgid "Toggle Control Panel via Keystrokes"
+msgstr "Basculer le panneau de configuration via les frappes"
+
+msgid "Render Native Resolution"
+msgstr "Rendre la résolution native"
+
+msgid "Keyboard Shortcuts"
+msgstr "Raccourcis clavier"
+
+msgid "Enable KasmVNC Keyboard Shortcuts"
+msgstr "Activer les raccourcis clavier KasmVNC"
+
+msgid "1 - Toggle Control Panel"
+msgstr "1 - Basculer le panneau de configuration"
+
+msgid "2 - Toggle Game Pointer Mode"
+msgstr "2 - Basculer le mode pointeur de jeu"
+
+msgid "3 - Toggle Pointer Lock"
+msgstr "3 - Basculer le verrouillage du pointeur"
+
+msgid "Stream Quality"
+msgstr "Qualité du flux"
+
+msgid "Preset Modes:"
+msgstr "Modes prédéfinis :"
+
+msgid "Static"
+msgstr "Statique"
+
+msgid "Low"
+msgstr "Faible"
+
+msgid "Medium"
+msgstr "Moyen"
+
+msgid "High"
+msgstr "Haut"
+
+msgid "Extreme"
+msgstr "Extrême"
+
+msgid "Lossless"
+msgstr "Sans perte"
+
+msgid "Custom"
+msgstr "Coutume"
+
+msgid "Anti-Aliasing:"
+msgstr "Anti crénelage:"
+
+msgid "Auto Dynamic"
+msgstr "Dynamique automatique"
+
+msgid "Off"
+msgstr "Désactivé"
+
+msgid "On"
+msgstr "Sur"
+
+msgid "Dynamic Quality Min:"
+msgstr "Qualité dynamique min :"
+
+msgid "Dynamic Quality Max:"
+msgstr "Qualité dynamique max :"
+
+msgid "Treat Lossless:"
+msgstr "Traiter sans perte :"
+
+msgid "Frame Rate:"
+msgstr "Fréquence d'images :"
+
+msgid "Video JPEG Quality:"
+msgstr "Qualité JPEG vidéo :"
+
+msgid "Video WEBP Quality:"
+msgstr "Qualité WEBP de la vidéo :"
+
+msgid "Video Area:"
+msgstr "Zone vidéo :"
+
+msgid "Video Time:"
+msgstr "Heure de la vidéo :"
+
+msgid "Video Out Time:"
+msgstr "Temps de sortie vidéo :"
+
+msgid "Video Mode Width:"
+msgstr "Largeur du mode vidéo :"
+
+msgid "Video Mode Height:"
+msgstr "Hauteur du mode vidéo :"
+
+msgid "Documentation"
+msgstr "Documentation"
+
+msgid "Drag Viewport"
+msgstr "Faire glisser la fenêtre"
+
+msgid "KasmVNC encountered an error:"
+msgstr "KasmVNC a rencontré une erreur :"

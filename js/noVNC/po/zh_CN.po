@@ -15,77 +15,90 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../app/ui.js:430
+#: ../app/ui.js:395
 msgid "Connecting..."
 msgstr "连接中..."
 
-#: ../app/ui.js:438
-msgid "Connected (encrypted) to "
-msgstr "已连接（已加密）到"
-
-#: ../app/ui.js:440
-msgid "Connected (unencrypted) to "
-msgstr "已连接（未加密）到"
-
-#: ../app/ui.js:446
+#: ../app/ui.js:402
 msgid "Disconnecting..."
 msgstr "正在断开连接..."
 
-#: ../app/ui.js:450
-msgid "Disconnected"
-msgstr "已断开连接"
-
-#: ../app/ui.js:1052 ../core/rfb.js:248
-msgid "Must set host"
-msgstr "必须设置主机"
-
-#: ../app/ui.js:1101
+#: ../app/ui.js:408
 msgid "Reconnecting..."
 msgstr "重新连接中..."
 
-#: ../app/ui.js:1140
+#: ../app/ui.js:413
+msgid "Internal error"
+msgstr "内部错误"
+
+#: ../app/ui.js:1015
+msgid "Must set host"
+msgstr "请提供主机名"
+
+#: ../app/ui.js:1097
+msgid "Connected (encrypted) to "
+msgstr "已连接到（加密）"
+
+#: ../app/ui.js:1099
+msgid "Connected (unencrypted) to "
+msgstr "已连接到（未加密）"
+
+#: ../app/ui.js:1120
+msgid "Something went wrong, connection is closed"
+msgstr "发生错误，连接已关闭"
+
+#: ../app/ui.js:1123
+msgid "Failed to connect to server"
+msgstr "无法连接到服务器"
+
+#: ../app/ui.js:1133
+msgid "Disconnected"
+msgstr "已断开连接"
+
+#: ../app/ui.js:1146
+msgid "New connection has been rejected with reason: "
+msgstr "连接被拒绝，原因："
+
+#: ../app/ui.js:1149
+msgid "New connection has been rejected"
+msgstr "连接被拒绝"
+
+#: ../app/ui.js:1170
 msgid "Password is required"
 msgstr "请提供密码"
 
-#: ../core/rfb.js:548
-msgid "Disconnect timeout"
-msgstr "超时断开"
-
 #: ../vnc.html:89
-msgid "noVNC encountered an error:"
-msgstr "noVNC 遇到一个错误："
-
 #: ../vnc.html:99
 msgid "Hide/Show the control bar"
 msgstr "显示/隐藏控制栏"
 
 #: ../vnc.html:106
 msgid "Move/Drag Viewport"
-msgstr "移动/拖动窗口"
+msgstr "拖放显示范围"
 
 #: ../vnc.html:106
 msgid "viewport drag"
-msgstr "窗口拖动"
+msgstr "显示范围拖放"
 
 #: ../vnc.html:112 ../vnc.html:115 ../vnc.html:118 ../vnc.html:121
 msgid "Active Mouse Button"
-msgstr "启动鼠标按键"
+msgstr "启动鼠标按鍵"
 
 #: ../vnc.html:112
 msgid "No mousebutton"
-msgstr "禁用鼠标按键"
+msgstr "禁用鼠标按鍵"
 
 #: ../vnc.html:115
 msgid "Left mousebutton"
-msgstr "鼠标左键"
+msgstr "鼠标左鍵"
 
 #: ../vnc.html:118
 msgid "Middle mousebutton"
-msgstr "鼠标中键"
+msgstr "鼠标中鍵"
 
 #: ../vnc.html:121
 msgid "Right mousebutton"
-msgstr "鼠标右键"
+msgstr "鼠标右鍵"
 
 #: ../vnc.html:124
 msgid "Keyboard"
@@ -110,10 +123,6 @@ msgstr "Ctrl"
 #: ../vnc.html:136
 msgid "Toggle Ctrl"
 msgstr "切换 Ctrl"
-
-#: ../vnc.html:136
-msgid "Edit clipboard content in the textarea below."
-msgstr "在下面的文本区域中编辑剪贴板内容。"
 
 #: ../vnc.html:139
 msgid "Alt"
@@ -141,19 +150,19 @@ msgstr "发送 Escape 键"
 
 #: ../vnc.html:148
 msgid "Ctrl+Alt+Del"
-msgstr "Ctrl+Alt+Del"
+msgstr "Ctrl-Alt-Del"
 
 #: ../vnc.html:148
 msgid "Send Ctrl-Alt-Del"
-msgstr "发送 Ctrl+Alt+Del 键"
+msgstr "发送 Ctrl-Alt-Del 键"
 
 #: ../vnc.html:156
 msgid "Shutdown/Reboot"
-msgstr "关机/重启"
+msgstr "关机/重新启动"
 
 #: ../vnc.html:156
 msgid "Shutdown/Reboot..."
-msgstr "关机/重启..."
+msgstr "关机/重新启动..."
 
 #: ../vnc.html:162
 msgid "Power"
@@ -165,7 +174,7 @@ msgstr "关机"
 
 #: ../vnc.html:165
 msgid "Reboot"
-msgstr "重启"
+msgstr "重新启动"
 
 #: ../vnc.html:166
 msgid "Reset"
@@ -186,10 +195,6 @@ msgstr "全屏"
 #: ../vnc.html:192 ../vnc.html:199
 msgid "Settings"
 msgstr "设置"
-
-#: ../vnc.html:200
-msgid "Encrypt"
-msgstr "加密"
 
 #: ../vnc.html:202
 msgid "Shared Mode"
@@ -216,69 +221,238 @@ msgid "Local Scaling"
 msgstr "本地缩放"
 
 #: ../vnc.html:216
-msgid "Local Downscaling"
-msgstr "降低本地尺寸"
-
-#: ../vnc.html:217
 msgid "Remote Resizing"
 msgstr "远程调整大小"
 
-#: ../vnc.html:222
+#: ../vnc.html:221
 msgid "Advanced"
 msgstr "高级"
 
-#: ../vnc.html:225
-msgid "Local Cursor"
-msgstr "本地光标"
-
-#: ../vnc.html:229
+#: ../vnc.html:224
 msgid "Repeater ID:"
 msgstr "中继站 ID"
 
-#: ../vnc.html:233
+#: ../vnc.html:228
 msgid "WebSocket"
 msgstr "WebSocket"
 
-#: ../vnc.html:239
+#: ../vnc.html:231
+msgid "Encrypt"
+msgstr "加密"
+
+#: ../vnc.html:234
 msgid "Host:"
 msgstr "主机："
 
-#: ../vnc.html:243
+#: ../vnc.html:238
 msgid "Port:"
 msgstr "端口："
 
-#: ../vnc.html:247
+#: ../vnc.html:242
 msgid "Path:"
 msgstr "路径："
 
-#: ../vnc.html:254
+#: ../vnc.html:249
 msgid "Automatic Reconnect"
 msgstr "自动重新连接"
 
-#: ../vnc.html:257
+#: ../vnc.html:252
 msgid "Reconnect Delay (ms):"
 msgstr "重新连接间隔 (ms)："
 
-#: ../vnc.html:263
+#: ../vnc.html:258
 msgid "Logging:"
 msgstr "日志级别："
 
-#: ../vnc.html:275
+#: ../vnc.html:270
 msgid "Disconnect"
-msgstr "断开连接"
+msgstr "中断连接"
 
-#: ../vnc.html:294
+#: ../vnc.html:289
 msgid "Connect"
 msgstr "连接"
 
-#: ../vnc.html:304
+#: ../vnc.html:299
 msgid "Password:"
 msgstr "密码："
 
-#: ../vnc.html:318
+#: ../vnc.html:313
 msgid "Cancel"
 msgstr "取消"
 
-#: ../vnc.html:334
-msgid "Canvas not supported."
-msgstr "不支持 Canvas。"
+msgid "Credentials are required"
+msgstr "需要凭证"
+
+msgid "Drag"
+msgstr "拖"
+
+msgid "Toggle Windows"
+msgstr "切换 Windows"
+
+msgid "Windows"
+msgstr "Windows"
+
+msgid "Quality:"
+msgstr "质量："
+
+msgid "Compression level:"
+msgstr "压缩级别："
+
+msgid "Show Dot when No Cursor"
+msgstr "没有光标时显示点"
+
+msgid "Version:"
+msgstr "版本："
+
+msgid "Username:"
+msgstr "用户名："
+
+msgid "Send Credentials"
+msgstr "发送凭证"
+
+msgid "Keys"
+msgstr "按键"
+
+msgid "Game Cursor Mode"
+msgstr "游戏光标模式"
+
+msgid "Press Esc Key to Exit Pointer Lock Mode"
+msgstr "按 Esc 键退出指针锁定模式"
+
+msgid "Game Mode paused, click on screen to resume Game Mode."
+msgstr "游戏模式暂停，点击屏幕恢复游戏模式。"
+
+msgid "Clipboard Up"
+msgstr "向上剪贴板"
+
+msgid "Clipboard Down"
+msgstr "向下剪贴板"
+
+msgid "Clipboard Seamless"
+msgstr "无缝剪贴板"
+
+msgid "Prefer Local Cursor"
+msgstr "首选本地光标"
+
+msgid "Translate keyboard shortcuts"
+msgstr "翻译键盘快捷键"
+
+msgid "Enable WebRTC UDP Transit"
+msgstr "启用 WebRTC UDP 传输"
+
+msgid "Enable WebP Compression"
+msgstr "启用 WebP 压缩"
+
+msgid "Enable Performance Stats"
+msgstr "启用性能统计"
+
+msgid "Enable Pointer Lock"
+msgstr "启用指针锁定"
+
+msgid "IME Input Mode"
+msgstr "启用本地输入法"
+
+msgid "Show Virtual Keyboard Control"
+msgstr "显示虚拟键盘控制"
+
+msgid "Toggle Control Panel via Keystrokes"
+msgstr "通过击键切换控制面板"
+
+msgid "Render Native Resolution"
+msgstr "渲染本机分辨率"
+
+msgid "Keyboard Shortcuts"
+msgstr "键盘快捷键"
+
+msgid "Enable KasmVNC Keyboard Shortcuts"
+msgstr "启用 KasmVNC 键盘快捷键"
+
+msgid "1 - Toggle Control Panel"
+msgstr "1 - 切换控制面板"
+
+msgid "2 - Toggle Game Pointer Mode"
+msgstr "2 - 切换游戏指针模式"
+
+msgid "3 - Toggle Pointer Lock"
+msgstr "3 - 切换指针锁定"
+
+msgid "Stream Quality"
+msgstr "流媒体质量"
+
+msgid "Preset Modes:"
+msgstr "预设模式："
+
+msgid "Static"
+msgstr "静止的"
+
+msgid "Low"
+msgstr "低的"
+
+msgid "Medium"
+msgstr "中等的"
+
+msgid "High"
+msgstr "高的"
+
+msgid "Extreme"
+msgstr "极致"
+
+msgid "Lossless"
+msgstr "无损"
+
+msgid "Custom"
+msgstr "自定义"
+
+msgid "Anti-Aliasing:"
+msgstr "抗锯齿："
+
+msgid "Auto Dynamic"
+msgstr "自动动态"
+
+msgid "Off"
+msgstr "关闭"
+
+msgid "On"
+msgstr "开启"
+
+msgid "Dynamic Quality Min:"
+msgstr "最低动态质量："
+
+msgid "Dynamic Quality Max:"
+msgstr "最高动态质量："
+
+msgid "Treat Lossless:"
+msgstr "对待无损："
+
+msgid "Frame Rate:"
+msgstr "帧率："
+
+msgid "Video JPEG Quality:"
+msgstr "视频 JPEG 质量："
+
+msgid "Video WEBP Quality:"
+msgstr "视频 WEBP 质量："
+
+msgid "Video Area:"
+msgstr "视频区："
+
+msgid "Video Time:"
+msgstr "视频时间："
+
+msgid "Video Out Time:"
+msgstr "视频输出时间："
+
+msgid "Video Mode Width:"
+msgstr "视频模式宽度："
+
+msgid "Video Mode Height:"
+msgstr "视频模式高度："
+
+msgid "Documentation"
+msgstr "文档"
+
+msgid "Drag Viewport"
+msgstr "拖动视口"
+
+msgid "KasmVNC encountered an error:"
+msgstr "KasmVNC 遇到错误："

@@ -70,9 +70,6 @@ msgid "Password is required"
 msgstr "비밀번호가 필요합니다."
 
 #: ../vnc.html:91
-msgid "noVNC encountered an error:"
-msgstr "noVNC에 오류가 발생했습니다:"
-
 #: ../vnc.html:101
 msgid "Hide/Show the control bar"
 msgstr "컨트롤 바 숨기기/보이기"
@@ -288,3 +285,180 @@ msgstr "비밀번호 전송"
 #: ../vnc.html:315
 msgid "Cancel"
 msgstr "취소"
+
+msgid "Credentials are required"
+msgstr "\"자격 증명이 필요합니다\""
+
+msgid "Drag"
+msgstr "견인"
+
+msgid "Toggle Windows"
+msgstr "\"창 전환\""
+
+msgid "Windows"
+msgstr "창"
+
+msgid "Quality:"
+msgstr "\"품질:\""
+
+msgid "Compression level:"
+msgstr "압축 수준:"
+
+msgid "Show Dot when No Cursor"
+msgstr "\"커서가 없을 때 점 표시\""
+
+msgid "Version:"
+msgstr "버전:"
+
+msgid "Username:"
+msgstr "사용자 이름:"
+
+msgid "Send Credentials"
+msgstr "자격증명 보내기"
+
+msgid "Keys"
+msgstr "열쇠"
+
+msgid "Game Cursor Mode"
+msgstr "게임 커서 모드"
+
+msgid "Press Esc Key to Exit Pointer Lock Mode"
+msgstr "\"포인터 잠금 모드를 종료하려면 Esc 키를 누르십시오\""
+
+msgid "Game Mode paused, click on screen to resume Game Mode."
+msgstr "\"게임 모드가 일시 중지되었습니다. 게임 모드를 다시 시작하려면 화면을 클릭하십시오.\""
+
+msgid "Clipboard Up"
+msgstr "클립보드 위로"
+
+msgid "CLipboard Down"
+msgstr "클립보드 아래로"
+
+msgid "Clipboard Seamless"
+msgstr "\"클립보드 원활한\""
+
+msgid "Prefer Local Cursor"
+msgstr "\"로컬 커서 선호\""
+
+msgid "Translate keyboard shortcuts"
+msgstr "단축키 번역"
+
+msgid "Enable WebRTC UDP Transit"
+msgstr "\"WebRTC UDP 전송 활성화\""
+
+msgid "Enable WebP Compression"
+msgstr "\"WebP 압축 활성화\""
+
+msgid "Enable Performance Stats"
+msgstr "\"성능 통계 활성화\""
+
+msgid "Enable Pointer Lock"
+msgstr "\"포인터 잠금 활성화\""
+
+msgid "IME Input Mode"
+msgstr "IME 입력 모드"
+
+msgid "Show Virtual Keyboard Control"
+msgstr "\"가상 키보드 제어 표시\""
+
+msgid "Toggle Control Panel via Keystrokes"
+msgstr "\"키 입력을 통한 제어판 전환\""
+
+msgid "Render Native Resolution"
+msgstr "\"기본 해상도 렌더링\""
+
+msgid "Keyboard Shortcuts"
+msgstr "키보드 단축키"
+
+msgid "Enable KasmVNC Keyboard Shortcuts"
+msgstr "\"KasmVNC 키보드 단축키 활성화\""
+
+msgid "1 - Toggle Control Panel"
+msgstr "\"1 - 제어판 전환\""
+
+msgid "2 - Toggle Game Pointer Mode"
+msgstr "\"2 - 게임 포인터 모드 전환\""
+
+msgid "3 - Toggle Pointer Lock"
+msgstr "\"3 - 포인터 잠금 전환\""
+
+msgid "Stream Quality"
+msgstr "\"스트림 품질\""
+
+msgid "Preset Modes:"
+msgstr "사전 설정 모드:"
+
+msgid "Static"
+msgstr "공전"
+
+msgid "Low"
+msgstr "낮은"
+
+msgid "Medium"
+msgstr "중간"
+
+msgid "High"
+msgstr "높은"
+
+msgid "Extreme"
+msgstr "\"극심한\""
+
+msgid "Lossless"
+msgstr "무손실"
+
+msgid "Custom"
+msgstr "관습"
+
+msgid "Anti-Aliasing:"
+msgstr "안티 앨리어싱:"
+
+msgid "Auto Dynamic"
+msgstr "오토 다이내믹"
+
+msgid "Off"
+msgstr "끄다"
+
+msgid "On"
+msgstr "에"
+
+msgid "Dynamic Quality Min:"
+msgstr "\"최소 동적 품질:\""
+
+msgid "Dynamic Quality Max:"
+msgstr "\"동적 품질 최대:\""
+
+msgid "Treat Lossless:"
+msgstr "무손실 치료:"
+
+msgid "Frame Rate:"
+msgstr "\"프레임 속도:\""
+
+msgid "Video JPEG Quality:"
+msgstr "\"비디오 JPEG 품질:\""
+
+msgid "Video WEBP Quality:"
+msgstr "\"비디오 WEBP 품질:\""
+
+msgid "Video Area:"
+msgstr "비디오 영역:"
+
+msgid "Video Time:"
+msgstr "비디오 시간:"
+
+msgid "Video Out Time:"
+msgstr "비디오 종료 시간:"
+
+msgid "Video Mode Width:"
+msgstr "비디오 모드 너비:"
+
+msgid "Video Mode Height:"
+msgstr "비디오 모드 높이:"
+
+msgid "Documentation"
+msgstr "선적 서류 비치"
+
+msgid "Drag Viewport"
+msgstr "드래그 뷰포트"
+
+msgid "KasmVNC encountered an error:"
+msgstr "KasmVNC에 오류가 발생했습니다:"

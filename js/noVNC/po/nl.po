@@ -71,9 +71,6 @@ msgid "Password is required"
 msgstr "Wachtwoord is vereist"
 
 #: ../vnc.html:80
-msgid "noVNC encountered an error:"
-msgstr "noVNC heeft een fout bemerkt:"
-
 #: ../vnc.html:90
 msgid "Hide/Show the control bar"
 msgstr "Verberg/Toon de bedieningsbalk"
@@ -303,20 +300,188 @@ msgid "Cancel"
 msgstr "Annuleren"
 
 #~ msgid "Disconnect timeout"
-#~ msgstr "Timeout tijdens verbreken van verbinding"
+#~ msgstr """"""""""""Timeout tijdens verbreken van verbinding"
 
 #~ msgid "Local Downscaling"
-#~ msgstr "Lokaal Neerschalen"
+#~ msgstr """"""""""""Lokaal Neerschalen"
 
 #~ msgid "Local Cursor"
-#~ msgstr "Lokale Cursor"
+#~ msgstr """"""""""""Lokale Cursor"
 
 #~ msgid "Canvas not supported."
-#~ msgstr "Canvas wordt niet ondersteund."
+#~ msgstr """"""""""""Canvas wordt niet ondersteund."
 
 #~ msgid ""
 #~ "Forcing clipping mode since scrollbars aren't supported by IE in "
 #~ "fullscreen"
-#~ msgstr ""
+#~ msgstr """""""""""""
 #~ "''Clipping mode' ingeschakeld, omdat schuifbalken in volledige-scherm-"
 #~ "modus in IE niet worden ondersteund"
+
+msgid "Credentials are required"
+msgstr "Inloggegevens zijn vereist"
+
+msgid "Drag"
+msgstr "Sleuren"
+
+msgid "Quality:"
+msgstr "Kwaliteit:"
+
+msgid "Compression level:"
+msgstr "Compressieniveau:"
+
+msgid "Version:"
+msgstr "Versie:"
+
+msgid "Username:"
+msgstr "Gebruikersnaam:"
+
+msgid "Send Credentials"
+msgstr "Inloggegevens verzenden"
+
+msgid "Keys"
+msgstr "Sleutels"
+
+msgid "Game Cursor Mode"
+msgstr "Spelcursormodus"
+
+msgid "Press Esc Key to Exit Pointer Lock Mode"
+msgstr "Druk op de Esc-toets om de aanwijzervergrendelingsmodus af te sluiten"
+
+msgid "Game Mode paused, click on screen to resume Game Mode."
+msgstr "Spelmodus gepauzeerd, klik op het scherm om de spelmodus te hervatten."
+
+msgid "Clipboard Up"
+msgstr "Klembord omhoog"
+
+msgid "CLipboard Down"
+msgstr "Klembord naar beneden"
+
+msgid "Clipboard Seamless"
+msgstr "Klembord naadloos"
+
+msgid "Prefer Local Cursor"
+msgstr "Geef de voorkeur aan lokale cursor"
+
+msgid "Translate keyboard shortcuts"
+msgstr "Sneltoetsen vertalen"
+
+msgid "Enable WebRTC UDP Transit"
+msgstr "WebRTC UDP-transit inschakelen"
+
+msgid "Enable WebP Compression"
+msgstr "WebP-compressie inschakelen"
+
+msgid "Enable Performance Stats"
+msgstr "Prestatiestatistieken inschakelen"
+
+msgid "Enable Pointer Lock"
+msgstr "Aanwijzervergrendeling inschakelen"
+
+msgid "IME Input Mode"
+msgstr "IME-invoermodus"
+
+msgid "Show Virtual Keyboard Control"
+msgstr "Toon virtuele toetsenbordbediening"
+
+msgid "Toggle Control Panel via Keystrokes"
+msgstr "Toggle Configuratiescherm via toetsaanslagen"
+
+msgid "Render Native Resolution"
+msgstr "Native resolutie weergeven"
+
+msgid "Keyboard Shortcuts"
+msgstr "Toetsenbord sneltoetsen"
+
+msgid "Enable KasmVNC Keyboard Shortcuts"
+msgstr "KasmVNC-sneltoetsen inschakelen"
+
+msgid "1 - Toggle Control Panel"
+msgstr "1 - Configuratiescherm omschakelen"
+
+msgid "2 - Toggle Game Pointer Mode"
+msgstr "2 - Schakel Game Pointer-modus in"
+
+msgid "3 - Toggle Pointer Lock"
+msgstr "3 - Aanwijzervergrendeling in-/uitschakelen"
+
+msgid "Stream Quality"
+msgstr "Streamkwaliteit"
+
+msgid "Preset Modes:"
+msgstr "Vooraf ingestelde modi:"
+
+msgid "Static"
+msgstr "Statisch"
+
+msgid "Low"
+msgstr "Laag"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "High"
+msgstr "Hoog"
+
+msgid "Extreme"
+msgstr "Extreem"
+
+msgid "Lossless"
+msgstr "Verliesloos"
+
+msgid "Custom"
+msgstr "Aangepast"
+
+msgid "Anti-Aliasing:"
+msgstr "Anti-aliasing:"
+
+msgid "Auto Dynamic"
+msgstr "Auto Dynamisch"
+
+msgid "Off"
+msgstr "Uit"
+
+msgid "On"
+msgstr "Op"
+
+msgid "Dynamic Quality Min:"
+msgstr "Dynamische kwaliteit min:"
+
+msgid "Dynamic Quality Max:"
+msgstr "Dynamische kwaliteit max:"
+
+msgid "Treat Lossless:"
+msgstr "Behandel Lossless:"
+
+msgid "Frame Rate:"
+msgstr "Frame rate:"
+
+msgid "Video JPEG Quality:"
+msgstr "Video JPEG-kwaliteit:"
+
+msgid "Video WEBP Quality:"
+msgstr "Video WEBP-kwaliteit:"
+
+msgid "Video Area:"
+msgstr "Videogebied:"
+
+msgid "Video Time:"
+msgstr "Videotijd:"
+
+msgid "Video Out Time:"
+msgstr "Video uit tijd:"
+
+msgid "Video Mode Width:"
+msgstr "Breedte videomodus:"
+
+msgid "Video Mode Height:"
+msgstr "Hoogte videomodus:"
+
+msgid "Documentation"
+msgstr "Documentatie"
+
+msgid "Drag Viewport"
+msgstr "Sleep Viewport"
+
+msgid "KasmVNC encountered an error:"
+msgstr "KasmVNC heeft een fout aangetroffen:"

@@ -68,9 +68,6 @@ msgid "Password is required"
 msgstr "Passwort ist erforderlich"
 
 #: ../vnc.html:89
-msgid "noVNC encountered an error:"
-msgstr "Ein Fehler ist aufgetreten:"
-
 #: ../vnc.html:99
 msgid "Hide/Show the control bar"
 msgstr "Kontrollleiste verstecken/anzeigen"
@@ -288,16 +285,196 @@ msgid "Canvas not supported."
 msgstr "Canvas nicht unterstützt."
 
 #~ msgid "Disconnect timeout"
-#~ msgstr "Zeitüberschreitung beim Trennen"
+#~ msgstr """"""""""""Zeitüberschreitung beim Trennen"
 
 #~ msgid "Local Downscaling"
-#~ msgstr "Lokales herunterskalieren"
+#~ msgstr """"""""""""Lokales herunterskalieren"
 
 #~ msgid "Local Cursor"
-#~ msgstr "Lokaler Mauszeiger"
+#~ msgstr """"""""""""Lokaler Mauszeiger"
 
 #~ msgid "Forcing clipping mode since scrollbars aren't supported by IE in fullscreen"
-#~ msgstr "'Clipping-Modus' aktiviert, Scrollbalken in 'IE-Vollbildmodus' werden nicht unterstützt"
+#~ msgstr """"""""""""'Clipping-Modus' aktiviert, Scrollbalken in 'IE-Vollbildmodus' werden nicht unterstützt"
 
 #~ msgid "True Color"
-#~ msgstr "True Color"
+#~ msgstr """"""""""""True Color"
+
+msgid "Failed to connect to server"
+msgstr "Verbindung zum Server fehlgeschlagen"
+
+msgid "Credentials are required"
+msgstr "Anmeldeinformationen sind erforderlich"
+
+msgid "Drag"
+msgstr "Ziehen"
+
+msgid "Toggle Windows"
+msgstr "Fenster umschalten"
+
+msgid "Windows"
+msgstr "Fenster"
+
+msgid "Quality:"
+msgstr "Qualität:"
+
+msgid "Compression level:"
+msgstr "Komprimierungsstufe:"
+
+msgid "Show Dot when No Cursor"
+msgstr "Punkt anzeigen, wenn kein Cursor"
+
+msgid "Version:"
+msgstr "Ausführung:"
+
+msgid "Username:"
+msgstr "Nutzername:"
+
+msgid "Send Credentials"
+msgstr "Anmeldeinformationen senden"
+
+msgid "Keys"
+msgstr "Schlüssel"
+
+msgid "Game Cursor Mode"
+msgstr "Spiel-Cursor-Modus"
+
+msgid "Press Esc Key to Exit Pointer Lock Mode"
+msgstr "Drücken Sie die Esc-Taste, um den Zeigersperrmodus zu verlassen"
+
+msgid "Game Mode paused, click on screen to resume Game Mode."
+msgstr "Spielmodus angehalten, klicken Sie auf den Bildschirm, um den Spielmodus fortzusetzen."
+
+msgid "Clipboard Up"
+msgstr "Zwischenablage hoch"
+
+msgid "CLipboard Down"
+msgstr "Zwischenablage runter"
+
+msgid "Clipboard Seamless"
+msgstr "Zwischenablage nahtlos"
+
+msgid "Prefer Local Cursor"
+msgstr "Lokalen Cursor bevorzugen"
+
+msgid "Translate keyboard shortcuts"
+msgstr "Tastaturkürzel übersetzen"
+
+msgid "Enable WebRTC UDP Transit"
+msgstr "WebRTC UDP Transit aktivieren"
+
+msgid "Enable WebP Compression"
+msgstr "WebP-Komprimierung aktivieren"
+
+msgid "Enable Performance Stats"
+msgstr "Leistungsstatistik aktivieren"
+
+msgid "Enable Pointer Lock"
+msgstr "Zeigersperre aktivieren"
+
+msgid "IME Input Mode"
+msgstr "IME-Eingabemodus"
+
+msgid "Show Virtual Keyboard Control"
+msgstr "Steuerung der virtuellen Tastatur anzeigen"
+
+msgid "Toggle Control Panel via Keystrokes"
+msgstr "Systemsteuerung per Tastendruck umschalten"
+
+msgid "Render Native Resolution"
+msgstr "Native Auflösung rendern"
+
+msgid "Keyboard Shortcuts"
+msgstr "Tastatürkürzel"
+
+msgid "Enable KasmVNC Keyboard Shortcuts"
+msgstr "KasmVNC-Tastaturkürzel aktivieren"
+
+msgid "1 - Toggle Control Panel"
+msgstr "1 - Systemsteuerung umschalten"
+
+msgid "2 - Toggle Game Pointer Mode"
+msgstr "2 - Spielzeigermodus umschalten"
+
+msgid "3 - Toggle Pointer Lock"
+msgstr "3 - Zeigersperre umschalten"
+
+msgid "Stream Quality"
+msgstr "Streamqualität"
+
+msgid "Preset Modes:"
+msgstr "Voreingestellte Modi:"
+
+msgid "Static"
+msgstr "Statisch"
+
+msgid "Low"
+msgstr "Niedrig"
+
+msgid "Medium"
+msgstr "Mittel"
+
+msgid "High"
+msgstr "Hoch"
+
+msgid "Extreme"
+msgstr "Extrem"
+
+msgid "Lossless"
+msgstr "verlustfrei"
+
+msgid "Custom"
+msgstr "Brauch"
+
+msgid "Anti-Aliasing:"
+msgstr "Kantenglättung:"
+
+msgid "Auto Dynamic"
+msgstr "Auto-Dynamik"
+
+msgid "Off"
+msgstr "Aus"
+
+msgid "On"
+msgstr "An"
+
+msgid "Dynamic Quality Min:"
+msgstr "Dynamische Qualität Min.:"
+
+msgid "Dynamic Quality Max:"
+msgstr "Maximale dynamische Qualität:"
+
+msgid "Treat Lossless:"
+msgstr "Verlustlos behandeln:"
+
+msgid "Frame Rate:"
+msgstr "Bildrate:"
+
+msgid "Video JPEG Quality:"
+msgstr "Video-JPEG-Qualität:"
+
+msgid "Video WEBP Quality:"
+msgstr "Video-WEBP-Qualität:"
+
+msgid "Video Area:"
+msgstr "Videobereich:"
+
+msgid "Video Time:"
+msgstr "Videozeit:"
+
+msgid "Video Out Time:"
+msgstr "Video-Out-Zeit:"
+
+msgid "Video Mode Width:"
+msgstr "Breite des Videomodus:"
+
+msgid "Video Mode Height:"
+msgstr "Höhe im Videomodus:"
+
+msgid "Documentation"
+msgstr "Dokumentation"
+
+msgid "Drag Viewport"
+msgstr "Darstellungsfenster ziehen"
+
+msgid "KasmVNC encountered an error:"
+msgstr "KasmVNC hat einen Fehler festgestellt:"
