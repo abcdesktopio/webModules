@@ -30,6 +30,7 @@ import * as ocuaparser from './ocuaparser.js';
 import * as webshell from './webshell.js';
 import * as appSelector from './appSelector.js';
 import * as speaker from './speaker/main.js';
+import * as microphone  from './microphone/main.js';
 import * as whichBrowser from './which-browser.js';
 import * as screenRecord from './screenRecord.js';
 import * as menu from './menu.js';
@@ -190,7 +191,7 @@ window.od.setupafteruserloginin = function () {
   clipboard.init();
 
   // Create event listener on broadway connect and disconnect for VNC audio
-  // liveAudio.init();
+  microphone.init();
   speaker.init();
 
   quickSupport.init();
@@ -729,6 +730,12 @@ function setupTopMenu() {
       const volume = Number(this.value);
       speaker.updateVolume( volume );
     });
+
+  $('#top #top-right #microphone')
+    .on('click', function () {
+      microphone.updateState();
+    });
+
 
   $('#placement').click(() => {
     launcher.placeAllWindows();
