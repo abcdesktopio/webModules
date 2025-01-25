@@ -86,7 +86,7 @@ export default function BroadwayVNC() {
      */
   this.syncClipBoardtoAbcDesktop = function (clipBoardTextData) {
     if (clipBoardTextData) {
-      console.log(`syncClipBoardtoAbcDesktop: send data to VNC clipboard ${clipBoardTextData}`);
+      // console.log(`syncClipBoardtoAbcDesktop: send data to VNC clipboard ${clipBoardTextData}`);
       rfb.clipboardPasteFrom(clipBoardTextData);
       // sync data between the clipboard PRIMARY and clipboard CLIPBOARD
       // use for GTK application inside the opendektop graphicals container
@@ -106,7 +106,7 @@ export default function BroadwayVNC() {
   // Send data from VNC to device
   function syncClipBoardtoUserAgent(clipBoardTextData) {
     if (clipBoardTextData && clipBoardTextData.detail) {
-      console.log(`VNC2Android:ClipBoardCopy ${clipBoardTextData.detail.text}`);
+      // console.log(`VNC2Android:ClipBoardCopy ${clipBoardTextData.detail.text}`);
       if (typeof window.JsHandler === 'undefined') {
         clipboard.getClipboard(clipBoardTextData.detail.text);
       } else {
