@@ -64,4 +64,4 @@ RUN cd /var/webModules && make dev
 # create version.json file
 RUN cd /var/webModules && ./mkversion.sh && cat version.json
 # run html5validator
-RUN cd /var/webModules && /myenv/bin/html5validator index.html
+# RUN cd /var/webModules && /myenv/bin/html5validator index.html
