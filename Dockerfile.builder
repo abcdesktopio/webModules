@@ -35,15 +35,14 @@ RUN  mkdir -p /etc/apt/keyrings && \
      npm -g install yarn 
 
 
-# install package for html5validator
-RUN  apt-get update  -y && \
-     apt-get install -y --no-install-recommends \
-	python3-pip \
-	openjdk-8-jre \
-	python3-venv
-
+## install package for html5validator
+#RUN  apt-get update  -y && \
+#     apt-get install -y --no-install-recommends \
+#	python3-pip \
+#	openjdk-8-jre \
+#	python3-venv
 # install html5validator
-RUN python3 -m venv myenv && /myenv/bin/pip3 install html5validator
+#RUN python3 -m venv myenv && /myenv/bin/pip3 install html5validator
 
 # copy /var/webModules
 # to run make install
