@@ -45,6 +45,7 @@ const configureSpeaker = async () => {
   // launcher.isPulseAvailable().then( speakeravailableConnect ); 
   launcher.isPulseAvailable().then(
           (res) => {
+	      // can failed if broadway rfb is connected and pulse audio not started
 	      if (res.status === 200) {
 	      	updateIconSpeaker('enable');
 	      }
