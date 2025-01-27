@@ -115,14 +115,21 @@ const unconfigureMicrophone = async () => {
 
 export async function microphoneavailableConnect() {
   let microphone=document.getElementById('microphone');
+  // is microphone is defined
   if (microphone) {
-    launcher.isPulseAvailable().then(
+    // if page is secure
+    if ( document.location.protocol === 'https:' ) {
+      launcher.isPulseAvailable().then(
           (res) => {
               if (res.status === 200) {
                 microphone.style.display = 'block';
               }
           }
-    );
+      );
+    }
+    else {
+      console.log( document.location.protocol + ' is not secured \'https:\', microphone is disabled' );
+    }
   }       
 }
 
