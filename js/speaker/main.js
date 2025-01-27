@@ -30,6 +30,7 @@ import * as notificationSystem from '../notificationsystem.js';
 import JSMpeg from '../jsmpeg-player.esm.js';
 
 var jsmpeg = null;
+var speaker_state = 'none'; // 'none' or 'enable'
 
 export const getsound_ws_url = () => {
   const path = `/sound?jwt_token=${window.od.currentUser.authorization}`;
@@ -42,6 +43,14 @@ const configureSpeaker = async () => {
   // The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page.
   //
   // launcher.isPulseAvailable().then( speakeravailableConnect ); 
+  launcher.isPulseAvailable().then(
+          (res) => {
+	      updateIconSpeaker('enable');
+              if (res.status === 200) {
+                speakeravailableConnect();
+              }
+          }
+  );
 }
 
 const unconfigureSpeaker = async () => {
@@ -53,7 +62,6 @@ const unconfigureSpeaker = async () => {
         console.log( 'JSMpeg.Player destroyed' );
   }
 }
-
 
 const speakeravailableConnect = async ( default_volume) => {
   let volume = (default_volume === undefined ) ? 1 : default_volume;
@@ -76,7 +84,6 @@ const speakeravailableConnect = async ( default_volume) => {
 
   if (jsmpeg)
   	jsmpeg.volume = volume;
-
 }
 
 
@@ -144,10 +151,21 @@ function displayNotificationWebRTCError( msg )
   notificationSystem.displayNotification(title, desc, type, img, url, duration);
 }
 
+export const updateIconSpeaker = ( state ) => {
+  let speaker=document.getElementById('speaker');
+  if (speaker) {
+ 	if ( state === 'enable' ) 
+      	  speaker.style.display = 'block';
+	else
+	  speaker.style.display = 'none';
+  }
+};
+
+
 broadcastEvent.addEventListener('speaker.available', async ({ detail: { available } }) => {
   console.log( 'speaker.available pulsespeaker', available );
   if (available) {
-    speakeravailableConnect();
+    configureSpeaker();
   }
 });
 
