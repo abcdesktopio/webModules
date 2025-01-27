@@ -45,7 +45,9 @@ const configureSpeaker = async () => {
   // launcher.isPulseAvailable().then( speakeravailableConnect ); 
   launcher.isPulseAvailable().then(
           (res) => {
-	      updateIconSpeaker('enable');
+	      if (res.status === 200) {
+	      	updateIconSpeaker('enable');
+	      }
  	      // do not connect immediatly without user gesture
 	      // Error in log 
 	      // The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu
@@ -55,7 +57,7 @@ const configureSpeaker = async () => {
               // }
           }
   );
-}
+};
 
 const unconfigureSpeaker = async () => {
   console.log( 'unconfigureSpeaker call' );
@@ -65,7 +67,7 @@ const unconfigureSpeaker = async () => {
         jsmpeg = null;
         console.log( 'JSMpeg.Player destroyed' );
   }
-}
+};
 
 const speakeravailableConnect = async ( default_volume) => {
   let volume = (default_volume === undefined ) ? 1 : default_volume;
@@ -88,19 +90,19 @@ const speakeravailableConnect = async ( default_volume) => {
 
   if (jsmpeg)
   	jsmpeg.volume = volume;
-}
+};
 
 
 export const updateVolumeLevel = async (volume) => { 
   if (jsmpeg) 
       jsmpeg.volume = volume;
   await speakeravailableConnect( volume );
-}
+};
 
 export async function init() {
   document.addEventListener('broadway.connected',    configureSpeaker);
   document.addEventListener('broadway.disconnected', unconfigureSpeaker);
-};
+}
 
 
 export async function updateVolume( volume ) {
