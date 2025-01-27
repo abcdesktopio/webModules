@@ -46,9 +46,13 @@ const configureSpeaker = async () => {
   launcher.isPulseAvailable().then(
           (res) => {
 	      updateIconSpeaker('enable');
-              if (res.status === 200) {
-                speakeravailableConnect();
-              }
+ 	      // do not connect immediatly without user gesture
+	      // Error in log 
+	      // The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu
+	      //
+	      // if (res.status === 200) {
+              //   speakeravailableConnect();
+              // }
           }
   );
 }
