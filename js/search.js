@@ -78,10 +78,20 @@ export const init = function () {
         // if value is not empty
         else if (this.value !== '') {
           const pattern = new RegExp(`^${this.value}`, 'i');
-          const apps = window.od.applist.filter((app) => (
-            typeof app.keyword === 'string'
-                && app.keyword.split(',').some((keyword) => pattern.test(keyword))
-          ));
+          const apps = window.od.applist.filter((app) => {
+	    if (pattern.test(app.name)) 
+		  return true;
+	    // app.keyword.split(',').some((keyword) => pattern.test(keyword))
+	    if ( typeof app.keyword === 'string' ) {
+	       
+               let a = app.keyword.split(',').some((keyword) => {
+		       return pattern.test(keyword)
+	         } 
+	       );
+	       return a;
+	    }
+	    return false;
+	  });
 
           // Clear last search
           $('#searchZone #appZone li').remove();
@@ -89,17 +99,14 @@ export const init = function () {
 
           let url;
           // Add new Apps search result
-          for (const { cat, icon, icondata, id, displayname, launch, execmode, secrets_requirement } of apps) {
-            if (cat) {
+          for (const { icondata, id, displayname, launch, execmode, secrets_requirement } of apps) {
               const li = system.getLIApp(id, launch, execmode, secrets_requirement);
               const iconApp = document.createElement('img');
               const nameApp = document.createElement('div');
               const iconLock = document.createElement('img');
 
-              li.className = `icon app ${cat[0]}`;
-              // url = window.od.net.urlrewrite(`../img/app/${icon}`);
-              url = "data:image/svg+xml;base64," + icondata;
-              iconApp.src = url;
+              li.className = 'icon app';
+              iconApp.src = "data:image/svg+xml;base64," + icondata;
               nameApp.className = 'appname';
               nameApp.innerText = displayname;
               iconLock.className = 'search-lock-icon';
@@ -119,7 +126,6 @@ export const init = function () {
                 close();
               });
               appZone.appendChild(li);
-            }
           }
           if (apps.length > 0) {
             showAppZone();
