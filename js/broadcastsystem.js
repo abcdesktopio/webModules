@@ -208,7 +208,11 @@ export const process_event = ( msg ) => {
   }
 
   if (msg.method === 'logout') {
-    launcher.logout(msg.data);
+    launcher.docker_logoff(msg.data);
+  }
+
+  if (msg.method === 'disconnect') {
+    launcher.disconnect(msg.data);
   }
 
   if (msg.method === 'ocrun') {

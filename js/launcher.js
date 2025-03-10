@@ -12,7 +12,7 @@
 */
 
 import welcomeSystem from './welcomesystem.js';
-import * as systemMenu from './systemmenu.js';
+// import * as systemMenu from './systemmenu.js';
 import * as notificationSystem from './notificationsystem.js';
 import * as system from './system.js';
 import odApiClient from './odapiclient.js';
@@ -135,9 +135,9 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
         return;
       }
 
-      if (!window.od.isTactile) {
-        systemMenu.mouselistener();
-      }
+      //if (!window.od.isTactile) {
+      //  systemMenu.mouselistener();
+      //}
 
       onAppIsRunning();
       document.getElementById('noVNC_canvas').focus();
@@ -331,9 +331,15 @@ export function initApplist() {
  * @desc Init applist from pyos.
  */
 export function initUserApplist() {
-  document.getElementById("keyboard").setAttribute("launch", "keyboard")
-  document.getElementById("placement").setAttribute("launch", "placement")
-  document.getElementById("top-issue").setAttribute("launch", "issue")
+  let keyboard = document.getElementById("keyboard");
+  if (keyboard) 
+	keyboard.setAttribute("launch", "keyboard");
+  let placement = document.getElementById("placement");
+  if (placement) 
+	placement.setAttribute("launch", "placement");
+  let topissue = document.getElementById("top-issue");	
+  if (topissue) 
+	topissue.setAttribute("launch", "issue")
   return odApiClient.composer
     .getUserAppList()
     .done((result) => {

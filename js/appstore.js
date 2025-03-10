@@ -11,10 +11,12 @@
 * Software description: cloud native desktop service
 */
 
-import * as systemMenu from './systemmenu.js';
+// import * as systemMenu from './systemmenu.js';
 import * as system from './system.js';
 import * as languages from './languages.js';
 import * as secrets from './secrets.js';
+import * as launcher from './launcher.js';
+import * as webshell from './webshell.js';
 
 let draggedApp;
 
@@ -159,7 +161,7 @@ function addListener() {
           }
         };
 
-        systemMenu.handleMenuClick(container, callbackOnAppIsRunning);
+        handleMenuClick(container, callbackOnAppIsRunning);
       }
     };
 
@@ -170,6 +172,66 @@ function addListener() {
     }
   });
 }
+
+/**
+ * @function handleMenuClick
+ * @param {object} clickedApp HTML element you clicked on inside the dock.
+ * @param {Function} onAppIsRunning Optional callback called when the application is running
+ * @returns {void}
+ * @desc Check if your application is HTML or X11 application.
+ */
+export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) {
+  if (clickedApp.attributes.launch.value === 'keyboard') {
+    window.od.broadway.showVirtualKeyboard();
+  }
+
+  // look for the applications myapptolaunch
+  const myapptolaunch =  window.od.applist.find(
+        ({ launch }) => clickedApp.attributes.launch.value === launch
+  );
+
+  // myapptolaunch is found, check properties
+  if (myapptolaunch) {
+    if (myapptolaunch.execmode === 'builtin') {
+      launcher.launch(myapptolaunch.launch, '', clickedApp);
+      system.addAppLoader(clickedApp);
+      clickedApp.setAttribute('state', 'started');
+      $(clickedApp).find('img.appLoader')
+        .addClass('appLoaderDock');
+    } else
+      if (myapptolaunch.execmode === 'frontendjs') {
+      switch (clickedApp.attributes.launch.value) {
+        // case 'frontendjs.phone':
+        // phone.open();
+        //  break;
+        case 'frontendjs.webshell':
+          webshell.open();
+          break;
+        default:
+          errorMessage.open();
+          break;
+      }
+    } else {
+      // This myapptolaunch is a docker image
+      if (clickedApp.getAttribute('locked') === 'false') {
+        launchDockerApplication();
+      } else {
+        secrets.runAuthentication(launchDockerApplication);
+      }
+    }
+  }
+
+ function launchDockerApplication() {
+    const runDict = { image: myapptolaunch.id, args: '' };
+    launcher.ocrun(runDict, clickedApp, onAppIsRunning);
+    system.addAppLoader(clickedApp);
+    clickedApp.setAttribute('state', 'started');
+    $(clickedApp).find('img.appLoader')
+      .addClass('appLoaderDock');
+    // speaker.letsPlaySound();
+  }
+};
+
 
 /**
  * @function open

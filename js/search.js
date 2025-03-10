@@ -15,7 +15,7 @@
  * @name searchSystem
  * @module
  */
-import * as systemMenu from './systemmenu.js';
+// import * as systemMenu from './systemmenu.js';
 import * as launcher from './launcher.js';
 import * as system from './system.js';
 import * as languages from './languages.js';
@@ -122,7 +122,7 @@ export const init = function () {
                   abortController.abort();
                 }
                 hideFileZone();
-                systemMenu.handleMenuClick(this);
+                // systemMenu.handleMenuClick(this);
                 close();
               });
               appZone.appendChild(li);

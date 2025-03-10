@@ -4,7 +4,7 @@
   "colors": [
     {
       "name": "@x11bgcolor",
-      "value": "#6EC6F0"
+      "value": "#65AECD"
     },
     {
       "name": "@primary",
@@ -16,7 +16,7 @@
     },
     {
       "name": "@tertiary",
-      "value": "#6EC6F0"
+      "value": "#65AECD"
     },
     {
       "name": "@quaternary",

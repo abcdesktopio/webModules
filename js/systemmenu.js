@@ -253,7 +253,10 @@ let getWihndowListIsPending = false;
  * @desc Show context menu (right clic).
 */
 export const showContextmenu = function (status, element) {
-  // console.debug('showContextmenu');
+  console.debug('showContextmenu RETURN');
+  system.show(window.contextmenu);
+  return;
+
   system.show(window.contextmenu);
   if (status === true) {
     if (!getWihndowListIsPending) {
@@ -580,6 +583,7 @@ export const saveMenu = function () {
 };
 
 export const internalLoadMenu = function (apps) {
+  return;
   const docklist = document.getElementById('docklist');
   
   

@@ -41,7 +41,8 @@ import * as welcomeinfo from './welcomeinfo.js';
 import * as desktopfeatures from './desktopfeatures.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
-import * as systemMenu from './systemmenu.js';
+import { broadcastEvent } from './broadcastevent.js';
+// import * as systemMenu from './systemmenu.js';
 import userGeolocation from './geolocation.js';
 import './secrets.js';
 
@@ -242,7 +243,7 @@ function initApplistcallback() {
       // console.log( data ); 
       if (data)
      	 console.debug( 'generateDesktopFiles mimetype database done with status', data.code );
-      systemMenu.init(); 
+         // systemMenu.init(); 
     })
     .catch( (err) => {
       console.error( 'generateDesktopFiles failed' );
@@ -611,8 +612,10 @@ function toggleFullScreen() {
  */
 function setFullScreenUI() {
   // console.log('setFullScreenUI');
-  if (!document.fullscreenElement && !document.mozFullScreenElement
-      && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+  if (!document.fullscreenElement && 
+      !document.mozFullScreenElement && 
+      !document.webkitFullscreenElement && 
+      !document.msFullscreenElement) {
     $('#fullscreen img').attr('src', 'img/top/fullscreen.svg');
     $('#fullscreen').attr('state', 'false');
   } else {
@@ -736,10 +739,7 @@ function setupTopMenu() {
       microphone.updateState();
     });
 
-
-  $('#placement').click(() => {
-    launcher.placeAllWindows();
-  });
+  /* $('#placement').click(() => { launcher.placeAllWindows(); }); */
 
   bug.init();
 }
@@ -865,3 +865,39 @@ function setupZoomValueChange(){
     }
   }
 }
+
+
+
+
+function launchmyapp( myapptolaunch ) {
+  if (myapptolaunch) {
+    // this application is inside oc.user image 
+    if (myapptolaunch.execmode === 'builtin') {
+      launcher.launch(myapptolaunch.launch, '');
+    }
+    else
+    // this application is front HTML/JS
+    if (myapptolaunch.execmode === 'frontendjs') {
+      switch (myapptolaunch.image) {
+        case 'frontendjs.phone':
+          // phone.open();
+          break;
+        case 'frontendjs.webshell':
+          webshell.open();
+          break;
+        default:
+          errorMessage.open();
+          break;
+      }
+    }
+    else {
+      // This myapptolaunch is a container image
+      // launchDockerApplication();
+      launcher.ocrun( myapptolaunch );
+    }
+  }
+}
+
+broadcastEvent.addEventListener('ocrun',  ( { detail: { data_dict } } ) => launchmyapp( data_dict ) );
+
+

@@ -511,9 +511,12 @@
                 <img draggable="false" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
             </div>
 
+	    <!--
             <div class="keep" title="Placement">
                 <img draggable="false" id="placement" src="img/top/placement.svg" alt="placement-icon" loading="lazy">
             </div>
+	    -->
+
             {{/isIndexPage}}
 
             <div id="copypaste" class="keep" title="Copy / Paste" style="display: none;">
@@ -1334,32 +1337,6 @@
 
     <!-- context menu -->
     <ul id="contextmenu"></ul>
-
-    {{#isIndexPage}}
-    <!-- dock -->
-    <div id="dock">
-        <ul id="docklist">
-            <li class="only-mobile" id="keyboard">
-		        <img src="img/kb.svg" alt="kb-icon" loading="lazy">
-	        </li>
-        </ul>
-        <input type="text" id="searchBar" name="searchBar">
-    </div>
-    <!-- searchZone -->
-    <div id="searchZone">
-        <div id="closeZone"></div>
-        <ul id="fileZone">
-            <li>
-                <p id="fileZoneTitle">Files</p>
-            </li>
-        </ul>
-        <ul id="appZone">
-            <li>
-                <p id="appZoneTitle">Applications</p>
-            </li>
-        </ul>
-    </div>
-    {{/isIndexPage}}
 
     {{ #scripts }}
     <script {{{defer}}} src="{{{src}}}"></script>
