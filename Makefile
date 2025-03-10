@@ -69,6 +69,7 @@ install:
 	# cp node_modules/xterm-addon-attach/lib/xterm-addon-attach.js ./js
 	# cp node_modules/xterm-addon-fit/lib/xterm-addon-fit.js .js
 	# cp node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js ./js
+	cd js/noVNC && npm i
 
 svg:
 	cd ./transpile && node index.js --svg
