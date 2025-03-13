@@ -90,10 +90,7 @@ async function _checkWebCodecsH264DecodeSupport() {
     if (!support.supported) {
         return false;
     }
-    else
-	return true;
-    /*
-    
+
     // Firefox incorrectly reports supports for H.264 under some
     // circumstances, so we need to actually test a real frame
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1932392
@@ -138,7 +135,7 @@ async function _checkWebCodecsH264DecodeSupport() {
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1932566
         error = e;
     }
-    
+
     // Firefox fails to deliver the error on Windows, so we need to
     // check if we got a frame instead
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1932579
@@ -149,8 +146,8 @@ async function _checkWebCodecsH264DecodeSupport() {
     if (error !== null) {
         return false;
     }
+
     return true;
-    */
 }
 supportsWebCodecsH264Decode = await _checkWebCodecsH264DecodeSupport();
 
