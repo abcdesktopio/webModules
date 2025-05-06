@@ -73,7 +73,8 @@ export const hasScrollbarGutter = _hasScrollbarGutter;
 
 export let supportsWebCodecsH264Decode = false;
 
-async function _checkWebCodecsH264DecodeSupport() {
+// async function _checkWebCodecsH264DecodeSupport() {
+function _checkWebCodecsH264DecodeSupport() {
     if (!('VideoDecoder' in window)) {
         return false;
     }
@@ -85,13 +86,16 @@ async function _checkWebCodecsH264DecodeSupport() {
         codedHeight: 1080,
         optimizeForLatency: true,
     };
-
-    let support = await VideoDecoder.isConfigSupported(config);
+    // let support = await VideoDecoder.isConfigSupported(config);
+    let support = VideoDecoder.isConfigSupported(config);
     if (!support.supported) {
         return false;
     }
+    // else {
+    //     return true;
+    // }
 
-    /*
+    
 
     // Firefox incorrectly reports supports for H.264 under some
     // circumstances, so we need to actually test a real frame
@@ -131,7 +135,9 @@ async function _checkWebCodecsH264DecodeSupport() {
     decoder.configure(config);
     decoder.decode(chunk);
     try {
-        await decoder.flush();
+        // 
+        // await decoder.flush();
+        decoder.flush();
     } catch (e) {
         // Firefox incorrectly throws an exception here
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1932566
@@ -148,11 +154,13 @@ async function _checkWebCodecsH264DecodeSupport() {
     if (error !== null) {
         return false;
     }
-    */
 
     return true;
 }
-supportsWebCodecsH264Decode = await _checkWebCodecsH264DecodeSupport();
+
+// supportsWebCodecsH264Decode = await _checkWebCodecsH264DecodeSupport();
+// This is a synchronous version of the above function
+supportsWebCodecsH264Decode = _checkWebCodecsH264DecodeSupport();
 
 /*
  * The functions for detection of platforms and browsers below are exported
