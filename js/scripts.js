@@ -44,6 +44,7 @@ import * as bug from './issue.js';
 import { broadcastEvent } from './broadcastevent.js';
 // import * as systemMenu from './systemmenu.js';
 import userGeolocation from './geolocation.js';
+import { isTouchDevice } from './noVNC/core/util/browser.js';
 import './secrets.js';
 
 //
@@ -148,9 +149,6 @@ function setupbeforeuserloginin() {
   // Init a dropzone on document.documentElement with Dropzone lib
   // upload.init();
   initRotation();
-
-  // Show or Hide the virtual keyboard if the device is a touch device.
-  setupisPCApp();
 
   // Add events support button
   quickSupport.init();
@@ -412,16 +410,6 @@ function parseQueryString(str) {
 }
 
 /**
- * @function setupisPCApp
- * @global
- * @return {void}
- * @desc Show or Hide the virtual keyboard if the device is a touch device.
- */
-function setupisPCApp() {
-  if (ocuaparser.isTouch() || navigator.maxTouchPoints > 0) { $('.only-mobile').css('display', 'inline-block'); $('.no-mobile').css('display', 'none');} else { $('.only-mobile').css('display', 'none'); $('.no-mobile').css('display', 'inline-block');}
-}
-
-/**
  * @function isCompatibleBrowser
  * @global
  * @return bool
@@ -631,9 +619,19 @@ function setFullScreenUI() {
  * @desc Init all top menu events
  */
 function setupTopMenu() {
+  
+  if (isTouchDevice) {
+    $('#top #top-right #keyboard').show();
+  }
+
   $('#top #top-right div').bind('click', function () {
 
     if (this.id === 'printer') {
+      return;
+    }
+
+    if (this.id === 'keyboard') {
+      window.od.broadway.toggleVirtualKeyboard();
       return;
     }
 
@@ -692,7 +690,8 @@ function setupTopMenu() {
 
     switch (this.children[0].id) {
       case 'settings':
-        settings.open();
+        // settings.open();
+        window.od.broadway.showVirtualKeyboard();
         break;
 
       case 'appstore':
@@ -738,6 +737,7 @@ function setupTopMenu() {
     .on('click', function () {
       microphone.updateState();
     });
+
 
   /* $('#placement').click(() => { launcher.placeAllWindows(); }); */
 
@@ -884,6 +884,9 @@ function launchmyapp( myapptolaunch ) {
           break;
         case 'frontendjs.webshell':
           webshell.open();
+          break;
+        case 'frontendjs.keyboard':
+          window.od.broadway.toggleVirtualKeyboard();
           break;
         default:
           errorMessage.open();
