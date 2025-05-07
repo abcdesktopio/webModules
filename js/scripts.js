@@ -690,8 +690,7 @@ function setupTopMenu() {
 
     switch (this.children[0].id) {
       case 'settings':
-        // settings.open();
-        window.od.broadway.showVirtualKeyboard();
+        settings.open();
         break;
 
       case 'appstore':
@@ -707,8 +706,8 @@ function setupTopMenu() {
         break;
 
       case 'tips':
-          tipsinfo.open();
-          break;
+        tipsinfo.open();
+        break;
 
       case 'logout':
         menu.logoffOpen();
