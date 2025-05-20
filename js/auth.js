@@ -187,7 +187,7 @@ export class ExplicitAuthManager extends AuthManager {
     // this.welcomeui.clearstatusText();
     this.welcomeui.clearstatusText();
     this.welcomeui.clearLoginProjetNameTitle();
-    this.welcomeui.showStatus('Starting authentification...');
+    this.welcomeui.showStatus('Starting authentication...');
     this.closeManagers();
     return launcher.explicitLogin(providername, user[1], pswd, loginsessionid )
     .then( (result) => { 
