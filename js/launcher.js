@@ -1205,62 +1205,6 @@ export function requestFileAPI(method, file) {
   return fetch(url, options);
 }
 
-export function fileAPIListDirectory(directory = '') {
-  const headers = new Headers();
-  headers.append(
-    'ABCAuthorization',
-    `Bearer ${window.od.currentUser.authorization}`,
-  );
-  const url = `/filer/directory/list/?${new URLSearchParams({ directory })}`;
-
-  const options = {
-    method: 'GET',
-    headers,
-  };
-
-  return fetch(window.od.net.urlrewrite(url), options);
-}
-
-window.fileAPIListDirectory = fileAPIListDirectory;
-
-/**
- * @function filesearch
- * @params {string} keywords
- * @params {callback} callback_onsuccess
- * @params {callback} callback_onerror
- * @return {object} ws
- * @desc Search for files in user's storage, to cancel the request just close the ws.
- */
-export function filesearch(keywords, abortController = new AbortController()) {
-  const params = `${keywords !== '' ? `?${new URLSearchParams({ keywords })}` : ''
-  }`;
-  const url = window.od.net.urlrewrite(`/spawner/filesearch${params}`);
-
-  const options = {
-    method: 'GET',
-    signal: abortController.signal,
-    headers: {
-      'Content-Type': 'application/json',
-      ABCAuthorization: `Bearer ${window.od.currentUser.authorization}`,
-    },
-  };
-
-  return fetch(window.od.net.urlrewrite(url), options)
-    .then(async (res) => {
-      if (res.status !== 200) {
-        let error;
-        try {
-          error = await res.json();
-        } catch (e) {
-          error = await res.text();
-        }
-        throw error;
-      }
-
-      return res.json();
-    });
-}
-
 /**
  * @function getmimeforfile
  * @params {string} filename

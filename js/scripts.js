@@ -21,7 +21,6 @@ import * as launcher from './launcher.js';
 import * as shareSystem from './shareSystem.js';
 import * as quickSupport from './quickSupport.js';
 import * as logmein from './logmein.js';
-import * as searchSystem from './search.js';
 import * as upload from './upload.js';
 import * as errorMessage from './errormessage.js';
 import * as printer from './printer.js';
@@ -152,9 +151,6 @@ function setupbeforeuserloginin() {
 
   // Add events support button
   quickSupport.init();
-
-  // Add event for dock's search bar and filter keycode for different feature.
-  searchSystem.init();
 
   // Add an event listener pinch for resizing the resolution if device have a touchscreen.
   if (window.od.isTactile) {
