@@ -47,7 +47,7 @@ jobs:
         with:
           file: Dockerfile.builder
           context: .
-          platforms: linux/amd64
+          platforms: linux/amd64, linux/arm64
           push: true
           build-args: |
             BASE_IMAGE_RELEASE=latest
@@ -62,7 +62,7 @@ jobs:
         with:
           file: Dockerfile
           context: .
-          platforms: linux/amd64
+          platforms: linux/amd64, linux/arm64
           push: true
           build-args: |
             BASE_IMAGE_RELEASE=${{ env.imagetag }}
