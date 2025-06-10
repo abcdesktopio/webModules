@@ -461,19 +461,11 @@ function isCompatibleBrowser() {
  * If user use Android app and make windows draggable.
  */
 function init() {
-  // console.info('function script:init()');
-  // check if we are running inside the orange android
-  // Application webview
-  window.isAndroidApplicationMode = ocuaparser.isAbcDesktopAndroidApplication();
-  
-  // console.debug('function script::logmein.tryReconnect()');
-
   // try to restor previous user context
   logmein.restoreUserContext().fail(() => {
     console.info('no user previous context, running standart welcome');
     welcomeSystem.open();
   });
-
 
   $('.window').mousedown(function () { system.activeWindow(this); });
 
