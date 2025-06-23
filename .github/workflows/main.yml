@@ -26,7 +26,7 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
-        name: move index.html and css to test to tmp directory
+      - name: move index.html and css to test to tmp directory
         run: |
           mkdir tmp
           mv index.html tmp/index.html
