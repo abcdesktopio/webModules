@@ -33,7 +33,7 @@ RUN chmod -R 555 *
 
 
 # --- START Build image ---
-FROM nginx
+FROM nginx:alpine-slim
 # buildkit
 # COPY --from=builder --chmod=555 /var/webModules /usr/share/nginx/html
 COPY --from=builder /var/webModules /usr/share/nginx/html
