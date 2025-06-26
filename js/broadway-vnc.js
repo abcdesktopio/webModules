@@ -4,13 +4,14 @@
  * @name BroadwayVNC
  * @module
  */
+import { isTouchDevice } from './noVNC/core/util/browser.js';
 import { clipboardsync, getTopAndDockHeight } from './launcher.js';
 import * as WebUtil from './noVNC/app/webutil.js';
-// import KeyTable from './noVNC/core/input/keysym.js';
 import RFB from './noVNC/core/rfb.js';
-// import keysyms from './noVNC/core/input/keysymdef.js';
-// import Keyboard from './noVNC/core/input/keyboard.js';
 import * as clipboard from './clipboard.js';
+import KeyTable from "./noVNC/core/input/keysym.js";
+import keysyms from "./noVNC/core/input/keysymdef.js";
+import Keyboard from "./noVNC/core/input/keyboard.js";
 
 function readyStateToMsg(readyState) {
   let msg = '';
@@ -39,18 +40,10 @@ export default function BroadwayVNC() {
   let rfb = null;
   let lastKeyboardinput = null;
   const defaultKeyboardinputLen = 100;
-  let isTouchDevice = false;
   let keyboardinput = null;
-
-  /**
-     * @function setview_only
-     * @param {boolean} mode
-     * @return {void}
-     * @desc Toggle readonly mode
-     */
-  this.setview_only = function (mode) {
-    this.view_only = mode;
-  };
+  let touchKeyboard = null;
+  let toggleVirtualKeyboardFlag = false;
+  
 
   /**
      * @function syncClipBoardtoAbcDesktop
@@ -58,7 +51,7 @@ export default function BroadwayVNC() {
      * @return {void}
      * @desc Send data to VNC RFB Clipboard
      */
-  this.syncClipBoardtoAbcDesktop = function (clipBoardTextData) {
+  this.syncClipBoardtoAbcDesktop = function(clipBoardTextData) {
     if (clipBoardTextData) {
       // console.log(`syncClipBoardtoAbcDesktop: send data to VNC clipboard ${clipBoardTextData}`);
       rfb.clipboardPasteFrom(clipBoardTextData);
@@ -78,7 +71,7 @@ export default function BroadwayVNC() {
   // The user has copy somthing like TEXT (only ?) to the clipboard in the desktop session
   // Recieve the text data and forward to the device
   // Send data from VNC to device
-  function syncClipBoardtoUserAgent(clipBoardTextData) {
+  this.syncClipBoardtoUserAgent = function(clipBoardTextData) {
     if (clipBoardTextData && clipBoardTextData.detail) {
       // console.log(`VNC2Android:ClipBoardCopy ${clipBoardTextData.detail.text}`);
       if (typeof window.JsHandler === 'undefined') {
@@ -112,66 +105,181 @@ export default function BroadwayVNC() {
     return myevent;
   }
 
-  /**
-     * @function isReconnecting
-     * @return {Boolean}
-     * @desc Return reconnection status
-     */
-  this.isReconnecting = function () {
-    return this._reconnecting;
-  };
-
-  /**
-     * @function setReconnecting
-     * @param {boolean} value
-     * @return {Boolean}
-     * @desc Set reconnection status
-     */
-  this.setReconnecting = function (value) {
-    this._reconnecting = value;
-  };
 
   /**
      * @function init
      * @return {void}
      * @desc Bind keyboard event and create canvas {@link creatediv}
      */
-  this.init = function () {
-    /*
-    isTouchDevice = ('ontouchstart' in document.documentElement)
-                                 // requried for Chrome debugger
-                                 || (document.ontouchstart !== undefined)
-                                 // required for MS Surface
-                                 || (navigator.maxTouchPoints > 0)
-                                 || (navigator.msMaxTouchPoints > 0);
+  this.init = function() {
 
-    // // Bind keyboard event
-    // keyboardinput = document.getElementById('keyboardinput');
-
-    // keyboardinput.oninput = keyInput;
-    // keyboardinput.onblur = keyInputBlur;
-    // keyboardinput.onsubmit = function() {
-    //     return false;
-    // };
-
-    // Util.addEvent(window, 'load', this.keyboardinputReset);
-    // Bind event for zoom
-    //
-    keyboardinput = document.getElementById('noVNC_keyboardinput');
-    if (!keyboardinput) return;
-
-    const touchKeyboard = new Keyboard(keyboardinput);
-    touchKeyboard.onkeyevent = this.keyEvent;
-    touchKeyboard.grab();
-
-    keyboardinput.addEventListener('input', this.keyInput);
-    keyboardinput.addEventListener('focus', this.onfocusVirtualKeyboard);
-    keyboardinput.addEventListener('blur', 	this.onblurVirtualKeyboard);
-    keyboardinput.addEventListener('submit', () => false);
-
-    document.documentElement.addEventListener('mousedown', this.keepVirtualKeyboard, true);
-    */
+    if (isTouchDevice) {
+      const keyboardinput = document.getElementById('noVNC_keyboardinput');
+      if (keyboardinput) {
+        touchKeyboard = new Keyboard(keyboardinput);
+        touchKeyboard.onkeyevent = keyEvent;
+        touchKeyboard.grab();
+        keyboardinput.addEventListener('input', this.keyInput);
+        keyboardinput.addEventListener('submit', () => false);   
+        keyboardinput.addEventListener('focus', this.onfocusVirtualKeyboard);
+        document.documentElement.addEventListener('mousedown', this.keepVirtualKeyboard, true); 
+      }
+    }
   };
+
+
+  this.showVirtualKeyboard = function() {
+    if (!isTouchDevice) return;
+    const input = document.getElementById('noVNC_keyboardinput');
+    if (document.activeElement == input) return;
+    input.focus();
+    try {
+        const l = input.value.length;
+        // Move the caret to the end
+        input.setSelectionRange(l, l);
+    } catch (err) {
+        // setSelectionRange is undefined in Google Chrome
+    }
+  }
+
+  this.hideVirtualKeyboard = function() {
+    if (!isTouchDevice) return;
+    const input = document.getElementById('noVNC_keyboardinput');
+    if (document.activeElement != input) return;
+    input.blur();
+  }
+
+  this.toggleVirtualKeyboard = function() {
+    if (!isTouchDevice) return;
+    if (toggleVirtualKeyboardFlag) {
+      toggleVirtualKeyboardFlag = false;
+      this.hideVirtualKeyboard();
+    } else {
+      toggleVirtualKeyboardFlag = true;
+      this.showVirtualKeyboard();
+    } 
+  }
+  this.onfocusVirtualKeyboard = function() {
+    if ( window.od.broadway.rfb) {
+      rfb.focusOnClick = false;
+    }
+  }
+
+  this.onblurVirtualKeyboard = function(event) {
+   
+    if (window.od.broadway.rfb) {
+        rfb.focusOnClick = true;
+    }
+},
+
+
+
+  this.keepVirtualKeyboard = function(event) {
+    
+    const input = document.getElementById('noVNC_keyboardinput');
+
+    // Only prevent focus change if the virtual keyboard is active
+    if (document.activeElement != input) {
+        return;
+    }
+
+    // Only allow focus to move to other elements that need
+    // focus to function properly
+    if (event.target.form !== undefined) {
+        switch (event.target.type) {
+            case 'text':
+            case 'email':
+            case 'search':
+            case 'password':
+            case 'tel':
+            case 'url':
+            case 'textarea':
+            case 'select-one':
+            case 'select-multiple':
+                return;
+        }
+    }
+
+    event.preventDefault();
+  }
+  
+  this.keyboardinputReset = function () {
+    const kbi = document.getElementById('noVNC_keyboardinput');
+    kbi.value = new Array(defaultKeyboardinputLen).join("_");
+    lastKeyboardinput = kbi.value;
+  }
+  
+function keyEvent(keysym, code, down) {
+    if (!window.od.broadway.rfb) return;
+    window.od.broadway.rfb.sendKey(keysym, code, down);
+  }
+  
+  // When normal keyboard events are left uncought, use the input events from
+  // the keyboardinput element instead and generate the corresponding key events.
+  // This code is required since some browsers on Android are inconsistent in
+  // sending keyCodes in the normal keyboard events when using on screen keyboards.
+  this.keyInput = function (event) {
+
+      if (!window.od.broadway.rfb) return;
+
+      const newValue = event.target.value;
+
+      if (!lastKeyboardinput) {
+          this.keyboardinputReset();
+      }
+      const oldValue = lastKeyboardinput;
+
+      let newLen;
+      try {
+          // Try to check caret position since whitespace at the end
+          // will not be considered by value.length in some browsers
+          newLen = Math.max(event.target.selectionStart, newValue.length);
+      } catch (err) {
+          // selectionStart is undefined in Google Chrome
+          newLen = newValue.length;
+      }
+      const oldLen = oldValue.length;
+
+      let inputs = newLen - oldLen;
+      let backspaces = inputs < 0 ? -inputs : 0;
+
+      // Compare the old string with the new to account for
+      // text-corrections or other input that modify existing text
+      for (let i = 0; i < Math.min(oldLen, newLen); i++) {
+          if (newValue.charAt(i) != oldValue.charAt(i)) {
+              inputs = newLen - i;
+              backspaces = oldLen - i;
+              break;
+          }
+      }
+
+      // Send the key events
+      for (let i = 0; i < backspaces; i++) {
+          rfb.sendKey(KeyTable.XK_BackSpace, "Backspace");
+      }
+      for (let i = newLen - inputs; i < newLen; i++) {
+          rfb.sendKey(keysyms.lookup(newValue.charCodeAt(i)));
+      }
+
+      // Control the text content length in the keyboardinput element
+      if (newLen > 2 * defaultKeyboardinputLen) {
+          this.keyboardinputReset();
+      } else if (newLen < 1) {
+          // There always have to be some text in the keyboardinput
+          // element with which backspace can interact.
+          this.keyboardinputReset();
+          // This sometimes causes the keyboard to disappear for a second
+          // but it is required for the android keyboard to recognize that
+          // text has been added to the field
+          event.target.blur();
+          // This has to be ran outside of the input handler in order to work
+          setTimeout(event.target.focus.bind(event.target), 0);
+      } else {
+          lastKeyboardinput = newValue;
+      }
+  }
+
+
 
   function sendevent(name) {
     try {
@@ -220,27 +328,37 @@ export default function BroadwayVNC() {
     let port;
     password = window.od.currentUser.vncpassword;
 
+    if (isTouchDevice) {
+      // if the user is using a touch device, reset the virtual keyboard
+      this.keyboardinputReset();
+    }
+
     // set path value from window.od.currentUser.websocketrouting
     //
     //  
-    if (window.od.currentUser.websocketrouting && window.od.currentUser.websocketrouting === 'bridge')
-    {
+    if (window.od.currentUser.websocketrouting && window.od.currentUser.websocketrouting === 'bridge') {
       path = '';
       port = window.od.currentUser.websockettcpport;
-    }
-    else
-    { 
+    } 
+    else { 
       path = `websockify?jwt_token=${window.od.currentUser.authorization}`;
     }
     url = window.od.net.getwsurl(path, window.od.currentUser.target_ip, port );
    
     try {
-      rfb = null;
-      rfb = new RFB(document.body, url, {
-        repeaterID: WebUtil.getConfigVar('repeaterID', ''),
-        shared: WebUtil.getConfigVar('shared', true),
-        credentials: { password },
-      });
+      let noVNC_container = document.getElementById('noVNC_container');
+      if (noVNC_container) {
+        noVNC_container.style.display = 'block';
+      }
+      else {
+        noVNC_container = document.body;
+      }
+      rfb = new RFB( noVNC_container, url,
+	      {	repeaterID: WebUtil.getConfigVar('repeaterID', ''),
+        	shared: WebUtil.getConfigVar('shared', true),
+        	credentials: { password },
+      	}
+      );
       
       // set an id to the RFB canvas
       // after the constructor
@@ -283,6 +401,6 @@ export default function BroadwayVNC() {
     window.od.broadway.rfb = rfb;
     window.od.broadway.rfb.addEventListener('connect',    this.connected);
     window.od.broadway.rfb.addEventListener('disconnect', this.disconnected);
-    window.od.broadway.rfb.addEventListener('clipboard',  syncClipBoardtoUserAgent);
+    window.od.broadway.rfb.addEventListener('clipboard',  this.syncClipBoardtoUserAgent);
   };
 }

@@ -52,7 +52,6 @@
 	<!-- end of dedicated index page -->
     {{/isIndexPage}}
 
-    <link rel="stylesheet" href="css/css-dist/bottomBar.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/error.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/base.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/welcome.css" type="text/css">
@@ -65,7 +64,6 @@
     <link rel="stylesheet" href="css/css-dist/upload.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/search.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/music.css" type="text/css">
-    <link rel="stylesheet" href="css/css-dist/video.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/share.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css">
     
@@ -123,11 +121,6 @@
         </p>
     </div>
 
-    <!-- Note that Google Chrome on Android doesn't respect any of these,
-    html attributes which attempt to disable text suggestions on the
-    on-screen keyboard. Let's hope Chrome implements the ime-mode
-    style for example -->
-    <textarea id="noVNC_keyboardinput" autocapitalize="off" autocomplete="off" spellcheck="false" tabindex="-1"></textarea>
     <div style="display: none;" id="loader">
         <div id="dot-container">
             <noscript>
@@ -138,6 +131,14 @@
             </noscript>
         </div>
     </div>
+    <!-- This is where the RFB elements will attach -->
+    <!-- <div id="noVNC_container"> -->
+        <!-- Note that Google Chrome on Android doesn't respect any of these,
+                html attributes which attempt to disable text suggestions on the
+                on-screen keyboard. Let's hope Chrome implements the ime-mode
+                style for example -->
+        <textarea id="noVNC_keyboardinput" autocapitalize="off" autocomplete="off" spellcheck="false" tabindex="-1"></textarea>
+    <!--  </div> -->
 
     <div id="loginScreen">
         <div id="content">
@@ -147,7 +148,7 @@
                     <div class="highlight" id="welcomeinfo"></div>
                     <div id="desktopfeatures">
                         <div class="form-group">
-			    <!-- for="desktopfeaturesul" --> 
+			                <!-- for="desktopfeaturesul" --> 
                             <label class="form-label" id="login-desktopfeatures">Desktop features</label>
                             <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-1 shadow-sm" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);" id="desktopfeaturesul"></ul>
                             <p class="form-comment" id="login-desktopfeatures-comment"></p>
@@ -184,14 +185,14 @@
                             <!-- The userPassword attribute has maximum length 128 and format UTF-8. -->
                             <input id="ADpassword" class="form-control" placeholder="Password" type="password" maxlength="128" autocomplete="current-password">
                         </div>	
-			<div class="form-group" id="form-group-submit">
+			            <div class="form-group" id="form-group-submit">
                             <button type="submit" class="btn btn-primary" id="connectAD">Sign in</button>
                             {{#urlcannotopensession}}
                                <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
                             {{/urlcannotopensession}}
                         </div>
-
                     </form>
+
                     <p class="form-comment" id="login-auth-requirement">
                         To access to this service you need to be identified. If you use {{{ projectName }}} from a personal computer which does not belong to the company, 
                         remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.
@@ -249,7 +250,7 @@
                                 <div class="card-header">
                                         <h4 class="my-0 fw-normal">
                                             <!-- <span class="badge bg-primary rounded-pill">1</span>  -->
-					    <p style="color:white">OAuth 2.0</p>
+					                        <p style="color:white">OAuth 2.0</p>
                                         </h4>
                                 </div>
                                 <div class="card-body">
@@ -498,7 +499,7 @@
 
             <!-- zoom cursor dropdown -->
             <!--
-            <div id="zoom" title="Zoom" class="no-mobile keep">
+            <div id="zoom" title="Zoom" class="keep">
                 <img src="../img/top/zoom-in.svg" alt="zoom-icon" loading="lazy">
                 <ul class="drop-down">
                     <li>
@@ -513,11 +514,17 @@
             </div>
             -->
 
+            <!-- keyboard for touch devices -->
+            <div id="keyboard" title="Keyboard" style="display: none;">
+                <img id="keyborad-logo" src="../img/top/keyboard.svg" class="keyboard-logo" alt="keyboard-icon" loading="lazy">
+            </div>
+
 	        <!-- printer is hidden by default -->
             <div id="printer" title="Printer"  style="display: none;" >
                 <img src="../img/top/printer_None.svg" alt="printer-icon" loading="lazy">
                 <ul class="drop-down"></ul>
             </div>
+
             <!--
             <div id="topMail" class="keep" title="Mail">
                 <img id="ico" src="../img/top/mail.svg" alt="mail-icon">
@@ -525,17 +532,19 @@
             -->
 
             {{#isIndexPage}}
+
             <div id="top-issue-container" class="keep" title="Issue">
                 <img draggable="false" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
             </div>
 
-	    <!--
-            <div class="keep" title="Placement">
-                <img draggable="false" id="placement" src="img/top/placement.svg" alt="placement-icon" loading="lazy">
-            </div>
-	    -->
+            <!--
+                <div class="keep" title="Placement">
+                    <img draggable="false" id="placement" src="img/top/placement.svg" alt="placement-icon" loading="lazy">
+                </div>
+            -->
 
             {{/isIndexPage}}
+
 
             <div id="copypaste" class="keep" title="Copy / Paste" style="display: none;">
                 <img id="ico" src="../img/top/copypaste.svg" alt="copy-paste-icon" loading="lazy">
@@ -549,12 +558,12 @@
                 </ul>
             </div>
 	    
-	    <div id="microphone" title="Microphone">
+	        <div id="microphone" title="Microphone">
                 <img id="microphone-logo" src="../img/top/mic.svg" class="microphone-logo" alt="microphone-icon" loading="lazy">
             </div>
 
             <div id="speakers" title="Sound">
-	 	<!-- <video id="audioplayer" autoplay playsinline></video> -->
+	 	        <!-- <video id="audioplayer" autoplay playsinline></video> -->
             	<img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="speakers-icon" loading="lazy">
             	<ul class="drop-down">
                   <li>

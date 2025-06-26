@@ -20,7 +20,6 @@ import * as launcher from './launcher.js';
 
 import * as system from './system.js';
 import * as printer from './printer.js';
-import * as searchSettings from './searchSettings.js';
 
 import { settingsEvents } from './settingsevents.js';
 
@@ -70,7 +69,6 @@ export const open = function () {
 
   const clone = windowsettings.cloneNode(true);
 
-  searchSettings.init(config);
   const tabsHeader = Array.from(clone.querySelectorAll('.tab-header'));
 
   for (const tabHeader of tabsHeader.map((t) => $(t))) {

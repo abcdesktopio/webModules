@@ -21,7 +21,6 @@ import * as launcher from './launcher.js';
 import * as shareSystem from './shareSystem.js';
 import * as quickSupport from './quickSupport.js';
 import * as logmein from './logmein.js';
-import * as searchSystem from './search.js';
 import * as upload from './upload.js';
 import * as errorMessage from './errormessage.js';
 import * as printer from './printer.js';
@@ -44,6 +43,7 @@ import * as bug from './issue.js';
 import { broadcastEvent } from './broadcastevent.js';
 // import * as systemMenu from './systemmenu.js';
 import userGeolocation from './geolocation.js';
+import { isTouchDevice } from './noVNC/core/util/browser.js';
 import './secrets.js';
 
 //
@@ -149,14 +149,8 @@ function setupbeforeuserloginin() {
   // upload.init();
   initRotation();
 
-  // Show or Hide the virtual keyboard if the device is a touch device.
-  setupisPCApp();
-
   // Add events support button
   quickSupport.init();
-
-  // Add event for dock's search bar and filter keycode for different feature.
-  searchSystem.init();
 
   // Add an event listener pinch for resizing the resolution if device have a touchscreen.
   if (window.od.isTactile) {
@@ -412,16 +406,6 @@ function parseQueryString(str) {
 }
 
 /**
- * @function setupisPCApp
- * @global
- * @return {void}
- * @desc Show or Hide the virtual keyboard if the device is a touch device.
- */
-function setupisPCApp() {
-  if (ocuaparser.isTouch() || navigator.maxTouchPoints > 0) { $('.only-mobile').css('display', 'inline-block'); $('.no-mobile').css('display', 'none');} else { $('.only-mobile').css('display', 'none'); $('.no-mobile').css('display', 'inline-block');}
-}
-
-/**
  * @function isCompatibleBrowser
  * @global
  * @return bool
@@ -477,19 +461,11 @@ function isCompatibleBrowser() {
  * If user use Android app and make windows draggable.
  */
 function init() {
-  // console.info('function script:init()');
-  // check if we are running inside the orange android
-  // Application webview
-  window.isAndroidApplicationMode = ocuaparser.isAbcDesktopAndroidApplication();
-  
-  // console.debug('function script::logmein.tryReconnect()');
-
   // try to restor previous user context
   logmein.restoreUserContext().fail(() => {
     console.info('no user previous context, running standart welcome');
     welcomeSystem.open();
   });
-
 
   $('.window').mousedown(function () { system.activeWindow(this); });
 
@@ -631,9 +607,19 @@ function setFullScreenUI() {
  * @desc Init all top menu events
  */
 function setupTopMenu() {
+  
+  if (isTouchDevice) {
+    $('#top #top-right #keyboard').show();
+  }
+
   $('#top #top-right div').bind('click', function () {
 
     if (this.id === 'printer') {
+      return;
+    }
+
+    if (this.id === 'keyboard') {
+      window.od.broadway.toggleVirtualKeyboard();
       return;
     }
 
@@ -708,8 +694,8 @@ function setupTopMenu() {
         break;
 
       case 'tips':
-          tipsinfo.open();
-          break;
+        tipsinfo.open();
+        break;
 
       case 'logout':
         menu.logoffOpen();
@@ -882,6 +868,9 @@ function launchmyapp( myapptolaunch ) {
           break;
         case 'frontendjs.webshell':
           webshell.open();
+          break;
+        case 'frontendjs.keyboard':
+          window.od.broadway.toggleVirtualKeyboard();
           break;
         default:
           errorMessage.open();
