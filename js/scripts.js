@@ -739,8 +739,6 @@ function setupTopMenu() {
       microphone.updateState();
     });
 
-  /* $('#placement').click(() => { launcher.placeAllWindows(); }); */
-
   bug.init();
 }
 
