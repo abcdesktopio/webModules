@@ -52,7 +52,6 @@
 	<!-- end of dedicated index page -->
     {{/isIndexPage}}
 
-    <link rel="stylesheet" href="css/css-dist/bottomBar.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/error.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/base.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/welcome.css" type="text/css">
@@ -65,7 +64,6 @@
     <link rel="stylesheet" href="css/css-dist/upload.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/search.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/music.css" type="text/css">
-    <link rel="stylesheet" href="css/css-dist/video.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/share.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css">
     
@@ -443,7 +441,12 @@
             </div>
             -->
 
-	        <!-- printer is hidden by default -->
+	    <!-- keyboard for touch devices -->
+            <div id="keyboard" title="Keyboard" style="display: none;">
+                <img id="keyborad-logo" src="../img/top/keyboard.svg" class="keyboard-logo" alt="keyboard-icon" loading="lazy">
+            </div>
+
+	    <!-- printer is hidden by default -->
             <div id="printer" title="Printer"  style="display: none;" >
                 <img src="../img/top/printer_None.svg" alt="printer-icon" loading="lazy">
                 <ul class="drop-down"></ul>
@@ -458,13 +461,6 @@
             <div id="top-issue-container" class="keep" title="Issue">
                 <img draggable="false" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
             </div>
-
-	    <!--
-            <div class="keep" title="Placement">
-                <img draggable="false" id="placement" src="img/top/placement.svg" alt="placement-icon" loading="lazy">
-            </div>
-	    -->
-
             {{/isIndexPage}}
 
             <div id="copypaste" class="keep" title="Copy / Paste" style="display: none;">
@@ -484,7 +480,6 @@
             </div>
 
             <div id="speakers" title="Sound">
-	 	<!-- <video id="audioplayer" autoplay playsinline></video> -->
             	<img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="speakers-icon" loading="lazy">
             	<ul class="drop-down">
                   <li>

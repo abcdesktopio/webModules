@@ -121,15 +121,14 @@ function startStop() {
     let url = 'js/speedtest_worker.js';
     url = window.od.net.urlrewrite(url);
     w = new Worker(url);
-
     const settings = {
-      url_dl: window.od.net.urlrewrite('/speedtest/garbage.php'), // path to a large file or garbage.php, used for download test. must be relative to this js file
-      url_ul: window.od.net.urlrewrite('/speedtest/empty.php'), // path to an empty file, used for upload test. must be relative to this js file
-      url_ping: window.od.net.urlrewrite('/speedtest/empty.php'), // path to an empty file, used for ping test. must be relative to this js file
-      url_getIp: window.od.net.urlrewrite('/speedtest/getIP.php'), // path to getIP.php relative to this js file, or a similar thing that outputs the client's ip
-      url_telemetry: window.od.net.urlrewrite('/speedtest/telemetry.php'), // path to the script that adds telemetry data to the database
+      // /backend/getIP.php
+      url_dl: window.od.net.urlrewrite('/speedtest/backend/garbage.php'), // path to a large file or garbage.php, used for download test. must be relative to this js file
+      url_ul: window.od.net.urlrewrite('/speedtest/backend/empty.php'), // path to an empty file, used for upload test. must be relative to this js file
+      url_ping: window.od.net.urlrewrite('/speedtest/backend/empty.php'), // path to an empty file, used for ping test. must be relative to this js file
+      url_getIp: window.od.net.urlrewrite('/speedtest/backend/getIP.php'), // path to getIP.php relative to this js file, or a similar thing that outputs the client's ip
+      url_telemetry: window.od.net.urlrewrite('/speedtest/backend/telemetry.php'), // path to the script that adds telemetry data to the database
     };
-
     let httpdata = 'start';
     httpdata += ` ${JSON.stringify(settings)}`;
     w.postMessage(httpdata); // Add optional parameters as a JSON object to this command

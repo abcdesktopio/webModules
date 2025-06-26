@@ -58,12 +58,12 @@ oc.nginx:
 
 checkTranspile:
 	if [ ! -d "./transpile/node_modules" ]; then \
-		cd ./transpile && yarn install --network-timeout 600000; \
+		cd ./transpile && npm install; \
 	fi
 
 install:
-	yarn install
-	cd transpile && yarn install
+	npm install
+	cd transpile && npm install
 	cp "node_modules/@cycjimmy/jsmpeg-player/dist/jsmpeg-player.esm.js" ./js
 	# cp node_modules/xterm/lib/xterm.js ./js
 	# cp node_modules/xterm-addon-attach/lib/xterm-addon-attach.js ./js

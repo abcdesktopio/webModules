@@ -803,6 +803,25 @@ export function buildsecret(password) {
   return odApiClient.auth.buildsecret(password);
 }
 
+
+
+export function fileAPIListDirectory(directory = '') {
+  const headers = new Headers();
+  headers.append(
+    'ABCAuthorization',
+    `Bearer ${window.od.currentUser.authorization}`,
+  );
+  const url = `/filer/directory/list/?${new URLSearchParams({ directory })}`;
+
+  const options = {
+    method: 'GET',
+    headers,
+  };
+
+  return fetch(window.od.net.urlrewrite(url), options);
+}
+
+
 /**
  * @function stopContainer
  * @param {string} container_id
@@ -1110,45 +1129,6 @@ export function getenv() {
 
 
 /**
- * @function closewindow
- * @params {Array<number>} windowsid
- * @return {void}
- * @desc Close windows using windows's ID.
- */
-export function closewindows(windowsid) {
-  return requestSpawnerAPI('closewindows', { windowsid });
-}
-
-/**
- * @function activatewindows
- * @params {Array<number>} windowsid
- * @return {void}
- * @desc Activate application window using window's ID.
- */
-export function activatewindows(windowsid) {
-  return requestSpawnerAPI('activatewindows', { windowsid });
-}
-
-/**
- * @function getwindowslist
- * @global
- * @return {void}
- * @desc Returns a list containing all the applications windows opened.
- */
-export function getwindowslist() {
-  return requestSpawnerAPI('getwindowslist', null, 'GET');
-}
-
-/**
- * @function broadcastwindowslist
- * @return {void}
- * @desc Broadcast to all users a list containing all the applications windows opened.
- */
-export function broadcastwindowslist() {
-  return requestSpawnerAPI('broadcastwindowslist');
-}
-
-/**
  * @function clipboardsync
  * @return {void}
  * @desc Sync data between the clipboard PRIMARY and clipboard CLIPBOARD
@@ -1203,62 +1183,6 @@ export function requestFileAPI(method, file) {
   };
 
   return fetch(url, options);
-}
-
-export function fileAPIListDirectory(directory = '') {
-  const headers = new Headers();
-  headers.append(
-    'ABCAuthorization',
-    `Bearer ${window.od.currentUser.authorization}`,
-  );
-  const url = `/filer/directory/list/?${new URLSearchParams({ directory })}`;
-
-  const options = {
-    method: 'GET',
-    headers,
-  };
-
-  return fetch(window.od.net.urlrewrite(url), options);
-}
-
-window.fileAPIListDirectory = fileAPIListDirectory;
-
-/**
- * @function filesearch
- * @params {string} keywords
- * @params {callback} callback_onsuccess
- * @params {callback} callback_onerror
- * @return {object} ws
- * @desc Search for files in user's storage, to cancel the request just close the ws.
- */
-export function filesearch(keywords, abortController = new AbortController()) {
-  const params = `${keywords !== '' ? `?${new URLSearchParams({ keywords })}` : ''
-  }`;
-  const url = window.od.net.urlrewrite(`/spawner/filesearch${params}`);
-
-  const options = {
-    method: 'GET',
-    signal: abortController.signal,
-    headers: {
-      'Content-Type': 'application/json',
-      ABCAuthorization: `Bearer ${window.od.currentUser.authorization}`,
-    },
-  };
-
-  return fetch(window.od.net.urlrewrite(url), options)
-    .then(async (res) => {
-      if (res.status !== 200) {
-        let error;
-        try {
-          error = await res.json();
-        } catch (e) {
-          error = await res.text();
-        }
-        throw error;
-      }
-
-      return res.json();
-    });
 }
 
 /**
@@ -1324,10 +1248,6 @@ export function getDesktop(key) {
 
 export function setTheme(theme) {
   return requestSpawnerAPI('setTheme', { theme });
-}
-
-export function placeAllWindows() {
-  return requestSpawnerAPI('placeAllWindows');
 }
 
 export async function getSpawnerVersion() {
