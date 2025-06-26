@@ -1110,45 +1110,6 @@ export function getenv() {
 
 
 /**
- * @function closewindow
- * @params {Array<number>} windowsid
- * @return {void}
- * @desc Close windows using windows's ID.
- */
-export function closewindows(windowsid) {
-  return requestSpawnerAPI('closewindows', { windowsid });
-}
-
-/**
- * @function activatewindows
- * @params {Array<number>} windowsid
- * @return {void}
- * @desc Activate application window using window's ID.
- */
-export function activatewindows(windowsid) {
-  return requestSpawnerAPI('activatewindows', { windowsid });
-}
-
-/**
- * @function getwindowslist
- * @global
- * @return {void}
- * @desc Returns a list containing all the applications windows opened.
- */
-export function getwindowslist() {
-  return requestSpawnerAPI('getwindowslist', null, 'GET');
-}
-
-/**
- * @function broadcastwindowslist
- * @return {void}
- * @desc Broadcast to all users a list containing all the applications windows opened.
- */
-export function broadcastwindowslist() {
-  return requestSpawnerAPI('broadcastwindowslist');
-}
-
-/**
  * @function clipboardsync
  * @return {void}
  * @desc Sync data between the clipboard PRIMARY and clipboard CLIPBOARD
@@ -1324,10 +1285,6 @@ export function getDesktop(key) {
 
 export function setTheme(theme) {
   return requestSpawnerAPI('setTheme', { theme });
-}
-
-export function placeAllWindows() {
-  return requestSpawnerAPI('placeAllWindows');
 }
 
 export async function getSpawnerVersion() {
