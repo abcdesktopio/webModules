@@ -31,8 +31,14 @@ if (window.setImmediate === undefined) {
 
         const index = event.data.slice("noVNC immediate trigger:".length);
 
+        if (!_immediateFuncs.hasOwnProperty(index)) {
+            console.warn(`Invalid immediate trigger index: ${index}`);
+            return;
+        }
+
         const callback = _immediateFuncs[index];
-        if (callback === undefined) {
+        if (typeof callback !== "function") {
+            console.warn(`Immediate trigger callback is not a function: ${index}`);
             return;
         }
 
