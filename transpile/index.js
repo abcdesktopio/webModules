@@ -360,7 +360,9 @@ async function run() {
   }
 
   if (program.opts().userInterface && program.opts().prod) { // Prevent of access index.html at the same time
+    console.log( 'call userInterface' );
     await userInterface();
+    console.log( 'call buildJSProductionFiles' );
     await buildJSProductionFiles();
   } else {
     if (program.opts().userInterface) {
