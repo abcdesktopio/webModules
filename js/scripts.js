@@ -708,6 +708,13 @@ function setupTopMenu() {
       case 'volume_level':
         break;
 
+      case 'snapshot':
+        console.log('menu snapshot start');
+	launcher.requestSnapshotAPI();
+	console.log('menu snapshot done');
+        break;
+
+
       default:
         console.error(`Invalid menu entry ${this.children[0].id}`);
         break;

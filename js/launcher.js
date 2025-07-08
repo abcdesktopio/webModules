@@ -1066,6 +1066,42 @@ export function requestSpawnerAPI(
   return fetch(window.od.net.urlrewrite(url), options).then((res) => res.json());
 }
 
+/**
+ * @function requestSnapshotAPI
+ * @global
+ * @params {object} jsonParameters
+ * @params {callback} onerror
+ * @return {void}
+ * @desc http asynchronous request.
+ */
+export function requestSnapshotAPI(
+  endPoint = '',
+  parameters = null,
+  method = 'POST',
+) {
+  let url = `/snapshot/${endPoint}`;
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append(
+    'ABCAuthorization',
+    `Bearer ${window.od.currentUser.authorization}`,
+  );
+
+  const options = {
+    headers,
+    method,
+  };
+
+  if (method === 'GET' && parameters) {
+    url += `?${new URLSearchParams(parameters)}`;
+  } else if (method !== 'GET' && parameters) {
+    options.body = JSON.stringify(parameters);
+  }
+
+  return fetch(window.od.net.urlrewrite(url), options).then((res) => res.json());
+}
+
+
 export function setAudioQuality(sink) {
   return requestSpawnerAPI('setAudioQuality', { sink });
 }
