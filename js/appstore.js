@@ -11,7 +11,6 @@
 * Software description: cloud native desktop service
 */
 
-// import * as systemMenu from './systemmenu.js';
 import * as system from './system.js';
 import * as languages from './languages.js';
 import * as secrets from './secrets.js';

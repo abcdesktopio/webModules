@@ -41,7 +41,6 @@ import * as desktopfeatures from './desktopfeatures.js';
 import * as languages from './languages.js';
 import * as bug from './issue.js';
 import { broadcastEvent } from './broadcastevent.js';
-// import * as systemMenu from './systemmenu.js';
 import userGeolocation from './geolocation.js';
 import { isTouchDevice } from './noVNC/core/util/browser.js';
 import './secrets.js';
@@ -237,7 +236,6 @@ function initApplistcallback() {
       // console.log( data ); 
       if (data)
      	 console.debug( 'generateDesktopFiles mimetype database done with status', data.code );
-         // systemMenu.init(); 
     })
     .catch( (err) => {
       console.error( 'generateDesktopFiles failed' );
@@ -783,7 +781,6 @@ export function closeTopLeftDropDowns() {
  */
 function addTransOverlay() {
   $('body').append('<div class="fullscreenTransOverlay"></div>');
-  // systemMenu.setLocked(true);
   $('.fullscreenTransOverlay').bind('click', () => {
     closeTopRightDropDowns();
     closeTopLeftDropDowns();

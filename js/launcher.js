@@ -12,7 +12,6 @@
 */
 
 import welcomeSystem from './welcomesystem.js';
-// import * as systemMenu from './systemmenu.js';
 import * as notificationSystem from './notificationsystem.js';
 import * as system from './system.js';
 import odApiClient from './odapiclient.js';
@@ -134,11 +133,6 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
         notificationSystem.displayNotification('Application', 'Unknow error', 'error');
         return;
       }
-
-      //if (!window.od.isTactile) {
-      //  systemMenu.mouselistener();
-      //}
-
       onAppIsRunning();
       document.getElementById('noVNC_canvas').focus();
       if (element && result.result) {
