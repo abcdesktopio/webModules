@@ -36,5 +36,6 @@ RUN chmod -R 555 *
 FROM nginx:alpine-slim
 # buildkit
 # COPY --from=builder --chmod=555 /var/webModules /usr/share/nginx/html
+RUN apk update && apk upgrade --no-cache
 COPY --from=builder /var/webModules /usr/share/nginx/html
 EXPOSE 80 
