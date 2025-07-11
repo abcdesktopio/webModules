@@ -708,7 +708,7 @@ function setupTopMenu() {
 
       case 'snapshot':
         console.log('menu snapshot start');
-	launcher.requestSnapshotAPI();
+	launcher.requestSnapshotAPI('snapshot');
 	console.log('menu snapshot done');
         break;
 
