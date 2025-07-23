@@ -26,10 +26,9 @@ RUN ./mkversion.sh && cat version.json
 
 # Clean
 # remove unused web content files 
+RUN npm audit fix
 RUN make removebuildtools
 RUN chmod -R 555 *
-# RUN cd /var/webModules/transpile && npm audit fix
-# RUN cd /var/webModules && npm i --package-lock-only && npm audit fix
 
 
 # --- START Build image ---
