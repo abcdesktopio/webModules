@@ -27,6 +27,7 @@ RUN ./mkversion.sh && cat version.json
 # Clean
 # remove unused web content files 
 RUN npm audit fix
+RUN npm update
 RUN make removebuildtools
 RUN chmod -R 555 *
 

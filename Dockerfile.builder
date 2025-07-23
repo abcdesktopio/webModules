@@ -58,11 +58,13 @@ COPY . /var/webModules
 # less is required 
 RUN npm install --global less
 # make install
-RUN cd /var/webModules && make install
-RUN cd /var/webModules && npm audit fix
+WORKDIR /var/webModules
+RUN make install
+RUN npm audit fix 
+RUN npm update
 # make dev
-RUN cd /var/webModules && make dev
+RUN  make dev
 # create version.json file
-RUN cd /var/webModules && ./mkversion.sh && cat version.json
+RUN ./mkversion.sh && cat version.json
 # run html5validator
 # RUN cd /var/webModules && /myenv/bin/html5validator index.html
