@@ -59,6 +59,7 @@ COPY . /var/webModules
 RUN npm install --global less
 # make install
 RUN cd /var/webModules && make install
+RUN cd /var/webModules && npm audit fix
 # make dev
 RUN cd /var/webModules && make dev
 # create version.json file
