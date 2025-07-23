@@ -30,7 +30,6 @@ import * as webshell from './webshell.js';
 import * as appSelector from './appSelector.js';
 import * as speaker from './speaker/main.js';
 import * as microphone  from './microphone/main.js';
-import * as whichBrowser from './which-browser.js';
 import * as screenRecord from './screenRecord.js';
 import * as menu from './menu.js';
 import * as system from './system.js';
@@ -39,7 +38,8 @@ import * as tipsinfo from './tipsinfo.js';
 import * as welcomeinfo from './welcomeinfo.js';
 import * as desktopfeatures from './desktopfeatures.js';
 import * as languages from './languages.js';
-import * as bug from './issue.js';
+import * as issue from './issue.js';
+import * as snapshot from './snapshot.js';
 import { broadcastEvent } from './broadcastevent.js';
 import userGeolocation from './geolocation.js';
 import { isTouchDevice } from './noVNC/core/util/browser.js';
@@ -128,9 +128,6 @@ function setupbeforeuserloginin() {
   // Create object UAParser for reading User Agent
   ocuaparser.init();
 
-  // Create object WhichBrowser Parser-JavaScript
-  whichBrowser.init();
-
   // Create broadway object and bind keyboard events and create canvas
   window.od.broadway = new BroadwayVNC(this);
   window.od.broadway.init();
@@ -194,6 +191,9 @@ window.od.setupafteruserloginin = function () {
   // Set url inside iframe & make windows resizable
   // Init a dropzone on document.documentElement with Dropzone lib
   upload.init();
+
+  // snaphost
+  snapshot.init();
 
   // load menu from od.config file
   // call launcher.getkeyinfo("menuconfig")
@@ -401,54 +401,6 @@ function parseQueryString(str) {
 
     return ret;
   }, {});
-}
-
-/**
- * @function isCompatibleBrowser
- * @global
- * @return bool
- * @desc Check if user's browser version is compatible.
- */
-function isCompatibleBrowser() {
-  /*
-     * Check browser version
-     */
-  const navInfo = whichBrowser.getBrowserInfo();
-  const version = parseInt(navInfo.version, 10);
-  switch (navInfo.name) {
-    case 'Chrome Headless':
-      if (version < 41) return false;
-      break;
-    case 'Chrome':
-      if (version < 41) return false;
-      break;
-    case 'Chromium':
-      if (version < 41) return false;
-      break;
-    case 'Firefox':
-      if (version < 32) return false;
-      break;
-    case 'IE':
-      if (version < 11) return false;
-      break;
-    case 'Safari':
-      if (version < 8) return false;
-      break;
-    case 'Mobile Safari':
-      if (version < 9) return false;
-      break;
-    case 'Opera':
-      if (version < 27) return false;
-      break;
-    case 'Edge':
-      if (version < 12) return false;
-      break;
-    default:
-      console.log(`Web browser unlisted: ${navInfo.name}`);
-      return false;
-  }
-
-  return true;
 }
 
 /**
@@ -707,9 +659,8 @@ function setupTopMenu() {
         break;
 
       case 'snapshot':
-        console.log('menu snapshot start');
-	launcher.requestSnapshotAPI('');
-	console.log('menu snapshot done');
+	// snapshot.version();
+	snapshot.snapshot();
         break;
 
 
@@ -730,7 +681,7 @@ function setupTopMenu() {
       microphone.updateState();
     });
 
-  bug.init();
+  issue.init();
 }
 
 /**
