@@ -41,6 +41,10 @@ function catchingCallback(error) {
 let attempt = 0;
 export async function init() {
   try {
+    // Create object WhichBrowser Parser-JavaScript
+    whichBrowser.init();
+    
+    // load template
     const templateIssue = document.querySelector('template#issue-window-template');
     const { id } = await launcher.getkeyinfo('tracker');
 
