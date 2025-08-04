@@ -26,6 +26,18 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node_version }}
+
+      - name: Install global dependencies
+        run: npm install --global less
+
+      - name: Install local dependencies
+        run: npm install
+
+
       - name: Build index.html
         run: make dev
 
