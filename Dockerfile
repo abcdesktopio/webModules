@@ -20,9 +20,10 @@ RUN echo current target is $TARGET it can be 'dev' or 'prod'
 COPY . /var/webModules 
 WORKDIR /var/webModules
 RUN make clean
+RUN make install
 RUN make $TARGET
-# create version.json file
-RUN ./mkversion.sh && cat version.json
+# dump version.json file
+RUN cat version.json
 
 # Clean
 # remove unused web content files 
