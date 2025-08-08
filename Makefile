@@ -62,14 +62,14 @@ checkTranspile:
 	fi
 
 install:
-	npm install
-	cd transpile && npm install
+	npm install && npm audit fix
+	cd transpile && npm install && npm audit fix
 	cp "node_modules/@cycjimmy/jsmpeg-player/dist/jsmpeg-player.esm.js" ./js
 	# cp node_modules/xterm/lib/xterm.js ./js
 	# cp node_modules/xterm-addon-attach/lib/xterm-addon-attach.js ./js
 	# cp node_modules/xterm-addon-fit/lib/xterm-addon-fit.js .js
 	# cp node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js ./js
-	cd js/noVNC && npm i
+	cd js/noVNC && npm install && npm audit fix
 
 svg:
 	cd ./transpile && node index.js --svg
