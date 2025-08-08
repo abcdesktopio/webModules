@@ -10,6 +10,7 @@ ARG NODE_MAJOR
 # convert arg to env
 ENV NODE_MAJOR=$NODE_MAJOR
 ENV BRANCH=$BRANCH
+SHELL ["/bin/bash", "-c"]
 RUN echo current branch is $BRANCH
 RUN echo NODE release is $NODE_MAJOR 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
