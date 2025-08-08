@@ -19,17 +19,6 @@ RUN echo current target is $TARGET it can be 'dev' or 'prod'
 
 COPY . /var/webModules 
 WORKDIR /var/webModules
-RUN make clean
-RUN make install
-RUN make $TARGET
-# dump version.json file
-RUN cat version.json
-
-# Clean
-# remove unused web content files 
-RUN npm audit fix
-RUN npm update
-RUN cd /var/webModules/js/noVNC && npm audit fix
 RUN make removebuildtools
 RUN chmod -R 555 *
 
