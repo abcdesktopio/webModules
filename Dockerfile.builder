@@ -63,12 +63,8 @@ RUN npm install --global less
 WORKDIR /var/webModules
 RUN make install
 RUN make dev
+RUN make version
 
 # audit fix in noVNC
 WORKDIR /var/webModules/js/noVNC
 RUN npm audit fix
-
-# create version.json file
-RUN ./mkversion.sh && cat version.json
-# run html5validator
-# RUN cd /var/webModules && /myenv/bin/html5validator index.html
