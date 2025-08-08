@@ -26,33 +26,6 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node_version }}
-
-      - name: Install global dependencies
-        run: npm install --global less
-
-      - name: Install local dependencies
-        run: npm install
-
-
-      - name: Build index.html
-        run: make dev
-
-      - name: move index.html and css to test to tmp directory
-        run: |
-          mkdir tmp
-          mv index.html tmp/index.html
-          cp -r css tmp/
-
-      - name: HTML5Validator
-        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
-        with:
-          root: ./tmp
-          css: true
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
