@@ -28,6 +28,7 @@ RUN ./mkversion.sh && cat version.json
 # remove unused web content files 
 RUN npm audit fix
 RUN npm update
+RUN cd /var/webModules/js/noVNC && npm audit fix
 RUN make removebuildtools
 RUN chmod -R 555 *
 
