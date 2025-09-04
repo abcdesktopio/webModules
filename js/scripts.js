@@ -40,6 +40,7 @@ import * as desktopfeatures from './desktopfeatures.js';
 import * as languages from './languages.js';
 import * as issue from './issue.js';
 import * as snapshot from './snapshot.js';
+import * as taskstate from './taskstate.js';
 import { broadcastEvent } from './broadcastevent.js';
 import userGeolocation from './geolocation.js';
 import { isTouchDevice } from './noVNC/core/util/browser.js';
@@ -204,6 +205,9 @@ window.od.setupafteruserloginin = function () {
   // init tips
   // call launcher.getkeyinfo
   tipsinfo.init();
+
+  // taskstate
+  taskstate.init();
 
   // show user name in top left screen
   system.setUsername(window.od.currentUser.name);

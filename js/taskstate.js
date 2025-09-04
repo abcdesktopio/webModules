@@ -13,12 +13,20 @@
 
 import * as launcher from './launcher.js';
 import { broadcastEvent } from './broadcastevent.js';
+import * as notificationSystem from './notificationsystem.js';
 
+var tasks_notification = {};
 
 const get_element_task_id = function ( task ) {
  // return 'waiting_task_id_' + task['id'];
  return task['id'];
 }
+
+
+const create_desciption_from_task = function ( task ) {
+	let description = task['id'] + ' ' + task['reason'] + ' ' + task['image'];
+	return description;
+};
 
 const create_element_from_task = function( task ) {
 	var html_task = document.createElement("img");
@@ -26,8 +34,9 @@ const create_element_from_task = function( task ) {
 	let icondata = task['icondata'] || task['oc.icondata'];
         html_task.src = 'data:image/svg+xml;base64,' + icondata;
 	html_task.id = get_element_task_id( task ) ;
-	html_task.alt =  task['image'] + ' ' +  task['name'];
-	html_task.title = task['image'];
+	let description = create_desciption_from_task(task);
+	html_task.alt = description;
+	html_task.title = description;
 	return html_task;
 }
 
@@ -35,12 +44,18 @@ const create_element_from_task = function( task ) {
 const update_display_task = function() {
 	let taskwaiting = document.getElementById('taskwaiting');
 	let applicationstatus = document.getElementById('applicationstatus');
-	if (!taskwaiting || !applicationstatus) return;
+	let hourglassi_start = document.getElementById('hourglassi_start');
+	if (!taskwaiting || !applicationstatus || !hourglassi_start) return;
 	if (taskwaiting.childElementCount > 0) {
 		applicationstatus.style.display = 'block';
+		hourglassi_start.title = '';
+		const collection = taskwaiting.children;
+		for ( let i=0; i < collection.length; ++i)
+			hourglassi_start.title += collection[i].title + '\n';
 	}
 	else {
 		applicationstatus.style.display = 'none';
+		hourglassi_start.title = '';
 	}
 
 }
@@ -109,16 +124,73 @@ export const update_on_container_notification = function( container ) {
 		case 'Completed':
 			remove_task( container );
                         break;
+		default:
+			remove_task( container );
 	}
 	update_display_task();
 }
 
 export const init = function () {
-  // document.addEventListener( 'container', ({ detail: { container } }) => update_on_container_notification(container));
-  let taskwaiting = document.getElementById('taskwaiting');
-  // update_state();
+  document.addEventListener( 'container', ({ detail: { container } }) => update_on_container_notification(container));
+  broadcastEvent.addEventListener( 'container', ({ detail: { container } }) => update_on_container_notification(container));
+  broadcastEvent.addEventListener( 'container', ({ detail: { container } }) => containerNotificationInfo(container));
   update_applicationstatus();
 }
 
-broadcastEvent.addEventListener( 'container',	({ detail: { container } }) => update_on_container_notification(container));
-// document.addEventListener('ocrun.done', () => update_state());
+export const containerNotificationInfo = function (data) {
+  let timeout = 2000;
+  let reason = data.reason;
+  let icondata = data['icondata'] || data['oc.icondata'];
+  const icon = `data:image/svg+xml;base64,${icondata}`;
+  if (!data['id']) return;	
+  if (!tasks_notification[data['id']]) {
+    tasks_notification[data['id']] = {};
+  }
+  if (tasks_notification[data['id']][reason] == true )
+	return;
+  switch( reason ) {
+	case 'Created': 
+        case 'Scheduled': {
+	      // stop bugging me 
+              // skip this event
+	      tasks_notification[data['id']][reason]=true;
+              break;
+	}
+        case 'PodInitializing':
+        case 'Pulling': {
+	      // postpone message in timeout
+	      // cancel if an event occurs in less than timeout
+              let timeout_id = setTimeout( notificationSystem.displayNotification, timeout, data.reason, data.message, 'info', icon, 15 );
+              tasks_notification[data['id']]['timeout'] = timeout_id;
+	      tasks_notification[data['id']][reason]=true;
+              break;
+	}
+        case 'Completed':
+	      // stop bugging me 
+              // skip this event
+              break;
+	case 'Started': {
+	      // stop bugging me 
+              // skip this event
+	      let timeout_id = tasks_notification[data['id']]['timeout'];
+              if (timeout_id) {
+                delete tasks_notification[data['id']]['timeout'];
+                clearTimeout(timeout_id);
+              }
+              break;
+	}
+	case 'Pulled': {
+	      let timeout_id = tasks_notification[data['id']]['timeout'];
+              if (timeout_id) {
+		delete tasks_notification[data['id']]['timeout']; 
+                clearTimeout(timeout_id);
+	      }
+	      else 
+		notificationSystem.displayNotification(data.reason, data.message, 'info', icon, 15);
+	      tasks_notification[data['id']][reason]=true;
+	      break;
+	}
+	default:
+              notificationSystem.displayNotification(data.reason, data.message, 'error', icon, 15);
+  }
+};

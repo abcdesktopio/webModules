@@ -15,11 +15,11 @@ import welcomeSystem from './welcomesystem.js';
 import * as notificationSystem from './notificationsystem.js';
 import * as system from './system.js';
 import odApiClient from './odapiclient.js';
-import { broadcastEvent } from './broadcastevent.js';
 import userGeolocation from './geolocation.js';
 
-
-
+// JWT will be refreshed when 3/4 of the expire time is reached
+// e.g. if expire_in is 3600 seconds, the token will be refreshed after 2700 seconds
+// (3600 * 750 milliseconds)
 const jwt_retry_before_expire_time_in_milliseconds = 850;
 
 /**
@@ -133,21 +133,23 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
         notificationSystem.displayNotification('Application', 'Unknow error', 'error');
         return;
       }
+      // dispatchEvent ocrun.done
+      document.dispatchEvent( new CustomEvent("ocrun.done", result.result) );
       onAppIsRunning();
       document.getElementById('noVNC_canvas').focus();
-      if (element && result.result) {
-        element.setAttribute('state', 'running');
-        element.setAttribute('container_id', result.result.container_id);
-      }
+      // if (element && result.result) {
+      //   element.setAttribute('state', 'running');
+      //   element.setAttribute('container_id', result.result.container_id);
+      // }
     })
     .fail(({ status, error }) => {
       let msg_info = `${status}: ${error}`;
       notificationSystem.displayNotification('Application', msg_info, 'error');
 
-      if (element instanceof HTMLLIElement) {
-        element.setAttribute('state', 'down');
-        element.setAttribute('container_id', '');
-      }
+      //if (element instanceof HTMLLIElement) {
+      //  element.setAttribute('state', 'down');
+      //  element.setAttribute('container_id', '');
+      // }
     })
     .always(() => {
       if (element) {
@@ -171,6 +173,13 @@ export function getUserInfo() {
   return odApiClient.user.whoami();
 }
 
+/**
+ * @function getLogs
+ * @global
+ * @params {callback} callback
+ * @return {void}
+ * @desc Get abcdesktop logs.
+ */
 export function getLogs(callback) {
   return odApiClient.composer
     .getLogs()
@@ -304,7 +313,6 @@ export function initApplist() {
         );
         return;
       }
-      
       window.od.applist = result;
     })
     .fail(({ status, error }) => {
@@ -781,7 +789,16 @@ export function getContainers() {
 }
 
 /**
- * @function getContainers
+ * @function getApplicationsbyPhase
+ * @global
+ */
+export function list_applications_by_phase( phase ) {
+  return odApiClient.composer.list_applications_by_phase( phase );
+}
+
+
+/**
+ * @function getSecrets
  * @global
  */
 export function getSecrets() {
@@ -1309,14 +1326,8 @@ export async function getWebModulesVersion() {
   return window.od.currentUser.webModulesVersion;
 }
 
-export const containerNotificationInfo = function (data) {
-  const icon = `data:image/svg+xml;base64,${data.icondata}`;
-  notificationSystem.displayNotification(data.name, data.message, 'error', icon, 15);
-};
 
 export function getListScret() {
   return odApiClient.composer.listsecrets();
 }
 
-broadcastEvent.addEventListener('container',	({ detail: { container } }) => containerNotificationInfo(container));
-// broadcastEvent.addEventListener('ocrun', 	({ detail: { data_dict } }) => ocrun(data_dict));
