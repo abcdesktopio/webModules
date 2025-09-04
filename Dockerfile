@@ -19,6 +19,15 @@ RUN echo current target is $TARGET it can be 'dev' or 'prod'
 
 COPY . /var/webModules 
 WORKDIR /var/webModules
+RUN make clean
+RUN make $TARGET
+# create version.json file
+RUN ./mkversion.sh && cat version.json
+
+# Clean
+# remove unused web content files 
+RUN npm audit fix
+RUN npm update
 RUN make removebuildtools
 RUN chmod -R 555 *
 
