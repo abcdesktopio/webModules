@@ -238,6 +238,10 @@ const odApiClient = new (class ODApiClient {
         return client.sendRequest('composer/listcontainer');
       }
 
+      list_applications_by_phase( phase ) {
+        return client.sendRequest('composer/list_applications_by_phase', { phase } );
+      }
+
       listsecrets() {
         return client.sendRequest('composer/listsecrets');
       }
