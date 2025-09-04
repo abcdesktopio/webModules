@@ -504,35 +504,6 @@ div.button {
   color: transparent;
 }
 
-#top #top-left #dash-control-buttons {
-  float: left;
-}
-
-#top.dashOpen #top-left #dash-control-buttons div {
-  width: 15px;
-  height: 15px;
-  float: left;
-  margin-left: 4px;
-  margin-top: 5px;
-}
-
-#top.dashOpen #top-left #dash-control-buttons .close {
-  background: url(../../../img/dash/dash-close.png) no-repeat;
-  margin-left: 10px;
-}
-
-#top.dashOpen #top-left #dash-control-buttons .close:active {
-  background: url(../../../img/dash/dash-close-clicked.png) no-repeat;
-}
-
-#top.dashOpen #top-left #dash-control-buttons .min {
-  background: url(../../../img/dash/dash-min.png) no-repeat;
-}
-
-#top.dashOpen #top-left #dash-control-buttons .max {
-  background: url(../../../img/dash/dash-max.png) no-repeat;
-}
-
 #top #top-button-bg #top-button {
   background: url("../../../img/topleft-button.png") no-repeat center center;
   width: 70px;
@@ -554,35 +525,70 @@ div.button {
   float: left;
 }
 
+#top #top-center {
+    overflow: hidden;
+    font-size: 15px;
+    position: inherit;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+    color: @light;
+    display: block;
+}
+
 #top #top-right {
   float: right;
   font-size: 15px;
   padding-right: 5px;
 }
 
-@media screen and (max-width: 800px) {
-  #top #top-center {
-    display: none;
+
+@keyframes heartbeat
+{
+  0% {
+    transform: scale( .75 );
+  }
+  20% {
+    transform: scale( 1 );
+  }
+  40% {
+    transform: scale( .75 );
+  }
+  60% {
+    transform: scale( 1 );
+  }
+  80% {
+    transform: scale( .65 );
+  }
+  100% {
+    transform: scale( .45 );
   }
 }
 
-@media screen and (min-width: 801px) {
-  #top #top-center {
-    overflow: hidden;
-    font-size: 15px;
-    position: inherit;
-    text-align: center;
-    padding-top: 3px;
-    width: 100%;
-    pointer-events: none;
-    color: @light;
-    display: block;
-  }
+/* Heart beat animation */
+@keyframes beat{
+  to { transform: scale(0.4); }
+}
 
-  #top #top-center p {
-    margin: 0;
-    padding: 0;
-  }
+.heartbeat {
+  animation: beat 1s infinite alternate;
+  transform-origin: center;
+}
+
+.heartbeat1 {
+    animation: heartbeat 1s infinite;
+}
+.heartbeat2 {
+    animation: heartbeat 2s infinite;
+}
+.heartbeat3 {
+    animation: heartbeat 3s infinite;
+}
+.heartbeat {
+    animation: heartbeat 4s infinite;
+}
+.heartbeat5 {
+    animation: heartbeat 5s infinite;
 }
 
 #top #top-right div {
@@ -591,6 +597,14 @@ div.button {
   overflow: hidden;
   padding-top: 4px;
 }
+
+#top #top-center div {
+  float: left;
+  padding: 0px 4px;
+  overflow: hidden;
+  padding-top: 4px;
+}
+
 
 #top #top-right #upload .drop-down {
   margin-left: -115px !important;
@@ -895,42 +909,6 @@ div.button {
   float: left;
 }
 
-#top #top-left #topPresence {
-  height: 18px;
-  padding: 0;
-  display: none;
-  padding: 0px 8px;
-  color: @light;
-  float: left;
-}
-
-#top #top-left #topPresence .drop-down {
-  margin-left: -7px;
-}
-
-#top #top-left #topPresence .drop-down:after,
-#top #top-left #topPresence .drop-down:before {
-  bottom: 100%;
-  left: 59%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-
-#top #top-left #topPresence .drop-down:after {
-  border-bottom-color: @light;
-  border-width: 10px;
-  margin-left: -85px;
-}
-#top #top-left #topPresence .drop-down:before {
-  border-bottom-color: @primary;
-  border-width: 11px;
-  margin-left: -86px;
-}
-
 #top #top-left #place.offline {
   background: url(../../../img/top/place-offline.svg) no-repeat center;
   background-size: 18px;
@@ -961,6 +939,12 @@ div.button {
 #issue-summary::placeholder,
 #issue-description::placeholder {
   color: #ffffff;
+}
+
+
+#top #top-right #applicationstatus {
+  display: none;
+  padding-block: unset;
 }
 
 #top #top-right #top-issue {
@@ -1023,10 +1007,6 @@ div.button {
 
 #top #top-right #speakers .drop-down #volume_level:disabled {
   opacity: 0.5;
-}
-
-#top #top-right #topMail {
-  display: none;
 }
 
 #top #top-right #support {
@@ -1194,6 +1174,7 @@ div.button {
 }
 
 #top #top-right div ul li,
+#top #top-center div ul li,
 #top #top-left div ul li {
   height: 30px;
   padding: 4px 40px 3px 6px;
@@ -1201,6 +1182,7 @@ div.button {
 }
 
 #top #top-right div ul li img,
+#top #top-center div ul li img,
 #top #top-left div ul li img {
   margin-left: -10px;
   margin-right: 5px;
@@ -1300,11 +1282,6 @@ input#volume_level{
   margin-top: 12px;
 }
 
-#top #top-right #printer {
-  padding: 0;
-  padding-top: 4px;
-}
-
 #top #top-right #printer .drop-down div {
   padding: 0px;
 }
@@ -1401,38 +1378,6 @@ input#volume_level{
   #top-left #title {
     display: none;
   }
-}
-
-#control-buttons {
-  margin-top: 2px;
-  margin-left: 8px;
-  float: left;
-  display: none;
-}
-
-#control-buttons div {
-  width: 19px;
-  height: 19px;
-  background-repeat: no-repeat;
-  float: left;
-  margin-right: 2px;
-}
-
-#control-buttons div:hover {
-  background-position: 0px -19px;
-}
-
-#control-buttons #close {
-  background-image: url(../../../img/close-button.jpg);
-}
-#control-buttons #min {
-  background-image: url(../../../img/min-button.jpg);
-}
-#control-buttons #max {
-  background-image: url(../../../img/max-button.jpg);
-}
-#top.dashOpen #control-buttons {
-  display: none;
 }
 
 .fullsize {
@@ -1542,6 +1487,7 @@ input#volume_level{
 }
 
 #top #top-right div.state,
+#top #top-center div.state,
 #top #top-left div.state {
   float: left;
   height: 12px;
