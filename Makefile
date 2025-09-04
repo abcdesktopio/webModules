@@ -107,4 +107,4 @@ clean:
 
 
 removebuildtools:
-	rm -rf .eslintrc.json .git .github .gitignore Dockerfile* Makefile transpile *.sh
+	rm -rf .eslintrc.json .git .github .gitignore Dockerfile* Makefile transpile package.json yarn.lock *.sh
