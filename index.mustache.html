@@ -352,53 +352,24 @@
     </div>
     <div id="top" class="dropShadow">
         <div id="top-left">
-            <div id="control-buttons">
-                <div id="close"></div>
-                <div id="min"></div>
-                <div id="max"></div>
-            </div>
             <div id="size" style="display:none;height:24px; width:100px;position: absolute;top: 2px;pointer-events: none;left:0px;color:rgba(68, 68, 68, 0.5);">
                 <div style="float:left;" id="width"></div>
                 <div style="float:left;">x</div>
                 <div style="float:left;" id="height"></div>
             </div>
-            <div id="topPresence">
-                <div id="presence" class="state"></div>
-                <ul class="drop-down">
-                    <li>
-                        <div class="state" id='available'></div>
-                        <p class="placestate">Available</p>
-                    </li>
-                    <li>
-                        <div class="state" id='away'></div>
-                        <p class="placestate">Away</p>
-                    </li>
-                    <li>
-                        <div class="state" id='brb'></div>
-                        <p class="placestate">Be right back</p>
-                    </li>
-                    <li>
-                        <div class="state" id='dnd'></div>
-                        <p class="placestate">Do not disturb</p>
-                    </li>
-                    <li>
-                        <div class="state" id='busy'></div>
-                        <p class="placestate">Busy</p>
-                    </li>
-                </ul>
-            </div>
             <div id="userMenu" title="User">
                 <span id="username">User</span>
             </div>
         </div>
-        <div id="top-center">
-            
-        </div>
+        <div id="top-center"></div>
         <div id="top-right">
-            <div class="loader-inner ball-clip-rotate" title="Connecting…"
-                style="height: 23px;width: 23px;display:none;">
+	    <div id="applicationstatus">
+		<div id="hourglassi_start" title="Please wait">
+                  <img id="hourglass-split" src="../img/top/hourglass-split.svg" loading="lazy">(
+                </div>
+		<div id="taskwaiting"></div>
+		<div id="hourglassi_end">)</div>
             </div>
-            <div id="connection" class="disconnected"></div>
             {{#isIndexPage}}
                 <div id="topScreenRecord" class="keep" title="Screen Recorder">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
@@ -451,11 +422,6 @@
                 <img src="../img/top/printer_None.svg" alt="printer-icon" loading="lazy">
                 <ul class="drop-down"></ul>
             </div>
-            <!--
-            <div id="topMail" class="keep" title="Mail">
-                <img id="ico" src="../img/top/mail.svg" alt="mail-icon">
-            </div>
-            -->
 
             {{#isIndexPage}}
             <div id="top-issue-container" class="keep" title="Issue">
