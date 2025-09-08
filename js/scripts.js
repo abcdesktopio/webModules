@@ -22,7 +22,6 @@ import * as shareSystem from './shareSystem.js';
 import * as quickSupport from './quickSupport.js';
 import * as logmein from './logmein.js';
 import * as upload from './upload.js';
-import * as errorMessage from './errormessage.js';
 import * as printer from './printer.js';
 import * as windowMessage from './windowMessage.js';
 import * as ocuaparser from './ocuaparser.js';
@@ -138,9 +137,6 @@ function setupbeforeuserloginin() {
 
   // Init event to show login and status progression
   connectLoader.init();
-
-  // init error message
-  errorMessage.init();
 
   // Init a dropzone on document.documentElement with Dropzone lib
   // upload.init();
@@ -832,7 +828,8 @@ function launchmyapp( myapptolaunch ) {
           window.od.broadway.toggleVirtualKeyboard();
           break;
         default:
-          errorMessage.open();
+          console.error( 'bad myapptolaunch.image value' );
+          console.error( myapptolaunch );
           break;
       }
     }
