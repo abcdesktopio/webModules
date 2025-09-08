@@ -17,7 +17,6 @@
  */
 
 import welcomeSystem from './welcomesystem.js';
-import * as ocuaparser from './ocuaparser.js';
 import * as system from './system.js';
 import { getTranslate } from './languages.js';
 
@@ -67,7 +66,7 @@ export const editStatus = function (status) {
   } catch (e) {
     console.error(e);
   }
-  console.log('connect loader status: ' + status );
+  
   welcomeSystem.showStatus(status);
 
   if (status === 'Connection') {
@@ -76,27 +75,6 @@ export const editStatus = function (status) {
 
   if (status === 'Normal') {
     welcomeSystem.close();
-    if (ocuaparser.isSoundSupported()) {
-      const connectSound = document.querySelector('#connectSound');
-      if (connectSound && (typeof connectSound.play === 'function')) {
-        try {
-          const playPromise = connectSound.play();
-          // In browsers that don’t yet support this functionality,
-          // playPromise won’t be defined.
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              // Automatic playback started!
-            }).catch((error) => {
-              console.error(error);
-              // Automatic playback failed.
-              // Show a UI element to let the user manually start playback.
-            });
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    }
   }
 
   if (status === 'Disconnected') {
