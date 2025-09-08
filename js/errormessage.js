@@ -31,7 +31,7 @@ let NavMessage;
 export const init = function () {
   _this = document.querySelector('.error-window');
   if (_this) {
-    $('.error-window  .control .close').bind('click', () => {
+    $('.error-window .control .close').bind('click', () => {
       close();
     });
 
