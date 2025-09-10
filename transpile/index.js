@@ -263,6 +263,7 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
     cuid: "{{ cuid }}",
     loginsessionid: "{{ loginsessionid }}",
     base_url: "{{ base_url }}",
+    refresh_timeout: "{{ refresh_timeout }}",
     isIndexPage,
     isDemoPage,
     isLoginSessionPage
