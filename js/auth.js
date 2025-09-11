@@ -109,11 +109,25 @@ export class ExplicitAuthManager extends AuthManager {
     this.controls = [ '#cuid', '#ADpassword' ]; // user input 
 
     const self = this;
+   
     $('form', this.$ui).submit((e) => {
       self.onsubmit();
       e.preventDefault();
       return false;
     });
+
+    let refreshsessionidtimeout = $("#refreshsessionidtimeout", this.$ui).val();
+    if ( !isNaN(refreshsessionidtimeout) ) {
+	refreshsessionidtimeout = refreshsessionidtimeout * 1000;
+	setTimeout( 
+		function() {
+			console.log( 'Refreshing sessionid, reload page now');
+			window.location.reload();
+		}, 
+		refreshsessionidtimeout 
+	);
+	console.log( 'Refresh sessionid timeout in ms ' + refreshsessionidtimeout );
+    }
   }
 
   removeControlErrorClass() {

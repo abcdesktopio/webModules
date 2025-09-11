@@ -175,7 +175,8 @@
                                 <input id="cuid" class="form-control" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly">
                                 <!-- loginsessionid is used to check that the user in cuid input value did not change with the previous request -->
                                 <!-- in case if the http request id formated manually --> 
-                                <input id="loginsessionid" type="hidden" value="{{ loginsessionid }}">
+				<input id="loginsessionid" type="hidden" value="{{ loginsessionid }}">
+				<input id="refreshsessionidtimeout" type="hidden" value="{{ refresh_timeout }}">
                             {{/isLoginSessionPage}}
                         </div>
                         <div class="form-group" id="form-group-password" >
