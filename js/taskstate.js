@@ -120,6 +120,7 @@ export const update_on_container_notification = function( container ) {
 			add_task( container );
                         break;
 		case 'Started':
+		case 'Running':
 		case 'Pulled':
 		case 'Completed':
 			remove_task( container );
@@ -169,6 +170,7 @@ export const containerNotificationInfo = function (data) {
 	      // stop bugging me 
               // skip this event
               break;
+	case 'Running': 
 	case 'Started': {
 	      // stop bugging me 
               // skip this event
