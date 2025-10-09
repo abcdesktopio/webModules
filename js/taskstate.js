@@ -10,13 +10,13 @@
 * Author: abcdesktop.io team
 * Software description: cloud native desktop service
 */
-
+import { broadcastEvent } from './broadcastevent.js'
 import * as launcher from './launcher.js';
-import { broadcastEvent } from './broadcastevent.js';
 import * as notificationSystem from './notificationsystem.js';
 
 var tasks_notification = {};
-
+var task_removed = {};
+	
 const get_element_task_id = function ( task ) {
  // return 'waiting_task_id_' + task['id'];
  return task['id'];
@@ -64,17 +64,23 @@ const add_task = function( task ) {
 	let taskwaiting = document.getElementById('taskwaiting');
         if (taskwaiting) {
 		let id = get_element_task_id( task );
-		var html_task =  document.getElementById( id );
-		if (!html_task) {
-			let html_task = create_element_from_task( task );
-        		taskwaiting.appendChild( html_task );
+		// only add if the task is not in removed dict
+		// events aren't sequential
+		// if the task has been removed previously 
+		// do not add it any more 
+		if (!task_removed[id]) {
+			var html_task =  document.getElementById( id );
+			if (!html_task) {
+				let html_task = create_element_from_task( task );
+        			taskwaiting.appendChild( html_task );
+			}
 		}
-
 	}
 }
 
 const remove_task = function( task ) {
 	let id = get_element_task_id( task );
+	task_removed[id] = true;
         var html_task =  document.getElementById( id );
         if (html_task) {
 		html_task.parentNode.removeChild( html_task );
@@ -132,14 +138,28 @@ export const update_on_container_notification = function( container ) {
 }
 
 export const init = function () {
-  document.addEventListener( 'container', ({ detail: { container } }) => update_on_container_notification(container));
+   launcher.getkeyinfo('imagenotificationconfig').done((msg) => {
+    if (msg && msg.id ) {
+      if (  msg.id.ephemeral_container == true ||  msg.id.pod_application == true)
+	    broadcastEvent.addEventListener( 'container', ({ detail: { container } }) => containerNotificationInfo(container));
+    }
+  });
+  // always add taskbar event image status
   broadcastEvent.addEventListener( 'container', ({ detail: { container } }) => update_on_container_notification(container));
-  broadcastEvent.addEventListener( 'container', ({ detail: { container } }) => containerNotificationInfo(container));
   update_applicationstatus();
 }
 
+
+export const do_container_notificationSystem = function( title, desc, type, img, url, duration ) {
+  let d=15;
+  notificationSystem.displayNotification(title, desc, type, img, url, duration);
+}
+
 export const containerNotificationInfo = function (data) {
-  let timeout = 2000;
+
+  console.log( data );
+
+  let timeout = 3000; // in milli seconds
   let reason = data.reason;
   let icondata = data['icondata'] || data['oc.icondata'];
   const icon = `data:image/svg+xml;base64,${icondata}`;
@@ -161,9 +181,13 @@ export const containerNotificationInfo = function (data) {
         case 'Pulling': {
 	      // postpone message in timeout
 	      // cancel if an event occurs in less than timeout
-              let timeout_id = setTimeout( notificationSystem.displayNotification, timeout, data.reason, data.message, 'info', icon, 15 );
-              tasks_notification[data['id']]['timeout'] = timeout_id;
-	      tasks_notification[data['id']][reason]=true;
+	      // add only one
+	      let timeout_id = tasks_notification[data['id']]['timeout'];
+	      if (!tasks_notification[data['id']]['timeout']) {
+              	timeout_id = setTimeout( do_container_notificationSystem, timeout, data.reason, data.message, 'info', icon, 15 );
+              	tasks_notification[data['id']]['timeout'] = timeout_id;
+	      	tasks_notification[data['id']][reason]=true;
+	      }
               break;
 	}
         case 'Completed':
@@ -176,23 +200,25 @@ export const containerNotificationInfo = function (data) {
               // skip this event
 	      let timeout_id = tasks_notification[data['id']]['timeout'];
               if (timeout_id) {
+		clearTimeout(timeout_id);
                 delete tasks_notification[data['id']]['timeout'];
-                clearTimeout(timeout_id);
               }
+	      tasks_notification[data['id']]['cancel'] = true; 
               break;
 	}
 	case 'Pulled': {
 	      let timeout_id = tasks_notification[data['id']]['timeout'];
               if (timeout_id) {
+		clearTimeout(timeout_id);
 		delete tasks_notification[data['id']]['timeout']; 
-                clearTimeout(timeout_id);
 	      }
 	      else 
 		notificationSystem.displayNotification(data.reason, data.message, 'info', icon, 15);
 	      tasks_notification[data['id']][reason]=true;
 	      break;
 	}
+
 	default:
-              notificationSystem.displayNotification(data.reason, data.message, 'error', icon, 15);
+              notificationSystem.displayNotification(data.reason, data.message, 'info', icon, 15);
   }
 };
