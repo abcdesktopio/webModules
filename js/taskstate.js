@@ -116,7 +116,7 @@ export const update_applicationstatus = function () {
 };
 
 export const update_on_container_notification = function( container ) {
-	console.log( container );
+	// console.log( container );
 	let reason = container.reason;
 	switch( reason ) {
 		case 'Created':
@@ -156,9 +156,7 @@ export const do_container_notificationSystem = function( title, desc, type, img,
 }
 
 export const containerNotificationInfo = function (data) {
-
-  console.log( data );
-
+  // console.log( data );
   let timeout = 3000; // in milli seconds
   let reason = data.reason;
   let icondata = data['icondata'] || data['oc.icondata'];
