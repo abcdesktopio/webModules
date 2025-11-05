@@ -93,7 +93,7 @@ const show_task = function( tasks )  {
  if (!taskwaiting) return;
  //taskwaiting.replaceChildren();
  for (var i = 0; i < tasks.length; i++) {
-	console.log( tasks[i] );
+	// console.log( tasks[i] );
 	let html_task = create_element_from_task( tasks[i] );
 	taskwaiting.appendChild( html_task );
  }
