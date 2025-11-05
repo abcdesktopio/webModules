@@ -23,6 +23,7 @@ import * as quickSupport from './quickSupport.js';
 import * as logmein from './logmein.js';
 import * as upload from './upload.js';
 import * as printer from './printer.js';
+import * as gamepad from './gamepad.js';
 import * as windowMessage from './windowMessage.js';
 import * as ocuaparser from './ocuaparser.js';
 import * as webshell from './webshell.js';
@@ -182,8 +183,14 @@ window.od.setupafteruserloginin = function () {
   microphone.init();
   speaker.init();
 
+  
   quickSupport.init();
+
+  // add printer	
   printer.init();
+
+  // add gamepad
+  gamepad.init();
 
   // Set url inside iframe & make windows resizable
   // Init a dropzone on document.documentElement with Dropzone lib
