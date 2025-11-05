@@ -185,6 +185,10 @@
                             <input id="ADpassword" class="form-control" placeholder="Password" type="password" maxlength="128" autocomplete="current-password">
                         </div>	
 			<div class="form-group" id="form-group-submit">
+			    <input type="checkbox" id="connectFullScreen" name="connectFullScreen" />
+    			    <label for="connectFullScreen" id="connectFullScreenlabel" >Switch to full screen mode after login</label>
+			</div>
+			<div class="form-group" id="form-group-submit">
                             <button type="submit" class="btn btn-primary" id="connectAD">Sign in</button>
                             {{#urlcannotopensession}}
                                <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
@@ -374,12 +378,18 @@
             </div>
             -->
 
-	    <!-- keyboard for touch devices -->
-            <div id="keyboard" title="Keyboard" style="display: none;">
-                <img id="keyborad-logo" src="../img/top/keyboard.svg" class="keyboard-logo" alt="keyboard-icon" loading="lazy">
+            <!-- gamepad devices -->
+            <div id="gamepad" title="Gamepad" style="display: none;">
+                <img id="gamepad-logo" src="../img/top/gamepad.svg" alt="gamepad-icon" loading="lazy">
+		<ul class="drop-down"></ul>
             </div>
 
-	    <!-- printer is hidden by default -->
+	        <!-- keyboard for touch devices -->
+            <div id="keyboard" title="Keyboard" style="display: none;">
+                <img id="keyboard-logo" src="../img/top/keyboard.svg" class="keyboard-logo" alt="keyboard-icon" loading="lazy">
+            </div>
+
+	        <!-- printer is hidden by default -->
             <div id="printer" title="Printer"  style="display: none;" >
                 <img src="../img/top/printer_None.svg" alt="printer-icon" loading="lazy">
                 <ul class="drop-down"></ul>
@@ -403,7 +413,7 @@
                 </ul>
             </div>
 	    
-	    <div id="microphone" title="Microphone">
+	        <div id="microphone" title="Microphone">
                 <img id="microphone-logo" src="../img/top/mic.svg" class="microphone-logo" alt="microphone-icon" loading="lazy">
             </div>
 
@@ -415,57 +425,59 @@
                   </li>
                </ul>
             </div>
+
             <div id="fullscreen" title="Fullscreen">
                 <img src="img/top/fullscreen.svg" alt="fullscreen-icon" loading="lazy">
             </div>
+            
             {{#isIndexPage}}
-                <div class="img_top" id="name">
-                    <img src="img/top/menu.svg" title="Settings" alt="menu-icon" loading="lazy">
-                    <ul id="mainmenu" class="drop-down">
-                        <li>
-                            <div class="state" id='settings'></div>
-                            <p id="settings-name" class="placestate">Settings</p>
-                        </li>
-                        <li class="divider"></li>
-                        <!-- <li><div class="state" id='whoami'></div><p class="placestate">Whoami</p></li> -->
-                        <li>
-                            <div class="state" id='appstore'></div>
-                            <p id="applications-name" class="placestate">Applications</p>
-                        </li>
-                        <!-- <li><div class="state" id='clogs'></div><p class="placestate">Logs</p></li> -->
-                        <li class="divider"></li>
-			<li>
-                            <div class="state" id='snapshot'></div>
-                            <p id="snapshot-name" class="placestate">Snapshot</p>
-                        </li>
-                        <!-- not yet avaliable not supported 
-			            <li>
-                            <div class="state" id='grabmouse'></div>
-                            <p id="grabmouse-name" class="placestate">Grab pointer for gaming</p>
-                        </li>
-                        -->
-                        <li>
-                            <div class="state" id='tips'></div>
-                            <p id="tips-shot-name" class="placestate">Tips</p>
-                        </li>
-                        <li>
-                            <div class="state" id='screenshot'></div>
-                            <p id="screen-shot-name" class="placestate">Screen shot</p>
-                        </li>
-                        <li>
-                            <!-- <div class="state" id='record'></div> -->
-                            <object id="record" class="state screen-record-animation" type="image/svg+xml"
-                                data="./img/top/record.svg">
-                            </object>
-                            <p id="screen-record-name" class="placestate">Screen record</p>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="state" id='logout'></div>
-                            <p id="log-out-name" class="placestate">Logoff</p>
-                        </li>
-                    </ul>
-                </div>
+            <div class="img_top" id="name">
+                <img src="img/top/menu.svg" title="Settings" alt="menu-icon" loading="lazy">
+                <ul id="mainmenu" class="drop-down">
+                    <li>
+                        <div class="state" id='settings'></div>
+                        <p id="settings-name" class="placestate">Settings</p>
+                    </li>
+                    <li class="divider"></li>
+                    <!-- <li><div class="state" id='whoami'></div><p class="placestate">Whoami</p></li> -->
+                    <li>
+                        <div class="state" id='appstore'></div>
+                        <p id="applications-name" class="placestate">Applications</p>
+                    </li>
+                    <!-- <li><div class="state" id='clogs'></div><p class="placestate">Logs</p></li> -->
+                    <li class="divider"></li>
+                    <li>
+                        <div class="state" id='snapshot'></div>
+                        <p id="snapshot-name" class="placestate">Snapshot</p>
+                    </li>
+                    <!-- not yet avaliable not supported 
+                    <li>
+                        <div class="state" id='grabmouse'></div>
+                        <p id="grabmouse-name" class="placestate">Grab pointer for gaming</p>
+                    </li>
+                    -->
+                    <li>
+                        <div class="state" id='tips'></div>
+                        <p id="tips-shot-name" class="placestate">Tips</p>
+                    </li>
+                    <li>
+                        <div class="state" id='screenshot'></div>
+                        <p id="screen-shot-name" class="placestate">Screen shot</p>
+                    </li>
+                    <li>
+                        <!-- <div class="state" id='record'></div> -->
+                        <object id="record" class="state screen-record-animation" type="image/svg+xml"
+                            data="./img/top/record.svg">
+                        </object>
+                        <p id="screen-record-name" class="placestate">Screen record</p>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="state" id='logout'></div>
+                        <p id="log-out-name" class="placestate">Logoff</p>
+                    </li>
+                </ul>
+            </div>
             {{/isIndexPage}}
         </div>
     </div>
