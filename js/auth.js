@@ -109,7 +109,7 @@ export class ExplicitAuthManager extends AuthManager {
     this.controls = [ '#cuid', '#ADpassword' ]; // user input 
 
     const self = this;
-   
+
     $('form', this.$ui).submit((e) => {
       self.onsubmit();
       e.preventDefault();

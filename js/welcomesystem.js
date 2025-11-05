@@ -191,6 +191,13 @@ const welcomeSystem = (function () {
       statusText.innerText = result.error;
     }
 
+    putinfullscreenmodeifneed() {
+      let connectFullScreen = document.getElementById('connectFullScreen');
+      if (connectFullScreen && connectFullScreen.checked) {
+	document.documentElement.requestFullscreen();
+      }
+    }
+
     clearstatusText() {
       let statusText = document.getElementById('statusText');
       // if statusText does not exist return
@@ -204,6 +211,7 @@ const welcomeSystem = (function () {
 
     thenlogin(result) {
       this.showStatus(result.message);
+      this.putinfullscreenmodeifneed();
       logmein.createUserContext()
       .then( (result) => {
         this.updateLoginProjetNameTitle( 'd' );
