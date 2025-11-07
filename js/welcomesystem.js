@@ -194,7 +194,9 @@ const welcomeSystem = (function () {
     putinfullscreenmodeifneed() {
       let connectFullScreen = document.getElementById('connectFullScreen');
       if (connectFullScreen && connectFullScreen.checked) {
-	document.documentElement.requestFullscreen();
+	document.documentElement.requestFullscreen().catch((err) => {
+      		console.error(`Error enabling fullscreen: ${err.message}`);
+    	});
       }
     }
 
