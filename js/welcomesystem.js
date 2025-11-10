@@ -194,17 +194,18 @@ const welcomeSystem = (function () {
     putinfullscreenmodeifneed() {
       let connectFullScreen = document.getElementById('connectFullScreen');
       if (connectFullScreen && connectFullScreen.checked) {
-	/*
-	 let cuid = document.getElementById('cuid');
-	  if (cuid) {
-	    cuid.requestFullscreen().catch((err) => {
+	
+	 let connectAD = document.getElementById('connectAD');
+	  if (connectAD) {
+	    connectAD.requestFullscreen().catch((err) => {
       		console.error(`Error enabling fullscreen: ${err.message}`);
     	    });
 	}
-	*/
+	/*
 	document.documentElement.requestFullscreen().catch((err) => {
 		 console.error(`Error enabling fullscreen: ${err.message}`);
         });
+	*/
       }
     }
 
