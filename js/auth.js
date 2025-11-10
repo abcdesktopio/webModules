@@ -107,10 +107,11 @@ export class ExplicitAuthManager extends AuthManager {
     super(name, ui, config );
     this.default_domain = config.default_domain;
     this.controls = [ '#cuid', '#ADpassword' ]; // user input 
-
     const self = this;
 
     $('form', this.$ui).submit((e) => {
+      console.log( 'form submit' );
+      this.welcomeui.putinfullscreenmodeifneed();
       self.onsubmit();
       e.preventDefault();
       return false;
@@ -211,6 +212,7 @@ export class ExplicitAuthManager extends AuthManager {
       this.thenlogin( result ); 
     })
     .fail( (e) => {
+      this.welcomeui.undoputinfullscreenmodeifneed();
       this.welcomeui.showStatus('');
       this.openManagers();
       // if the error message is not catched
