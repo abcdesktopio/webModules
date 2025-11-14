@@ -66,20 +66,13 @@ export function getScreenHeight() {
  * @function getTopAndDockHeight
  * @global
  * @return {integer}
- * @desc Get hight of top bar and dock
+ * @desc Get hight of top bar
  */
 export function getTopAndDockHeight() {
   let height = 0;
-
   const topElement = document.getElementById('top');
-  if (topElement && topElement.clientHeight) height += topElement.clientHeight;
-
-  const dockElement = document.getElementById('dock');
-
-  if (dockElement && dockElement.offsetHeight) {
-    height += dockElement.offsetHeight;
-  }
-
+  if (topElement && topElement.clientHeight) 
+	height += topElement.clientHeight;
   return height;
 }
 
