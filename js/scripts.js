@@ -420,7 +420,7 @@ function parseQueryString(str) {
 function init() {
   // try to restor previous user context
   logmein.restoreUserContext().fail(() => {
-    console.info('no user previous context, running standart welcome');
+    console.info('no user previous context, opening welcomeSystem');
     welcomeSystem.open();
   });
 
