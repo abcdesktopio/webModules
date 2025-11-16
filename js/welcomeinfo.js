@@ -70,7 +70,24 @@ function add( msg ) {
     	element_msg_information.classList.add('welcomeinfomessage');
 	div.appendChild(element_msg_information);
     }
-  
+
+    if (msg.script) {
+	// To dynamically add a script tag, you need to create a new script element and append it to the target element.
+	// You can do this for external scripts:
+	if (msg.script.src) {
+		let newScript = document.createElement("script");
+		newScript.async = msg.script.async;
+		newScript.src = msg.script.src;
+		div.appendChild(newScript);
+	}
+	// And inline scripts:
+	if (msg.script.data) {
+		let newScript = document.createElement("script");
+		let inlineScript = document.createTextNode(msg.script.data);
+		newScript.appendChild(inlineScript);
+		div.appendChild(newScript);
+        }
+    }
     div_welcomeinfo.appendChild(div);
   }
 }
