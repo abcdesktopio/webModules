@@ -63,9 +63,9 @@ checkTranspile:
 
 install:
 	npm install && npm update && npm audit fix
-	cd transpile && npm install && npm update && npm audit fix
+	cd transpile && npm install 
 	cp "node_modules/@cycjimmy/jsmpeg-player/dist/jsmpeg-player.esm.js" ./js
-	cd js/noVNC && npm install && npm update
+	cd js/noVNC && npm install 
 
 svg:
 	cd ./transpile && node index.js --svg
