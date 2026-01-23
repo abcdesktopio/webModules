@@ -108,3 +108,4 @@ clean:
 
 removebuildtools:
 	rm -rf .eslintrc.json .git .github .gitignore Dockerfile* Makefile transpile package.json yarn.lock *.sh
+	rm -rf js/noVNC/node_modules
