@@ -32,13 +32,17 @@ app.min.js
 app.js
 
 index.html
+index.session.mustache.html
 app.html
+app.session.mustache.html
 description.html
+
 
 demo.html
 
 transpile/.env
 
+**/package-lock.json
 i18n/*.json
 !list.json
 !i18n/*.mustache.json
