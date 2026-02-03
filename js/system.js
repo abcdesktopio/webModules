@@ -260,3 +260,10 @@ export function getLIApp(
 }
 
 broadcastEvent.addEventListener('connect.counter', ({ detail: { connectCounter } }) => updateNbConnect(connectCounter));
+
+let clearTokenButton = document.getElementById('clearToken');
+if (clearTokenButton) {
+  clearTokenButton.addEventListener('click', () => {
+    localStorage.removeItem('abcdesktop_jwt_user_token');
+  });
+}

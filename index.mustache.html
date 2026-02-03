@@ -190,7 +190,7 @@
     			    <label for="connectFullScreen" id="connectFullScreenlabel" >Switch to full screen mode after login</label>
 			</div>
 			-->
-			<div class="form-group" id="form-group-submit">
+			            <div class="form-group" id="form-group-submit">
                             <button type="submit" class="btn btn-primary" id="connectAD">Sign in</button>
                             {{#urlcannotopensession}}
                                <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
@@ -202,13 +202,19 @@
                         To access to this service you need to be identified. If you use {{{ projectName }}} from a personal computer which does not belong to the company, 
                         remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.
                     </p>
+                    
                 </div>
+                
         
                 {{^isDemoPage}}
                 <div id="connectGP">
                     <ul id="connectGPList">
                         
                     </ul>
+                </div>
+
+                <div id="clearCacheSection">
+                    <button type="button" class="btn btn-secondary" id="clearToken">Clear authentication cache</button>
                 </div>
                 {{/isDemoPage}}
 
