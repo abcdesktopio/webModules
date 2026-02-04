@@ -61,7 +61,7 @@ RUN npm install --global less
 # run make install 
 WORKDIR /var/webModules
 RUN make install
-RUN make dev
+RUN make prod
 
 # create version.json file
 RUN ./mkversion.sh && cat version.json
