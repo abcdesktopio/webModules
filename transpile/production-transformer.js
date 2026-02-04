@@ -62,10 +62,14 @@ const babelTransformFile = util.promisify(babel.transformFile);
 async function* walkDir(basePath) {
   const dirents = await fs.promises.readdir(basePath, { withFileTypes: true });
   const mapper = (dirent) => path.join(basePath, dirent.name);
+
+  const skipDirs = ['node_modules'];
+  const shouldSkipDir = (dirent) => skipDirs.some(skip => dirent.name === skip);
+
   const files = dirents.filter((dirent) => dirent.isFile() && !dirent.isSymbolicLink())
     .map(mapper);
 
-  const directories = dirents.filter((dirent) => dirent.isDirectory() && !dirent.isSymbolicLink())
+  const directories = dirents.filter((dirent) => dirent.isDirectory() && !dirent.isSymbolicLink() && !shouldSkipDir(dirent))
     .map(mapper);
 
   yield* files;
