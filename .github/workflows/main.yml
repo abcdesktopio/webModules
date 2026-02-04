@@ -72,7 +72,7 @@ jobs:
             BASE_IMAGE_RELEASE=${{ env.imagetag }}
             BASE_IMAGE=ghcr.io/abcdesktopio/oc.nginx.builder
             BRANCH=${{ env.branch }}
-            TARGET=dev
+            TARGET=prod
             NODE_MAJOR=${{ env.node_version }}
           tags: |
             ghcr.io/abcdesktopio/oc.nginx:${{ env.imagetag }}
