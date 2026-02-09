@@ -39,7 +39,7 @@ export function getWindowsWidth() {
  * @desc Get windows height
  */
 export function getWindowsHeight() {
-  return document.documentElement.clientHeight - getTopAndDockHeight();
+  return document.documentElement.clientHeight; //  - getTopAndDockHeight();
 }
 
 /**
