@@ -26,7 +26,6 @@ const welcomeSystem = (function () {
   const managers = {};
   let $ui;
   let $additionnalmanagerui;
-  let $clearCacheManagerUi;
   let stages=[ 'a', 'b', 'c', 'd' ];
 
   return new (class exported {
@@ -37,7 +36,6 @@ const welcomeSystem = (function () {
     init() {
       $ui = $('#loginScreen');
       $additionnalmanagerui  = $('#additionnalloginScreencontent');
-      $clearCacheManagerUi = $('#clearCacheSection');
 
       const self = this;
       return odApiClient.auth.getauthconfig()
@@ -258,15 +256,12 @@ const welcomeSystem = (function () {
     closeManagers() {	    
        $additionnalmanagerui.addClass('hide');
        $additionnalmanagerui.hide(); 
-       $clearCacheManagerUi.addClass('hide');
-       $clearCacheManagerUi.hide(); 
        for (const name in managers) 
           managers[name].close();
     }
   
     openManagers() {
       $additionnalmanagerui.show();
-      $clearCacheManagerUi.show();
       for (const name in managers) 
         managers[name].open();
     }

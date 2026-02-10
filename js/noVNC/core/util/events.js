@@ -43,7 +43,7 @@ function _captureProxy(e) {
 
     // Respect the wishes of the redirected event handlers
     if (newEv.defaultPrevented) {
-        e.preventDefault();
+    	 e.preventDefault();
     }
 
     // Implicitly release the capture on button release

@@ -15,7 +15,7 @@ ifndef VERBOSE
 endif
 
 ifndef NODE_MAJOR
-NODE_MAJOR=20
+NODE_MAJOR=24
 endif
 
 ifndef BRANCH
