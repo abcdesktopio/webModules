@@ -38,7 +38,6 @@ import * as tipsinfo from './tipsinfo.js';
 import * as welcomeinfo from './welcomeinfo.js';
 import * as desktopfeatures from './desktopfeatures.js';
 import * as languages from './languages.js';
-import * as issue from './issue.js';
 import * as snapshot from './snapshot.js';
 import * as taskstate from './taskstate.js';
 import { broadcastEvent } from './broadcastevent.js';
@@ -108,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function setupbeforeuserloginin() {
   // init events on body
-  initGlobalEvents();
+  // initGlobalEvents();
 
   // init zoom value
   initZoom();
@@ -557,6 +556,19 @@ function setFullScreenUI() {
   }
 }
 
+function top_handleMouse(ev) {
+     console.log('top_handleMouse', ev);
+     if ( window.od.broadway.rfb._handleMouse )
+	window.od.broadway.rfb._handleMouse(ev);
+}
+
+function top_click(ev) {
+     console.log('top_click', ev);
+     if ( window.od.broadway.rfb._handleMouse )
+        window.od.broadway.rfb._handleMouse(ev);
+}
+
+
 /**
  * @function setupTopMenu
  * @global
@@ -568,7 +580,9 @@ function setupTopMenu() {
   if (isTouchDevice) {
     $('#top #top-right #keyboard').show();
   }
-
+  
+  
+  // return;
   $('#top #top-right div').bind('click', function () {
 
     if (this.id === 'printer') {
@@ -601,6 +615,7 @@ function setupTopMenu() {
     }
   });
 
+  /*
   $('#top #top-left div').bind('click', function () {
     const hasSelected = $(this).hasClass('selected');
     if (!$(this).hasClass('keep')) {
@@ -622,6 +637,7 @@ function setupTopMenu() {
       $('#top #top-left div').unbind('mouseover');
     }
   });
+  */
 
   $('#top #top-right div ul li').bind('click', function () {
     addTransOverlay();
@@ -688,7 +704,15 @@ function setupTopMenu() {
       microphone.updateState();
     });
 
-  issue.init();
+  /* 
+  let top = document.getElementById('top');
+  if (top) {
+        top.addEventListener('click', top_click );
+        top.addEventListener('mousedown', top_handleMouse );
+        top.addEventListener('mouseup',   top_handleMouse );
+        top.addEventListener('mousemove', top_handleMouse );
+  }
+  */
 }
 
 /**
