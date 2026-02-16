@@ -22,15 +22,14 @@ import * as shareSystem from './shareSystem.js';
 import * as quickSupport from './quickSupport.js';
 import * as logmein from './logmein.js';
 import * as upload from './upload.js';
-import * as errorMessage from './errormessage.js';
 import * as printer from './printer.js';
+import * as gamepad from './gamepad.js';
 import * as windowMessage from './windowMessage.js';
 import * as ocuaparser from './ocuaparser.js';
 import * as webshell from './webshell.js';
 import * as appSelector from './appSelector.js';
 import * as speaker from './speaker/main.js';
 import * as microphone  from './microphone/main.js';
-import * as whichBrowser from './which-browser.js';
 import * as screenRecord from './screenRecord.js';
 import * as menu from './menu.js';
 import * as system from './system.js';
@@ -39,9 +38,9 @@ import * as tipsinfo from './tipsinfo.js';
 import * as welcomeinfo from './welcomeinfo.js';
 import * as desktopfeatures from './desktopfeatures.js';
 import * as languages from './languages.js';
-import * as bug from './issue.js';
+import * as snapshot from './snapshot.js';
+import * as taskstate from './taskstate.js';
 import { broadcastEvent } from './broadcastevent.js';
-// import * as systemMenu from './systemmenu.js';
 import userGeolocation from './geolocation.js';
 import { isTouchDevice } from './noVNC/core/util/browser.js';
 import './secrets.js';
@@ -108,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function setupbeforeuserloginin() {
   // init events on body
-  initGlobalEvents();
+  // initGlobalEvents();
 
   // init zoom value
   initZoom();
@@ -129,9 +128,6 @@ function setupbeforeuserloginin() {
   // Create object UAParser for reading User Agent
   ocuaparser.init();
 
-  // Create object WhichBrowser Parser-JavaScript
-  whichBrowser.init();
-
   // Create broadway object and bind keyboard events and create canvas
   window.od.broadway = new BroadwayVNC(this);
   window.od.broadway.init();
@@ -141,9 +137,6 @@ function setupbeforeuserloginin() {
 
   // Init event to show login and status progression
   connectLoader.init();
-
-  // init error message
-  errorMessage.init();
 
   // Init a dropzone on document.documentElement with Dropzone lib
   // upload.init();
@@ -189,12 +182,21 @@ window.od.setupafteruserloginin = function () {
   microphone.init();
   speaker.init();
 
+  
   quickSupport.init();
+
+  // add printer	
   printer.init();
+
+  // add gamepad
+  gamepad.init();
 
   // Set url inside iframe & make windows resizable
   // Init a dropzone on document.documentElement with Dropzone lib
   upload.init();
+
+  // snaphost
+  snapshot.init();
 
   // load menu from od.config file
   // call launcher.getkeyinfo("menuconfig")
@@ -205,6 +207,9 @@ window.od.setupafteruserloginin = function () {
   // init tips
   // call launcher.getkeyinfo
   tipsinfo.init();
+
+  // taskstate
+  taskstate.init();
 
   // show user name in top left screen
   system.setUsername(window.od.currentUser.name);
@@ -237,7 +242,6 @@ function initApplistcallback() {
       // console.log( data ); 
       if (data)
      	 console.debug( 'generateDesktopFiles mimetype database done with status', data.code );
-         // systemMenu.init(); 
     })
     .catch( (err) => {
       console.error( 'generateDesktopFiles failed' );
@@ -406,54 +410,6 @@ function parseQueryString(str) {
 }
 
 /**
- * @function isCompatibleBrowser
- * @global
- * @return bool
- * @desc Check if user's browser version is compatible.
- */
-function isCompatibleBrowser() {
-  /*
-     * Check browser version
-     */
-  const navInfo = whichBrowser.getBrowserInfo();
-  const version = parseInt(navInfo.version, 10);
-  switch (navInfo.name) {
-    case 'Chrome Headless':
-      if (version < 41) return false;
-      break;
-    case 'Chrome':
-      if (version < 41) return false;
-      break;
-    case 'Chromium':
-      if (version < 41) return false;
-      break;
-    case 'Firefox':
-      if (version < 32) return false;
-      break;
-    case 'IE':
-      if (version < 11) return false;
-      break;
-    case 'Safari':
-      if (version < 8) return false;
-      break;
-    case 'Mobile Safari':
-      if (version < 9) return false;
-      break;
-    case 'Opera':
-      if (version < 27) return false;
-      break;
-    case 'Edge':
-      if (version < 12) return false;
-      break;
-    default:
-      console.log(`Web browser unlisted: ${navInfo.name}`);
-      return false;
-  }
-
-  return true;
-}
-
-/**
  * @function init
  * @global
  * @return {void}
@@ -463,7 +419,7 @@ function isCompatibleBrowser() {
 function init() {
   // try to restor previous user context
   logmein.restoreUserContext().fail(() => {
-    console.info('no user previous context, running standart welcome');
+    console.info('no user previous context, opening welcomeSystem');
     welcomeSystem.open();
   });
 
@@ -600,6 +556,19 @@ function setFullScreenUI() {
   }
 }
 
+function top_handleMouse(ev) {
+     console.log('top_handleMouse', ev);
+     if ( window.od.broadway.rfb._handleMouse )
+	window.od.broadway.rfb._handleMouse(ev);
+}
+
+function top_click(ev) {
+     console.log('top_click', ev);
+     if ( window.od.broadway.rfb._handleMouse )
+        window.od.broadway.rfb._handleMouse(ev);
+}
+
+
 /**
  * @function setupTopMenu
  * @global
@@ -611,7 +580,9 @@ function setupTopMenu() {
   if (isTouchDevice) {
     $('#top #top-right #keyboard').show();
   }
-
+  
+  
+  // return;
   $('#top #top-right div').bind('click', function () {
 
     if (this.id === 'printer') {
@@ -644,6 +615,7 @@ function setupTopMenu() {
     }
   });
 
+  /*
   $('#top #top-left div').bind('click', function () {
     const hasSelected = $(this).hasClass('selected');
     if (!$(this).hasClass('keep')) {
@@ -665,6 +637,7 @@ function setupTopMenu() {
       $('#top #top-left div').unbind('mouseover');
     }
   });
+  */
 
   $('#top #top-right div ul li').bind('click', function () {
     addTransOverlay();
@@ -708,6 +681,12 @@ function setupTopMenu() {
       case 'volume_level':
         break;
 
+      case 'snapshot':
+	// snapshot.version();
+	snapshot.snapshot();
+        break;
+
+
       default:
         console.error(`Invalid menu entry ${this.children[0].id}`);
         break;
@@ -725,10 +704,15 @@ function setupTopMenu() {
       microphone.updateState();
     });
 
-
-  /* $('#placement').click(() => { launcher.placeAllWindows(); }); */
-
-  bug.init();
+  /* 
+  let top = document.getElementById('top');
+  if (top) {
+        top.addEventListener('click', top_click );
+        top.addEventListener('mousedown', top_handleMouse );
+        top.addEventListener('mouseup',   top_handleMouse );
+        top.addEventListener('mousemove', top_handleMouse );
+  }
+  */
 }
 
 /**
@@ -779,7 +763,6 @@ export function closeTopLeftDropDowns() {
  */
 function addTransOverlay() {
   $('body').append('<div class="fullscreenTransOverlay"></div>');
-  // systemMenu.setLocked(true);
   $('.fullscreenTransOverlay').bind('click', () => {
     closeTopRightDropDowns();
     closeTopLeftDropDowns();
@@ -876,7 +859,8 @@ function launchmyapp( myapptolaunch ) {
           window.od.broadway.toggleVirtualKeyboard();
           break;
         default:
-          errorMessage.open();
+          console.error( 'bad myapptolaunch.image value' );
+          console.error( myapptolaunch );
           break;
       }
     }

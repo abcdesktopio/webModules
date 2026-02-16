@@ -191,6 +191,33 @@ const welcomeSystem = (function () {
       statusText.innerText = result.error;
     }
 
+    putinfullscreenmodeifneed() {
+      let connectFullScreen = document.getElementById('connectFullScreen');
+      if (connectFullScreen && connectFullScreen.checked) {
+	
+	 let connectAD = document.getElementById('connectAD');
+	  if (connectAD) {
+	    connectAD.requestFullscreen().catch((err) => {
+      		console.error(`Error enabling fullscreen: ${err.message}`);
+    	    });
+	}
+	/*
+	document.documentElement.requestFullscreen().catch((err) => {
+		 console.error(`Error enabling fullscreen: ${err.message}`);
+        });
+	*/
+      }
+    }
+
+    undoputinfullscreenmodeifneed() {
+      let connectFullScreen = document.getElementById('connectFullScreen');
+      if (connectFullScreen && connectFullScreen.checked) {
+        document.exitFullscreen()
+	        .then(() => console.log("Document Exited from Full screen mode"))
+      		.catch((err) => console.error(err));
+      };
+    }
+
     clearstatusText() {
       let statusText = document.getElementById('statusText');
       // if statusText does not exist return

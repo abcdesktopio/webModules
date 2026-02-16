@@ -605,12 +605,14 @@ settingsEvents.addEventListener('close', () => {
   firstAppear = true;
 });
 
+/*
 broadcastEvent.addEventListener(
   'display.setBackgroundBorderColor',
   ({ detail: { color } }) => setBackgroundBorderColor(color),
 );
-
-
+*/
+/*
+ *
 // describe code usage 
 let idTimeout;
 const handlerResize = () => {
@@ -662,3 +664,4 @@ document.addEventListener('broadway.connected', async () => {
 document.addEventListener('broadway.disconnected', () => {
   window.removeEventListener('resize', handlerResize);
 });
+*/

@@ -12,15 +12,14 @@
 */
 
 import welcomeSystem from './welcomesystem.js';
-// import * as systemMenu from './systemmenu.js';
 import * as notificationSystem from './notificationsystem.js';
 import * as system from './system.js';
 import odApiClient from './odapiclient.js';
-import { broadcastEvent } from './broadcastevent.js';
 import userGeolocation from './geolocation.js';
 
-
-
+// JWT will be refreshed when 3/4 of the expire time is reached
+// e.g. if expire_in is 3600 seconds, the token will be refreshed after 2700 seconds
+// (3600 * 750 milliseconds)
 const jwt_retry_before_expire_time_in_milliseconds = 850;
 
 /**
@@ -40,7 +39,7 @@ export function getWindowsWidth() {
  * @desc Get windows height
  */
 export function getWindowsHeight() {
-  return document.documentElement.clientHeight - getTopAndDockHeight();
+  return document.documentElement.clientHeight; //  - getTopAndDockHeight();
 }
 
 /**
@@ -67,20 +66,13 @@ export function getScreenHeight() {
  * @function getTopAndDockHeight
  * @global
  * @return {integer}
- * @desc Get hight of top bar and dock
+ * @desc Get hight of top bar
  */
 export function getTopAndDockHeight() {
   let height = 0;
-
   const topElement = document.getElementById('top');
-  if (topElement && topElement.clientHeight) height += topElement.clientHeight;
-
-  const dockElement = document.getElementById('dock');
-
-  if (dockElement && dockElement.offsetHeight) {
-    height += dockElement.offsetHeight;
-  }
-
+  if (topElement && topElement.clientHeight) 
+	height += topElement.clientHeight;
   return height;
 }
 
@@ -134,26 +126,23 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
         notificationSystem.displayNotification('Application', 'Unknow error', 'error');
         return;
       }
-
-      //if (!window.od.isTactile) {
-      //  systemMenu.mouselistener();
-      //}
-
+      // dispatchEvent ocrun.done
+      document.dispatchEvent( new CustomEvent("ocrun.done", result.result) );
       onAppIsRunning();
       document.getElementById('noVNC_canvas').focus();
-      if (element && result.result) {
-        element.setAttribute('state', 'running');
-        element.setAttribute('container_id', result.result.container_id);
-      }
+      // if (element && result.result) {
+      //   element.setAttribute('state', 'running');
+      //   element.setAttribute('container_id', result.result.container_id);
+      // }
     })
     .fail(({ status, error }) => {
       let msg_info = `${status}: ${error}`;
       notificationSystem.displayNotification('Application', msg_info, 'error');
 
-      if (element instanceof HTMLLIElement) {
-        element.setAttribute('state', 'down');
-        element.setAttribute('container_id', '');
-      }
+      //if (element instanceof HTMLLIElement) {
+      //  element.setAttribute('state', 'down');
+      //  element.setAttribute('container_id', '');
+      // }
     })
     .always(() => {
       if (element) {
@@ -177,6 +166,13 @@ export function getUserInfo() {
   return odApiClient.user.whoami();
 }
 
+/**
+ * @function getLogs
+ * @global
+ * @params {callback} callback
+ * @return {void}
+ * @desc Get abcdesktop logs.
+ */
 export function getLogs(callback) {
   return odApiClient.composer
     .getLogs()
@@ -310,7 +306,6 @@ export function initApplist() {
         );
         return;
       }
-      
       window.od.applist = result;
     })
     .fail(({ status, error }) => {
@@ -787,7 +782,16 @@ export function getContainers() {
 }
 
 /**
- * @function getContainers
+ * @function getApplicationsbyPhase
+ * @global
+ */
+export function list_applications_by_phase( phase ) {
+  return odApiClient.composer.list_applications_by_phase( phase );
+}
+
+
+/**
+ * @function getSecrets
  * @global
  */
 export function getSecrets() {
@@ -802,6 +806,25 @@ export function getSecrets() {
 export function buildsecret(password) {
   return odApiClient.auth.buildsecret(password);
 }
+
+
+
+export function fileAPIListDirectory(directory = '') {
+  const headers = new Headers();
+  headers.append(
+    'ABCAuthorization',
+    `Bearer ${window.od.currentUser.authorization}`,
+  );
+  const url = `/filer/directory/list/?${new URLSearchParams({ directory })}`;
+
+  const options = {
+    method: 'GET',
+    headers,
+  };
+
+  return fetch(window.od.net.urlrewrite(url), options);
+}
+
 
 /**
  * @function stopContainer
@@ -1047,6 +1070,42 @@ export function requestSpawnerAPI(
   return fetch(window.od.net.urlrewrite(url), options).then((res) => res.json());
 }
 
+/**
+ * @function requestSnapshotAPI
+ * @global
+ * @params {object} jsonParameters
+ * @params {callback} onerror
+ * @return {void}
+ * @desc http asynchronous request.
+ */
+export function requestSnapshotAPI(
+  endPoint = '',
+  parameters = null,
+  method = 'POST',
+) {
+  let url = `/snapshot/${endPoint}`;
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append(
+    'ABCAuthorization',
+    `Bearer ${window.od.currentUser.authorization}`,
+  );
+
+  const options = {
+    headers,
+    method,
+  };
+
+  if (method === 'GET' && parameters) {
+    url += `?${new URLSearchParams(parameters)}`;
+  } else if (method !== 'GET' && parameters) {
+    options.body = JSON.stringify(parameters);
+  }
+
+  return fetch(window.od.net.urlrewrite(url), options).then((res) => res.json());
+}
+
+
 export function setAudioQuality(sink) {
   return requestSpawnerAPI('setAudioQuality', { sink });
 }
@@ -1108,45 +1167,6 @@ export function getenv() {
   return requestSpawnerAPI('getenv', null, 'GET');
 }
 
-
-/**
- * @function closewindow
- * @params {Array<number>} windowsid
- * @return {void}
- * @desc Close windows using windows's ID.
- */
-export function closewindows(windowsid) {
-  return requestSpawnerAPI('closewindows', { windowsid });
-}
-
-/**
- * @function activatewindows
- * @params {Array<number>} windowsid
- * @return {void}
- * @desc Activate application window using window's ID.
- */
-export function activatewindows(windowsid) {
-  return requestSpawnerAPI('activatewindows', { windowsid });
-}
-
-/**
- * @function getwindowslist
- * @global
- * @return {void}
- * @desc Returns a list containing all the applications windows opened.
- */
-export function getwindowslist() {
-  return requestSpawnerAPI('getwindowslist', null, 'GET');
-}
-
-/**
- * @function broadcastwindowslist
- * @return {void}
- * @desc Broadcast to all users a list containing all the applications windows opened.
- */
-export function broadcastwindowslist() {
-  return requestSpawnerAPI('broadcastwindowslist');
-}
 
 /**
  * @function clipboardsync
@@ -1270,10 +1290,6 @@ export function setTheme(theme) {
   return requestSpawnerAPI('setTheme', { theme });
 }
 
-export function placeAllWindows() {
-  return requestSpawnerAPI('placeAllWindows');
-}
-
 export async function getSpawnerVersion() {
   if (window.od.currentUser.spawnerVersion === undefined) {
     const { data } = await requestSpawnerAPI('version', null, 'GET');
@@ -1303,14 +1319,8 @@ export async function getWebModulesVersion() {
   return window.od.currentUser.webModulesVersion;
 }
 
-export const containerNotificationInfo = function (data) {
-  const icon = `data:image/svg+xml;base64,${data.icondata}`;
-  notificationSystem.displayNotification(data.name, data.message, 'error', icon, 15);
-};
 
 export function getListScret() {
   return odApiClient.composer.listsecrets();
 }
 
-broadcastEvent.addEventListener('container',	({ detail: { container } }) => containerNotificationInfo(container));
-// broadcastEvent.addEventListener('ocrun', 	({ detail: { data_dict } }) => ocrun(data_dict));

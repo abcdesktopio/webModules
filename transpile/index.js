@@ -36,7 +36,7 @@ program
   .option('-s --svg', 'Replace the current tertiary color in svg files by the tertiary color in conf.json')
   .option('-c, --css', 'Transpile less code to css')
   .option('-o, --oneCss', 'Use one file css minified')
-  .option('-ui, --user-interface', 'Apply user interface\'s configuration')
+  .option('-u, --user-interface', 'Apply user interface\'s configuration')
   .option('--prod', 'Use for indicate to build app.js production file')
   .option('--clean', 'clear the lib folder before building');
 
@@ -263,6 +263,7 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
     cuid: "{{ cuid }}",
     loginsessionid: "{{ loginsessionid }}",
     base_url: "{{ base_url }}",
+    refresh_timeout: "{{ refresh_timeout }}",
     isIndexPage,
     isDemoPage,
     isLoginSessionPage

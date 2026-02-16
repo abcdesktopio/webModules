@@ -346,6 +346,8 @@ function keyEvent(keysym, code, down) {
     url = window.od.net.getwsurl(path, window.od.currentUser.target_ip, port );
    
     try {
+      // let noVNC_container = document.body;
+      
       let noVNC_container = document.getElementById('noVNC_container');
       if (noVNC_container) {
         noVNC_container.style.display = 'block';
@@ -353,6 +355,8 @@ function keyEvent(keysym, code, down) {
       else {
         noVNC_container = document.body;
       }
+      
+
       rfb = new RFB( noVNC_container, url,
 	      {	repeaterID: WebUtil.getConfigVar('repeaterID', ''),
         	shared: WebUtil.getConfigVar('shared', true),
@@ -367,6 +371,8 @@ function keyEvent(keysym, code, down) {
       // 
       // set default background by reading value from body 
       rfb._screen.style.background = window.getComputedStyle(document.body).getPropertyValue('background-color');
+      
+      /*
       rfb._screenSize = function () {
         const h = this._screen.offsetHeight - getTopAndDockHeight();
         return {
@@ -374,7 +380,8 @@ function keyEvent(keysym, code, down) {
           h,
         };
       };
-      
+      */
+
       // Is a boolean indicating if the remote session should be clipped to its container. 
       // When disabled scrollbars will be shown to handle the resulting overflow. Disabled by default.
       rfb.clipViewport = true;

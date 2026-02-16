@@ -3,6 +3,7 @@
 ## About this repository
 webModules repository contains the HTML/JS files for the abcdesktop website.
 
+
 ## To get more informations
 Please, read the public documentation web site:
 * [https://www.abcdesktop.io/](https://www.abcdesktop.io/)
@@ -16,7 +17,7 @@ Please, read the public documentation web site:
 ### Clone default webmodules  
 
 ```bash
-git clone -b 4.0 https://github.com/abcdesktopio/webModules.git
+git clone -b 4.3 https://github.com/abcdesktopio/webModules.git
 ```
 
 ## Locate project and ui files 

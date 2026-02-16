@@ -19,7 +19,7 @@
 import { broadcastEvent } from './broadcastevent.js';
 import * as launcher from './launcher.js';
 import { checkError } from './system.js';
-
+import * as notificationSystem from './notificationsystem.js';
 let wsbroadcast;
 
 /**
@@ -122,6 +122,12 @@ export const connect = () => {
 export const process_event = ( msg ) => {
 
   // console.debug(`broadcastSystem:msgevent: ${msg.method}`);
+
+  if (msg.method === 'snapshot') {
+	  notificationSystem.displayNotification( msg.method, msg.data, 'info');
+	   console.log( msg.method );
+	   console.log( msg );
+  }
 
   if (msg.method === 'hello') {
     broadcastEvent.dispatchEvent(

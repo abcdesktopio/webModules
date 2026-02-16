@@ -18,13 +18,12 @@
     "bootbox": "^6.0.0",
     "bootstrap": "^5.3.3",
     "bootstrap-table": "^1.22.5",
-    "download": "^8.0.0",
     "dropzone": "^6.0.0-beta.2",
     "jquery": "^3.7.1",
     "jquery-ui": "^1.13.3",
     "js-cookie": "^3.0.5",
     "mustache": "^4.2.0",
-    "ua-parser-js": "^2.0.0",
+    "ua-parser-js": "^2.0.4",
     "url": "^0.11.3"
   }
 }

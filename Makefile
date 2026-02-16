@@ -15,7 +15,7 @@ ifndef VERBOSE
 endif
 
 ifndef NODE_MAJOR
-NODE_MAJOR=20
+NODE_MAJOR=24
 endif
 
 ifndef BRANCH
@@ -58,18 +58,14 @@ oc.nginx:
 
 checkTranspile:
 	if [ ! -d "./transpile/node_modules" ]; then \
-		cd ./transpile && yarn install --network-timeout 600000; \
+		cd ./transpile && npm install; \
 	fi
 
 install:
-	yarn install
-	cd transpile && yarn install
+	npm install && npm update && npm audit fix
+	cd transpile && npm install 
 	cp "node_modules/@cycjimmy/jsmpeg-player/dist/jsmpeg-player.esm.js" ./js
-	# cp node_modules/xterm/lib/xterm.js ./js
-	# cp node_modules/xterm-addon-attach/lib/xterm-addon-attach.js ./js
-	# cp node_modules/xterm-addon-fit/lib/xterm-addon-fit.js .js
-	# cp node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js ./js
-	cd js/noVNC && npm i
+	cd js/noVNC && npm install 
 
 svg:
 	cd ./transpile && node index.js --svg
@@ -95,8 +91,9 @@ prod: checkTranspile version
 dev: uiAndAssets version
 
 updatejs:
-	rm  js/ua-parser.min.js | true
-	wget -O js/ua-parser.min.js https://raw.githubusercontent.com/faisalman/ua-parser-js/master/dist/ua-parser.min.js
+	echo "no need to run this command anymore"
+	# rm  js/ua-parser.min.js | true
+	# wget -O js/ua-parser.min.js https://raw.githubusercontent.com/faisalman/ua-parser-js/master/dist/ua-parser.min.js
 
 
 clean:
@@ -111,3 +108,5 @@ clean:
 
 removebuildtools:
 	rm -rf .eslintrc.json .git .github .gitignore Dockerfile* Makefile transpile package.json yarn.lock *.sh
+	rm -rf js/noVNC/node_modules
+

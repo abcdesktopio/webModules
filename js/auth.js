@@ -107,13 +107,28 @@ export class ExplicitAuthManager extends AuthManager {
     super(name, ui, config );
     this.default_domain = config.default_domain;
     this.controls = [ '#cuid', '#ADpassword' ]; // user input 
-
     const self = this;
+
     $('form', this.$ui).submit((e) => {
+      console.log( 'form submit' );
+      this.welcomeui.putinfullscreenmodeifneed();
       self.onsubmit();
       e.preventDefault();
       return false;
     });
+
+    let refreshsessionidtimeout = $("#refreshsessionidtimeout", this.$ui).val();
+    if ( !isNaN(refreshsessionidtimeout) ) {
+	refreshsessionidtimeout = refreshsessionidtimeout * 1000;
+	setTimeout( 
+		function() {
+			console.log( 'Refreshing sessionid, reload page now');
+			window.location.reload();
+		}, 
+		refreshsessionidtimeout 
+	);
+	console.log( 'Refresh sessionid timeout in ms ' + refreshsessionidtimeout );
+    }
   }
 
   removeControlErrorClass() {
@@ -197,6 +212,7 @@ export class ExplicitAuthManager extends AuthManager {
       this.thenlogin( result ); 
     })
     .fail( (e) => {
+      this.welcomeui.undoputinfullscreenmodeifneed();
       this.welcomeui.showStatus('');
       this.openManagers();
       // if the error message is not catched
@@ -255,12 +271,49 @@ export class ExplicitAuthManager extends AuthManager {
 
 export class LoginButtonAuthManager extends AuthManager {
   createProvider(config) {
-    let $provider = $(`#login-${config.name}`, this.$ui);
-    if (!$provider.length) {
-      $provider = $('<li></li>').append($('<a></a>').text(`Connect with ${config.displayname || config.name}`));
-      $('ul', this.$ui).first().append($provider);
+    let existing = document.getElementById(`login-${config.name}`);
+    if (!existing) {
+      const li = document.createElement('li');
+      li.id = `login-${config.name}`;
+      li.style.backgroundColor = config.backgroundcolor;
+      li.style.backgroundSize = '30px';
+      li.style.display = 'flex';
+      li.style.alignItems = 'center';
+      li.style.paddingLeft = '10px';
+
+      const a = document.createElement('a');
+      a.id = `connect-with-${config.name}`;
+      a.href = '#';
+      a.style.color = config.textcolor;
+
+      const img = document.createElement('img');
+      img.src = `data:image/svg+xml;base64,${config.icondata}`;
+      img.alt = `${config.name} logo`;
+      img.style.width = '40px';
+      img.style.height = '40px';
+      img.style.marginRight = '12px';
+
+      a.appendChild(document.createTextNode(`Sign-in with ${config.displayname || config.name} account`));
+
+      li.appendChild(img)
+      li.appendChild(a);
+
+      const gpList = document.getElementById('connectGPList');
+      const openidList =document.getElementById('connectOpenidList');
+
+      if(gpList) {
+        gpList.appendChild(li);
+      } 
+
+      if (openidList) {
+        setTimeout(() => {
+          const clone = li.cloneNode(true);
+          openidList.appendChild(clone);
+        }, 0);
+      } 
     }
 
+    let $provider = $(`#login-${config.name}`, this.$ui);
     const self = this;
 
     $('a', $provider)
@@ -270,7 +323,7 @@ export class LoginButtonAuthManager extends AuthManager {
         self.manageLogin($(this).data('auth-provider'));
       });
 
-    $provider.closest('li').show();
+    $provider.show();
 
     return super.createProvider(config);
   }

@@ -53,23 +53,42 @@ function add( msg ) {
 
   if (div_welcomeinfo) {
     var div = document.createElement("div");
-    div.appendChild(document.createElement("hr"));
 
-    let element_title = document.createElement("code");
-    element_title.appendChild(document.createTextNode(msg.title));
-    div.appendChild(element_title);
+    if (msg.title) {
+	div.appendChild(document.createElement("hr"));
+    	let element_title = document.createElement("code");
+    	element_title.appendChild(document.createTextNode(msg.title));
+   	div.appendChild(element_title);
+    	div.appendChild(document.createElement("br"));
+	element_added = true;
+    }
 
-    div.appendChild(document.createElement("br"));
-    div.appendChild(document.createElement("br"));
+    if (msg.information) {
+	div.appendChild(document.createElement("br"));
+    	let element_msg_information = document.createElement("div");
+    	element_msg_information.innerHTML = msg.information;
+    	element_msg_information.classList.add('welcomeinfomessage');
+	div.appendChild(element_msg_information);
+    }
 
-    let element_msg_information = document.createElement("div");
-    let msg_information = document.createTextNode(msg.information);
-    element_msg_information.appendChild(msg_information);
-    element_msg_information.classList.add('welcomeinfomessage');
-
-    div.appendChild(element_msg_information);
+    if (msg.script) {
+	// To dynamically add a script tag, you need to create a new script element and append it to the target element.
+	// You can do this for external scripts:
+	if (msg.script.src) {
+		let newScript = document.createElement("script");
+		newScript.async = msg.script.async;
+		newScript.src = msg.script.src;
+		div.appendChild(newScript);
+	}
+	// And inline scripts:
+	if (msg.script.data) {
+		let newScript = document.createElement("script");
+		let inlineScript = document.createTextNode(msg.script.data);
+		newScript.appendChild(inlineScript);
+		div.appendChild(newScript);
+        }
+    }
     div_welcomeinfo.appendChild(div);
-    element_added = true;
   }
 }
 

@@ -92,22 +92,6 @@ a {
  border-color: @secondary;
 }
 
-#clearlocalstoragedata {
-  color: @tertiary;
-  width: 100%;
-  max-width: 450px;
-  overflow: hidden;
-  margin: 5px 0px;
-  border-color: @tertiary;
-  border-radius: 0px;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: left;
-  background: no-repeat 10px center;
-  background-size: 30px;
-}
-
-
 div.window-dialog div.modal-dialog {
   height: calc(100% - 84px);
   width: 100%;
@@ -194,15 +178,6 @@ div.window-dialog-small .modal-content .modal-footer .button-log-off {
   width: 98%;
   margin-left: 1%;
   margin-top: 1%;
-}
-
-.blurred * {
-  color: transparent !important;
-  text-shadow: 0 0 5px @primary !important;
-}
-
-.blurred {
-  filter: blur(5px);
 }
 
 .window {
@@ -294,15 +269,6 @@ div.button {
     width: 800px;
     height: 400px;
     padding: 2px;
-}
-
-#pub {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 999999;
-  display: none;
-  background: none;
 }
 
 #menu {
@@ -440,34 +406,6 @@ div.button {
   background-image: url(../../../img/app/main_menu_54x54_fe.png);
 }
 
-#menu .home {
-  height: 50px;
-  width: 50px;
-  margin-left: 4px;
-  background-image: url(../../../img/app/pantheon-files-icons.svg);
-}
-
-#menu .midori {
-  height: 50px;
-  width: 50px;
-  margin-left: 4px;
-  background-image: url(../../../img/app/midori-icons.svg);
-}
-
-#menu .geary {
-  height: 50px;
-  width: 50px;
-  margin-left: 4px;
-  background-image: url(../../../img/app/geary-icons.svg);
-}
-
-#menu .photos {
-  height: 50px;
-  width: 50px;
-  margin-left: 4px;
-  background-image: url(../../../img/app/photos-icons.svg);
-}
-
 #menu .settings {
   background-image: url(../../../img/app/settings_54x54_fe.png);
 }
@@ -495,7 +433,6 @@ div.button {
 #top.dashOpen {
   background-image: none;
   background-color: transparent;
-  z-index: 13;
 }
 
 #top.dashOpen #top-right #time {
@@ -504,35 +441,6 @@ div.button {
 
 #top.dashOpen #top-left #title {
   color: transparent;
-}
-
-#top #top-left #dash-control-buttons {
-  float: left;
-}
-
-#top.dashOpen #top-left #dash-control-buttons div {
-  width: 15px;
-  height: 15px;
-  float: left;
-  margin-left: 4px;
-  margin-top: 5px;
-}
-
-#top.dashOpen #top-left #dash-control-buttons .close {
-  background: url(../../../img/dash/dash-close.png) no-repeat;
-  margin-left: 10px;
-}
-
-#top.dashOpen #top-left #dash-control-buttons .close:active {
-  background: url(../../../img/dash/dash-close-clicked.png) no-repeat;
-}
-
-#top.dashOpen #top-left #dash-control-buttons .min {
-  background: url(../../../img/dash/dash-min.png) no-repeat;
-}
-
-#top.dashOpen #top-left #dash-control-buttons .max {
-  background: url(../../../img/dash/dash-max.png) no-repeat;
 }
 
 #top #top-button-bg #top-button {
@@ -556,30 +464,16 @@ div.button {
   float: left;
 }
 
-#top #top-right {
-  float: right;
-  font-size: 15px;
-  padding-right: 5px;
-}
-
-@media screen and (max-width: 800px) {
-  #top #top-center {
-    display: none;
-  }
-}
-
-@media screen and (min-width: 801px) {
-  #top #top-center {
+#top #top-center {
     overflow: hidden;
     font-size: 15px;
     position: inherit;
     text-align: center;
-    padding-top: 3px;
     width: 100%;
     pointer-events: none;
     color: @light;
     display: block;
-  }
+}
 
   #top #top-center p {
     margin: 0;
@@ -976,59 +870,6 @@ div.button {
   float: left;
 }
 
-#top #top-left #topPresence {
-  height: 18px;
-  padding: 0;
-  display: none;
-  padding: 0px 8px;
-  color: @light;
-  float: left;
-}
-
-#top #top-left #topPresence .drop-down {
-  margin-left: -7px;
-}
-
-#top #top-left #topPresence .drop-down:after,
-#top #top-left #topPresence .drop-down:before {
-  bottom: 100%;
-  left: 59%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-
-#top #top-left #topPresence .drop-down:after {
-  border-bottom-color: @light;
-  border-width: 10px;
-  margin-left: -85px;
-}
-#top #top-left #topPresence .drop-down:before {
-  border-bottom-color: @primary;
-  border-width: 11px;
-  margin-left: -86px;
-}
-
-#top #top-left #place.offline {
-  background: url(../../../img/top/place-offline.svg) no-repeat center;
-  background-size: 18px;
-  border-radius: 15px;
-}
-#top #top-left #place.available {
-  background: url(../../../img/top/place-available.svg) no-repeat center;
-  border-radius: 15px;
-  background-size: 18px;
-}
-
-#top #top-left #place.unavailable {
-  background: url(../../../img/top/place-unavailable.svg) no-repeat center;
-  border-radius: 15px;
-  background-size: 18px;
-}
-
 #top-issue-container {
   display: none;
 }
@@ -1042,6 +883,12 @@ div.button {
 #issue-summary::placeholder,
 #issue-description::placeholder {
   color: #ffffff;
+}
+
+
+#top #top-right #applicationstatus {
+  display: none;
+  padding-block: unset;
 }
 
 #top #top-right #top-issue {
@@ -1109,10 +956,6 @@ div.button {
 
 #top #top-right #speakers .drop-down #volume_level:disabled {
   opacity: 0.5;
-}
-
-#top #top-right #topMail {
-  display: none;
 }
 
 #top #top-right #support {
@@ -1285,6 +1128,7 @@ div.button {
 }
 
 #top #top-right div ul li,
+#top #top-center div ul li,
 #top #top-left div ul li {
   height: 30px;
   padding: 4px 40px 3px 6px;
@@ -1292,6 +1136,7 @@ div.button {
 }
 
 #top #top-right div ul li img,
+#top #top-center div ul li img,
 #top #top-left div ul li img {
   margin-left: -10px;
   margin-right: 5px;
@@ -1391,11 +1236,6 @@ input#volume_level{
   margin-top: 12px;
 }
 
-#top #top-right #printer {
-  padding: 0;
-  padding-top: 4px;
-}
-
 #top #top-right #printer .drop-down div {
   padding: 0px;
 }
@@ -1492,38 +1332,6 @@ input#volume_level{
   #top-left #title {
     display: none;
   }
-}
-
-#control-buttons {
-  margin-top: 2px;
-  margin-left: 8px;
-  float: left;
-  display: none;
-}
-
-#control-buttons div {
-  width: 19px;
-  height: 19px;
-  background-repeat: no-repeat;
-  float: left;
-  margin-right: 2px;
-}
-
-#control-buttons div:hover {
-  background-position: 0px -19px;
-}
-
-#control-buttons #close {
-  background-image: url(../../../img/close-button.jpg);
-}
-#control-buttons #min {
-  background-image: url(../../../img/min-button.jpg);
-}
-#control-buttons #max {
-  background-image: url(../../../img/max-button.jpg);
-}
-#top.dashOpen #control-buttons {
-  display: none;
 }
 
 .fullsize {
@@ -1633,6 +1441,7 @@ input#volume_level{
 }
 
 #top #top-right div.state,
+#top #top-center div.state,
 #top #top-left div.state {
   float: left;
   height: 12px;
@@ -1765,6 +1574,16 @@ input#volume_level{
   width: 18px;
   margin: 0;
 }
+
+#top #top-right div#snapshot {
+  background: url(../../../img/top/snapshot.svg) no-repeat center;
+  background-size: contain;
+  border-radius: 0px;
+  height: 18px;
+  width: 18px;
+  margin: 0;
+}
+
 
 #record {
   background-size: contain;

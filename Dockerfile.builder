@@ -26,13 +26,18 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 	wget 						\
 	ca-certificates					
 
-# install yarn npm nodejs
-RUN  mkdir -p /etc/apt/keyrings && \
-     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
-     apt-get update && \
-     apt-get install -y --no-install-recommends nodejs && \
-     npm -g install yarn 
+
+# install npm nodejs 
+RUN curl -fsSL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - && \
+    apt-get update && apt-get install -y --no-install-recommends nodejs && \
+    npm install -g npm
+
+# RUN  mkdir -p /etc/apt/keyrings && \
+#     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+#     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+#     apt-get update && \
+#     apt-get install -y --no-install-recommends nodejs && \
+#     npm -g install yarn 
 
 
 ## install package for html5validator
@@ -57,11 +62,13 @@ COPY . /var/webModules
 # install less 
 # less is required 
 RUN npm install --global less
-# make install
-RUN cd /var/webModules && make install
-# make dev
-RUN cd /var/webModules && make dev
+
+# run make install 
+WORKDIR /var/webModules
+RUN make install
+RUN make dev
+
 # create version.json file
-RUN cd /var/webModules && ./mkversion.sh && cat version.json
+RUN ./mkversion.sh && cat version.json
 # run html5validator
 # RUN cd /var/webModules && /myenv/bin/html5validator index.html

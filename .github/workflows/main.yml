@@ -4,12 +4,16 @@ name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0,12 * * *'
 
 env: 
   imagetag: ${{ github.head_ref || github.ref_name || 'dev' }}
   branch: ${{ github.head_ref || github.ref_name || 'dev' }}
-  node_version: '20'
+  node_version: '24'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -68,8 +72,17 @@ jobs:
             BASE_IMAGE_RELEASE=${{ env.imagetag }}
             BASE_IMAGE=ghcr.io/abcdesktopio/oc.nginx.builder
             BRANCH=${{ env.branch }}
-            TARGET=dev
+            TARGET=prod
             NODE_MAJOR=${{ env.node_version }}
           tags: |
             ghcr.io/abcdesktopio/oc.nginx:${{ env.imagetag }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ghcr.io/abcdesktopio/oc.nginx:${{ env.imagetag }}
+          format: 'table'
+          ignore-unfixed: false
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
 
