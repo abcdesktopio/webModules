@@ -121,14 +121,8 @@ function startStop() {
     let url = 'js/speedtest_worker.js';
     url = window.od.net.urlrewrite(url);
     w = new Worker(url);
-<<<<<<< HEAD
-
-   const settings = {
-	   // /backend/getIP.php
-=======
     const settings = {
       // /backend/getIP.php
->>>>>>> 4.4
       url_dl: window.od.net.urlrewrite('/speedtest/backend/garbage.php'), // path to a large file or garbage.php, used for download test. must be relative to this js file
       url_ul: window.od.net.urlrewrite('/speedtest/backend/empty.php'), // path to an empty file, used for upload test. must be relative to this js file
       url_ping: window.od.net.urlrewrite('/speedtest/backend/empty.php'), // path to an empty file, used for ping test. must be relative to this js file
