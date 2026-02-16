@@ -121,6 +121,11 @@
         </p>
     </div>
 
+    <!-- Note that Google Chrome on Android doesn't respect any of these,
+    html attributes which attempt to disable text suggestions on the
+    on-screen keyboard. Let's hope Chrome implements the ime-mode
+    style for example -->
+    <textarea id="noVNC_keyboardinput" autocapitalize="off" autocomplete="off" spellcheck="false" tabindex="-1"></textarea>
     <div style="display: none;" id="loader">
         <div id="dot-container">
             <noscript>
@@ -131,14 +136,6 @@
             </noscript>
         </div>
     </div>
-    <!-- This is where the RFB elements will attach -->
-    <!-- <div id="noVNC_container"> -->
-        <!-- Note that Google Chrome on Android doesn't respect any of these,
-                html attributes which attempt to disable text suggestions on the
-                on-screen keyboard. Let's hope Chrome implements the ime-mode
-                style for example -->
-        <textarea id="noVNC_keyboardinput" autocapitalize="off" autocomplete="off" spellcheck="false" tabindex="-1"></textarea>
-    <!--  </div> -->
 
     <div id="loginScreen">
         <div id="content">
@@ -148,8 +145,8 @@
                     <div class="highlight" id="welcomeinfo"></div>
                     <div id="desktopfeatures">
                         <div class="form-group">
-			                <!-- for="desktopfeaturesul" --> 
-                            <label class="form-label" id="login-desktopfeatures">Desktop features</label>
+			    <!-- for="desktopfeaturesul" --> 
+			    <label class="form-label" id="login-desktopfeatures" for="desktopfeaturesul">Desktop features</label>
                             <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-1 shadow-sm" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);" id="desktopfeaturesul"></ul>
                             <p class="form-comment" id="login-desktopfeatures-comment"></p>
                         </div>
@@ -177,22 +174,29 @@
                                 <input id="cuid" class="form-control" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly">
                                 <!-- loginsessionid is used to check that the user in cuid input value did not change with the previous request -->
                                 <!-- in case if the http request id formated manually --> 
-                                <input id="loginsessionid" type="hidden" value="{{ loginsessionid }}">
+				<input id="loginsessionid" type="hidden" value="{{ loginsessionid }}">
+				<input id="refreshsessionidtimeout" type="hidden" value="{{ refresh_timeout }}">
                             {{/isLoginSessionPage}}
                         </div>
                         <div class="form-group" id="form-group-password" >
                             <label class="form-label" id="login-passwordlabel" for="ADpassword">Password</label> 
                             <!-- The userPassword attribute has maximum length 128 and format UTF-8. -->
                             <input id="ADpassword" class="form-control" placeholder="Password" type="password" maxlength="128" autocomplete="current-password">
-                        </div>	
-			            <div class="form-group" id="form-group-submit">
+                        </div>
+			<!--
+			<div class="form-group" id="form-group-submit">
+			    <input type="checkbox" id="connectFullScreen" name="connectFullScreen" />
+    			    <label for="connectFullScreen" id="connectFullScreenlabel" >Switch to full screen mode after login</label>
+			</div>
+			-->
+			<div class="form-group" id="form-group-submit">
                             <button type="submit" class="btn btn-primary" id="connectAD">Sign in</button>
                             {{#urlcannotopensession}}
                                <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
                             {{/urlcannotopensession}}
                         </div>
-                    </form>
 
+                    </form>
                     <p class="form-comment" id="login-auth-requirement">
                         To access to this service you need to be identified. If you use {{{ projectName }}} from a personal computer which does not belong to the company, 
                         remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.
@@ -201,43 +205,8 @@
         
                 {{^isDemoPage}}
                 <div id="connectGP">
-                    <ul>
-                        <li id="login-facebook">
-                            <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
-                        </li>
-                        <li id="login-github">
-                            <a id="connect-with-github" href="#">Sign-in with Github</a>
-                        </li>
-                        <li id="login-google">
-                            <a id="connect-with-google" href="#">Sign-in with Google</a>
-                        </li>
-                        <li id="login-orange">
-                            <a id="connect-with-orange" href="#">Sign-in with Orange</a>
-                        </li>
-                        <li id="login-linkedin">
-                            <a id="connect-with-linkedin" href="#">Sign-in with LinkedIn</a>
-                        </li>
-                        <li id="login-discord">
-                            <a id="connect-with-discord" href="#">Sign-in with Discord</a>
-                        </li>
-                        <li id="login-spotify">
-                            <a id="connect-with-spotify" href="#">Sign-in with Spotify</a>
-                        </li>
-                        <li id="login-mobileorange">
-                            <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
-                        </li>
-                        <li id="login-anonymous">
-                            <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
-                        </li>
-                        <li id="login-orangeconnect">
-                            <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
-                        </li>
-                        <li id="login-sslclient">
-                            <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
-                        </li>
-                        <li id="login-sslclient-directory">
-                            <a id="connect-with-sslclient-directory" href="#">Sign-in with SSL client certificat query directory</a>
-                        </li>
+                    <ul id="connectGPList">
+                        
                     </ul>
                 </div>
                 {{/isDemoPage}}
@@ -250,49 +219,14 @@
                                 <div class="card-header">
                                         <h4 class="my-0 fw-normal">
                                             <!-- <span class="badge bg-primary rounded-pill">1</span>  -->
-					                        <p style="color:white">OAuth 2.0</p>
+					    <p style="color:white">OAuth 2.0</p>
                                         </h4>
-                                </div>
+                                </div> 
                                 <div class="card-body">
                                     <div class="col">
                                         <div id="connectOpenid">
-                                            <ul>
-                                                <li id="login-facebook">
-                                                    <a id="connect-with-facebook" href="#">Sign-in with Facebook</a>
-                                                </li>
-                                                <li id="login-github">
-                                                    <a id="connect-with-github" href="#">Sign-in with Github</a>
-                                                </li>
-                                                <li id="login-google">
-                                                    <a id="connect-with-google" href="#">Sign-in with Google</a>
-                                                </li>
-                                                <li id="login-orange">
-                                                    <a id="connect-with-orange" href="#">Sign-in with Orange</a>
-                                                </li>
-                                                <li id="login-linkedin">
-                                                    <a id="connect-with-linkedin" href="#">Sign-in with LinkedIn</a>
-                                                </li>
-                                                <li id="login-discord">
-                                                    <a id="connect-with-discord" href="#">Sign-in with Discord</a>
-                                                </li>
-                                                <li id="login-spotify">
-                                                    <a id="connect-with-spotify" href="#">Sign-in with Spotify</a>
-                                                </li>
-                                                <li id="login-mobileorange">
-                                                    <a id="connect-with-mobile-connect" href="#">Sign-in with Mobile Connect</a>
-                                                </li>
-                                                <li id="login-anonymous">
-                                                    <a id="connect-with-anonymous" href="#">Sign-in Anonymously, have a look</a>
-                                                </li>
-                                                <li id="login-orangeconnect">
-                                                    <a id="connect-with-orangeconnect" href="#">Sign-in with DIOD Orange Connect</a>
-                                                </li>
-                                                <li id="login-sslclient">
-                                                    <a id="connect-with-sslclient" href="#">Sign-in with SSL client certificat</a>
-                                                </li>
-                                                <li id="login-sslclient-directory">
-                                                    <a id="connect-with-sslclient-directory" href="#">Sign-in with SSL client certificat and query directory services</a>
-                                                </li>
+                                            <ul id="connectOpenidList">
+                                                
                                             </ul>
                                         </div>
                                     </div>
@@ -377,101 +311,21 @@
         </div>
     </div>
 
-    <audio id="connectSound" src="/static/connexion.mp3"></audio>
-
     <div class="removeapp">
         <img src="img/menu/minus.svg" alt="minus-icon" loading="lazy">
     </div>
-
-    <div id="fullbcg">
-        <div class="window" id="navMessage">
-            <p>Oops, your web browser <span id="currentNav"></span> is no longer supported. Please upgrade to a modern,
-                fully supported browser.
-            </p>
-            <p>Find the lastest versions of our supported browsers below.</p>
-            <div class="navs">
-		<img src="img/google-chrome.svg" alt="google-chrome-icon" loading="lazy">
-                <p>Google Chrome 41</p>
-		<a target="_blank" href="https://www.google.fr/chrome/browser/desktop/">Download</a>
-            </div>
-            <div class="navs">
-		<img src="img/firefox-icons.svg" alt="firefox-icon" loading="lazy">
-                <p>Mozilla Firefox 36</p>
-                <a target="_blank" href="https://www.mozilla.org/fr/firefox/new/">Download</a>
-            </div>
-            <div class="navs">
-		<img src="img/internetexplorer.svg" alt="internet-explorer-icon" loading="lazy">
-                <p>Internet Explorer 11</p>
-                <a target="_blank" href="http://windows.microsoft.com/fr-fr/internet-explorer/download-ie">Download</a>
-            </div>
-            <p>Our developers are using Google Chrome and you recommend this browser for these performances.</p>
-            <div id="btnIgnore">
-		    <img src="img/error/bug.svg" alt="bug-icon" loading="lazy">
-		    Ignore and accept the eventual bugs
-		    <img src="img/error/arrow.svg" alt="arrow-icon" loading="lazy">
-            </div>
-        </div>
-        <div class="window" id="IEMessage">
-            <img style="position: relative;left: 50%;margin-left: -128px" src="img/error/stop.png" alt="stop" loading="lazy">
-            <p>
-                <b>Oops</b>, your Internet Explorer is running in Compatibility Mode emulating IE 
-                <span id='version'></span>. Please turn off Compatibility mode or use supported browser.
-            </p>
-            <p>Our developers are using Google Chrome and you recommend this browser for these performances.</p>
-        </div>
-    </div>
-    <div id="previews"></div>
+    
     <div class="notifyPanel">
     </div>
-    <div id="top" class="dropShadow">
-        <div id="top-left">
-            <div id="control-buttons">
-                <div id="close"></div>
-                <div id="min"></div>
-                <div id="max"></div>
-            </div>
-            <div id="size" style="display:none;height:24px; width:100px;position: absolute;top: 2px;pointer-events: none;left:0px;color:rgba(68, 68, 68, 0.5);">
-                <div style="float:left;" id="width"></div>
-                <div style="float:left;">x</div>
-                <div style="float:left;" id="height"></div>
-            </div>
-            <div id="topPresence">
-                <div id="presence" class="state"></div>
-                <ul class="drop-down">
-                    <li>
-                        <div class="state" id='available'></div>
-                        <p class="placestate">Available</p>
-                    </li>
-                    <li>
-                        <div class="state" id='away'></div>
-                        <p class="placestate">Away</p>
-                    </li>
-                    <li>
-                        <div class="state" id='brb'></div>
-                        <p class="placestate">Be right back</p>
-                    </li>
-                    <li>
-                        <div class="state" id='dnd'></div>
-                        <p class="placestate">Do not disturb</p>
-                    </li>
-                    <li>
-                        <div class="state" id='busy'></div>
-                        <p class="placestate">Busy</p>
-                    </li>
-                </ul>
-            </div>
-            <div id="userMenu" title="User">
-                <span id="username">User</span>
-            </div>
-        </div>
-        <div id="top-center">
-            
-        </div>
+    <div id="top">
         <div id="top-right">
-            <div class="loader-inner ball-clip-rotate" title="Connecting…"
-                style="height: 23px;width: 23px;display:none;">
+	    <div id="applicationstatus">
+		<div id="hourglassi_start" title="Please wait">
+                  <img id="hourglass-split" src="../img/top/hourglass-split.svg" loading="lazy">
+                </div>
+		<div id="taskwaiting"></div>
+		<div id="hourglassi_end"></div>
             </div>
-            <div id="connection" class="disconnected"></div>
             {{#isIndexPage}}
                 <div id="topScreenRecord" class="keep" title="Screen Recorder">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
@@ -492,6 +346,12 @@
                     <img src="../img/top/shell.svg" alt="shell-icon" loading="lazy">
                 </div>
             {{/isIndexPage}}
+            <div id="move-menu" class="keep" title="Move">
+                <img src="../img/top/move.svg" alt="move-icon" loading="lazy">
+            </div>
+
+            <hr />
+
             <div id="upload" class="keep" title="Upload">
                 <img src="../img/top/upload.svg" alt="upload-icon" loading="lazy">
                 <ul class="drop-down"></ul>
@@ -499,7 +359,7 @@
 
             <!-- zoom cursor dropdown -->
             <!--
-            <div id="zoom" title="Zoom" class="keep">
+            <div id="zoom" title="Zoom" class="no-mobile keep">
                 <img src="../img/top/zoom-in.svg" alt="zoom-icon" loading="lazy">
                 <ul class="drop-down">
                     <li>
@@ -514,9 +374,15 @@
             </div>
             -->
 
-            <!-- keyboard for touch devices -->
+            <!-- gamepad devices -->
+            <div id="gamepad" title="Gamepad" style="display: none;">
+                <img id="gamepad-logo" src="../img/top/gamepad.svg" alt="gamepad-icon" loading="lazy">
+		<ul class="drop-down"></ul>
+            </div>
+
+	        <!-- keyboard for touch devices -->
             <div id="keyboard" title="Keyboard" style="display: none;">
-                <img id="keyborad-logo" src="../img/top/keyboard.svg" class="keyboard-logo" alt="keyboard-icon" loading="lazy">
+                <img id="keyboard-logo" src="../img/top/keyboard.svg" class="keyboard-logo" alt="keyboard-icon" loading="lazy">
             </div>
 
 	        <!-- printer is hidden by default -->
@@ -525,26 +391,11 @@
                 <ul class="drop-down"></ul>
             </div>
 
-            <!--
-            <div id="topMail" class="keep" title="Mail">
-                <img id="ico" src="../img/top/mail.svg" alt="mail-icon">
-            </div>
-            -->
-
             {{#isIndexPage}}
-
             <div id="top-issue-container" class="keep" title="Issue">
                 <img draggable="false" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
             </div>
-
-            <!--
-                <div class="keep" title="Placement">
-                    <img draggable="false" id="placement" src="img/top/placement.svg" alt="placement-icon" loading="lazy">
-                </div>
-            -->
-
             {{/isIndexPage}}
-
 
             <div id="copypaste" class="keep" title="Copy / Paste" style="display: none;">
                 <img id="ico" src="../img/top/copypaste.svg" alt="copy-paste-icon" loading="lazy">
@@ -563,7 +414,6 @@
             </div>
 
             <div id="speakers" title="Sound">
-	 	        <!-- <video id="audioplayer" autoplay playsinline></video> -->
             	<img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="speakers-icon" loading="lazy">
             	<ul class="drop-down">
                   <li>
@@ -571,53 +421,59 @@
                   </li>
                </ul>
             </div>
+
             <div id="fullscreen" title="Fullscreen">
                 <img src="img/top/fullscreen.svg" alt="fullscreen-icon" loading="lazy">
             </div>
+            
             {{#isIndexPage}}
-                <div class="img_top" id="name">
-                    <img src="img/top/menu.svg" title="Settings" alt="menu-icon" loading="lazy">
-                    <ul id="mainmenu" class="drop-down">
-                        <li>
-                            <div class="state" id='settings'></div>
-                            <p id="settings-name" class="placestate">Settings</p>
-                        </li>
-                        <li class="divider"></li>
-                        <!-- <li><div class="state" id='whoami'></div><p class="placestate">Whoami</p></li> -->
-                        <li>
-                            <div class="state" id='appstore'></div>
-                            <p id="applications-name" class="placestate">Applications</p>
-                        </li>
-                        <!-- <li><div class="state" id='clogs'></div><p class="placestate">Logs</p></li> -->
-                        <li class="divider"></li>
-                        <!-- not yet avaliable not supported 
-			            <li>
-                            <div class="state" id='grabmouse'></div>
-                            <p id="grabmouse-name" class="placestate">Grab pointer for gaming</p>
-                        </li>
-                        -->
-                        <li>
-                            <div class="state" id='tips'></div>
-                            <p id="tips-shot-name" class="placestate">Tips</p>
-                        </li>
-                        <li>
-                            <div class="state" id='screenshot'></div>
-                            <p id="screen-shot-name" class="placestate">Screen shot</p>
-                        </li>
-                        <li>
-                            <!-- <div class="state" id='record'></div> -->
-                            <object id="record" class="state screen-record-animation" type="image/svg+xml"
-                                data="./img/top/record.svg">
-                            </object>
-                            <p id="screen-record-name" class="placestate">Screen record</p>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="state" id='logout'></div>
-                            <p id="log-out-name" class="placestate">Logoff</p>
-                        </li>
-                    </ul>
-                </div>
+            <div class="img_top" id="name">
+                <img src="img/top/menu.svg" title="Settings" alt="menu-icon" loading="lazy">
+                <ul id="mainmenu" class="drop-down">
+                    <li>
+                        <div class="state" id='settings'></div>
+                        <p id="settings-name" class="placestate">Settings</p>
+                    </li>
+                    <li class="divider"></li>
+                    <!-- <li><div class="state" id='whoami'></div><p class="placestate">Whoami</p></li> -->
+                    <li>
+                        <div class="state" id='appstore'></div>
+                        <p id="applications-name" class="placestate">Applications</p>
+                    </li>
+                    <!-- <li><div class="state" id='clogs'></div><p class="placestate">Logs</p></li> -->
+                    <li class="divider"></li>
+                    <li>
+                        <div class="state" id='snapshot'></div>
+                        <p id="snapshot-name" class="placestate">Snapshot</p>
+                    </li>
+                    <!-- not yet avaliable not supported 
+                    <li>
+                        <div class="state" id='grabmouse'></div>
+                        <p id="grabmouse-name" class="placestate">Grab pointer for gaming</p>
+                    </li>
+                    -->
+                    <li>
+                        <div class="state" id='tips'></div>
+                        <p id="tips-shot-name" class="placestate">Tips</p>
+                    </li>
+                    <li>
+                        <div class="state" id='screenshot'></div>
+                        <p id="screen-shot-name" class="placestate">Screen shot</p>
+                    </li>
+                    <li>
+                        <!-- <div class="state" id='record'></div> -->
+                        <object id="record" class="state screen-record-animation" type="image/svg+xml"
+                            data="./img/top/record.svg">
+                        </object>
+                        <p id="screen-record-name" class="placestate">Screen record</p>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="state" id='logout'></div>
+                        <p id="log-out-name" class="placestate">Logoff</p>
+                    </li>
+                </ul>
+            </div>
             {{/isIndexPage}}
         </div>
     </div>
@@ -665,34 +521,6 @@
             </div>
         </div>
     </div>
-    <div class="window" id="anonymous-error">
-        <div class="control">
-            <div class="close"></div>
-        </div>
-        <div class="content">
-            <img src="img/error/shape.svg" alt="shape-icon" loading="lazy">
-            <div class="message">
-                <p>
-                    Anonymous users cannot acces to this feature<br> Please authenticate with your account.
-                </p>
-            </div>
-            <div class="logoff-buttons">
-                <div id="connect" class="logoff highlight">
-                    Connect
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="error-window window">
-        <div class="control">
-            <div class="close"></div>
-        </div>
-        <div class="error-container">
-            <h1>{{{ projectName }}}</h1>
-            <h2 id="error-container-message-first-part">Thanks for exploring {{{ projectName }}}</h2>
-            <h2 id="error-container-message-second-part">Remember, this is still in progress</h2>
-        </div>
-    </div>
     <div id="supportWindow" class="window">
         <div class="control">
             <div class="close"></div>
@@ -706,38 +534,6 @@
             <div class="button" id="cancel">Cancel</div>
         </div>
     </div>
-
-    <!-- 
-    <div id="chatWindow" class="window">
-        <div class="control">
-            <div class="close"></div>
-            <div class="window-title">
-                Skype Entreprise
-            </div>
-        </div>
-        <div class="content">
-            <div class="left">
-                <div class="top">
-                    <div class="tab active" id="contactTab">Contacts</div>
-                    <div class="tab" id="chatTab">Conversations</div>
-                    <input type="text" placeholder="Search contact by name..." id="contactSearch" name="">
-                </div>
-                <ul id="contactList"></ul>
-                <ul id="searchList"></ul>
-                <ul id="chatList"></ul>
-            </div>
-            <div class="right">
-                <div id="emoticonPanel"></div>
-                <div class="write">
-                    <a href="javascript:;" class="write-link attach"></a>
-                    <input type="text">
-                    <a href="javascript:;" class="write-link smiley"></a>
-                    <a href="javascript:;" class="write-link send"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
 
     <div id="restart-window" class="window">
         <div class="control">
@@ -1377,5 +1173,6 @@
     <script type="module" src="{{{.}}}"></script>
     {{ /modules }}
     <!-- end scripts -->
+    <div id="noVNC_container"></div>
 </body>
 </html>

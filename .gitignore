@@ -34,6 +34,8 @@ app.js
 index.html
 app.html
 description.html
+app.session.mustache.html
+index.session.mustache.html
 
 demo.html
 
@@ -42,3 +44,4 @@ transpile/.env
 i18n/*.json
 !list.json
 !i18n/*.mustache.json
+package-lock.json

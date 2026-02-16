@@ -124,3 +124,129 @@ export const init = function () {
     }
   );
 };
+
+// Base code from https://codingartistweb.com/2022/08/draggable-div-with-javascript/
+
+let moveMenuIcon = document.getElementById("move-menu");
+let draggableMenu = document.getElementById("top-right");
+let initialX = 0,
+  initialY = 0;
+let moveElement = false;
+let dropDownDirectionRight = false;
+
+let events = {
+  mouse: {
+    down: "mousedown",
+    move: "mousemove",
+    up: "mouseup",
+  },
+  touch: {
+    down: "touchstart",
+    move: "touchmove",
+    up: "touchend",
+  },
+};
+
+let deviceType = "";
+
+//Detech touch device
+const isTouchDevice = () => {
+  try {
+    //We try to create TouchEvent (it would fail for desktops and throw error)
+    document.createEvent("TouchEvent");
+    deviceType = "touch";
+    return true;
+  } catch (e) {
+    deviceType = "mouse";
+    return false;
+  }
+};
+
+isTouchDevice();
+
+const stopMovement = (e) => {
+  moveElement = false;
+  moveMenuIcon.style.cursor = "grab";
+};
+
+let copyPasteDropdown = document.querySelector("#copypaste .drop-down");
+let speakersDropdown = document.querySelector("#speakers .drop-down");
+let nameDropdown = document.querySelector("#name .drop-down");
+
+//Start (mouse down / touch start)
+moveMenuIcon.addEventListener(events[deviceType].down, (e) => {
+
+  e.preventDefault();
+  //initial x and y points
+  initialX = !isTouchDevice() ? e.clientX : e.touches[0].clientX;
+  initialY = !isTouchDevice() ? e.clientY : e.touches[0].clientY;
+
+  moveMenuIcon.style.cursor = "grabbing";
+
+  //Start movement
+  moveElement = true;
+});
+
+//Move
+document.addEventListener(events[deviceType].move, (e) => {
+  //if movement == true then set top and left to new X andY while removing any offset
+  if (moveElement) {
+    e.preventDefault();
+    let newX = !isTouchDevice() ? e.clientX : e.touches[0].clientX;
+    let newY = !isTouchDevice() ? e.clientY : e.touches[0].clientY;
+
+    // next position
+    let nextTop  = draggableMenu.offsetTop  - (initialY - newY);
+    let nextLeft = draggableMenu.offsetLeft - (initialX - newX);
+
+    // screen limits definition
+    const maxLeft = window.innerWidth  - draggableMenu.offsetWidth;
+    const maxTop  = window.innerHeight - draggableMenu.offsetHeight - 44; // 44 is the height of the desktop toolbar
+
+    if (nextLeft < 0) nextLeft = 0;
+    if (nextTop  < 0) nextTop  = 0;
+    if (nextLeft > maxLeft) nextLeft = maxLeft;
+    if (nextTop  > maxTop)  nextTop  = maxTop;
+
+    draggableMenu.style.left = nextLeft + "px";
+    draggableMenu.style.top  = nextTop  + "px";
+
+    if (newX > window.innerWidth / 2 && dropDownDirectionRight === true) {
+      dropDownDirectionRight = false;
+      console.log("dropown à gauche");
+      copyPasteDropdown.style.right = "59px";
+      copyPasteDropdown.style.setProperty('--arrow-left', '103%');
+      copyPasteDropdown.style.setProperty('--arrow-rotate', '90deg');
+
+      speakersDropdown.style.right = "59px"; 
+      speakersDropdown.style.setProperty('--arrow-left', '104%');
+      speakersDropdown.style.setProperty('--arrow-rotate', '90deg');
+
+      nameDropdown.style.right = "63px";
+      nameDropdown.style.setProperty('--arrow-left', '105%');
+      nameDropdown.style.setProperty('--arrow-rotate', '90deg');
+    }
+    
+    if (newX < window.innerWidth / 2 && dropDownDirectionRight === false) {
+      dropDownDirectionRight = true;
+      console.log("dropown à droite")
+      copyPasteDropdown.style.right = "-313px";
+      copyPasteDropdown.style.setProperty('--arrow-left', '-2%');
+      copyPasteDropdown.style.setProperty('--arrow-rotate', '-90deg');
+
+      speakersDropdown.style.right = "-159px"; 
+      speakersDropdown.style.setProperty('--arrow-left', '-4%');
+      speakersDropdown.style.setProperty('--arrow-rotate', '-90deg');
+
+      nameDropdown.style.right = "-239px";
+      nameDropdown.style.setProperty('--arrow-left', '-4%');
+      nameDropdown.style.setProperty('--arrow-rotate', '-90deg');
+    }
+
+    initialX = newX;
+    initialY = newY;
+  }
+});
+
+//mouse up / touch end
+document.addEventListener(events[deviceType].up, stopMovement);

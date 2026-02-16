@@ -488,6 +488,8 @@ div.button {
   height: 24px;
   color: @light;
   z-index: 11;
+  display: flex;
+  justify-content: right;
 }
 
 #top.dashOpen {
@@ -583,6 +585,66 @@ div.button {
     margin: 0;
     padding: 0;
   }
+#top #top-right {
+  float: right;
+  font-size: 15px;
+  padding-right: 5px;
+  position: fixed;
+  z-index: 11;
+  background-color: @secondary;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+@keyframes heartbeat
+{
+  0% {
+    transform: scale( .75 );
+  }
+  20% {
+    transform: scale( 1 );
+  }
+  40% {
+    transform: scale( .75 );
+  }
+  60% {
+    transform: scale( 1 );
+  }
+  80% {
+    transform: scale( .65 );
+  }
+  100% {
+    transform: scale( .45 );
+  }
+}
+
+/* Heart beat animation */
+@keyframes beat{
+  to { transform: scale(0.4); }
+}
+
+.heartbeat {
+  animation: beat 1s infinite alternate;
+  transform-origin: center;
+}
+
+.heartbeat1 {
+    animation: heartbeat 1s infinite;
+}
+.heartbeat2 {
+    animation: heartbeat 2s infinite;
+}
+.heartbeat3 {
+    animation: heartbeat 3s infinite;
+}
+.heartbeat {
+    animation: heartbeat 4s infinite;
+}
+.heartbeat5 {
+    animation: heartbeat 5s infinite;
 }
 
 #top #top-right div {
@@ -590,6 +652,21 @@ div.button {
   padding: 0px 4px;
   overflow: hidden;
   padding-top: 4px;
+}
+
+#top #top-center div {
+  float: left;
+  padding: 0px 4px;
+  overflow: hidden;
+  padding-top: 4px;
+}
+
+#top #top-right hr {
+  margin: 0.5rem 0;
+}
+
+#top #top-right #move-menu {
+  cursor: grab;
 }
 
 #top #top-right #upload .drop-down {
@@ -603,7 +680,7 @@ div.button {
   background: @secondary;
   padding: 0px 5px;
   margin-top: 0px;
-  position: fixed;
+  position: absolute;
   display: none;
   z-index: 10;
   border-radius: 8px;
@@ -797,20 +874,24 @@ div.button {
 
 #top #top-right #name .drop-down {
   width: 225px;
-  right: 1px;
-  background: @secondary;
+  right: 63px;
+  top: 80px;
+  // default values
+  --arrow-left: 105%;      
+  --arrow-rotate: 90deg;
 }
 
 #top #top-right #name .drop-down:after,
 #top #top-right #name .drop-down:before {
-  bottom: 100%;
-  left: 92%;
+  bottom: 54%;
+  left: var(--arrow-left);
   border: solid transparent;
   content: " ";
   height: 0;
   width: 0;
   position: absolute;
   pointer-events: none;
+  transform: rotate(var(--arrow-rotate));
 }
 
 #top #top-right #name .drop-down:after {
@@ -982,20 +1063,25 @@ div.button {
 }
 
 #top #top-right #speakers .drop-down {
-  width: 140px;
-  margin-left: -62px;
+  width: 145px;
+  right: 59px;
+  top: 64px;
+  // default values
+  --arrow-left: 104%;      
+  --arrow-rotate: 90deg;
 }
 
 #top #top-right #speakers .drop-down:after,
 #top #top-right #speakers .drop-down:before {
-  bottom: 100%;
-  left: 50%;
+  bottom: 32%;
+  left: var(--arrow-left);
   border: solid transparent;
   content: " ";
   height: 0;
   width: 0;
   position: absolute;
   pointer-events: none;
+  transform: rotate(var(--arrow-rotate));
 }
 
 #top #top-right #speakers .drop-down:after {
@@ -1112,19 +1198,24 @@ div.button {
 
 #top #top-right #copypaste .drop-down {
   width: 300px;
-  margin-left: -245px;
+  right: 59px;
+  top: 17px;
+  // default values
+  --arrow-left: 103%;      
+  --arrow-rotate: 90deg;
 }
 
 #top #top-right #copypaste .drop-down:after,
 #top #top-right #copypaste .drop-down:before {
-  bottom: 100%;
-  left: 85%;
+  bottom: 42%;
+  left: var(--arrow-left);
   border: solid transparent;
   content: " ";
   height: 0;
   width: 0;
   position: absolute;
   pointer-events: none;
+  transform: rotate(var(--arrow-rotate));
 }
 
 #top #top-right #copypaste .drop-down:after {
@@ -1801,6 +1892,8 @@ input#volume_level{
   left: 0;
   right: 0;
   top: 24px; /* the height of the control bar */
+  top: 0px; /* the height of the control bar */
+  height: 100%;
   margin-left: auto;
   margin-right: auto;
   outline: none;
