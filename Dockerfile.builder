@@ -15,15 +15,15 @@ RUN echo NODE release is $NODE_MAJOR
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update  -y && \
     apt-get install -y --no-install-recommends \
-	build-essential			                \
-        git			                        \
-	gnupg						\
-	ca-certificates					\
-	curl						\
-	dpkg						\
-	python3						\
-	devscripts 					\
-	wget 						\
+	build-essential	\
+    git \
+	gnupg \
+	ca-certificates \
+	curl \
+	dpkg \
+	python3 \
+	devscripts \
+	wget \
 	ca-certificates					
 
 # install yarn npm nodejs
