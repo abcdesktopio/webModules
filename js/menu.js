@@ -13,6 +13,8 @@
 
 import * as launcher from './launcher.js';
 import * as languages from './languages.js';
+import { closeTopRightDropDowns } from './scripts.js';
+import { setCapture } from './noVNC/core/util/events.js';
 
 let menuconfig;
 
@@ -123,16 +125,28 @@ export const init = function () {
       // Add an event listener for close , logoff and cancel buttons to the menu
     }
   );
+  const controlBar = document.getElementById("abcdesktop_control_bar");
+  setTimeout(() => {
+    controlBar.classList.remove("abcdesktop_open");
+  }, 5000);
 };
 
-// Base code from https://codingartistweb.com/2022/08/draggable-div-with-javascript/
+// Code adapted from : https://github.com/novnc/noVNC
 
-let moveMenuIcon = document.getElementById("move-menu");
-let draggableMenu = document.getElementById("top-right");
-let initialX = 0,
-  initialY = 0;
-let moveElement = false;
-let dropDownDirectionRight = false;
+/* GLOBAL VARIABLES */
+
+const controlBarAnchor = document.getElementById("abcdesktop_control_bar_anchor");
+const controlBarHandle = document.getElementById("abcdesktop_control_bar_handle");
+const controlBar = document.getElementById("abcdesktop_control_bar");
+const hints = document.getElementsByClassName('abcdesktop_control_bar_hint');
+let controlbarDownClientY = 0;
+let controlbarDownOffsetY = 0;
+let controlbarDownClientX = 0;
+let controlbarDownOffsetX = 0;
+let controlbarGrabbed = false;
+let controlbarMoving = false;
+let controlbarOnTop = true;
+let currentSnapping = "top";
 
 let events = {
   mouse: {
@@ -149,7 +163,16 @@ let events = {
 
 let deviceType = "";
 
-//Detech touch device
+/* END GLOBAL VARIABLES */
+
+/* HELPER FUNCTIONS */
+
+/**
+ * Check if the device is a touch device or not.
+ * If the device is a touch device, it returns true and sets the global variable deviceType to "touch".
+ * If the device is not a touch device, it returns false and sets the global variable deviceType to "mouse".
+ * @returns {boolean} true if the device is a touch device, false otherwise.
+ */
 const isTouchDevice = () => {
   try {
     //We try to create TouchEvent (it would fail for desktops and throw error)
@@ -162,91 +185,251 @@ const isTouchDevice = () => {
   }
 };
 
+/**
+ * Opens the control bar by adding the "abcdesktop_open" class to the element.
+ * @param {Element} e - The element to add the class to.
+ */
+const openControlbar = (e) => {
+  e.classList.add("abcdesktop_open");
+}
+
+/**
+ * Closes the control bar by removing the "abcdesktop_open" class from the element.
+ * Also calls closeTopRightDropDowns() to close any open top right drop downs.
+ * @param {Element} e - The element to remove the class from.
+ */
+const closeControlbar = (e) => {
+  closeTopRightDropDowns();
+  e.classList.remove("abcdesktop_open")
+}
+
+/**
+ * Toggles the control bar by either adding or removing the "abcdesktop_open" class
+ * from the given element.
+ * @param {Element} e - The element to toggle the control bar on.
+ */
+const toggleControlbar = (e) => {
+  if (e.classList.contains("abcdesktop_open")) {
+      closeControlbar(e);
+  } else {
+      openControlbar(e);
+  }
+}
+
+/**
+ * Shows or hides all control bar hints, except for the current snapping position.
+ * If animate is true, the transition will be animated, otherwise it will be instantaneous.
+ * @param {boolean} show - Whether to show or hide the hints.
+ * @param {boolean} [animate=true] - Whether to animate the transition.
+ */
+const showControlbarHints = (show, animate=true) => {
+  for (const hint of hints) {
+    if (hint.id === `abcdesktop_${currentSnapping}_control_bar_hint`) {
+      continue;
+    }
+
+    if (animate) {
+        hint.classList.remove("abcdesktop_notransition");
+    } else {
+        hint.classList.add("abcdesktop_notransition");
+    }
+
+    if (show) {
+        hint.classList.add("abcdesktop_active");
+    } else {
+        hint.classList.remove("abcdesktop_active");
+    }
+
+  }
+}
+
+const toggleControlbarChangeSnapping = () => {
+  // Temporarily disable animation, if bar is displayed, to avoid weird
+  // movement. The transitionend-event will not fire when display=none.
+  const controlBarDisplayStyle = window.getComputedStyle(controlBar).display;
+  if (controlBarDisplayStyle !== 'none') {
+      controlBar.style.transitionDuration = '0s';
+      controlBar.addEventListener('transitionend', () => controlBar.style.transitionDuration = '');
+  }
+
+  // Consider this a movement of the handle
+  controlbarMoving = true;
+
+  // The user has "followed" hint, let's hide it until the next drag
+  showControlbarHints(false, false);
+}
+
+/**
+ * Snaps the control bar to the left edge of the window, if it's not already there.
+ * If the control bar is currently snapped to the right or top edge, this will toggle
+ * the control bar's snapping position and hide all control bar hints until the next
+ * drag.
+ */
+const snapToLeft = () => {
+  if (controlBarAnchor.classList.contains("abcdesktop_right") || controlBarAnchor.classList.contains("abcdesktop_top")){
+    toggleControlbarChangeSnapping();
+    controlBarAnchor.classList.remove("abcdesktop_top");
+    controlBarAnchor.classList.remove("abcdesktop_right");
+    currentSnapping = "left";
+    controlbarOnTop = false;
+  }
+}
+
+/**
+ * Snaps the control bar to the right edge of the window, if it's not already there.
+ * If the control bar is currently snapped to the left or top edge, this will toggle
+ * the control bar's snapping position and hide all control bar hints until the next
+ * drag.
+ */
+const snapToRight = () => {
+  if (!controlBarAnchor.classList.contains("abcdesktop_right")){
+    toggleControlbarChangeSnapping();
+    controlBarAnchor.classList.remove("abcdesktop_top");
+    controlBarAnchor.classList.add("abcdesktop_right");
+    currentSnapping = "right";
+    controlbarOnTop = false;
+  }
+}
+
+/**
+ * Snaps the control bar to the top edge of the window, if it's not already there.
+ * If the control bar is currently snapped to the left or right edge, this will toggle
+ * the control bar's snapping position and hide all control bar hints until the next
+ * drag.
+ */
+const snapToTop = () => {
+  if (!controlBarAnchor.classList.contains("abcdesktop_top")) {
+    toggleControlbarChangeSnapping();
+    controlBarAnchor.classList.add("abcdesktop_top");
+    controlBarAnchor.classList.remove("abcdesktop_right");
+    currentSnapping = "top";
+    controlbarOnTop = true;
+  }
+}
+
+/**
+ * Checks if the control bar should be snapped to the left, right, or top edge
+ * of the window based on the pointer's position.
+ * If the control bar should be snapped, the appropriate snapping function
+ * will be called.
+ * @param {{clientX: number, clientY: number}} ptr - The pointer event
+ */
+const checkChangeSnapping = (ptr) => {
+  const { clientX, clientY } = ptr;
+  const leftEdge = window.innerWidth * 0.1;
+  const rightEdge = window.innerWidth * 0.9;
+  const topEdge = window.innerHeight * 0.1;
+
+  if (clientX < leftEdge) {
+    snapToLeft();
+  } else if (clientX > rightEdge) {
+    snapToRight();
+  } else if (clientY < topEdge) {
+    snapToTop();
+  }
+}
+
+/* END OF HELPER FUNCTIONS */
+
+/* START OF EVENT HANDLERS */
+
 isTouchDevice();
 
-const stopMovement = (e) => {
-  moveElement = false;
-  moveMenuIcon.style.cursor = "grab";
-};
-
-let copyPasteDropdown = document.querySelector("#copypaste .drop-down");
-let speakersDropdown = document.querySelector("#speakers .drop-down");
-let nameDropdown = document.querySelector("#name .drop-down");
 
 //Start (mouse down / touch start)
-moveMenuIcon.addEventListener(events[deviceType].down, (e) => {
+controlBarHandle.addEventListener(events[deviceType].down, (e) => {
+  const ptr = !isTouchDevice() ? e : e.touches[0];
+
+  const bounds = controlBarHandle.getBoundingClientRect();
+
+  if(controlbarOnTop){
+    controlbarDownClientX = ptr.clientX;
+    controlbarDownOffsetX = ptr.clientX - bounds.left; 
+  }
+  else {
+    controlbarDownClientY = ptr.clientY;
+    controlbarDownOffsetY = ptr.clientY - bounds.top;
+  }
+
+  controlbarGrabbed = true;
+  controlbarMoving = false;
+
+  showControlbarHints(true);
+
+  if (deviceType === "mouse") {
+    setCapture(controlBarHandle); 
+  }
 
   e.preventDefault();
-  //initial x and y points
-  initialX = !isTouchDevice() ? e.clientX : e.touches[0].clientX;
-  initialY = !isTouchDevice() ? e.clientY : e.touches[0].clientY;
-
-  moveMenuIcon.style.cursor = "grabbing";
-
-  //Start movement
-  moveElement = true;
+  e.stopPropagation();
 });
 
 //Move
-document.addEventListener(events[deviceType].move, (e) => {
-  //if movement == true then set top and left to new X andY while removing any offset
-  if (moveElement) {
+document.addEventListener(events[deviceType].move, moveControlbarHandle, true);
+
+document.addEventListener(events[deviceType].up, (e) => {
+  if (controlbarGrabbed && !controlbarMoving) {
+    toggleControlbar(controlBar);
     e.preventDefault();
-    let newX = !isTouchDevice() ? e.clientX : e.touches[0].clientX;
-    let newY = !isTouchDevice() ? e.clientY : e.touches[0].clientY;
-
-    // next position
-    let nextTop  = draggableMenu.offsetTop  - (initialY - newY);
-    let nextLeft = draggableMenu.offsetLeft - (initialX - newX);
-
-    // screen limits definition
-    const maxLeft = window.innerWidth  - draggableMenu.offsetWidth;
-    const maxTop  = window.innerHeight - draggableMenu.offsetHeight - 44; // 44 is the height of the desktop toolbar
-
-    if (nextLeft < 0) nextLeft = 0;
-    if (nextTop  < 0) nextTop  = 0;
-    if (nextLeft > maxLeft) nextLeft = maxLeft;
-    if (nextTop  > maxTop)  nextTop  = maxTop;
-
-    draggableMenu.style.left = nextLeft + "px";
-    draggableMenu.style.top  = nextTop  + "px";
-
-    if (newX > window.innerWidth / 2 && dropDownDirectionRight === true) {
-      dropDownDirectionRight = false;
-      console.log("dropown à gauche");
-      copyPasteDropdown.style.right = "59px";
-      copyPasteDropdown.style.setProperty('--arrow-left', '103%');
-      copyPasteDropdown.style.setProperty('--arrow-rotate', '90deg');
-
-      speakersDropdown.style.right = "59px"; 
-      speakersDropdown.style.setProperty('--arrow-left', '104%');
-      speakersDropdown.style.setProperty('--arrow-rotate', '90deg');
-
-      nameDropdown.style.right = "63px";
-      nameDropdown.style.setProperty('--arrow-left', '105%');
-      nameDropdown.style.setProperty('--arrow-rotate', '90deg');
-    }
-    
-    if (newX < window.innerWidth / 2 && dropDownDirectionRight === false) {
-      dropDownDirectionRight = true;
-      console.log("dropown à droite")
-      copyPasteDropdown.style.right = "-313px";
-      copyPasteDropdown.style.setProperty('--arrow-left', '-2%');
-      copyPasteDropdown.style.setProperty('--arrow-rotate', '-90deg');
-
-      speakersDropdown.style.right = "-159px"; 
-      speakersDropdown.style.setProperty('--arrow-left', '-4%');
-      speakersDropdown.style.setProperty('--arrow-rotate', '-90deg');
-
-      nameDropdown.style.right = "-239px";
-      nameDropdown.style.setProperty('--arrow-left', '-4%');
-      nameDropdown.style.setProperty('--arrow-rotate', '-90deg');
-    }
-
-    initialX = newX;
-    initialY = newY;
+    e.stopPropagation();
   }
+
+  controlbarGrabbed = false;
+  controlbarMoving = false;
+  showControlbarHints(false);
 });
 
-//mouse up / touch end
-document.addEventListener(events[deviceType].up, stopMovement);
+function moveControlbarHandle(e) {
+  if (!controlbarGrabbed) return;
+  
+  const ptr = !isTouchDevice() ? e : e.touches[0];
+
+  checkChangeSnapping(ptr);
+
+  if(controlbarOnTop && !controlbarMoving) {
+    if (Math.abs(ptr.clientX - controlbarDownClientX) < 3) return;
+    controlbarMoving = true;
+  }
+  else if (!controlbarMoving) {
+    if (Math.abs(ptr.clientY - controlbarDownClientY) < 3) return;
+    controlbarMoving = true;
+  }
+  
+  dragControlBarHandle(ptr);
+}
+
+function dragControlBarHandle(ptr) {
+  const handleHeight = controlBarHandle.offsetHeight;
+  const handleWidth = controlBarHandle.offsetWidth;
+  const controlBarRect = controlBar.getBoundingClientRect();
+  const margin = 10;
+
+  if (controlbarOnTop) {
+    // Absolute position
+    let newX = ptr.clientX - controlbarDownOffsetX;
+
+    // Limits
+    let clampedX = Math.max(controlBarRect.left + margin,
+      Math.min(newX,
+        controlBarRect.left + controlBarRect.width - handleWidth - margin));
+
+    // Relative transform
+    const relativeX = clampedX - controlBarRect.left;
+    controlBarHandle.style.transform = `translateX(${relativeX}px)`;
+  }
+  else {
+    // Absolute position
+    let newY = ptr.clientY - controlbarDownOffsetY;
+
+    // Limits
+    let clampedY = Math.max(controlBarRect.top + margin,
+      Math.min(newY,
+        controlBarRect.top + controlBarRect.height - handleHeight - margin));
+
+    // Relative transform
+    const relativeY = clampedY - controlBarRect.top;
+    controlBarHandle.style.transform = `translateY(${relativeY}px)`;
+  }
+}
+
+/* END OF EVENT HANDLERS */

@@ -7,7 +7,6 @@
     <title>{{ projectName }}</title>
     
     {{#isLoginSessionPage}}
-    <!-- This is a session page -->
     <base href="{{{ base_url }}}">
     {{/isLoginSessionPage}}
 
@@ -60,6 +59,7 @@
     <link rel="stylesheet" href="css/css-dist/loginScreen.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/logoff.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/restart.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/menu.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/notification.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/loaders.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/upload.css" type="text/css">
@@ -318,17 +318,17 @@
     
     <div class="notifyPanel">
     </div>
-    <div id="top">
-        <div id="top-right">
-	    <div id="applicationstatus">
-		<div id="hourglassi_start" title="Please wait">
-                  <img id="hourglass-split" src="../img/top/hourglass-split.svg" loading="lazy">
-                </div>
-		<div id="taskwaiting"></div>
-		<div id="hourglassi_end"></div>
-            </div>
+
+    <!-- abcdesktop control bar -->
+    <div id="abcdesktop_control_bar_anchor" class="abcdesktop_top abcdesktop_vcenter">
+
+        <div id="abcdesktop_control_bar" class="abcdesktop_open">
+            <div id="abcdesktop_control_bar_handle" title="Hide/Show the control bar"></div>
+
+            <div class="abcdesktop_scroll">
+
             {{#isIndexPage}}
-                <div id="topScreenRecord" class="keep" title="Screen Recorder">
+                <div id="topScreenRecord" class="abcdesktop_button keep" title="Screen Recorder">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
                         id="Capa_1" x="0px" y="0px" viewBox="0 0 491.858 491.858"
                         style="enable-background:new 0 0 491.858 491.858;" xml:space="preserve" width="512px"
@@ -343,62 +343,46 @@
                             fill="#6EC6F0" />
                     </svg>
                 </div>
-                <div id="shell" class="keep" title="Shell">
+                <div id="shell" class="abcdesktop_button keep" title="Shell">
                     <img src="../img/top/shell.svg" alt="shell-icon" loading="lazy">
                 </div>
             {{/isIndexPage}}
-            <div id="move-menu" class="keep" title="Move">
-                <img src="../img/top/move.svg" alt="move-icon" loading="lazy">
-            </div>
 
-            <hr />
-
-            <div id="upload" class="keep" title="Upload">
+            <div id="upload" class="abcdesktop_button keep" title="Upload">
                 <img src="../img/top/upload.svg" alt="upload-icon" loading="lazy">
                 <ul class="drop-down"></ul>
             </div>
 
-            <!-- zoom cursor dropdown -->
-            <!--
-            <div id="zoom" title="Zoom" class="no-mobile keep">
-                <img src="../img/top/zoom-in.svg" alt="zoom-icon" loading="lazy">
-                <ul class="drop-down">
-                    <li>
-                        <img src="../img/top/dash-circle.svg" alt="dash-circle-icon" loading="lazy">
-                        <input type="range" id="zoom_range" name="zoom_range" min="0.5" max="4" value="1" step="0.1">
-                        <img src="../img/top/plus-circle.svg" alt="plus-circle-icon" loading="lazy">
-                    </li>
-                    <li>
-                        <p class="placestate">Currrent zoom : <input type="text" id="zoomValue" name="zoomValue"></p>
-                    </li>
-                </ul>
-            </div>
-            -->
+            <!-- Drag/Pan the viewport
+            <input type="image" alt="Drag" src="app/images/drag.svg" 
+                id="abcdesktop_view_drag_button" class="abcdesktop_button abcdesktop_hidden"
+                title="Move/Drag viewport"> -->
 
-            <!-- gamepad devices -->
-            <div id="gamepad" title="Gamepad" style="display: none;">
+             <!-- gamepad devices -->
+             <div id="gamepad" title="Gamepad" class="abcdesktop_button" style="display: none;">
                 <img id="gamepad-logo" src="../img/top/gamepad.svg" alt="gamepad-icon" loading="lazy">
-		<ul class="drop-down"></ul>
+		        <ul class="drop-down"></ul>
             </div>
 
 	        <!-- keyboard for touch devices -->
-            <div id="keyboard" title="Keyboard" style="display: none;">
+            <div id="keyboard" title="Keyboard" class="abcdesktop_button" style="display: none;">
                 <img id="keyboard-logo" src="../img/top/keyboard.svg" class="keyboard-logo" alt="keyboard-icon" loading="lazy">
             </div>
 
 	        <!-- printer is hidden by default -->
-            <div id="printer" title="Printer"  style="display: none;" >
+            <div id="printer" title="Printer" class="abcdesktop_button" style="display: none;" >
                 <img src="../img/top/printer_None.svg" alt="printer-icon" loading="lazy">
                 <ul class="drop-down"></ul>
             </div>
 
             {{#isIndexPage}}
-            <div id="top-issue-container" class="keep" title="Issue">
+            <div id="top-issue-container" class="abcdesktop_button keep" title="Issue">
                 <img draggable="false" id="top-issue" src="img/top/bugs.svg" alt="bugs-icon" loading="lazy">
             </div>
             {{/isIndexPage}}
 
-            <div id="copypaste" class="keep" title="Copy / Paste" style="display: none;">
+            <!-- Clipboard -->
+            <div id="copypaste" class="abcdesktop_button keep" title="Copy / Paste" style="display: none;">
                 <img id="ico" src="../img/top/copypaste.svg" alt="copy-paste-icon" loading="lazy">
                 <ul class="drop-down">
                     <li>
@@ -409,12 +393,14 @@
                     </li>
                 </ul>
             </div>
-	    
-	        <div id="microphone" title="Microphone">
+
+            <!-- Microphone -->
+            <div id="microphone" class="abcdesktop_button" title="Microphone">
                 <img id="microphone-logo" src="../img/top/mic.svg" class="microphone-logo" alt="microphone-icon" loading="lazy">
             </div>
 
-            <div id="speakers" title="Sound">
+            <!-- Speakers -->
+            <div id="speakers" class="abcdesktop_button" title="Sound">
             	<img id="speakers-logo" src="../img/top/Volume_None.svg" class="speakers-logo" alt="speakers-icon" loading="lazy">
             	<ul class="drop-down">
                   <li>
@@ -423,12 +409,14 @@
                </ul>
             </div>
 
-            <div id="fullscreen" title="Fullscreen">
+            <!-- Toggle fullscreen -->
+            <div id="fullscreen" class="abcdesktop_button" title="Fullscreen">
                 <img src="img/top/fullscreen.svg" alt="fullscreen-icon" loading="lazy">
             </div>
-            
+
+            <!-- Main Menu -->
             {{#isIndexPage}}
-            <div class="img_top" id="name">
+            <div class="abcdesktop_button img_top" id="name">
                 <img src="img/top/menu.svg" title="Settings" alt="menu-icon" loading="lazy">
                 <ul id="mainmenu" class="drop-down">
                     <li>
@@ -476,8 +464,25 @@
                 </ul>
             </div>
             {{/isIndexPage}}
+            </div>
         </div>
     </div>
+
+    <div id="abcdesktop_left_hint_anchor" class="abcdesktop_hint_anchor abcdesktop_vcenter">
+        <div id="abcdesktop_left_control_bar_hint" class="abcdesktop_control_bar_hint">
+        </div>
+    </div>
+
+    <div id="abcdesktop_right_hint_anchor" class="abcdesktop_hint_anchor abcdesktop_vcenter">
+        <div id="abcdesktop_right_control_bar_hint" class="abcdesktop_control_bar_hint">
+        </div>
+    </div>
+
+    <div id="abcdesktop_top_hint_anchor" class="abcdesktop_hint_anchor abcdesktop_vcenter abcdesktop_top">
+        <div id="abcdesktop_top_control_bar_hint" class="abcdesktop_control_bar_hint">
+        </div>
+    </div>
+    
     <div id="tooltip">
         <div class="shadow-arrow"></div>
         <div class="arrow-right"></div>

@@ -578,12 +578,12 @@ function top_click(ev) {
 function setupTopMenu() {
   
   if (isTouchDevice) {
-    $('#top #top-right #keyboard').show();
+    $('#abcdesktop_control_bar .abcdesktop_scroll #keyboard').show();
   }
   
   
   // return;
-  $('#top #top-right div').bind('click', function () {
+  $('#abcdesktop_control_bar .abcdesktop_scroll div').bind('click', function () {
 
     if (this.id === 'printer') {
       return;
@@ -599,15 +599,15 @@ function setupTopMenu() {
       closeTopRightDropDowns();
     }
     if (!hasSelected) {
-      $('#top #top-right div').removeClass('selected');
-      $('#top #top-right .drop-down').hide();
+      $('#abcdesktop_control_bar .abcdesktop_scroll div').removeClass('selected');
+      $('#abcdesktop_control_bar .abcdesktop_scroll .drop-down').hide();
       $(this).addClass('selected');
       $('.drop-down', this).show();
       addTransOverlay();
-      // $('#top #top-right div').bind('mouseover', function() {
+      // $('#abcdesktop_control_bar .abcdesktop_scroll div').bind('mouseover', function() {
       //     if (!$(this).hasClass('selected')) {
-      //         $('#top #top-right div').removeClass('selected');
-      //         $('#top #top-right .drop-down').hide();
+      //         $('#abcdesktop_control_bar .abcdesktop_scroll div').removeClass('selected');
+      //         $('#abcdesktop_control_bar .abcdesktop_scroll .drop-down').hide();
       //         $(this).addClass('selected');
       //         $('.drop-down', this).show();
       //     }
@@ -639,7 +639,7 @@ function setupTopMenu() {
   });
   */
 
-  $('#top #top-right div ul li').bind('click', function () {
+  $('#abcdesktop_control_bar .abcdesktop_scroll div ul li').bind('click', function () {
     addTransOverlay();
 
     if (!this.children
@@ -693,13 +693,13 @@ function setupTopMenu() {
     }
   });
 
-  $('#top #top-right #speakers #volume_level')
+  $('#abcdesktop_control_bar .abcdesktop_scroll #speakers #volume_level')
     .on('input', function () {
       const volume = Number(this.value);
       speaker.updateVolume( volume );
     });
 
-  $('#top #top-right #microphone')
+  $('#abcdesktop_control_bar .abcdesktop_scroll #microphone')
     .on('click', function () {
       microphone.updateState();
     });
@@ -734,25 +734,11 @@ export function requestInputLock() {
  * @desc Close top right drop down
  */
 export function closeTopRightDropDowns() {
-  $('#top #top-right div').removeClass('selected');
-  $('#top #top-right .drop-down').hide();
+  $('#abcdesktop_control_bar .abcdesktop_scroll div').removeClass('selected');
+  $('#abcdesktop_control_bar .abcdesktop_scroll .drop-down').hide();
   $('.fullscreenTransOverlay').unbind('click');
   $('.fullscreenTransOverlay').remove();
-  $('#top #top-right div').unbind('mouseover');
-}
-
-/**
- * @function closeTopLeftDropDowns
- * @global
- * @return {void}
- * @desc Close top left drop down
- */
-export function closeTopLeftDropDowns() {
-  $('#top #top-left div').removeClass('selected');
-  $('#top #top-left .drop-down').hide();
-  $('.fullscreenTransOverlay').unbind('click');
-  $('.fullscreenTransOverlay').remove();
-  $('#top #top-left div').unbind('mouseover');
+  $('#abcdesktop_control_bar .abcdesktop_scroll div').unbind('mouseover');
 }
 
 /**
@@ -765,7 +751,6 @@ function addTransOverlay() {
   $('body').append('<div class="fullscreenTransOverlay"></div>');
   $('.fullscreenTransOverlay').bind('click', () => {
     closeTopRightDropDowns();
-    closeTopLeftDropDowns();
   });
 }
 

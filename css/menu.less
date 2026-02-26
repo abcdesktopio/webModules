@@ -1,0 +1,1103 @@
+/* ----------------------------------------
+ * Control bar
+ * ----------------------------------------
+ */
+
+ #abcdesktop_control_bar_anchor {
+    /* The anchor is needed to get z-stacking to work */
+    position: fixed;
+    z-index: 10;
+
+    transition: 0.5s ease-in-out;
+
+    /* Edge misrenders animations wihthout this */
+    transform: translateX(0);
+}
+
+#abcdesktop_control_bar_anchor.abcdesktop_right {
+    left: auto;
+    right: 0;
+}
+
+#abcdesktop_control_bar {
+    position: relative;
+    left: -100%;
+
+    transition: 0.5s ease-in-out;
+    background-color: @secondary;
+    border-radius: 0 12px 12px 0;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none; /* Disable iOS image long-press popup */
+}
+#abcdesktop_control_bar.abcdesktop_open {
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    left: 0;
+}
+#abcdesktop_control_bar::before {
+    /* This extra element is to get a proper shadow */
+    content: "";
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    width: 30px;
+    left: -30px;
+    transition: box-shadow 0.5s ease-in-out;
+}
+#abcdesktop_control_bar.abcdesktop_open::before {
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+}
+.abcdesktop_right #abcdesktop_control_bar {
+    left: 100%;
+    border-radius: 12px 0 0 12px;
+}
+.abcdesktop_right #abcdesktop_control_bar.abcdesktop_open {
+    left: 0;
+}
+.abcdesktop_right #abcdesktop_control_bar::before {
+    visibility: hidden;
+}
+
+#abcdesktop_control_bar_handle {
+    position: absolute;
+    left: -15px;
+    top: 0;
+    transform: translateY(35px);
+    width: calc(100% + 30px);
+    height: 50px;
+    z-index: -1;
+    cursor: pointer;
+    border-radius: 6px;
+    background-image: url(../../../img/top/handle_bg_side.svg);
+    background-color: @secondary;
+    background-repeat: no-repeat;
+    background-position: right;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+}
+#abcdesktop_control_bar_handle:after {
+    content: "";
+    transition: transform 0.5s ease-in-out;
+    background-image: url(../../../img/top/handle_side.svg);
+    position: absolute;
+    top: 22px; /* (50px-6px)/2 */
+    right: 5px;
+    bottom: 0;
+    width: 5px;
+    height: 6px;
+}
+#abcdesktop_control_bar.abcdesktop_open #abcdesktop_control_bar_handle:after {
+    transform: translateX(1px) rotate(180deg);
+}
+
+.abcdesktop_right #abcdesktop_control_bar_handle {
+    background-position: left;
+}
+.abcdesktop_right #abcdesktop_control_bar_handle:after {
+    left: 5px;
+    right: 0;
+    transform: translateX(1px) rotate(180deg);
+}
+.abcdesktop_right #abcdesktop_control_bar.abcdesktop_open #abcdesktop_control_bar_handle:after {
+    transform: none;
+}
+/* Larger touch area for the handle, used when a touch screen is available */
+#abcdesktop_control_bar_handle div {
+    position: absolute;
+    right: -35px;
+    top: 0;
+    width: 50px;
+    height: 100%;
+    display: none;
+}
+@media (any-pointer: coarse) {
+    #abcdesktop_control_bar_handle div {
+        display: initial;
+    }
+}
+.abcdesktop_right #abcdesktop_control_bar_handle div {
+    left: -35px;
+    right: auto;
+}
+
+#abcdesktop_control_bar > .abcdesktop_scroll {
+    max-height: 100vh; /* Chrome is buggy with 100% */
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Control bar hint */
+.abcdesktop_hint_anchor{
+  position: fixed;
+  z-index: 20;
+}
+
+#abcdesktop_right_hint_anchor {
+    left: auto;
+    right: -50px;
+}
+
+#abcdesktop_left_hint_anchor {
+    left: -50px;
+    right: auto;
+}
+
+#abcdesktop_top_hint_anchor {
+    top: -50px;
+    bottom: auto;
+}
+
+
+.abcdesktop_vcenter.abcdesktop_top{
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+}
+
+.abcdesktop_top #abcdesktop_control_bar {
+    left: 0;
+    top: -44px;
+    border-radius: 0 0 12px 12px;
+}
+
+.abcdesktop_top #abcdesktop_control_bar.abcdesktop_open {
+    box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.5);
+    top: 0;
+}
+
+.abcdesktop_top #abcdesktop_control_bar::before {
+  transition: none;
+}
+
+.abcdesktop_top #abcdesktop_control_bar.abcdesktop_open::before {
+    box-shadow: none;
+}
+
+.abcdesktop_top #abcdesktop_control_bar > .abcdesktop_scroll {
+    flex-direction: row;
+    gap: 7px;
+}
+
+.abcdesktop_top #abcdesktop_control_bar_handle {
+    position: absolute;
+    top: -15px;           
+    left: 0;
+    transform: translateX(35px);  
+    width: 50px;         
+    height: calc(100% + 30px);
+    z-index: -1;
+    cursor: pointer;
+    border-radius: 6px;
+    background-image: url(../../../img/top/handle_bg_top.svg);
+    background-color: @secondary;
+    background-repeat: no-repeat;
+    background-position: bottom;  
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+.abcdesktop_top #abcdesktop_control_bar_handle:after {
+    content: "";
+    transition:  0.5s ease-in-out;  /* ← changed: all */
+    background-image: url(../../../img/top/handle_top.svg);
+    position: absolute;
+    top: 62px;
+    right: 0;
+    left: 22px;     
+    bottom: 5px;     
+    width: 6px;   
+    height: 5px;    
+}
+
+.abcdesktop_control_bar_hint {
+    position: relative;
+    transform: scale(0);
+    width: 100px;
+    height: 50%;
+    max-height: 600px;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s ease-in-out;
+    background: transparent;
+    box-shadow: 0 0 10px black, inset 0 0 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    transition-delay: 0s;
+}
+
+#abcdesktop_top_control_bar_hint {
+  height: 100px;
+  width: 50%;
+}
+
+.abcdesktop_control_bar_hint.abcdesktop_active {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0.2s;
+    transform: scale(1);
+}
+.abcdesktop_control_bar_hint.abcdesktop_notransition {
+    transition: none !important;
+}
+
+/* Control bar buttons */
+#abcdesktop_control_bar .abcdesktop_button {
+    min-width: unset;
+    padding: 6px 6px;
+    vertical-align: middle;
+    border:1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    background-color: transparent;
+    margin: 5px auto;
+}
+#abcdesktop_control_bar .abcdesktop_button.abcdesktop_selected {
+    border-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+#abcdesktop_control_bar .abcdesktop_button.abcdesktop_hidden {
+    display: none !important;
+}
+
+.abcdesktop_vcenter {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none;
+}
+
+.abcdesktop_vcenter .abcdesktop_top{
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+}
+
+.abcdesktop_vcenter > * {
+    pointer-events: auto;
+}
+
+/* Expanders */
+.abcdesktop_expander {
+    cursor: pointer;
+}
+.abcdesktop_expander::before {
+    display: inline-block;
+    margin-right: 5px;
+    transition: 0.2s ease-in-out;
+}
+.abcdesktop_expander.abcdesktop_open::before {
+    transform: rotateZ(90deg);
+}
+.abcdesktop_expander ~ * {
+    margin: 5px;
+    margin-left: 10px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 6px;
+}
+.abcdesktop_expander:not(.abcdesktop_open) ~ * {
+    display: none;
+}
+
+#abcdesktop_control_bar div {
+    float: left;
+    padding: 0px 4px;
+    overflow: hidden;
+    padding-top: 4px;
+  }
+  
+  #abcdesktop_control_bar #upload .drop-down {
+    margin-left: -115px !important;
+  }
+  
+  #abcdesktop_control_bar .drop-down {
+    list-style-type: none;
+    top: 35px;
+    background: @secondary;
+    padding: 0px 5px;
+    margin-top: 0px;
+    position: absolute;
+    display: none;
+    z-index: 10;
+    border-radius: 8px;
+    margin-left: -305px;
+    padding: 8px 0px 8px 0px;
+    font-weight: 300;
+  }
+
+  #abcdesktop_control_bar #share {
+    width: 25px;
+    height: 18px;
+    display: none;
+    position: initial;
+    margin-right: 5px;
+  }
+  
+  #abcdesktop_control_bar #share #nb {
+    float: right;
+    line-height: 10px;
+    margin-left: 15px;
+    color: @light;
+    padding-top: 0;
+    font-size: 12px;
+    font-weight: bold;
+    display: none;
+    position: absolute;
+    top: 5px;
+  }
+  
+  #abcdesktop_control_bar #zoom input[type="text"] {
+    width: 28px;
+    background: @primary;
+    color: @light;
+    border: none;
+  }
+  
+  #abcdesktop_control_bar #zoom input[type="range"] {
+    margin-bottom: 5px;
+  }
+  
+  #abcdesktop_control_bar #zoom li {
+    display: flex;
+    gap: 10px;
+    color: @light;
+  }
+  
+  #abcdesktop_control_bar #zoom li img{
+    margin: 0;
+  }
+  
+  #abcdesktop_control_bar #copypaste textarea {
+    min-height: 80px;
+    max-height: 500px;
+    width: 230px;
+    margin: 0;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-left: 10px;
+    float: left;
+    background: @primary;
+    color: @light;
+  }
+  
+  #abcdesktop_control_bar #copypaste button {
+    float: right;
+    height: 35px;
+    width: 40px;
+    right: 10px;
+    border-radius: 5px;
+    position: relative;
+    border: 1px solid @primary;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  #abcdesktop_control_bar #copypaste button img {
+    height: 20px;
+    width: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+    pointer-events: none;
+  }
+  
+  #abcdesktop_control_bar #copypaste #send {
+    top: 23px;
+    background: @tertiary;
+  }
+  
+  #abcdesktop_control_bar img,
+  #abcdesktop_control_bar svg {
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+  }
+  
+  #abcdesktop_control_bar img#printer {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  
+  #abcdesktop_control_bar div .drop-down li.disabled {
+    color: @primary;
+  }
+  
+  #abcdesktop_control_bar div .drop-down li .key-combo{
+    float: right;
+    color: @primary;
+    background-color: transparent;
+  }
+  
+  #abcdesktop_control_bar div ul#mainmenu.drop-down li:hover {
+    background: @primary;
+  }
+  
+  #abcdesktop_control_bar div ul li.divider:hover{
+    background: @primary;
+  }
+  
+  #abcdesktop_control_bar #name .drop-down {
+    width: 225px;
+    right: -243px;
+    top: 97px;
+    // default values
+    --arrow-left: -4%;      
+    --arrow-rotate: -90deg;
+  }
+  
+  #abcdesktop_control_bar #name .drop-down:after,
+  #abcdesktop_control_bar #name .drop-down:before {
+    bottom: 54%;
+    left: var(--arrow-left);
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    transform: rotate(var(--arrow-rotate));
+  }
+
+  .abcdesktop_top #abcdesktop_control_bar #name .drop-down {
+    right: -36px;
+    top: 58px;
+    // default values
+    --arrow-left: 76%;      
+    --arrow-rotate: 0;
+  }
+  
+  .abcdesktop_top #abcdesktop_control_bar #name .drop-down:after,
+  .abcdesktop_top #abcdesktop_control_bar #name .drop-down:before {
+    bottom: 100%;
+  }
+
+  .abcdesktop_right #abcdesktop_control_bar #name .drop-down {
+    right: 65px;
+    top: 97px;
+    // default values
+    --arrow-left: 105%;      
+    --arrow-rotate: 90deg;
+  }
+  
+  #abcdesktop_control_bar #name .drop-down:after {
+    border-bottom-color: @secondary;
+    border-width: 10px;
+    margin-left: -10px;
+  }
+  
+  #abcdesktop_control_bar #name .drop-down:before {
+    border-bottom-color: @secondary;
+    border-width: 11px;
+    margin-left: -11px;
+  }
+  
+  #abcdesktop_control_bar #name span {
+    color: @light;
+    font-weight: 600;
+  }
+
+  #abcdesktop_control_bar #applicationstatus {
+    display: none;
+    padding-block: unset;
+  }
+  
+  #abcdesktop_control_bar #top-issue {
+    cursor: pointer;
+    pointer-events: unset !important;
+  }
+
+  #top-issue-container {
+    display: none;
+  }
+  
+  #abcdesktop_control_bar #placement {
+    cursor: pointer;
+    pointer-events: unset !important;
+  }
+  
+  #abcdesktop_control_bar #speakers {
+    display: none;
+  }
+  
+  #abcdesktop_control_bar #microphone {
+    display: none;
+  }
+  
+  #abcdesktop_control_bar #speakers .drop-down {
+    width: 145px;
+    right: -163px;
+    top: 42px;
+    // default values
+    --arrow-left: -4%;      
+    --arrow-rotate: -90deg;
+  }
+  
+  #abcdesktop_control_bar #speakers .drop-down:after,
+  #abcdesktop_control_bar #speakers .drop-down:before {
+    bottom: 32%;
+    left: var(--arrow-left);
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    transform: rotate(var(--arrow-rotate));
+  }
+
+  .abcdesktop_top #abcdesktop_control_bar #speakers .drop-down {
+    right: 24px;
+    top: 58px;
+    // default values
+    --arrow-left: 50%;      
+    --arrow-rotate: 0;
+  }
+  
+  .abcdesktop_top #abcdesktop_control_bar #speakers .drop-down:after,
+  .abcdesktop_top #abcdesktop_control_bar #speakers .drop-down:before {
+    bottom: 100%;
+  }
+
+  .abcdesktop_right #abcdesktop_control_bar #speakers .drop-down {
+    right: 65px;
+    top: 42px;
+    // default values
+    --arrow-left: 106%;      
+    --arrow-rotate: 90deg;
+  }
+  
+  #abcdesktop_control_bar #speakers .drop-down:after {
+    border-bottom-color: @secondary;
+    border-width: 9px;
+    margin-left: -9px;
+  }
+  #abcdesktop_control_bar #speakers .drop-down:before {
+    border-bottom-color: @primary;
+    border-width: 8px;
+    margin-left: -8px;
+  }
+  
+  #abcdesktop_control_bar #speakers .drop-down input[type="range"][orient="vertical"] {
+    writing-mode: vertical-lr;
+    -ms-writing-mode: bt-rl;
+    // -webkit-appearance: slider-vertical;
+    height: 100px;
+    border: none;
+    width: 30px;
+    margin: 0;
+    padding: 0;
+    outline: none;
+  }
+  
+  #abcdesktop_control_bar #speakers .drop-down #volume_level:disabled {
+    opacity: 0.5;
+  }
+  
+  #abcdesktop_control_bar #support {
+    display: none;
+  }
+  
+  #abcdesktop_control_bar #share .drop-down {
+    width: 350px;
+    margin-left: -200px;
+  }
+  
+  #abcdesktop_control_bar #share .drop-down #otherClients {
+    width: 90%;
+    margin-top: 20px;
+    margin-left: 5%;
+    border-top: 1px solid;
+  }
+  
+  #abcdesktop_control_bar #share .drop-down .user {
+    width: 100%;
+    height: 20px;
+    color: @dark;
+    padding-left: 20px;
+    line-height: 20px;
+  }
+  
+  #abcdesktop_control_bar #share .drop-down .user img {
+    right: 25px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  #abcdesktop_control_bar #share .drop-down:after,
+  #abcdesktop_control_bar #share .drop-down:before {
+    bottom: 100%;
+    left: 60%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  #abcdesktop_control_bar #share .drop-down:after {
+    border-bottom-color: @light;
+    border-width: 9px;
+    margin-left: -9px;
+  }
+  #abcdesktop_control_bar #share .drop-down:before {
+    border-bottom-color: @primary;
+    border-width: 8px;
+    margin-left: -8px;
+  }
+  
+  #abcdesktop_control_bar #zoom .drop-down {
+    width: 200px;
+    margin-left: -160px;
+  }
+  
+  #abcdesktop_control_bar #zoom .drop-down:after,
+  #abcdesktop_control_bar #zoom .drop-down:before {
+    bottom: 100%;
+    left: 85%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  #abcdesktop_control_bar #zoom .drop-down:after {
+    border-bottom-color: @secondary;
+    border-width: 9px;
+    margin-left: -9px;
+  }
+  #abcdesktop_control_bar #zoom .drop-down:before {
+    border-bottom-color: @secondary;
+    border-width: 8px;
+    margin-left: -8px;
+  }
+  
+  #abcdesktop_control_bar #copypaste .drop-down {
+    width: 300px;
+    right: -317px;
+    top: -27px;
+    // default values
+    --arrow-left: -2%;      
+    --arrow-rotate: -90deg;
+  }
+  
+  #abcdesktop_control_bar #copypaste .drop-down:after,
+  #abcdesktop_control_bar #copypaste .drop-down:before {
+    bottom: 42%;
+    left: var(--arrow-left);
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    transform: rotate(var(--arrow-rotate));
+  }
+
+  .abcdesktop_top #abcdesktop_control_bar #copypaste .drop-down {
+    right: 85px;
+    top: 58px;
+    // default values
+    --arrow-left: 83%;      
+    --arrow-rotate: 0;
+  }
+  
+  .abcdesktop_top #abcdesktop_control_bar #copypaste .drop-down:after,
+  .abcdesktop_top #abcdesktop_control_bar #copypaste .drop-down:before {
+    bottom: 100%;
+  }
+
+  .abcdesktop_right #abcdesktop_control_bar #copypaste .drop-down {
+    right: 65px;
+    top: -27px;
+    // default values
+    --arrow-left: 103%;      
+    --arrow-rotate: 90deg;
+  }
+  
+  #abcdesktop_control_bar #copypaste .drop-down:after {
+    border-bottom-color: @secondary;
+    border-width: 9px;
+    margin-left: -9px;
+  }
+  
+  #abcdesktop_control_bar #copypaste .drop-down:before {
+    border-bottom-color: @secondary;
+    border-width: 8px;
+    margin-left: -8px;
+  }
+  
+  #abcdesktop_control_bar #copypaste ul li {
+    display: contents;
+    padding: 0;
+  }
+  
+  #abcdesktop_control_bar #connection .drop-down {
+    width: 219px;
+    margin-left: -75px;
+  }
+  #abcdesktop_control_bar #dropbox .drop-down {
+    width: 208px;
+    margin-left: -60px;
+  }
+  
+  #abcdesktop_control_bar #dropbox .drop-down:after,
+  #abcdesktop_control_bar #dropbox .drop-down:before {
+    bottom: 100%;
+    left: 32%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  #abcdesktop_control_bar #dropbox .drop-down:after {
+    border-bottom-color: @light;
+    border-width: 10px;
+    margin-left: -10px;
+  }
+  #abcdesktop_control_bar #dropbox .drop-down:before {
+    border-bottom-color: @primary;
+    border-width: 11px;
+    margin-left: -11px;
+  }
+
+  #abcdesktop_control_bar div img.disabled {
+    opacity: 0.4;
+    filter: opacity(40);
+  }
+  #abcdesktop_control_bar div ul {
+    list-style-position: inside;
+  }
+  
+  #abcdesktop_control_bar div ul li{
+    height: 30px;
+    padding: 4px 40px 3px 6px;
+    color: @dark;
+  }
+  
+  #abcdesktop_control_bar div ul li img{
+    margin-left: -10px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  
+  #abcdesktop_control_bar div ul li.ticked {
+    list-style-image: url("../../../img/top/tic7pxk.png");
+    padding-left: 0px;
+  }
+  
+  #contextmenu li.divider,
+  #abcdesktop_control_bar div ul li.divider {
+    height: 0px;
+    border-bottom: 1px solid @primary;
+    padding: 0px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  #abcdesktop_control_bar #speakers div {
+    float: left;
+  }
+  
+  #abcdesktop_control_bar #speakers .small-icon {
+    background: url(../../../img/top/0slider.jpg) no-repeat;
+    height: 15px;
+    width: 7px;
+    margin-top: 12px;
+  }
+  
+  #abcdesktop_control_bar #speakers .system-volume {
+    height: 37px;
+    padding: 3px;
+  }
+  
+  #abcdesktop_control_bar #speakers .system-volume:hover,
+  #abcdesktop_control_bar #speakers .banshee:hover {
+    background: none;
+  }
+  
+  #abcdesktop_control_bar #speakers .banshee {
+    height: 43px;
+    padding-left: 50px;
+  }
+  
+  #abcdesktop_control_bar #speakers .banshee div:hover {
+    background-color: @secondary;
+  }
+  
+  input#volume_level{
+    padding: 2px 0px 2px 0px;
+  }
+  
+  #abcdesktop_control_bar #speakers .slider {
+    width: 185px;
+    height: 17px;
+    float: left;
+    overflow: visible;
+    cursor: default;
+    margin-top: 5px;
+    padding-top: 10px;
+  }
+  
+  #abcdesktop_control_bar #speakers .slider-active {
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    background: @danger;
+    height: 5px;
+    width: 60px;
+    margin-left: 26px;
+    margin-top: -15px;
+    position: relative;
+    z-index: 1;
+    padding: 0px;
+  }
+  
+  #abcdesktop_control_bar #speakers .ui-slider-handle {
+    z-index: 2;
+  }
+  
+  #abcdesktop_control_bar #speakers .large-icon {
+    background: url(../../../img/top/100slider.jpg) no-repeat;
+    height: 15px;
+    width: 7px;
+    float: right;
+    margin-top: 12px;
+  }
+  
+  #abcdesktop_control_bar #printer .drop-down div {
+    padding: 0px;
+  }
+  
+  #abcdesktop_control_bar #printer .drop-down .left-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  #abcdesktop_control_bar #printer .drop-down .fileName {
+    width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  #abcdesktop_control_bar #printer .drop-down .left-container img {
+    margin: 0;
+    padding: 0;
+    margin-right: 5px;
+  }
+  
+  #abcdesktop_control_bar #printer .drop-down .deletePrint {
+    position: absolute;
+    right: 10px;
+  }
+  
+  #abcdesktop_control_bar #printer .drop-down .deletePrint img {
+    margin: 0;
+  }
+  #abcdesktop_control_bar #printer .drop-down:after,
+  #abcdesktop_control_bar #printer .drop-down:before {
+    bottom: 100%;
+    right: 1.5%;
+    border-bottom-color: @secondary;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  #abcdesktop_control_bar #printer .drop-down:after {
+    border-bottom-color: @secondary;
+    border-width: 10px;
+  }
+  
+  #abcdesktop_control_bar #upload {
+    width: 18px;
+    height: 18px;
+    display: none;
+    padding: 0;
+    margin-top: 5px;
+  }
+  
+  #abcdesktop_control_bar #upload .drop-down {
+    display: block;
+    max-height: 130px;
+  }
+  
+  #abcdesktop_control_bar #upload .drop-down:after,
+  #abcdesktop_control_bar #upload .drop-down:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  #abcdesktop_control_bar #upload .drop-down:after {
+    border-bottom-color: @secondary;
+    border-width: 9px;
+    margin-left: -9px;
+  }
+  
+  #abcdesktop_control_bar #upload .drop-down:before {
+    border-bottom-color: @primary;
+    border-width: 8px;
+    margin-left: -8px;
+  }
+
+  #abcdesktop_control_bar #shell {
+    display: none;
+  }
+  
+  #abcdesktop_control_bar div.state{
+    float: left;
+    height: 12px;
+    margin: 0;
+    padding: 0;
+    width: 12px;
+    border-radius: 10px;
+    margin-top: 2px;
+  }
+
+  #abcdesktop_control_bar div#process {
+    background: url(../../../img/top/settings.svg);
+    background-size: contain;
+    height: 14px;
+    width: 14px;
+    margin-top: 1px;
+  }
+  
+  #abcdesktop_control_bar div#store {
+    background: url(../../../img/top/shop.svg);
+    background-size: contain;
+    border-radius: 0px;
+    height: 14px;
+    width: 14px;
+  }
+  
+  #abcdesktop_control_bar div#clogs {
+    background: url(../../../img/top/terminal.svg);
+    background-size: contain;
+    border-radius: 0px;
+    height: 14px;
+    width: 14px;
+  }
+  
+  #abcdesktop_control_bar div#help {
+    background: url(../../../img/top/help.svg);
+    background-size: contain;
+    border-radius: 0px;
+    height: 14px;
+    width: 14px;
+  }
+  
+  #abcdesktop_control_bar div#settings {
+    background: url(../../../img/top/settings.svg) no-repeat center;
+    background-size: contain;
+    height: 18px;
+    width: 18px;
+  }
+  
+  #abcdesktop_control_bar div#appstore {
+    background: url(../../../img/top/apps.svg) no-repeat center;
+    background-size: contain;
+    border-radius: 0px;
+    height: 18px;
+    width: 18px;
+  }
+  
+  #abcdesktop_control_bar div#download {
+    background: url(../../../img/top/download.svg) no-repeat center;
+    background-size: contain;
+    border-radius: 0px;
+    height: 18px;
+    width: 18px;
+  }
+  
+  #abcdesktop_control_bar div#grabmouse {
+    background: url(../../../img/top/pointer.svg) no-repeat center;
+    background-size: contain;
+    border-radius: 0px;
+    height: 18px;
+    width: 18px;
+  }
+  
+  #abcdesktop_control_bar div#screenshot {
+    background: url(../../../img/top/screenshot.svg) no-repeat center;
+    background-size: contain;
+    border-radius: 0px;
+    height: 18px;
+    width: 18px;
+  }
+  
+  #abcdesktop_control_bar div#tips {
+    background: url(../../../img/top/newspaper.svg) no-repeat center;
+    background-size: contain;
+    border-radius: 0px;
+    height: 18px;
+    width: 18px;
+  }
+  
+  #abcdesktop_control_bar div#logout {
+    background: url(../../../img/top/logout.svg) no-repeat center;
+    background-size: contain;
+    border-radius: 0px;
+    height: 18px;
+    width: 18px;
+  }
+  
+  #abcdesktop_control_bar div#snapshot {
+    background: url(../../../img/top/snapshot.svg) no-repeat center;
+    background-size: contain;
+    border-radius: 0px;
+    height: 18px;
+    width: 18px;
+  }
+  
+  
+  #record {
+    background-size: contain;
+    border-radius: 0px !important;
+    height: 18px !important;
+    width: 18px !important;
+    float: left;
+    margin: 0;
+  }
+  
+  #abcdesktop_control_bar div#speedtest {
+    background: url(../../../img/top/speedtest.svg);
+    background-size: contain;
+    border-radius: 0px;
+    height: 14px;
+    width: 14px;
+  }
+  
+  #abcdesktop_control_bar div#whoami {
+    background: url(../../../img/top/whoami.svg);
+    background-size: contain;
+    height: 14px;
+    width: 14px;
+    border-radius: 0;
+  }
+  
+  #abcdesktop_control_bar div#whereami {
+    background: url(../../../img/top/whereami.svg);
+    background-size: contain;
+    height: 14px;
+    width: 14px;
+    border-radius: 0;
+  }
+  
