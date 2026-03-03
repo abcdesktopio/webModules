@@ -42,11 +42,13 @@ const create_element_from_task = function( task ) {
 
 
 const update_display_task = function() {
+	let controlBar = document.getElementById('abcdesktop_control_bar');
 	let taskwaiting = document.getElementById('taskwaiting');
 	let applicationstatus = document.getElementById('applicationstatus');
 	let hourglassi_start = document.getElementById('hourglassi_start');
 	if (!taskwaiting || !applicationstatus || !hourglassi_start) return;
 	if (taskwaiting.childElementCount > 0) {
+		controlBar.classList.add('abcdesktop_open');
 		applicationstatus.style.display = 'block';
 		hourglassi_start.title = '';
 		const collection = taskwaiting.children;
@@ -56,6 +58,7 @@ const update_display_task = function() {
 	else {
 		applicationstatus.style.display = 'none';
 		hourglassi_start.title = '';
+		controlBar.classList.remove('abcdesktop_open');
 	}
 
 }

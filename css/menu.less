@@ -122,8 +122,6 @@
 
 #abcdesktop_control_bar > .abcdesktop_scroll {
     max-height: 100vh; /* Chrome is buggy with 100% */
-    overflow-x: hidden;
-    overflow-y: auto;
     padding: 0 5px;
     display: flex;
     flex-direction: column;
@@ -185,7 +183,7 @@
     position: absolute;
     top: -15px;           
     left: 0;
-    transform: translateX(35px);  
+    transform: translateX(53px);  
     width: 50px;         
     height: calc(100% + 30px);
     z-index: -1;
@@ -244,6 +242,7 @@
 
 /* Control bar buttons */
 #abcdesktop_control_bar .abcdesktop_button {
+    position: relative;
     min-width: unset;
     padding: 6px 6px;
     vertical-align: middle;
@@ -309,7 +308,6 @@
 #abcdesktop_control_bar div {
     float: left;
     padding: 0px 4px;
-    overflow: hidden;
     padding-top: 4px;
   }
   
@@ -325,7 +323,7 @@
     margin-top: 0px;
     position: absolute;
     display: none;
-    z-index: 10;
+    z-index: 20;
     border-radius: 8px;
     margin-left: -305px;
     padding: 8px 0px 8px 0px;
@@ -444,8 +442,8 @@
   
   #abcdesktop_control_bar #name .drop-down {
     width: 225px;
-    right: -243px;
-    top: 97px;
+    right: -261px;
+    top: -36px;
     // default values
     --arrow-left: -4%;      
     --arrow-rotate: -90deg;
@@ -465,7 +463,7 @@
   }
 
   .abcdesktop_top #abcdesktop_control_bar #name .drop-down {
-    right: -36px;
+    right: -39px;
     top: 58px;
     // default values
     --arrow-left: 76%;      
@@ -479,7 +477,7 @@
 
   .abcdesktop_right #abcdesktop_control_bar #name .drop-down {
     right: 65px;
-    top: 97px;
+    top: -36px;
     // default values
     --arrow-left: 105%;      
     --arrow-rotate: 90deg;
@@ -531,8 +529,8 @@
   
   #abcdesktop_control_bar #speakers .drop-down {
     width: 145px;
-    right: -163px;
-    top: 42px;
+    right: -179px;
+    top: 6px;
     // default values
     --arrow-left: -4%;      
     --arrow-rotate: -90deg;
@@ -552,7 +550,7 @@
   }
 
   .abcdesktop_top #abcdesktop_control_bar #speakers .drop-down {
-    right: 24px;
+    right: -59px;
     top: 58px;
     // default values
     --arrow-left: 50%;      
@@ -566,7 +564,7 @@
 
   .abcdesktop_right #abcdesktop_control_bar #speakers .drop-down {
     right: 65px;
-    top: 42px;
+    top: -6px;
     // default values
     --arrow-left: 106%;      
     --arrow-rotate: 90deg;
@@ -682,8 +680,8 @@
   
   #abcdesktop_control_bar #copypaste .drop-down {
     width: 300px;
-    right: -317px;
-    top: -27px;
+    right: -332px;
+    top: -28px;
     // default values
     --arrow-left: -2%;      
     --arrow-rotate: -90deg;
@@ -703,7 +701,7 @@
   }
 
   .abcdesktop_top #abcdesktop_control_bar #copypaste .drop-down {
-    right: 85px;
+    right: -36px;
     top: 58px;
     // default values
     --arrow-left: 83%;      
