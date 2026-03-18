@@ -670,10 +670,6 @@ function setupTopMenu() {
         tipsinfo.open();
         break;
 
-      case 'logout':
-        menu.logoffOpen();
-        break;
-
       case 'grabmouse':
         requestInputLock();
         break;
@@ -702,6 +698,11 @@ function setupTopMenu() {
   $('#abcdesktop_control_bar .abcdesktop_scroll #microphone')
     .on('click', function () {
       microphone.updateState();
+    });
+
+    $('#abcdesktop_control_bar .abcdesktop_scroll #logout')
+    .on('click', function () {
+      menu.logoffOpen();
     });
 
   /* 
