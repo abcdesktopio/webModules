@@ -32,7 +32,7 @@
     -webkit-touch-callout: none; /* Disable iOS image long-press popup */
 }
 #abcdesktop_control_bar.abcdesktop_open {
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
     left: 0;
 }
 #abcdesktop_control_bar::before {
@@ -45,9 +45,10 @@
     left: -30px;
     transition: box-shadow 0.5s ease-in-out;
 }
-#abcdesktop_control_bar.abcdesktop_open::before {
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
-}
+
+// #abcdesktop_control_bar.abcdesktop_open::before {
+//     box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+// }
 .abcdesktop_right #abcdesktop_control_bar {
     left: 100%;
     border-radius: 12px 0 0 12px;
@@ -73,7 +74,7 @@
     background-color: @secondary;
     background-repeat: no-repeat;
     background-position: right;
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
 }
 #abcdesktop_control_bar_handle:after {
     content: "";
@@ -162,7 +163,7 @@
 }
 
 .abcdesktop_top #abcdesktop_control_bar.abcdesktop_open {
-    box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.5);
+    // box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.5);
     top: 0;
 }
 
@@ -170,9 +171,9 @@
   transition: none;
 }
 
-.abcdesktop_top #abcdesktop_control_bar.abcdesktop_open::before {
-    box-shadow: none;
-}
+// .abcdesktop_top #abcdesktop_control_bar.abcdesktop_open::before {
+//     box-shadow: none;
+// }
 
 .abcdesktop_top #abcdesktop_control_bar > .abcdesktop_scroll {
     flex-direction: row;
@@ -193,7 +194,7 @@
     background-color: @secondary;
     background-repeat: no-repeat;
     background-position: bottom;  
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
 }
 
 .abcdesktop_top #abcdesktop_control_bar_handle:after {
@@ -415,6 +416,7 @@
     width: 18px;
     height: 18px;
     pointer-events: none;
+    vertical-align: top;
   }
   
   #abcdesktop_control_bar img#printer {
