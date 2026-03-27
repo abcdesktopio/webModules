@@ -6,7 +6,7 @@
   "author": "kecsou <kevin.voyer.developpeur@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
-    "eslint": "^9.1.1"
+    "eslint": "^10.1.0"
   },
   "dependencies": {
     "@cycjimmy/jsmpeg-player": "6.1.2",
