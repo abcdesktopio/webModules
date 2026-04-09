@@ -42,6 +42,7 @@ const create_element_from_task = function( task ) {
 
 
 const update_display_task = function() {
+	let controlBarAnchor = document.getElementById('abcdesktop_control_bar_anchor');
 	let controlBar = document.getElementById('abcdesktop_control_bar');
 	let taskwaiting = document.getElementById('taskwaiting');
 	let applicationstatus = document.getElementById('applicationstatus');
@@ -49,7 +50,13 @@ const update_display_task = function() {
 	if (!taskwaiting || !applicationstatus || !hourglassi_start) return;
 	if (taskwaiting.childElementCount > 0) {
 		controlBar.classList.add('abcdesktop_open');
-		applicationstatus.style.display = 'block';
+		if (controlBarAnchor.classList.contains('abcdesktop_top')) {
+			applicationstatus.style.display = 'block';
+		}
+		else {
+			applicationstatus.style.display = 'flex';
+			applicationstatus.style.flexDirection = 'column';
+		}
 		hourglassi_start.title = '';
 		const collection = taskwaiting.children;
 		for ( let i=0; i < collection.length; ++i)
