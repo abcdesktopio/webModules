@@ -86,9 +86,9 @@ const odApiClient = new (class ODApiClient {
         return client.sendRequest('user/whoami');
       }
 
-      getInfo() {
-        return client.sendRequest('user/getinfo');
-      }
+      // getInfo() {
+      //   return client.sendRequest('user/getinfo');
+      // }
 
       getLyncConnectionKey() {
         return client.sendRequest('user/getlyncconnectionkey');
