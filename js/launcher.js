@@ -1105,11 +1105,6 @@ export function requestSnapshotAPI(
   return fetch(window.od.net.urlrewrite(url), options).then((res) => res.json());
 }
 
-
-export function setAudioQuality(sink) {
-  return requestSpawnerAPI('setAudioQuality', { sink });
-}
-
 export function playAudioSample() {
   return requestSpawnerAPI('playAudioSample');
 }
