@@ -13,49 +13,27 @@
 
 @import "@{global}";
 
-.dz-upload {
-  display: block;
-  background-color: @tertiary !important;
-  height: 10px;
-  width: 0%;
-  border-radius: 10px;
+
+.dz-processing{
+  display: flex;
+  gap: 10px;
 }
 
-#upload .dz-preview {
-  clear: both;
-  width: 250px;
-  margin-bottom: 10px;
-}
-
-#upload span {
-  padding: 0;
-  color: @dark;
-  background-color: transparent;
+#upload button img{
+  width: 32px;
+  height: 32px;
 }
 
 .dz-complete {
-  display: none;
+  display: none !important;
 }
 
-.dz-progress {
-  clear: both;
-  height: 10px;
-  width: 75%;
-  margin-left: 10%;
-  padding: 0 !important;
-  background-color: @secondary;
-  border-radius: 10px;
-  margin-top: 5px;
+#progress-bar-container{
+  width: 65px;
+  padding: 0px !important;
+  margin: 0px !important;
 }
 
-.dz-error-mark {
-  float: right;
-  margin-top: 1px;
-  padding-top: 1px !important;
-  cursor: pointer;
-}
-
-#upload .dz-error-mark span {
-  pointer-events: none;
-  color: @tertiary;
+.file-name{
+  width: 150px;
 }

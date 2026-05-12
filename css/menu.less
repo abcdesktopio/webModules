@@ -930,28 +930,50 @@
   }
   
   #abcdesktop_control_bar #upload {
-    width: 18px;
-    height: 18px;
     display: none;
-    padding: 0;
-    margin-top: 5px;
   }
   
   #abcdesktop_control_bar #upload .drop-down {
     display: block;
-    max-height: 130px;
+    right: -395px;
+    top: -18px;
+    // default values
+    --arrow-left: -2%;      
+    --arrow-rotate: -90deg;
   }
   
   #abcdesktop_control_bar #upload .drop-down:after,
   #abcdesktop_control_bar #upload .drop-down:before {
-    bottom: 100%;
-    left: 50%;
+    bottom: 45%;
+    left: var(--arrow-left);
     border: solid transparent;
     content: " ";
     height: 0;
     width: 0;
     position: absolute;
     pointer-events: none;
+    transform: rotate(var(--arrow-rotate));
+  }
+
+  .abcdesktop_top #abcdesktop_control_bar #upload .drop-down {
+    right: -46px;
+    top: 58px;
+    // default values
+    --arrow-left: 83%;      
+    --arrow-rotate: 0;
+  }
+  
+  .abcdesktop_top #abcdesktop_control_bar #upload .drop-down:after,
+  .abcdesktop_top #abcdesktop_control_bar #upload .drop-down:before {
+    bottom: 100%;
+  }
+
+  .abcdesktop_right #abcdesktop_control_bar #upload .drop-down {
+    right: 65px;
+    top: -18px;
+    // default values
+    --arrow-left: 102%;      
+    --arrow-rotate: 90deg;
   }
   
   #abcdesktop_control_bar #upload .drop-down:after {

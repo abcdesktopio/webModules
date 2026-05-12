@@ -40,13 +40,28 @@ export const init = function () {
  * @see {@link http://www.dropzonejs.com| DropzoneJs}
  */
 function initDropZone() {
+  // Get the template HTML and remove it from the doument
+  var previewNode = document.querySelector("#template");
+  if (!previewNode || !previewNode.parentNode) return;
+  previewNode.id = "";
+  var previewTemplate = previewNode.parentNode.innerHTML;
+  previewNode.parentNode.removeChild(previewNode);
+  
+  const uploadDropDown =  document.querySelector('#upload .drop-down');
+
   const myDropzone = new window.Dropzone(document.body, {
     url: '/filer',
     clickable: false,
-    previewsContainer: '#upload .drop-down',
+    autoQueue: true,
+    parallelUploads: 3,
+    thumbnailWidth: 64,
+    thumbnailHeight: 64,
+    previewTemplate: previewTemplate,
+    previewsContainer: '#previews',
     maxFilesize: null,
     headers: { 'ABCAuthorization': `Bearer ${window.od.currentUser.authorization}` },
   });
+
 
   myDropzone.on('queuecomplete', () => {
     console.log('Queue complete');
@@ -62,12 +77,18 @@ function initDropZone() {
 
   myDropzone.on('addedfile', function (file) {
     upload.style.display = 'block';
+    uploadDropDown.style.display = 'block';
+    let controlBar = document.getElementById('abcdesktop_control_bar');
+    if (controlBar) {
+      controlBar.classList.add('abcdesktop_open');
+    }
     console.log(file);
     // update the headers Authorization
     this.options.headers.ABCAuthorization = `Bearer ${window.od.currentUser.authorization}`;
-    file.previewElement.querySelector('.dz-error-mark').addEventListener('click', () => {
-      myDropzone.cancelUpload(file);
-    });
+  });
+
+  myDropzone.on('success', (file) => {
+    file.previewElement.classList.add("dz-complete");
   });
 
   myDropzone.on('error', (file, response, e) => {

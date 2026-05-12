@@ -355,9 +355,30 @@
                 </div>
             {{/isIndexPage}}
 
-            <div id="upload" class="abcdesktop_button keep" title="Upload">
+            <div id="upload" class="abcdesktop_button" title="Upload">
                 <img src="../img/top/upload.svg" alt="upload-icon" loading="lazy">
-                <ul class="drop-down"></ul>
+                <div id="previews" class="drop-down">
+                    <div id="template">
+                        <div>
+                            <span class="file-preview"><img data-dz-thumbnail /></span>
+                        </div>
+                        <div>
+                            <p class="file-name" data-dz-name></p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                        </div>
+                        <div>
+                            <p class="file-size" data-dz-size></p>
+                            <div id="progress-bar-container" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                            </div>
+                        </div>
+                        <div>
+                            <button data-dz-remove class="btn btn-danger delete">
+                                <img src="../img/top/trash.svg" alt="delete-icon" loading="lazy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Drag/Pan the viewport
