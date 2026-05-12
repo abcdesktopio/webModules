@@ -62,7 +62,7 @@ function add( msg ) {
 
     let selected=true;
     for(var key in msg) {
-	if (key === "default") continue;
+	// if (key === "default") continue;
 
 	// create li
     	//  <li class="nav-item" role="presentation">
