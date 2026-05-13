@@ -1,6 +1,7 @@
 {
   "modules": [
-    "js/scripts.js"
+    "js/scripts.js",
+    "node_modules/js-circle-progress/dist/circle-progress.min.js"
   ],
   "scripts": [
     {

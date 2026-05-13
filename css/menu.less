@@ -306,7 +306,7 @@
     display: none;
 }
 
-#abcdesktop_control_bar div {
+#abcdesktop_control_bar .drop-down div {
     float: left;
     padding: 0px 4px;
     padding-top: 4px;
@@ -931,12 +931,45 @@
   
   #abcdesktop_control_bar #upload {
     display: none;
+    padding-top: 8px;
+  }
+
+  #upload-icon {
+    position: absolute;
+    right: 6.8px;
+    top: 7px;
+  }
+
+  #total-upload-progress-bar-and-icon-container{
+    position: relative;
+    width: 32px;
+    height: 32px;
+    top: -2px;
+  }
+
+  #abcdesktop_control_bar #upload circle-progress::part(base){
+    width: 32px;
+    height: 32px;
+  }
+
+  #abcdesktop_control_bar #upload circle-progress::part(text){
+    display: none;
+  }
+
+  #abcdesktop_control_bar #upload circle-progress::part(circle){
+    stroke-width: 6px;
+	  stroke: @svgColor;
+  }
+
+  #abcdesktop_control_bar #upload circle-progress::part(value){
+    stroke-width: 6px;
+    stroke: @tertiary;
   }
   
   #abcdesktop_control_bar #upload .drop-down {
     display: block;
-    right: -395px;
-    top: -18px;
+    right: -387px;
+    top: -12px;
     // default values
     --arrow-left: -2%;      
     --arrow-rotate: -90deg;
@@ -956,8 +989,8 @@
   }
 
   .abcdesktop_top #abcdesktop_control_bar #upload .drop-down {
-    right: -46px;
-    top: 58px;
+    right: 155px;
+    top: 65px;
     // default values
     --arrow-left: 83%;      
     --arrow-rotate: 0;
@@ -969,8 +1002,8 @@
   }
 
   .abcdesktop_right #abcdesktop_control_bar #upload .drop-down {
-    right: 65px;
-    top: -18px;
+    right: 74px;
+    top: -12px;
     // default values
     --arrow-left: 102%;      
     --arrow-rotate: 90deg;

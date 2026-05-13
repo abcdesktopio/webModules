@@ -46,8 +46,8 @@ function initDropZone() {
   previewNode.id = "";
   var previewTemplate = previewNode.parentNode.innerHTML;
   previewNode.parentNode.removeChild(previewNode);
-  
   const uploadDropDown =  document.querySelector('#upload .drop-down');
+  const totalProgressBar = document.getElementById('totalUploadProgress');
 
   const myDropzone = new window.Dropzone(document.body, {
     url: '/filer',
@@ -66,6 +66,7 @@ function initDropZone() {
   myDropzone.on('queuecomplete', () => {
     console.log('Queue complete');
     upload.style.display = 'none';
+    totalProgressBar.value = 0;
     $('.dz-complete').remove();
     script.closeTopRightDropDowns();
   });
@@ -89,6 +90,10 @@ function initDropZone() {
 
   myDropzone.on('success', (file) => {
     file.previewElement.classList.add("dz-complete");
+  });
+
+  myDropzone.on('totaluploadprogress', (progress) => {
+    totalProgressBar.value = progress;
   });
 
   myDropzone.on('error', (file, response, e) => {

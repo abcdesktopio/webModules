@@ -355,8 +355,15 @@
                 </div>
             {{/isIndexPage}}
 
-            <div id="upload" class="abcdesktop_button" title="Upload">
-                <img src="../img/top/upload.svg" alt="upload-icon" loading="lazy">
+            <div id="upload" title="Upload">
+                <div id="total-upload-progress-bar-and-icon-container">
+                    <circle-progress
+                        id="totalUploadProgress"
+                        max="100"
+                        value="0"
+                    ></circle-progress>
+                    <img id="upload-icon" src="../img/top/upload.svg" alt="upload-icon" loading="lazy">
+                </div>
                 <div id="previews" class="drop-down">
                     <div id="template">
                         <div>
