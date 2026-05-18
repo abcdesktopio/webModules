@@ -13,6 +13,7 @@
 
 import * as launcher from './launcher.js';
 import * as languages from './languages.js';
+import * as printer from './printer.js';
 import { closeTopRightDropDowns } from './scripts.js';
 import { setCapture } from './noVNC/core/util/events.js';
 
@@ -172,7 +173,7 @@ let deviceType = "";
  * If the device is a touch device, it returns true and sets the global variable deviceType to "touch".
  * If the device is not a touch device, it returns false and sets the global variable deviceType to "mouse".
  * @returns {boolean} true if the device is a touch device, false otherwise.
- */
+*/
 const isTouchDevice = () => {
   try {
     //We try to create TouchEvent (it would fail for desktops and throw error)
@@ -184,6 +185,18 @@ const isTouchDevice = () => {
     return false;
   }
 };
+
+export const calculateControlBarHandlePositioning = () => {
+  if (controlbarOnTop) {
+    const controlBarRect = controlBar.getBoundingClientRect();
+    console.log(controlBarRect.width);
+    controlBarHandle.style.transform = `translateX(${Math.round((controlBarRect.width -50) / 2)}px)`;
+  } else {
+    const controlBarRect = controlBar.getBoundingClientRect();
+    console.log(controlBarRect.height);
+    controlBarHandle.style.transform = `translateY(${Math.round((controlBarRect.height -50) / 2)}px)`;
+  }
+}
 
 /**
  * Opens the control bar by adding the "abcdesktop_open" class to the element.
@@ -334,6 +347,23 @@ const checkChangeSnapping = (ptr) => {
 /* START OF EVENT HANDLERS */
 
 isTouchDevice();
+
+document.addEventListener('broadway.connected', () => {
+  launcher.getSettings()
+    .then((res) => {
+      if (res.code === 200) {
+        const config = {
+          enabledTabsHeaders: [],
+        }
+        config.enabledTabsHeaders = res.data;
+        printer.handlerSettingsConfig(config);
+        if (config.enabledTabsHeaders.includes('audio')) {
+          $('#speakers').css('display', 'block');
+        }
+        calculateControlBarHandlePositioning();
+      }
+    });
+});
 
 
 //Start (mouse down / touch start)

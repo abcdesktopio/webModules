@@ -16,10 +16,7 @@
  * @module
  */
 
-import * as launcher from './launcher.js';
-
 import * as system from './system.js';
-import * as printer from './printer.js';
 
 import { settingsEvents } from './settingsevents.js';
 
@@ -32,6 +29,7 @@ import * as printersTab from './settings_tabs/printer.js';
 import * as speedTestTab from './settings_tabs/speedTest.js';
 import * as screenColorTab from './settings_tabs/screenColor.js';
 import * as containersTab from './settings_tabs/containers.js';
+import * as menu from './menu.js';
 
 import * as languages from './languages.js';
 
@@ -73,9 +71,9 @@ export const open = function () {
 
   for (const tabHeader of tabsHeader.map((t) => $(t))) {
     const tabName = tabHeader.attr('tab').replace('-tab', '');
-    if (config.enabledTabsHeaders.includes(tabName)) {
-      tabHeader.removeClass('d-none');
-    }
+    // if (config.enabledTabsHeaders.includes(tabName)) {
+    //   tabHeader.removeClass('d-none');
+    // }
 
     tabHeader.click(function () {
       const target = $(this).attr('tab');
@@ -197,16 +195,3 @@ export const open = function () {
     }
   }
 };
-
-document.addEventListener('broadway.connected', () => {
-  launcher.getSettings()
-    .then((res) => {
-      if (res.code === 200) {
-        config.enabledTabsHeaders = res.data;
-        printer.handlerSettingsConfig(config);
-        if (config.enabledTabsHeaders.includes('audio')) {
-          $('#speakers').css('display', 'block');
-        }
-      }
-    });
-});
