@@ -50,13 +50,7 @@ const update_display_task = function() {
 	if (!taskwaiting || !applicationstatus || !hourglassi_start) return;
 	if (taskwaiting.childElementCount > 0) {
 		controlBar.classList.add('abcdesktop_open');
-		if (controlBarAnchor.classList.contains('abcdesktop_top')) {
-			applicationstatus.style.display = 'block';
-		}
-		else {
-			applicationstatus.style.display = 'flex';
-			applicationstatus.style.flexDirection = 'column';
-		}
+		applicationstatus.style.display = 'flex';
 		hourglassi_start.title = '';
 		const collection = taskwaiting.children;
 		for ( let i=0; i < collection.length; ++i)
