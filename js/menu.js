@@ -360,10 +360,22 @@ document.addEventListener('broadway.connected', () => {
         if (config.enabledTabsHeaders.includes('audio')) {
           $('#speakers').css('display', 'block');
         }
-        calculateControlBarHandlePositioning();
       }
+      calculateControlBarHandlePositioning();
     });
 });
+
+document.addEventListener('printer.available', async ({ detail: { available } })  => {
+  if (available){
+    calculateControlBarHandlePositioning();
+  }
+})
+
+document.addEventListener('speaker.available', async ({ detail: { available } })  => {
+  if (available){
+    calculateControlBarHandlePositioning();
+  }
+})
 
 
 //Start (mouse down / touch start)
