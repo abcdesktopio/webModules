@@ -90,14 +90,6 @@ const odApiClient = new (class ODApiClient {
       //   return client.sendRequest('user/getinfo');
       // }
 
-      getLyncConnectionKey() {
-        return client.sendRequest('user/getlyncconnectionkey');
-      }
-
-      getZimbraUrl() {
-        return client.sendRequest('user/getzimbraurl');
-      }
-
       getLocation() {
         return client.sendRequest('user/getlocation');
       }
@@ -139,7 +131,7 @@ const odApiClient = new (class ODApiClient {
       }
 
       getVersion() {
-        return client.sendRequest('version');
+        return client.sendRequest('core/version');
       }
     })();
 
