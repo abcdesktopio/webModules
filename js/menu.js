@@ -189,7 +189,6 @@ const isTouchDevice = () => {
 export const calculateControlBarHandlePositioning = () => {
   if (controlbarOnTop) {
     const controlBarRect = controlBar.getBoundingClientRect();
-    console.log(controlBarRect.width);
     controlBarHandle.style.transform = `translateX(${Math.round((controlBarRect.width -50) / 2)}px)`;
   } else {
     const controlBarRect = controlBar.getBoundingClientRect();
