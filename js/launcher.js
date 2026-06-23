@@ -187,14 +187,6 @@ export function getLogs(callback) {
     });
 }
 
-export function getlyncconnectionkey() {
-  return odApiClient.user.getLyncConnectionKey();
-}
-
-export function getzimbraurl() {
-  return odApiClient.user.getZimbraUrl();
-}
-
 /**
  * @function listenableprinter
  * @global
