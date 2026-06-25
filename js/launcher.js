@@ -16,6 +16,7 @@ import * as notificationSystem from './notificationsystem.js';
 import * as system from './system.js';
 import odApiClient from './odapiclient.js';
 import userGeolocation from './geolocation.js';
+import { SSE } from "./sse.js";
 
 // JWT will be refreshed when 3/4 of the expire time is reached
 // e.g. if expire_in is 3600 seconds, the token will be refreshed after 2700 seconds
@@ -399,7 +400,7 @@ export function refresh_usertoken() {
     });
 }
 
-export function refresh_desktoptoken(app) {
+export function refresh_desktoptoken() {
   // Refresh the current Auth token
   odApiClient.composer
     .refreshdesktoptoken(app)
@@ -422,7 +423,7 @@ export function refresh_desktoptoken(app) {
         window.od.currentUser.authorization = result.result.authorization;
         const expire_refresh_token = result.result.expire_in * jwt_retry_before_expire_time_in_milliseconds; // retry before 3/4 of expire time
         console.info( `Desktop Token updated successful, next call in ${expire_refresh_token} ms`);
-        setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
+        setTimeout(ctrlRefresh_desktop_token, expire_refresh_token);
         return deferred.promise();
       }
       deferred.reject(xhr.status, 'API call Refresh token failed', result);
@@ -453,9 +454,9 @@ function ctrlRefresh_usertoken() {
   }
 }
 
-function ctrlRefresh_desktop_token(app) {
+function ctrlRefresh_desktop_token() {
   if (window.od.broadway.isConnected()) {
-    refresh_desktoptoken(app);
+    refresh_desktoptoken();
   } else {
     auth_sessionexpired();
   }
@@ -521,18 +522,167 @@ export function login(provider, args={}) {
  * @desc run Apps Or Desktop
  */
 export function runAppsOrDesktop() {
-  const url = new URL(window.location.href);
-  const app = url.searchParams.get('app');
-  const args = url.searchParams.get('args');
-  // abcdesktopinstancetypecallback is launchMetappli or launchDesktop
-  let abcdesktopinstancetypecallback;
-  if (app && app !== '') {
-    abcdesktopinstancetypecallback = odApiClient.composer.launchMetappli;
-  } else {
-    abcdesktopinstancetypecallback = odApiClient.composer.launchDesktop;
-  }
-  return launchnewDesktopInstance(abcdesktopinstancetypecallback, app, args);
+  return launchDesktop();
 }
+
+class RetriableError extends Error { }
+class FatalError extends Error { }
+
+export function launchDesktop(args) {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
+  const width = getScreenWidth();
+  const height = getScreenHeight();
+  const hostname = location.hostname;
+  const desktopbody = { width, height, hostname, timezone, args };
+  const EventStreamContentType = "text/event-stream";
+  
+  const controller = new AbortController()
+  const { signal } = controller;
+
+  const url = '/API/composer/launchdesktop';
+  var source = new SSE(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+	      'ABCAuthorization': `Bearer ${abcdesktop_jwt_user_token}`
+    },
+    reconnectDelay: 60000, // Wait 3 seconds before reconnecting
+    maxRetries: null, // Retry indefinitely (set a number to limit retries)
+    useLastEventId: true, // Send Last-Event-ID header on reconnect (recommended)
+  });
+
+  source.addEventListener("message", (msg) => {
+    console.log( msg );
+    if (msg.id) {
+      console.log(`Received event ${msg.id}`);
+    }
+    // The lastEventId is automatically tracked
+    // and will be sent on next reconnection
+    if (msg.event === 'FatalError') {
+        console.log( msg );
+    }
+    const parsedObj = JSON.parse(msg["data"]);
+    console.log(parsedObj)
+    if (parsedObj.status == 100) {
+      welcomeSystem.showStatus( parsedObj.message );
+    } 
+    else if (parsedObj.status == 200) {
+      const expire_refresh_token = parsedObj.result.expire_in * 750;
+      window.od.currentUser.protocol = parsedObj.result.protocol || 'vnc';
+      window.od.currentUser.target_ip = parsedObj.result.target_ip;
+      window.od.currentUser.vncpassword = parsedObj.result.vncpassword;
+      window.od.currentUser.authorization = parsedObj.result.authorization;
+      window.od.currentUser.websocketrouting = parsedObj.result.websocketrouting;
+      window.od.currentUser.websockettcpport = parsedObj.result.websockettcpport;
+      window.od.currentUser.pulseaudiotcpport = 4714;
+      setTimeout(ctrlRefresh_desktop_token, expire_refresh_token);
+      connectReady();
+    }
+    else {
+      console.log( msg );
+      welcomeSystem.showStatus( msg["data"] );
+    }
+  });
+
+  source.addEventListener("open", (e) => {
+    console.log('open');
+    if (source.lastEventId) {
+      console.log(`Reconnected, resuming from event ${source.lastEventId}`);
+    }
+    welcomeSystem.showStatus( 'Launch desktop' );
+  });
+
+  source.addEventListener("error", (e) => {
+      welcomeSystem.showStatus( 'error' );
+      if (source.maxRetries && source.retryCount >= source.maxRetries) {
+        console.log("Max retries reached, connection permanently closed");
+      } else {
+        console.log(
+          `Connection lost. ${
+            source.maxRetries
+              ? `Attempt ${source.retryCount + 1}/${source.maxRetries}`
+              : "Will"
+          } reconnect in 3s...`
+        );
+      }
+    });
+
+  source.addEventListener("abort", (e) => {
+    console.log('abort');
+    welcomeSystem.showStatus( 'abort' );
+  });
+
+  /*
+  return fetchEventSource('/API/composer/launchdesktop', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+	      'ABCAuthorization': `Bearer ${abcdesktop_jwt_user_token}`
+    },
+    body: JSON.stringify( desktopbody || {}),
+    signal: signal,
+    async onopen(response) {
+        if (response.ok) { // && response.headers.get('content-type') === EventStreamContentType) {
+            return; // everything's good
+        } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+            // client-side errors are usually non-retriable:
+            throw new FatalError();
+        } else {
+            throw new RetriableError();
+        }
+    },
+    onmessage(msg) {
+        // if the server emits an error message, throw an exception
+        // so it gets handled by the onerror callback below:
+        if (msg.event === 'FatalError') {
+            throw new FatalError(msg.data);
+        }
+        const parsedObj = JSON.parse(msg["data"]);
+        console.log(parsedObj)
+        if (parsedObj.status == 100) {
+          welcomeSystem.showStatus( parsedObj.message );
+        } 
+        else if (parsedObj.status == 200) {
+          const expire_refresh_token = parsedObj.result.expire_in * 750;
+	        window.od.currentUser.protocol = parsedObj.result.protocol || 'vnc';
+          window.od.currentUser.target_ip = parsedObj.result.target_ip;
+          window.od.currentUser.vncpassword = parsedObj.result.vncpassword;
+          window.od.currentUser.authorization = parsedObj.result.authorization;
+	        window.od.currentUser.websocketrouting = parsedObj.result.websocketrouting;
+          window.od.currentUser.websockettcpport = parsedObj.result.websockettcpport;
+          window.od.currentUser.pulseaudiotcpport = 4714;
+	        setTimeout(ctrlRefresh_desktop_token, expire_refresh_token);
+          connectReady();
+          controller.abort();
+        }
+        else {
+          console.log( msg );
+          welcomeSystem.showStatus( msg["data"] );
+          controller.abort();
+          throw new RetriableError();
+        }
+        
+    },
+    onclose() {
+        controller.abort();
+        // if the server closes the connection unexpectedly, retry:
+        // throw new RetriableError();
+    },
+    onerror(err) { 
+        //if (err instanceof FatalError) {
+        //    throw err; // rethrow to stop the operation
+        //} else {
+            // do nothing to automatically retry. You can also
+            // return a specific retry interval here.
+        //}
+       controller.abort();
+    }
+   });
+
+   */
+}
+
 
 export function auth(provider, args={}) {
   return odApiClient.auth
@@ -571,15 +721,15 @@ export function launchnewDesktopInstance(
           && Number.isInteger(result.result.expire_in)
         ) {
           const expire_refresh_token = result.result.expire_in * 750;
-	  window.od.currentUser.protocol = result.result.protocol || 'vnc';
+          window.od.currentUser.protocol = result.result.protocol || 'vnc';
           window.od.currentUser.target_ip = result.result.target_ip;
           window.od.currentUser.vncpassword = result.result.vncpassword;
           window.od.currentUser.authorization = result.result.authorization;
-	  window.od.currentUser.websocketrouting = result.result.websocketrouting;
+	        window.od.currentUser.websocketrouting = result.result.websocketrouting;
           window.od.currentUser.websockettcpport = result.result.websockettcpport;
           window.od.currentUser.pulseaudiotcpport = 4714;
-	  setTimeout(ctrlRefresh_desktop_token, expire_refresh_token, app);
           connectReady();
+          setTimeout(ctrlRefresh_desktop_token, expire_refresh_token);
         } else {
           showError(result);
         }

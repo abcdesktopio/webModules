@@ -234,7 +234,7 @@ const welcomeSystem = (function () {
       logmein.createUserContext()
       .then( (result) => {
         this.updateLoginProjetNameTitle( 'd' );
-        this.showStatus(result.message);
+        // this.showStatus(result.message);
       } )
       .fail( (result)  => {
         this.clearLoginProjetNameTitle();
