@@ -139,76 +139,101 @@
     </div>
 
     <div id="loginScreen">
+        <!-- Animated background blobs -->
+        <div class="login-bg">
+            <div class="login-bg__blob login-bg__blob--1"></div>
+            <div class="login-bg__blob login-bg__blob--2"></div>
+            <div class="login-bg__blob login-bg__blob--3"></div>
+        </div>
+
         <div id="content">
-	        <h1 id="loginScreenProjectNameSplited">{{{ projectNameSplitedHTML }}}</h1>
+            <!-- Brand panel (left) -->
+            <div class="login-brand">
+                <div class="login-brand__logo">
+                    <h1 id="loginScreenProjectNameSplited">{{{ projectNameSplitedHTML }}}</h1>
+                    <p class="login-brand__tagline">Cloud Native Desktop</p>
+                </div>
+                <div class="login-brand__dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <!-- Vertical separator -->
+            <div class="login-separator"></div>
+
+            <!-- Form panel (right) -->
             <div id="loginScreenContent">
                 <div id="additionnalloginScreencontent">
                     <div class="highlight" id="welcomeinfo"></div>
                     <div id="desktopfeatures">
                         <div class="form-group">
-			    <!-- for="desktopfeaturesul" --> 
-			    <label class="form-label" id="login-desktopfeatures" for="desktopfeaturesul">Desktop features</label>
+                            <label class="form-label" id="login-desktopfeatures" for="desktopfeaturesul">Desktop features</label>
                             <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-1 shadow-sm" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);" id="desktopfeaturesul"></ul>
                             <p class="form-comment" id="login-desktopfeatures-comment"></p>
                         </div>
                     </div>
                 </div>
+
                 <p id="statusText"></p>
+
                 <div id="activeDirectory">
                     <form>
-                        <!-- 
-                            The SAM-Account-Name attribute (also known as the pre–Windows 2000 user logon name) 
-                            is limited to 256 characters in the Active Directory schema.
-                            However, for backward compatibility the limit is 20 characters.
-                            Len( domain ) = 253
-                            Len('\') = 1
-                            Len(SAMAccountName) = 20
-                            maxlength = 253 + 1 + 20 = 274 
-                        -->
-                        <div class="form-group" id="form-group-login" >
-                            <label class="form-label" id="login-loginlabel" for="cuid">Login</label>
-                            {{^isLoginSessionPage}}
-                                <input id="cuid" class="form-control" placeholder="Login" type="text" maxlength="274" autocomplete="on">
+                        <!-- Login field — floating label (placeholder=" " triggers the float animation)
+                             SAM-Account-Name: domain(253) + backslash(1) + login(20) = 274 chars max -->
+                        <div class="form-group login-input-group" id="form-group-login">
+                            <div class="login-input-wrap">
+                                <svg class="login-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                {{^isLoginSessionPage}}
+                                <input id="cuid" class="form-control" placeholder=" " type="text" maxlength="274" autocomplete="on">
                                 <input id="loginsessionid" type="hidden" value="">
-                            {{/isLoginSessionPage}}
-                            {{#isLoginSessionPage}}
-                                <input id="cuid" class="form-control" placeholder="Login" type="text" maxlength="274" value="{{ cuid }}" readonly="readonly">
-                                <!-- loginsessionid is used to check that the user in cuid input value did not change with the previous request -->
-                                <!-- in case if the http request id formated manually --> 
-				<input id="loginsessionid" type="hidden" value="{{ loginsessionid }}">
-				<input id="refreshsessionidtimeout" type="hidden" value="{{ refresh_timeout }}">
-                            {{/isLoginSessionPage}}
-                        </div>
-                        <div class="form-group" id="form-group-password" >
-                            <label class="form-label" id="login-passwordlabel" for="ADpassword">Password</label> 
-                            <!-- The userPassword attribute has maximum length 128 and format UTF-8. -->
-                            <input id="ADpassword" class="form-control" placeholder="Password" type="password" maxlength="128" autocomplete="current-password">
-                        </div>
-			<!--
-			<div class="form-group" id="form-group-submit">
-			    <input type="checkbox" id="connectFullScreen" name="connectFullScreen" />
-    			    <label for="connectFullScreen" id="connectFullScreenlabel" >Switch to full screen mode after login</label>
-			</div>
-			-->
-			<div class="form-group" id="form-group-submit">
-                            <button type="submit" class="btn btn-primary" id="connectAD">Sign in</button>
-                            {{#urlcannotopensession}}
-                               <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
-                            {{/urlcannotopensession}}
+                                {{/isLoginSessionPage}}
+                                {{#isLoginSessionPage}}
+                                <!-- loginsessionid checks that cuid did not change since the previous request -->
+                                <input id="cuid" class="form-control" placeholder=" " type="text" maxlength="274" value="{{ cuid }}" readonly="readonly">
+                                <input id="loginsessionid" type="hidden" value="{{ loginsessionid }}">
+                                <input id="refreshsessionidtimeout" type="hidden" value="{{ refresh_timeout }}">
+                                {{/isLoginSessionPage}}
+                                <label class="form-label" id="login-loginlabel" for="cuid">Login</label>
+                            </div>
                         </div>
 
+                        <!-- Password field — floating label
+                             userPassword attribute: max 128 chars, UTF-8 -->
+                        <div class="form-group login-input-group" id="form-group-password">
+                            <div class="login-input-wrap">
+                                <svg class="login-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <input id="ADpassword" class="form-control" placeholder=" " type="password" maxlength="128" autocomplete="current-password">
+                                <label class="form-label" id="login-passwordlabel" for="ADpassword">Password</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="form-group-submit">
+                            <button type="submit" class="btn btn-primary login-btn" id="connectAD">
+                                <span>Sign in</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                            {{#urlcannotopensession}}
+                            <a href="{{{ urlcannotopensession }}}" id="link-open-session">I can't open my session</a>
+                            {{/urlcannotopensession}}
+                        </div>
                     </form>
                     <p class="form-comment" id="login-auth-requirement">
-                        To access to this service you need to be identified. If you use {{{ projectName }}} from a personal computer which does not belong to the company, 
+                        To access to this service you need to be identified. If you use {{{ projectName }}} from a personal computer which does not belong to the company,
                         remember to close your browser and to delete file attachments saved on the hard disk when you are done. In case of issues, call your usual support.
                     </p>
                 </div>
-        
+
                 {{^isDemoPage}}
                 <div id="connectGP">
-                    <ul id="connectGPList">
-                        
-                    </ul>
+                    <ul id="connectGPList"></ul>
                 </div>
                 {{/isDemoPage}}
 
