@@ -16,7 +16,7 @@ import * as notificationSystem from './notificationsystem.js';
 import * as system from './system.js';
 import odApiClient from './odapiclient.js';
 import userGeolocation from './geolocation.js';
-import { SSE } from "./sse.js";
+import { SSE } from "../node_modules/sse.js/lib/sse.js";
 
 // JWT will be refreshed when 3/4 of the expire time is reached
 // e.g. if expire_in is 3600 seconds, the token will be refreshed after 2700 seconds
@@ -116,10 +116,74 @@ export function logout(data_dict) {
 export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
   // Play Icon animation
   // Add code here
-  getSecrets();
+  // getSecrets();
+  const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
+  data_dict.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  
 
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  data_dict.timezone = timezone;
+  const url = '/API/composer/ocrun';
+  var source = new SSE(url, {
+    start: false,
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+	      'ABCAuthorization': `Bearer ${abcdesktop_jwt_user_token}`
+    },
+    payload: JSON.stringify( data_dict || {}),
+    maxRetries: null, // Retry indefinitely (set a number to limit retries)
+    useLastEventId: true, // Send Last-Event-ID header on reconnect (recommended)
+  });
+
+  source.addEventListener("message", (msg) => {
+    // console.log( msg );
+    if (msg.id) {
+      console.log(`Received event ${msg.id}`);
+    }
+    // The lastEventId is automatically tracked
+    // and will be sent on next reconnection
+    if (msg.event === 'FatalError') {
+        console.log( msg );
+    }
+    const parsedObj = JSON.parse(msg["data"]);
+    console.log(parsedObj)
+    if (parsedObj.status == 100) {
+
+    } 
+    else if (parsedObj.status == 200) {
+    }
+    else {
+    }
+  });
+
+  source.addEventListener("open", (e) => {
+    console.log(e);
+  });
+
+  source.addEventListener("error", (e) => {
+      console.log( e );
+      if (source.maxRetries && source.retryCount >= source.maxRetries) {
+        console.log("Max retries reached, connection permanently closed");
+      } else {
+        console.log(
+          `Connection lost. ${
+            source.maxRetries
+              ? `Attempt ${source.retryCount + 1}/${source.maxRetries}`
+              : "Will"
+          } reconnect in 3s...`
+        );
+      }
+    });
+
+  source.addEventListener("abort", (e) => {
+    console.log(e);
+  });
+  
+  // ... later on
+  source.stream();
+
+
+  /*
+
   return odApiClient.composer
     .runApp(data_dict)
     .done((result) => {
@@ -152,7 +216,9 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
         }, 500);
       }
     });
+  */
 }
+
 /**
  * @function getUserInfo
  * @global
@@ -525,9 +591,6 @@ export function runAppsOrDesktop() {
   return launchDesktop();
 }
 
-class RetriableError extends Error { }
-class FatalError extends Error { }
-
 export function launchDesktop(args) {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
@@ -535,19 +598,16 @@ export function launchDesktop(args) {
   const height = getScreenHeight();
   const hostname = location.hostname;
   const desktopbody = { width, height, hostname, timezone, args };
-  const EventStreamContentType = "text/event-stream";
-  
-  const controller = new AbortController()
-  const { signal } = controller;
 
   const url = '/API/composer/launchdesktop';
   var source = new SSE(url, {
+    start: false,
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
 	      'ABCAuthorization': `Bearer ${abcdesktop_jwt_user_token}`
     },
-    reconnectDelay: 60000, // Wait 3 seconds before reconnecting
+    payload: JSON.stringify( desktopbody || {}),
     maxRetries: null, // Retry indefinitely (set a number to limit retries)
     useLastEventId: true, // Send Last-Event-ID header on reconnect (recommended)
   });
@@ -612,75 +672,10 @@ export function launchDesktop(args) {
     console.log('abort');
     welcomeSystem.showStatus( 'abort' );
   });
+  
+  // ... later on
+  source.stream();
 
-  /*
-  return fetchEventSource('/API/composer/launchdesktop', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-	      'ABCAuthorization': `Bearer ${abcdesktop_jwt_user_token}`
-    },
-    body: JSON.stringify( desktopbody || {}),
-    signal: signal,
-    async onopen(response) {
-        if (response.ok) { // && response.headers.get('content-type') === EventStreamContentType) {
-            return; // everything's good
-        } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
-            // client-side errors are usually non-retriable:
-            throw new FatalError();
-        } else {
-            throw new RetriableError();
-        }
-    },
-    onmessage(msg) {
-        // if the server emits an error message, throw an exception
-        // so it gets handled by the onerror callback below:
-        if (msg.event === 'FatalError') {
-            throw new FatalError(msg.data);
-        }
-        const parsedObj = JSON.parse(msg["data"]);
-        console.log(parsedObj)
-        if (parsedObj.status == 100) {
-          welcomeSystem.showStatus( parsedObj.message );
-        } 
-        else if (parsedObj.status == 200) {
-          const expire_refresh_token = parsedObj.result.expire_in * 750;
-	        window.od.currentUser.protocol = parsedObj.result.protocol || 'vnc';
-          window.od.currentUser.target_ip = parsedObj.result.target_ip;
-          window.od.currentUser.vncpassword = parsedObj.result.vncpassword;
-          window.od.currentUser.authorization = parsedObj.result.authorization;
-	        window.od.currentUser.websocketrouting = parsedObj.result.websocketrouting;
-          window.od.currentUser.websockettcpport = parsedObj.result.websockettcpport;
-          window.od.currentUser.pulseaudiotcpport = 4714;
-	        setTimeout(ctrlRefresh_desktop_token, expire_refresh_token);
-          connectReady();
-          controller.abort();
-        }
-        else {
-          console.log( msg );
-          welcomeSystem.showStatus( msg["data"] );
-          controller.abort();
-          throw new RetriableError();
-        }
-        
-    },
-    onclose() {
-        controller.abort();
-        // if the server closes the connection unexpectedly, retry:
-        // throw new RetriableError();
-    },
-    onerror(err) { 
-        //if (err instanceof FatalError) {
-        //    throw err; // rethrow to stop the operation
-        //} else {
-            // do nothing to automatically retry. You can also
-            // return a specific retry interval here.
-        //}
-       controller.abort();
-    }
-   });
-
-   */
 }
 
 
