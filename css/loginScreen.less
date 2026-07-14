@@ -11,325 +11,629 @@
 * Software description: cloud native desktop service
 */
 
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
+
 @import "@{global}";
 
+/* ============================================
+   LOGIN SCREEN — Glassmorphism redesign
+   ============================================ */
+
+/* ------ Background blob animations ------ */
+@keyframes loginBlobFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes loginBlobFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-25px, 20px) scale(1.03); }
+  66%       { transform: translate(20px, -25px) scale(0.97); }
+}
+@keyframes loginBlobFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(15px, -15px) scale(1.04); }
+}
+
+/* ------ Hide animation (JS adds .hide to #loginScreen) ------ */
+@-webkit-keyframes moveout {
+  0%   { -webkit-transform: translateX(0); opacity: 1; }
+  30%  { -webkit-transform: translateX(-5%) scale(1); }
+  100% { -webkit-transform: translateX(110%) scale(0.9); opacity: 0; }
+}
+@-moz-keyframes moveout {
+  0%   { -moz-transform: translateX(0); opacity: 1; }
+  30%  { -moz-transform: translateX(-5%) scale(1); }
+  100% { -moz-transform: translateX(110%) scale(0.9); opacity: 0; }
+}
+@keyframes moveout {
+  0%   { transform: translateX(0); opacity: 1; }
+  30%  { transform: translateX(-5%) scale(1); }
+  100% { transform: translateX(110%) scale(0.9); opacity: 0; }
+}
+
+/* ------ Error shake animations (JS adds .error to inputs) ------ */
+@keyframes animatedshake-account {
+  10%, 90%      { transform: translate3d(-3px, 0, 0); border-color: @danger; }
+  20%, 80%      { transform: translate3d(5px, 0, 0);  border-color: @danger; }
+  30%, 50%, 70% { transform: translate3d(-8px, 0, 0); border-color: @danger; }
+  40%, 60%      { transform: translate3d(5px, 0, 0);  border-color: @danger; }
+}
+@keyframes animatedshake-key {
+  10%, 90%      { transform: translate3d(-3px, 0, 0); border-color: @danger; }
+  20%, 80%      { transform: translate3d(5px, 0, 0);  border-color: @danger; }
+  30%, 50%, 70% { transform: translate3d(-8px, 0, 0); border-color: @danger; }
+  40%, 60%      { transform: translate3d(5px, 0, 0);  border-color: @danger; }
+}
+@keyframes animatedshake {
+  10%, 90%      { transform: translate3d(-3px, 0, 0); border-color: @danger; }
+  20%, 80%      { transform: translate3d(5px, 0, 0);  border-color: @danger; }
+  30%, 50%, 70% { transform: translate3d(-8px, 0, 0); border-color: @danger; }
+  40%, 60%      { transform: translate3d(5px, 0, 0);  border-color: @danger; }
+}
+
+/* ============================================
+   Full-screen container
+   NOTE: align-items:flex-start (NOT center) prevents the card from being
+   clipped at the top when it is taller than the viewport (many OAuth providers).
+   overflow-y:auto enables scrolling in that case.
+   ============================================ */
 #loginScreen {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  inset: 0;
   z-index: 999;
   overflow: hidden;
   overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 1rem;
   background: @secondary;
-}
-
-@-webkit-keyframes moveout {
-  0% {
-    -webkit-transform: translateX(0);
-  }
-  30% {
-    -webkit-transform: translateX(-10%) scale(1);
-  }
-  100% {
-    -webkit-transform: translateX(150%) scale(1);
-  }
-}
-
-@-moz-keyframes moveout {
-  0% {
-    -moz-transform: translateX(0);
-  }
-  30% {
-    -moz-transform: translateX(-10%) scale(1);
-  }
-  100% {
-    -moz-transform: translateX(150%) scale(1);
-  }
-}
-
-@keyframes moveout {
-  0% {
-    transform: translateX(0);
-  }
-  30% {
-    transform: translateX(-10%) scale(1);
-  }
-  100% {
-    transform: translateX(150%) scale(1);
-  }
 }
 
 #loginScreen.hide {
   -webkit-animation: moveout 1.5s 0.2s ease forwards;
-  -moz-animation: moveout 1.5s 0.2s ease forwards;
-  animation: moveout 1.5s 0.2s ease forwards;
+  -moz-animation:    moveout 1.5s 0.2s ease forwards;
+  animation:         moveout 1.5s 0.2s ease forwards;
 }
 
-#loginScreen #content {
+/* ============================================
+   Animated background blobs
+   ============================================ */
+.login-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-bg__blob {
   position: absolute;
-  left: 10%;
-  margin-top: 5%;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.16;
+}
+
+.login-bg__blob--1 {
+  width: 520px;
+  height: 520px;
+  background: @tertiary;
+  top: -120px;
+  left: -120px;
+  animation: loginBlobFloat1 14s ease-in-out infinite;
+}
+
+.login-bg__blob--2 {
+  width: 420px;
+  height: 420px;
+  background: @primary;
+  bottom: -100px;
+  right: -100px;
+  animation: loginBlobFloat2 17s ease-in-out infinite;
+}
+
+.login-bg__blob--3 {
+  width: 280px;
+  height: 280px;
+  background: @tertiary;
+  bottom: 25%;
+  left: 35%;
+  opacity: 0.08;
+  animation: loginBlobFloat3 20s ease-in-out infinite;
+}
+
+/* ============================================
+   Glassmorphism card
+   ============================================ */
+#loginScreen #content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  width: min(940px, 92vw);
+  min-height: 440px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  overflow: hidden;
   color: @light;
   user-select: text;
-  width: 70%;
 }
 
-#loginScreen h1 {
-  display: inline;
-  font-size: 70px;
+/* ============================================
+   Brand panel — left side
+   NOTE: justify-content:flex-start anchors the title to the top so it
+   stays visible even when the card grows tall (many providers listed).
+   ============================================ */
+.login-brand {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(255, 255, 255, 0.015) 100%
+  );
+}
+
+.login-brand::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 30% 60%,
+    mix(@tertiary, transparent, 14%) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   Brand title
+   ============================================ */
+#loginScreen h1,
+#loginScreen #loginScreenProjectNameSplited {
+  display: block;
+  font-size: clamp(38px, 4.5vw, 60px);
+  // font-weight: 700;
+  // letter-spacing: -1.5px;
+  // padding: 0;
+  margin: 0 0 0.4rem;
+  line-height: 1;
+  color: @light;
+}
+
+/* Accent colour applied by the transpile system to a, b, c spans */
+#loginScreen #projectNameSplitedStagea,
+#loginScreen #projectNameSplitedStageb,
+#loginScreen #projectNameSplitedStagec {
+  color: @tertiary;
+}
+
+#loginScreen #projectNameSplitedStaged {
+  color: @light;
+}
+
+/* Letter animation class set by JS */
+.abccreatedesktopstatus {
+  opacity: 0.45;
+  transition: opacity 0.3s ease;
+}
+
+.login-brand__tagline {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.40);
+  margin: 0 0 2rem;
   padding: 0;
-  margin: 0;
-  font-weight: normal;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
-#loginScreen p {
-  font-size: large;
-  margin: 0px;
-  padding: 0px;
+/* Decorative dots pushed to the bottom of the brand panel */
+.login-brand__dots {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 2rem;
 }
 
-#loginScreen p.error {
-  // color: @danger;
+.login-brand__dots span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: @tertiary;
+  opacity: 0.55;
+}
+.login-brand__dots span:nth-child(2) { opacity: 0.30; }
+.login-brand__dots span:nth-child(3) { opacity: 0.14; }
+
+/* ============================================
+   Vertical separator
+   ============================================ */
+.login-separator {
+  width: 1px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 20%,
+    rgba(255, 255, 255, 0.12) 80%,
+    transparent 100%
+  );
+}
+
+/* ============================================
+   Form panel — right side
+   ============================================ */
+#loginScreen #loginScreenContent {
+  flex: 1.3;
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+/* ============================================
+   Status / error message
+   ============================================ */
+#loginScreen #statusText {
+  font-size: 0.875rem;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  display: none;
+}
+
+#loginScreen p.error,
+#loginScreen #statusText.error {
+  display: block;
+  background: rgba(205, 60, 20, 0.11);
+  border: 1px solid rgba(205, 60, 20, 0.28);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  color: #ff8566;
   user-select: text;
 }
 
 #loginScreen p img {
-  height: 25px;
-  margin-right: 10px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 #loginScreen p span {
   vertical-align: bottom;
 }
 
-#loginScreen .form-comment {
-  font-size: small;
-  text-align: justify;
-  margin-top: 1rem;
-}
-@keyframes animatedshake-account {
-  10%, 90% {
-    transform: translate3d(-3px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-    background-size: 25px;
-    background: url(../../../img/welcome/account-danger.svg) no-repeat 350px;
-  }
-  
-  20%, 80% {
-    transform: translate3d(5px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-    background-size: 25px;
-    background: url(../../../img/welcome/account-danger.svg) no-repeat 350px;
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-8px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-    background-size: 25px;
-    background: url(../../../img/welcome/account-danger.svg) no-repeat 350px;
-  }
-
-  40%, 60% {
-    transform: translate3d(5px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-    background-size: 25px;
-    background: url(../../../img/welcome/account-danger.svg) no-repeat 350px;
-  }
-}
-
-@keyframes animatedshake-key {
-  10%, 90% {
-    transform: translate3d(-3px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-    background-size: 25px;
-    background: url(../../../img/welcome/key-danger.svg) no-repeat 350px;
-  }
-  
-  20%, 80% {
-    transform: translate3d(5px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-    background-size: 25px;
-    background: url(../../../img/welcome/key-danger.svg) no-repeat 350px;
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-8px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-    background-size: 25px;
-    background: url(../../../img/welcome/key-danger.svg) no-repeat 350px;
-  }
-
-  40%, 60% {
-    transform: translate3d(5px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-    background-size: 25px;
-    background: url(../../../img/welcome/key-danger.svg) no-repeat 350px;
-  }
-}
-
-
-@keyframes animatedshake {
-  10%, 90% {
-    transform: translate3d(-3px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-  }
-  
-  20%, 80% {
-    transform: translate3d(5px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-8px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-  }
-
-  40%, 60% {
-    transform: translate3d(5px, 0, 0);
-    color: @danger;
-    border-bottom: 1px solid @danger;
-  }
+/* ============================================
+   Auth sections — hidden by default, shown by JS
+   ============================================ */
+#loginScreen #additionnalloginScreencontent,
+#loginScreen #activeDirectory,
+#loginScreen #connectGP,
+#loginScreen #clearCacheSection {
+  display: none;
+  box-sizing: border-box;
+  user-select: text;
 }
 
 #loginScreen #desktopfeatures {
   display: none;
 }
 
-#loginScreen input:focus{
-  border: 1px solid @tertiary;
-  box-shadow: 0px 0px 0px 3px mix(black, @tertiary, 40%);
+#loginScreen #additionnalloginScreencontent {
+  margin-bottom: 1.25rem;
 }
 
-
-.authent-window #authent-window-user-id,
-#loginScreen #cuid {
-  // background: url(../../../img/welcome/account.svg) no-repeat 350px;
-  // background-size: 25px;
-  max-width: 450px;
-  color: @light;
-  background: @primary;
-}
-
-.authent-window #authent-window-user-password,
-#loginScreen #ADpassword {
-  // background: url(../../../img/welcome/key.svg) no-repeat 350px;
-  // background-size: 25px;
-  max-width: 450px;
-  color: @light;
-  background: @primary;
-}
-
-
-.authent-window #authent-window-user-password,
-#loginScreen #cuid.error {
-  animation: animatedshake 1s both;
-  background-size: 25px;
-}
-
-.authent-window #authent-window-user-password,
-#loginScreen #ADpassword.error {
-  animation: animatedshake 1s both;
-}
-
-#loginScreen ::-webkit-input-placeholder {
-  /* WebKit, Blink, Edge */
-  color: @light;
-  font-size: 16px;
-}
-#loginScreen :-moz-placeholder {
-  /* Mozilla Firefox 4 to 18 */
-  color: @light;
-  font-size: 16px;
-  opacity: 1;
-}
-#loginScreen ::-moz-placeholder {
-  /* Mozilla Firefox 19+ */
-  color: @light;
-  font-size: 16px;
-  opacity: 1;
-}
-#loginScreen :-ms-input-placeholder {
-  /* Internet Explorer 10-11 */
-  color: @light;
-  font-size: 16px;
-}
-#loginScreen :-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px @primary inset;
-  -webkit-text-fill-color: @light !important;
-}
-
-#loginScreen #additionnalloginScreencontent,
-#loginScreen #activeDirectory,
-#loginScreen #connectGP,
-#loginScreen #clearCacheSection {
-  display: none;
-  margin-top: 5%;
-  box-sizing: border-box;
-  user-select: text;
-}
-
-#loginScreen #activeDirectory a {
-  color: @light;
-  text-decoration: underline;
-  margin-left: 10px;
-}
-
+/* ============================================
+   Form groups
+   ============================================ */
 .form-group {
-   margin-top: 2rem;
+  margin-top: 1.25rem;
+}
+
+.login-input-group {
+  margin-top: 1.5rem;
+}
+
+/* ============================================
+   Floating-label inputs with icon
+   Input order inside .login-input-wrap:
+     1. .login-input-icon (SVG, absolute)
+     2. input.form-control  (placeholder=" ")
+     3. label.form-label    (floats via CSS sibling selector)
+   The ~ combinator works even with hidden inputs between input and label.
+   ============================================ */
+.login-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login-input-icon {
+  position: absolute;
+  left: 14px;
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.30);
+  pointer-events: none;
+  transition: color 0.2s ease;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.login-input-wrap:focus-within .login-input-icon {
+  color: @tertiary;
+}
+
+/* Input */
+#loginScreen .form-control {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 12px;
+  color: @light;
+  padding: 1.15rem 1rem 0.45rem 2.8rem;
+  font-size: 0.95rem;
+  height: 58px;
+  max-width: none;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+#loginScreen .form-control::placeholder {
+  color: transparent; /* hide real placeholder; the label plays that role */
+}
+
+/* Floating label — centred by default, floats on focus or when filled */
+#loginScreen .login-input-wrap .form-label {
+  position: absolute;
+  left: 2.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+  transition: top 0.18s ease, transform 0.18s ease,
+              font-size 0.18s ease, color 0.18s ease;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Float up when focused or when value is present (placeholder not shown) */
+#loginScreen .form-control:focus ~ .form-label,
+#loginScreen .form-control:not(:placeholder-shown) ~ .form-label {
+  top: 11px;
+  transform: translateY(0);
+  font-size: 0.70rem;
+  color: @tertiary;
+  letter-spacing: 0.04em;
+}
+
+/* Focus ring */
+#loginScreen .form-control:focus {
+  outline: none;
+  border-color: @tertiary;
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 3px mix(@tertiary, transparent, 18%);
+}
+
+/* Autofill */
+#loginScreen :-webkit-autofill,
+#loginScreen :-webkit-autofill:hover,
+#loginScreen :-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #3c4048 inset;
+  -webkit-text-fill-color: @light !important;
+  transition: background-color 5000s ease-in-out 0s;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Force label up when browser autofills */
+#loginScreen :-webkit-autofill ~ .form-label {
+  top: 11px;
+  transform: translateY(0);
+  font-size: 0.70rem;
+  color: @tertiary;
+}
+
+/* Error state on inputs */
+#loginScreen #cuid.error,
+.authent-window #authent-window-user-id.error {
+  animation: animatedshake 0.9s both;
+  border-color: @danger;
+}
+
+#loginScreen #ADpassword.error,
+.authent-window #authent-window-user-password.error {
+  animation: animatedshake 0.9s both;
+  border-color: @danger;
+}
+
+/* authent-window shared input styles */
+.authent-window #authent-window-user-id,
+.authent-window #authent-window-user-password {
+  max-width: 450px;
+  color: @light;
+  background: @primary;
+}
+
+/* ============================================
+   Sign-in button
+   ============================================ */
+#loginScreen #form-group-submit {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+#loginScreen .login-btn,
+#loginScreen #connectAD {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, @tertiary 0%, mix(white, @tertiary, 16%) 100%);
+  color: @quaternary;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.72rem 1.7rem;
+  border-radius: 11px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.025em;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 18px mix(@tertiary, transparent, 35%);
+  flex-shrink: 0;
+}
+
+#loginScreen .login-btn svg,
+#loginScreen #connectAD svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.2s ease;
+}
+
+#loginScreen .login-btn:hover,
+#loginScreen #connectAD:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px mix(@tertiary, transparent, 45%);
+}
+
+#loginScreen .login-btn:hover svg,
+#loginScreen #connectAD:hover svg {
+  transform: translateX(3px);
+}
+
+#loginScreen .login-btn:active,
+#loginScreen #connectAD:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px mix(@tertiary, transparent, 25%);
+}
+
+/* ============================================
+   "Can't open session" link
+   ============================================ */
+#loginScreen #activeDirectory a,
+#loginScreen #link-open-session {
+  color: rgba(255, 255, 255, 0.38);
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+#loginScreen #activeDirectory a:hover,
+#loginScreen #link-open-session:hover {
+  color: @tertiary;
+}
+
+/* ============================================
+   Legal text below the form
+   ============================================ */
+#loginScreen .form-comment {
+  font-size: 0.75rem;
+  text-align: left;
+  margin-top: 1.4rem;
+  color: rgba(255, 255, 255, 0.25);
+  line-height: 1.55;
+}
+
+/* ============================================
+   External auth providers (OAuth / SSO list)
+   ============================================ */
+#loginScreen #connectGP {
+  margin-top: 0.5rem;
 }
 
 #loginScreen #connectGP ul {
   padding: 0;
-  margin-top: 0;
+  margin: 0;
   overflow: hidden;
-  max-width: 450px;
+  list-style: none;
 }
 
 #loginScreen #connectGP li {
-  float: left;
+  float: none;
   display: none;
   list-style: none;
-  height: 50px;
+  height: auto;
   width: 100%;
   overflow: hidden;
-  margin: 5px 0px;
+  margin: 7px 0;
 }
 
 #loginScreen #connectGP li a {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  padding: 0.7rem 1rem;
+  height: auto;
+  line-height: 1.4;
   text-decoration: none;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  color: @light;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 
-#icon-alarm {
-  width: 80%;
+#loginScreen #connectGP li a:hover {
+  background: mix(@tertiary, transparent, 12%);
+  border-color: mix(@tertiary, transparent, 35%);
+  transform: translateX(4px);
 }
 
-#icon-trash {
-  width: 80%;
+#loginScreen #connectGP .badge.bg-primary.rounded-pill {
+  background-color: @tertiary !important;
+}
+
+/* ============================================
+   Bootstrap overrides scoped to login context
+   ============================================ */
+.bg-primary {
+  background-color: @tertiary !important;
+}
+
+.btn-primary {
+  background-color: @tertiary;
+  border-style: none;
 }
 
 .card {
-    background-color: @secondary;
+  background-color: @secondary;
+}
+
+.card-header {
+  background-color: @quaternary;
 }
 
 #loginScreen .card-body.mb-4.shadow-sm {
@@ -337,9 +641,16 @@
   background-color: @secondary;
 }
 
-#loginScreen #connectGP .badge.bg-primary.rounded-pill {
-  background-color: @tertiary;	
+.list-group-item {
+  color: white;
+  background-color: @quaternary;
 }
+
+.chapter-item { margin-top: 10px; }
+.plead        { margin-top: 5px; }
+
+#icon-alarm { width: 80%; }
+#icon-trash { width: 80%; }
 
 #loginScreen #card-head {
   background-color: #474B45;
@@ -351,46 +662,22 @@
 }
 
 #loginScreen #content #connectGP.container .bg-light {
-    background-color: @quaternary!important;
-}
-
-.bg-primary {
-    background-color: @tertiary!important;
-}
-
-
-.btn-primary {
-    background-color: @tertiary;
-    border-style: none;
-}
-
-.card-header {
-    background-color: @quaternary;
-}
-
-.chapter-item {
-    margin-top: 10px;
-}
-
-.plead {
-    margin-top: 5px;
-}
-
-.list-group-item {
- color: white;
- background-color: @quaternary;
+  background-color: @quaternary !important;
 }
 
 #loginScreen #content #connectGP #title-instance {
   margin: 5%;
 }
 
+/* ============================================
+   Session-expired overlay
+   ============================================ */
 div#overScreen {
   height: 100%;
   width: 100%;
   position: fixed;
-  z-index: 999;
-  opacity: 0.8;
+  z-index: 9999;
+  opacity: 0.85;
   background: @primary;
   display: none;
 }
@@ -408,30 +695,75 @@ p#overScreenMessage a {
   color: @tertiary;
 }
 
-@media screen and (max-width: 750px) and (max-height: 900px) {
+/* ============================================
+   Responsive — tablet / mobile
+   ============================================ */
+@media screen and (max-width: 720px) {
+  #loginScreen {
+    padding: 1.5rem 0.75rem;
+  }
+
   #loginScreen #content {
-    left: 5%;
-    max-width: 90%;
-    height: 90%;
+    flex-direction: column;
+    width: 96vw;
+    min-height: auto;
+    border-radius: 20px;
+  }
+
+  /* Separator becomes horizontal */
+  .login-separator {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.12) 20%,
+      rgba(255, 255, 255, 0.12) 80%,
+      transparent 100%
+    );
+  }
+
+  .login-brand {
+    padding: 2rem 2rem 1.25rem;
+  }
+
+  .login-brand__dots {
+    display: none;
+  }
+
+  #loginScreen #loginScreenContent {
+    padding: 1.5rem 2rem 2.5rem;
+  }
+
+  #loginScreen h1,
+  #loginScreen #loginScreenProjectNameSplited {
+    font-size: 38px;
   }
 }
 
-@media screen and (max-width: 560px) and (min-width: 401px) {
-  #loginScreen h1 {
-    font-size: 50px;
+@media screen and (max-width: 420px) {
+  #loginScreen h1,
+  #loginScreen #loginScreenProjectNameSplited {
+    font-size: 32px;
   }
 
-  #loginScreen p {
-    font-size: 15px;
+  .login-brand {
+    padding: 1.5rem;
+  }
+
+  #loginScreen #loginScreenContent {
+    padding: 1rem 1.5rem 2rem;
+  }
+
+  #loginScreen .login-btn,
+  #loginScreen #connectAD {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #loginScreen #form-group-submit {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
-@media screen and (max-width: 400px) {
-  #loginScreen h1 {
-    font-size: 45px;
-  }
-
-  #loginScreen #connectGP li a {
-    font-size: 12px;
-  }
-}
