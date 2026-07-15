@@ -91,6 +91,12 @@ a {
  border-color: @secondary;
 }
 
+/* ============================================================
+   Bootbox / Bootstrap modals — glassmorphism style
+   Mirrors the login-page card design (@loginScreen #content)
+   ============================================================ */
+
+/* --- Full-size dialog (settings, appstore, screenshot, tipsinfo) --- */
 div.window-dialog div.modal-dialog {
   height: calc(100% - 84px);
   width: 100%;
@@ -99,20 +105,36 @@ div.window-dialog div.modal-dialog {
   max-width: unset !important;
 }
 
+/* --- Small centered dialog (logoff, screen-record, auth) --- */
 div.window-dialog-small {
   top: calc(50% - 200px);
 }
 
+div.window-dialog-small .modal-dialog {
+  max-width: 60%;
+  margin: 0 auto !important;
+}
+
+/* --- Shared: glass card surface --- */
 div.window-dialog div.modal-dialog div.modal-content,
 div.window-dialog-small div.modal-dialog div.modal-content {
   color: @light;
-  border: none !important;
   height: 100%;
+  background: rgba(22, 24, 30, 0.80);
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.60),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  overflow: hidden;
 }
 
+/* --- Body height (full-size only) --- */
 div.window-dialog div.modal-dialog div.modal-content div.modal-body,
 div.window-dialog-small div.modal-dialog div.modal-content div.modal-body {
-  height: calc(100% - 45px);
+  height: calc(100% - 48px);
 }
 
 div.window-dialog div.modal-dialog div.modal-content div.bootbox-body,
@@ -120,56 +142,135 @@ div.window-dialog-small div.modal-dialog div.modal-content div.bootbox-body {
   height: 100%;
 }
 
+/* --- Header --- */
 div.window-dialog .modal-content .modal-header,
 div.window-dialog-small .modal-content .modal-header {
-  background: @secondary;
-  border-bottom: none !important;
-  border-top-left-radius: unset !important;
-  border-top-right-radius: unset !important;
-  padding: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+  padding: 0.7rem 1.25rem;
+  position: relative;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
 }
 
 div.window-dialog .modal-content .modal-header h5,
 div.window-dialog-small .modal-content .modal-header h5 {
   width: 100%;
   text-align: center;
-  font-size: 17px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: @tertiary;
   margin: 0 !important;
 }
 
+/* --- Close button (× / btn-close) --- */
 div.window-dialog .modal-content .modal-header .close,
-div.window-dialog-small .modal-content .modal-header .close {
-  color: #ffffff !important;
-  border: none !important;
+div.window-dialog .modal-content .modal-header .btn-close,
+div.window-dialog-small .modal-content .modal-header .close,
+div.window-dialog-small .modal-content .modal-header .btn-close {
   position: absolute;
-  right: 10px;
-  background-color: #ffffff;
-  padding: 0;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.40) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.2rem 0.45rem;
+  font-size: 1.15rem;
+  line-height: 1;
+  opacity: 1;
+  cursor: pointer;
+  transition: color 0.15s ease;
   margin: 0;
-  opacity: 100;
 }
 
+div.window-dialog .modal-content .modal-header .close:hover,
+div.window-dialog .modal-content .modal-header .btn-close:hover,
+div.window-dialog-small .modal-content .modal-header .close:hover,
+div.window-dialog-small .modal-content .modal-header .btn-close:hover {
+  color: @light !important;
+}
+
+/* --- Body --- */
 div.window-dialog .modal-content .modal-body,
-div.window-dialog .modal-content .modal-footer,
-div.window-dialog-small .modal-content .modal-body,
-div.window-dialog-small .modal-content .modal-footer {
-  background: @primary;
+div.window-dialog-small .modal-content .modal-body {
+  background: transparent;
+  color: @light;
 }
 
+/* --- Footer --- */
 div.window-dialog .modal-content .modal-footer,
 div.window-dialog-small .modal-content .modal-footer {
+  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom-left-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
   justify-content: center !important;
-  border-top: unset !important;
+  gap: 0.75rem;
+  padding: 0.8rem 1.25rem;
 }
 
+/* --- Generic footer buttons (cancel / secondary) --- */
+div.window-dialog .modal-content .modal-footer .btn,
+div.window-dialog-small .modal-content .modal-footer .btn {
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: @light;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+div.window-dialog .modal-content .modal-footer .btn:hover,
+div.window-dialog-small .modal-content .modal-footer .btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+div.window-dialog .modal-content .modal-footer .btn:active,
+div.window-dialog-small .modal-content .modal-footer .btn:active {
+  transform: translateY(1px);
+}
+
+/* --- Primary action button (.window-button) --- */
 div.window-dialog .modal-content .modal-footer .window-button,
 div.window-dialog-small .modal-content .modal-footer .window-button {
-  background: @tertiary;
+  background: linear-gradient(135deg, @tertiary 0%, mix(white, @tertiary, 16%) 100%);
+  border-color: transparent;
+  color: @quaternary;
+  font-weight: 600;
+  box-shadow: 0 4px 14px mix(@tertiary, transparent, 35%);
 }
 
+div.window-dialog .modal-content .modal-footer .window-button:hover,
+div.window-dialog-small .modal-content .modal-footer .window-button:hover {
+  background: linear-gradient(135deg, mix(white, @tertiary, 10%) 0%, mix(white, @tertiary, 26%) 100%);
+  box-shadow: 0 6px 20px mix(@tertiary, transparent, 45%);
+  border-color: transparent;
+}
+
+/* --- Danger action button (.button-log-off) --- */
 div.window-dialog .modal-content .modal-footer .button-log-off,
 div.window-dialog-small .modal-content .modal-footer .button-log-off {
-  background: @danger;
+  background: linear-gradient(135deg, @danger 0%, mix(white, @danger, 16%) 100%);
+  border-color: transparent;
+  color: @light;
+  font-weight: 600;
+  box-shadow: 0 4px 14px mix(@danger, transparent, 35%);
+}
+
+div.window-dialog .modal-content .modal-footer .button-log-off:hover,
+div.window-dialog-small .modal-content .modal-footer .button-log-off:hover {
+  background: linear-gradient(135deg, mix(white, @danger, 10%) 0%, mix(white, @danger, 26%) 100%);
+  box-shadow: 0 6px 20px mix(@danger, transparent, 45%);
+  border-color: transparent;
 }
 
 #window-container {
@@ -838,7 +939,11 @@ img.app-lock-icon {
 
 
 .modal-backdrop {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
+  background-color: @secondary;
+  opacity: 0.72 !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 

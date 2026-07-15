@@ -71,17 +71,29 @@ div.settings-title {
 }
 
 .btn-settings {
-  background: @secondary;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  transition: background 0.15s ease, color 0.15s ease;
   line-height: unset !important;
 }
 
+.btn-settings:hover {
+  background: rgba(255, 255, 255, 0.11);
+  color: @light;
+}
+
 .btn-settings-active {
-  background: @tertiary !important;
+  background: linear-gradient(135deg, @tertiary 0%, mix(white, @tertiary, 16%) 100%) !important;
+  border-color: transparent !important;
+  color: @quaternary !important;
+  font-weight: 600;
 }
 
 .text-bg-primary {
-  color: @primary;
-  background: @tertiary !important;
+  color: @quaternary;
+  background: linear-gradient(135deg, @tertiary 0%, mix(white, @tertiary, 16%) 100%) !important;
 }
 
 .writeSpaceNoWrap {
@@ -108,12 +120,19 @@ div.settings-title {
 
 #input-search-section {
   color: @light !important;
-  border-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px;
   height: 25px;
   box-shadow: none !important;
-  background: @primary url(../../../img/search1.svg) 5px no-repeat;
-  background-size: 20px;
+  background: rgba(255, 255, 255, 0.07) url(../../../img/search1.svg) 6px center no-repeat;
+  background-size: 16px;
   text-indent: 25px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+#input-search-section:focus {
+  background-color: rgba(255, 255, 255, 0.11);
+  border-color: @tertiary !important;
 }
 
 div.card-container {
