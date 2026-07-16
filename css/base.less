@@ -177,14 +177,15 @@ div.window-dialog-small .modal-content .modal-header .btn-close {
   top: 50%;
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.40) !important;
-  background: transparent !important;
+  background-color: transparent !important;
+  filter: invert(1) grayscale(100%) brightness(200%) opacity(0.5);
   border: none !important;
   padding: 0.2rem 0.45rem;
   font-size: 1.15rem;
   line-height: 1;
   opacity: 1;
   cursor: pointer;
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, filter 0.15s ease;
   margin: 0;
 }
 
@@ -193,6 +194,7 @@ div.window-dialog .modal-content .modal-header .btn-close:hover,
 div.window-dialog-small .modal-content .modal-header .close:hover,
 div.window-dialog-small .modal-content .modal-header .btn-close:hover {
   color: @light !important;
+  filter: invert(1) grayscale(100%) brightness(300%) opacity(1);
 }
 
 /* --- Body --- */
