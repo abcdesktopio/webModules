@@ -16,7 +16,7 @@
     "@xterm/addon-webgl": "^0.18.0",
     "@xterm/xterm": "^5.5.0",
     "bootbox": "^6.0.0",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^5.3.8",
     "bootstrap-table": "^1.22.5",
     "dropzone": "^6.0.0-beta.2",
     "jquery": "^3.7.1",
