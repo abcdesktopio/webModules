@@ -47,16 +47,6 @@
 }
 
 /* ------ Hide animation (JS adds .hide to #loginScreen) ------ */
-@-webkit-keyframes moveout {
-  0%   { -webkit-transform: translateX(0); opacity: 1; }
-  30%  { -webkit-transform: translateX(-5%) scale(1); }
-  100% { -webkit-transform: translateX(110%) scale(0.9); opacity: 0; }
-}
-@-moz-keyframes moveout {
-  0%   { -moz-transform: translateX(0); opacity: 1; }
-  30%  { -moz-transform: translateX(-5%) scale(1); }
-  100% { -moz-transform: translateX(110%) scale(0.9); opacity: 0; }
-}
 @keyframes moveout {
   0%   { transform: translateX(0); opacity: 1; }
   30%  { transform: translateX(-5%) scale(1); }
@@ -252,6 +242,17 @@
   text-transform: uppercase;
 }
 
+
+.login-brand__additionnalloginScreencontenttag {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.40);
+  padding: 0;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+  // text-transform: uppercase;
+}
+
+
 .login-brand__secondary-title {
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.40);
@@ -266,6 +267,13 @@
   font-weight: 400;
   padding: 0.7rem 1rem;
   user-select: text;
+}
+
+.login-brand__welcomeinfomessage {
+  // color: @tertiary;
+  padding-bottom: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
 }
 
 

@@ -24,8 +24,6 @@ html {
 }
 
 body {
-  -webkit-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
   font: normal 100% "HelveticaNeue", "Helvetica", "Arial", sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -35,11 +33,9 @@ body {
   width: 100%;
   height: 100%;
   -webkit-user-select: none;
-  margin: 0;
-  -khtml-user-select: none;
   -moz-user-select: none;
-  -o-user-select: none;
   user-select: none;
+  margin: 0;
   position: absolute;
 }
 
@@ -49,13 +45,6 @@ body {
 }
 
 /*Disable boostrap global*/
-/*
-*,
-::after,
-::before {
-  box-sizing: unset;
-}
-*/
 
 #keyboard {
   padding-top: 7px;
@@ -283,7 +272,6 @@ div.window-dialog-small .modal-content .modal-footer .button-log-off:hover {
 }
 
 .window {
-  -webkit-box-shadow: 0px 0px 2px @dark;
   box-shadow: 0px 0px 2px @dark;
   position: absolute;
   background-color: @primary;
@@ -327,8 +315,7 @@ textarea::selection {
 textarea {
   background-color: @light;
   border: 1px solid @primary;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px;
+  border-radius: @radius-sm;
   padding: 2px;
   cursor: text;
 }
@@ -336,8 +323,7 @@ textarea {
 input {
   // background-color: @light;
   // border: 1px solid @primary;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px;
+  border-radius: @radius-sm;
   padding: 2px;
 }
 
@@ -382,11 +368,7 @@ div.button {
   border-right: 1px solid @light;
   z-index: 10;
   overflow: hidden;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+  .no-select();
 }
 
 #menu.dashOpen {
@@ -419,9 +401,7 @@ div.button {
   position: absolute;
   left: 82px;
   padding: 3px 10px 2px 10px;
-  -webkit-border-radius: 4px 4px 4px 4px;
-  border-radius: 4px 4px 4px 4px;
-  -webkit-box-shadow: 0px 0px 5px @dark;
+  border-radius: @radius-md;
   box-shadow: 0px 0px 5px @dark;
 }
 
@@ -465,14 +445,11 @@ div.button {
   padding-top: 6px;
   margin-bottom: -1px;
   background-repeat: no-repeat;
-  -moz-transition: -moz-box-shadow 0.3s linear;
-  -webkit-transition: -webkit-box-shadow 0.3s linear;
   transition: box-shadow 0.3s linear;
 }
 
 #menu ul li.glow {
   box-shadow: 0px 0px 7px @tertiary;
-  -webkit-box-shadow: 0px 0px 7px @tertiary;
   background-color: @secondary;
 }
 
@@ -623,7 +600,6 @@ div.button {
 }
 
 .selected-window {
-  -webkit-box-shadow: 0px 0px 3px @dark;
   box-shadow: 0px 0px 3px @dark;
   z-index: 4;
 }
@@ -934,11 +910,6 @@ img.app-lock-icon {
 .abccreatedesktopstatus {
   color: @tertiary;
 }
-
-.welcomeinfomessage {
-  color: @tertiary;
-}
-
 
 .modal-backdrop {
   width: 100%;
