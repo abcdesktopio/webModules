@@ -269,6 +269,13 @@
   user-select: text;
 }
 
+.login-brand__welcomeinfomessage {
+  // color: @tertiary;
+  padding-bottom: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+}
+
 
 /* Decorative dots pushed to the bottom of the brand panel */
 .login-brand__dots {
@@ -695,7 +702,7 @@ div#overScreen {
   width: 100%;
   position: fixed;
   z-index: 9999;
-  opacity: 0.85;
+  opacity: @opacity-high;
   background: @primary;
   display: none;
 }
@@ -759,7 +766,7 @@ p#overScreenMessage a {
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: @breakpoint-sm) {
   #loginScreen h1,
   #loginScreen #loginScreenProjectNameSplited {
     font-size: 32px;

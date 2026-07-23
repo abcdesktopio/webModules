@@ -158,8 +158,8 @@
 #about-window .content .about-buttons div {
   text-align: center;
   float: right;
-  width: 85px;
-  height: 23px;
+  width: @button-width;
+  height: @button-height-sm;
   border-radius: @radius-md;
   border: 1px solid @primary;
   margin-right: 8px;
@@ -267,7 +267,7 @@
 #about-window #cg a:hover {
   color: @dark;
 }
-@media screen and (max-width: 700px) and (orientation: portrait) {
+@media screen and (max-width: @breakpoint-md) and (orientation: portrait) {
   #about-window {
     width: 300px;
     height: 430px;
@@ -305,7 +305,7 @@
   }
 }
 
-@media screen and (max-width: 700px) and (orientation: landscape) {
+@media screen and (max-width: @breakpoint-md) and (orientation: landscape) {
   #about-window {
     width: 300px;
     height: 230px;
