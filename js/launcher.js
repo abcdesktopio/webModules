@@ -120,7 +120,6 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
   const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
   data_dict.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   
-
   const url = '/API/composer/ocrun';
   var source = new SSE(url, {
     start: false,
