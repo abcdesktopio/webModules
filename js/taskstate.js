@@ -123,6 +123,7 @@ export const update_on_container_notification = function( container ) {
 	// console.log( container );
 	let reason = container.reason;
 	switch( reason ) {
+		case 'Patched':
 		case 'Created':
 		case 'Scheduled':
 		case 'PodInitializing':

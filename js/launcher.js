@@ -17,6 +17,7 @@ import * as system from './system.js';
 import odApiClient from './odapiclient.js';
 import userGeolocation from './geolocation.js';
 import { SSE } from "../node_modules/sse.js/lib/sse.js";
+import { broadcastEvent } from './broadcastevent.js';
 
 // JWT will be refreshed when 3/4 of the expire time is reached
 // e.g. if expire_in is 3600 seconds, the token will be refreshed after 2700 seconds
@@ -145,10 +146,17 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
     }
     const parsedObj = JSON.parse(msg["data"]);
     console.log(parsedObj)
+    parsedObj['id'] = parsedObj['name']
     if (parsedObj.status == 100) {
+       broadcastEvent.dispatchEvent(
+            new CustomEvent('container', { detail: { container: parsedObj.message } } ),
+          );
 
     } 
     else if (parsedObj.status == 200) {
+       broadcastEvent.dispatchEvent(
+            new CustomEvent('container', { detail: { container: parsedObj.message } } ),
+          );
     }
     else {
     }
