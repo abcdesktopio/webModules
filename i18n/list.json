@@ -10,6 +10,10 @@
         "ro-ro": "ro-RO.json",
         "ro": "ro-RO.json",
         "zh": "zh-CN.json",
-        "zh-cn": "zh-CN.json"
+        "zh-cn": "zh-CN.json",
+        "de-de": "de-DE.json",
+        "de": "de-DE.json",
+        "de-at": "de-DE.json",
+        "de-ch": "de-DE.json"
     }
 }
