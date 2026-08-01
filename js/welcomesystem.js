@@ -162,7 +162,7 @@ const welcomeSystem = (function () {
       spantextstatusText.innerText = message;
       // spantextstatusText.innerHTML = message + '<br>' + spantextstatusText.innerHTML;
       
-      let imgsrc='img/ring_tertiary.svg';
+      let imgsrc='img/ring.svg';
       let ringstatusimg = document.getElementById('spantextstatusImg');
       if (!ringstatusimg) {
         ringstatusimg = document.createElement('img');
