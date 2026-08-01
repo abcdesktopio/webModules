@@ -55,6 +55,7 @@ export const open = function () {
     `,
     className: 'window-dialog window-dialog-settings',
     animate: false,
+    closeButton: false, // Removes the top-right 'X' close button
     onEscape: () => {
       settingsEvents.dispatchEvent(new CustomEvent('close'));
     },
@@ -145,6 +146,14 @@ export const open = function () {
       showHome();
       setTitleSuffix();
       settingsEvents.dispatchEvent(new CustomEvent('back'));
+    });
+  }
+
+  const close_btn = document.querySelector('#settings-close-button');
+  if (close_btn) {
+    close_btn.addEventListener('click', () => {
+      // settingsEvents.dispatchEvent(new CustomEvent('close'));
+      bootbox.hideAll();
     });
   }
 
