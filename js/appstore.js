@@ -85,9 +85,10 @@ function openTab(tabId) {
 
       li.setAttribute('data-bs-toggle', 'tooltip');
       li.setAttribute('data-bs-html', 'true');
-      li.setAttribute('data-bs-title', `<b class="tooltipTitle">Launch :</b> ${launch}<br>
-                                        <b class="tooltipTitle">ID :</b> ${sha_id}<br>
-                                        <b class="tooltipTitle">Created :</b> ${created}`);
+      li.setAttribute('data-bs-title', 
+        `<p class="tooltipTitle"><b class="tooltipTitle">Launch :</b> ${launch}<br>
+        <b class="tooltipTitle">ID :</b> ${sha_id}<br>
+        <b class="tooltipTitle">Created :</b> ${created}</p>`);
 
       li.appendChild(wrapperIcon);
       li.appendChild(p);
@@ -222,7 +223,7 @@ function filterAppList(query) {
  */
 export const close = function () {
   if (appstore_dialog) {
-    appstore_dialog.hide();
+    appstore_dialog.modal('hide');  
   }
 }
 
