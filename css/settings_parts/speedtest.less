@@ -8,10 +8,10 @@
 
 #settings-window #speedtest-tab #startStopBtn {
 	display: inline-block;
-	color: @dark;
-	background-color: @light;
-	border-radius: 0.3em;
-	transition: all 0.3s;
+	color: @quaternary;
+	background: linear-gradient(135deg, @tertiary 0%, mix(white, @tertiary, 16%) 100%);
+	border-radius: @radius-round;
+	transition: box-shadow 0.15s ease, transform 0.1s ease;
 	box-sizing: border-box;
 	width: 150px;
 	height: 40px;
@@ -19,12 +19,23 @@
 	text-align: center;
 	margin-top: 15px;
 	cursor: pointer;
+	font-weight: 600;
+	box-shadow: 0 4px 14px mix(@tertiary, transparent, 35%);
+}
+
+#settings-window #speedtest-tab #startStopBtn:hover {
+	box-shadow: 0 6px 20px mix(@tertiary, transparent, 45%);
+}
+
+#settings-window #speedtest-tab #startStopBtn:active {
+	transform: translateY(1px);
 }
 
 #settings-window #speedtest-tab #startStopBtn.running {
-	background-color:@tertiary;
-	border-color:@tertiary;
+	background: linear-gradient(135deg, @danger 0%, mix(white, @danger, 16%) 100%);
+	border-color:@danger;
 	color:@light;
+	box-shadow: 0 4px 14px mix(@danger, transparent, 35%);
 }
 
 #settings-window #speedtest-tab #startStopBtn:before { content:"Start"; }

@@ -41,16 +41,7 @@
     <!-- jquery css -->
     <link rel="stylesheet" href="node_modules/jquery-ui/dist/themes/ui-lightness/jquery-ui.css" type="text/css">
 
-    {{#isIndexPage}}
-    <!-- this is an index page -->
-    <link rel="stylesheet" href="css/css-dist/settings.css" type="text/css">
-    <link rel="stylesheet" href="css/css-dist/tipsinfo.css" type="text/css">
-    <link rel="stylesheet" href="css/css-dist/screenRecord.css" type="text/css">
-    <link rel="stylesheet" href="node_modules/@xterm/xterm/css/xterm.css" type="text/css">
-    <link rel="stylesheet" href="css/css-dist/appstore.css" type="text/css">
-    <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css" type="text/css">
-	<!-- end of dedicated index page -->
-    {{/isIndexPage}}
+   
 
     <link rel="stylesheet" href="css/css-dist/error.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/base.css" type="text/css">
@@ -67,7 +58,19 @@
     <link rel="stylesheet" href="css/css-dist/music.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/share.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css">
-    
+   
+    {{#isIndexPage}}
+    <!-- this is an index page -->
+    <link rel="stylesheet" href="css/css-dist/settings.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/tipsinfo.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/screenRecord.css" type="text/css">
+    <link rel="stylesheet" href="node_modules/@xterm/xterm/css/xterm.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/appstore.css" type="text/css">
+    <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css" type="text/css">
+	<!-- end of dedicated index page -->
+    {{/isIndexPage}}
+
+
     {{#isDemoPage}}
     <!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-VS25TGNTRZ"></script>
@@ -651,13 +654,13 @@
         </template>
         <template id='settings-window-title-template'>
             <div class="settings-title">
-                <div id="settings-back-button">
-			<img src="img/settings/back.svg" alt="back-icon" loading="lazy">
-		</div>
-                <h5 id="settings-title"></h5>
-                <div class="searchSection">
-                    <input id="input-search-section" class="d-sm-block d-none" type="text" aria-describedby="basic-addon1">
-                </div>
+                <div id="settings-back-button" class="settings-back-button">
+			        <img src="img/settings/back.svg" alt="back-icon" loading="lazy">
+		        </div>
+                <h5 id="settings-title" class="settings-title"></h5>
+                <div id="settings-close-button" class="settings-close-button">
+			        <img src="img/settings/close.svg" alt="close-icon" loading="lazy">
+		        </div>
             </div>
         </template>
         <template id="settings-window-body-template" class="window">
@@ -741,11 +744,11 @@
                     <div id="system-tab-switch-buttons" class="d-flex justify-content-center max-size">
                         <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle" >
                             <input type="radio" class="btn-check" name="options" id="settings-system-btn-system-input" autocomplete="off" checked>
-                            <label id="settings-system-btn-system" class="btn btn-secondary btn-settings-active"  data-view="settings-system-view-infos-system" for="settings-system-btn-system-input">System</label>
+                            <label id="settings-system-btn-system" class="btn btn-settings btn-settings-active"  data-view="settings-system-view-infos-system" for="settings-system-btn-system-input">System</label>
                             <input type="radio" class="btn-check" name="options" id="settings-system-view-user-container-input" autocomplete="off">
-                            <label id="settings-system-btn-user-container" class="btn btn-secondary" data-view="settings-system-view-user-container" for="settings-system-view-user-container-input">Pod</label>
+                            <label id="settings-system-btn-user-container" class="btn btn-settings" data-view="settings-system-view-user-container" for="settings-system-view-user-container-input">Pod</label>
                             <input type="radio" class="btn-check" name="options" id="settings-system-btn-view-infos-input" autocomplete="off">
-                            <label id="settings-system-btn-view-infos"  class="btn btn-secondary" data-view="settings-system-view-display" for="settings-system-btn-view-infos-input">Display</label>
+                            <label id="settings-system-btn-view-infos"  class="btn btn-settings" data-view="settings-system-view-display" for="settings-system-btn-view-infos-input">Display</label>
                         </div>
                     </div>
  
@@ -881,10 +884,10 @@
                     <div id="user-tab-switch-buttons" class="d-flex justify-content-center max-size">
                         <div id="buttons-screen-user" class="d-flex btn-group btn-group-toggle">
                             <input type="radio" class="btn-check" name="options" id="settings-user-current-session-btn-input" autocomplete="off" checked>
-                            <label id="settings-user-current-session-btn" class="btn btn-secondary btn-settings-active" data-view="user-current-session" for="settings-user-current-session-btn-input">Current session</label>
+                            <label id="settings-user-current-session-btn" class="btn btn-settings btn-settings-active" data-view="user-current-session" for="settings-user-current-session-btn-input">Current session</label>
                    
                             <input type="radio" class="btn-check" name="options" id="settings-user-connection-history-input" autocomplete="off" >
-                            <label id="settings-user-connection-history" class="btn btn-secondary" data-view="user-connection-history" for="settings-user-connection-history-input">Connection history</label>
+                            <label id="settings-user-connection-history" class="btn btn-settings" data-view="user-connection-history" for="settings-user-connection-history-input">Connection history</label>
                         </div>
                     </div>
                     <div class="container">
@@ -1006,10 +1009,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-100 d-flex justify-content-center">
-                            <br>
-                            <div id="map" class="col-10"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1020,9 +1019,9 @@
                 <div id="screenColor-tab-switch-buttons" class="d-flex justify-content-center max-size">
                     <div id="buttons-screen-background" class="d-flex btn-group btn-group-toggle" >
                         <input type="radio" class="btn-check" name="options" id="settings-screen-background-colors-btn-input" autocomplete="off" checked>
-                        <label id="settings-screen-background-colors-btn" class="btn btn-secondary btn-settings-active" data-view="panel_colors" for="settings-screen-background-colors-btn-input">Colors</label>
+                        <label id="settings-screen-background-colors-btn" class="btn btn-settings btn-settings-active" data-view="panel_colors" for="settings-screen-background-colors-btn-input">Colors</label>
                         <input type="radio" class="btn-check" name="options" id="settings-screen-background-pictures-btn-input" autocomplete="off">
-                        <label id="settings-screen-background-pictures-btn" class="btn btn-secondary" data-view="panel_picture" for="settings-screen-background-pictures-btn-input">Pictures</label>
+                        <label id="settings-screen-background-pictures-btn" class="btn btn-settings" data-view="panel_picture" for="settings-screen-background-pictures-btn-input">Pictures</label>
                     </div>
                 </div>
                 <br>
@@ -1094,47 +1093,70 @@
                 </div>
             </div>
         </template>
+        <template id='appstore-window-title-template'>
+            <div class="appstore-title">
+                <div id="appstore-back-button" class="settings-back-button">
+                    <img src="img/settings/back.svg" alt="back-icon" loading="lazy">
+                </div>
+                <h5 id="appstore-title" class="settings-title" >Applications</h5>
+                <div id="appstore-close-button" class="settings-close-button">
+                    <img src="img/settings/close.svg" alt="close-icon" loading="lazy">
+                </div>
+            </div>
+        </template>
         <template id="appstore-window-template" class="window">
             <div class="content-apps">
-                <div id="nav">
+                <nav id="nav">
                     <div id="office" class="button">
                         <div>
-                            <img src="img/appstore/doc.svg" alt="doc-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/doc.svg" alt="doc-icon" loading="lazy"></span>
                             <p id="appstore-office-title" class="app-type d-none d-sm-block">Office</p>
                         </div>
                     </div>
                     <div id="games" class="button">
                         <div>
-                            <img src="img/appstore/gamepad.svg" alt="gamepad-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/gamepad.svg" alt="gamepad-icon" loading="lazy"></span>
                             <p id="appstore-game-title" class="app-type d-none d-sm-block">Games</p>
                         </div>
                     </div>
                     <div id="graphics" class="button">
                         <div>
-                            <img src="img/appstore/design.svg" alt="design-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/design.svg" alt="design-icon" loading="lazy"></span>
                             <p id="appstore-graphics-title" class="app-type d-none d-sm-block">Graphics</p>
                         </div>
                     </div>
                     <div id="utilities" class="button">
                         <div>
-                            <img src="img/appstore/utils.svg" alt="utils-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/utils.svg" alt="utils-icon" loading="lazy"></span>
                             <p id="appstore-utilities-title" class="app-type d-none d-sm-block">Utilities</p>
                         </div>
                     </div>
                     <div id="development" class="button">
                         <div>
-                            <img src="img/appstore/dev.svg" alt="dev-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/dev.svg" alt="dev-icon" loading="lazy"></span>
                             <p id="appstore-dev-title" class="app-type d-none d-sm-block">Development</p>
                         </div>
                     </div>
                     <div id="education" class="button">
                         <div>
-                            <img src="img/appstore/education.svg" alt="education-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/education.svg" alt="education-icon" loading="lazy"></span>
                             <p id="appstore-education-title" class="app-type d-none d-sm-block">Education</p>
                         </div>
                     </div>
+                </nav>
+        
+                <div class="appstore-main">
+                    <div class="appstore-toolbar">
+                        <div class="appstore-search-wrap">
+                            <svg class="appstore-search-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/>
+                            </svg>
+                            <input id="appstore-search-placeholder" type="text" placeholder="Search apps..." autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                    <ul id='appstore-applist'></ul>
                 </div>
-                <ul id='appstore-applist'></ul>
+                
             </div>
         </template>
         <template id="authent-window-template" class="window">

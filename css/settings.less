@@ -32,8 +32,19 @@
 div.settings-title {
   display: flex;
   flex-direction: row;
-  min-height: 35px;
   align-items: center;
+  gap: 10px;
+  min-height: 35px;
+  width: 100%;
+}
+
+div.settings-title h5#settings-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .window-dialog-settings div.modal-dialog {
@@ -52,20 +63,59 @@ div.settings-title {
   height: 100%;
 }
 
-.window-dialog-settings div.modal-dialog #settings-back-button {
-  height: 35px;
-  width: 35px;
-  cursor: pointer;
+.settings-back-button {
+  .circular-icon-button();
   display: none;
-  position: absolute;
+  flex: 0 0 auto;
 }
 
-.window-dialog-settings div.modal-dialog #settings-back-button img {
-  height: 15px;
-  width: 15px;
+.settings-back-button:hover {
+  .circular-icon-button-hover();
+}
+
+.settings-back-button:active {
+  .circular-icon-button-active();
+}
+
+.settings-back-button img {
+  height: 13px;
+  width: 13px;
   pointer-events: none;
-  margin-left: 10px;
-  margin-top: 10px;
+}
+
+
+.settings-close-button {
+  .circular-icon-button();
+  display: block;
+  flex: 0 0 auto;
+}
+
+.settings-close-button:hover {
+  .circular-icon-button-hover();
+}
+
+.settings-close-button:active {
+  .circular-icon-button-active();
+}
+
+.settings-close-button img {
+  height: 13px;
+  width: 13px;
+  pointer-events: none;
+}
+
+.settings-title .searchSection {
+  position: static !important;
+  top: unset !important;
+  right: unset !important;
+  left: unset !important;
+  flex: 0 0 auto;
+  width: auto;
+  margin-left: auto;
+}
+
+.settings-title .searchSection input#input-search-section {
+  width: 180px;
 }
 
 .btn-settings {
@@ -85,9 +135,25 @@ div.settings-title {
 .btn-settings-active {
   background: linear-gradient(135deg, @tertiary 0%, mix(white, @tertiary, 16%) 100%) !important;
   border-color: transparent !important;
-  color: @quaternary !important;
-  font-weight: 600;
+  // color: @quaternary !important;
+  // font-weight: 600;
 }
+
+/*
+.btn-check+.btn-settings-active {
+  background: linear-gradient(135deg, @tertiary 0%, mix(white, @tertiary, 16%) 100%) !important;
+  border-color: transparent !important;
+  // color: @quaternary !important;
+  // font-weight: 600;
+}
+*/
+
+.btn-check+.btn:hover {
+  color: rgb(255, 255, 255) !important; 
+  background: rgba(255, 255, 255, 0.16);
+  border-color: transparent !important;
+}
+
 
 .text-bg-primary {
   color: @quaternary;
@@ -110,6 +176,90 @@ div.settings-title {
 #input-search-section:focus {
   background-color: rgba(255, 255, 255, 0.11);
   border-color: @tertiary !important;
+}
+
+
+
+
+/* ============================================================
+   Shared modern content styling for settings tab bodies
+   (cards / tables / buttons used across system, user, logs,
+   speedtest, localisation, screen-background and container tabs)
+   ============================================================ */
+#settings-window .card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: @radius-xl;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+#settings-window .card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+#settings-window .card-title,
+#settings-window h6 {
+  color: @tertiary;
+}
+
+#settings-window table.table {
+  color: @light;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+#settings-window table thead th {
+  color: @tertiary;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+#settings-window table.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background: rgba(255, 255, 255, 0.03);
+  color: @light;
+  box-shadow: none;
+}
+
+#settings-window table td,
+#settings-window table th {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+#settings-window .btn:not(.btn-settings):not(.btn-settings-active) {
+  border-radius: @radius-md;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: @light;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+#settings-window .btn:not(.btn-settings):not(.btn-settings-active):hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+#settings-window .btn:not(.btn-settings):not(.btn-settings-active):active {
+  transform: translateY(1px);
+}
+
+#settings-window .btn-info {
+  background: linear-gradient(135deg, @blue 0%, mix(white, @blue, 16%) 100%);
+  border-color: transparent;
+  color: @quaternary;
+  font-weight: 600;
+}
+
+#settings-window .btn-danger {
+  background: linear-gradient(135deg, @danger 0%, mix(white, @danger, 16%) 100%);
+  border-color: transparent;
+  color: @light;
+  font-weight: 600;
+}
+
+#settings-window .btn-dark {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: @light;
 }
 
 /** Home tab  **/

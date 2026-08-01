@@ -19,6 +19,14 @@
 	height: 75px;
 	cursor: pointer;
 	vertical-align: bottom;
+	border-radius: @radius-md;
+	border: 2px solid transparent;
+	transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.colors_blocks:hover {
+	transform: scale(1.06);
+	border-color: rgba(255, 255, 255, 0.35);
 }
 
 #screen-background-tab #modes-screen #panel_colors #color-list::-webkit-scrollbar {

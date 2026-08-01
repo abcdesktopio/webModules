@@ -73,3 +73,29 @@
   -webkit-user-select: initial;
   -moz-user-select: initial;
 }
+
+/* Mixin : bouton circulaire "glass" (ex: #settings-back-button, bootbox-close-button) */
+.circular-icon-button() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, filter 0.15s ease, transform 0.1s ease;
+}
+
+.circular-icon-button-hover() {
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: mix(@tertiary, transparent, 45%);
+}
+
+.circular-icon-button-active() {
+  transform: scale(0.92);
+}
