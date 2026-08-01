@@ -139,6 +139,7 @@ async function* walkSvgImages(root = '') {
  */
 async function buildSvg(colors = []) {
   console.time('Build svg');
+  console.log(`Build svg readfile ${pathCache}`);
   const cache = JSON.parse(await fs.promises.readFile(pathCache, 'utf8'));
   const { currentSvgColor } = cache;
 

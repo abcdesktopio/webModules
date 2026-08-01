@@ -25,6 +25,7 @@ async function bootstrap() {
   const { filename, searchValue, replaceValue } = workerData;
   const svgContent = await fs.promises.readFile(filename, 'utf8');
   if (svgContent.includes(searchValue)) {
+    console.log( `[replaceWorker] Replacing ${searchValue} by ${replaceValue} in ${filename}` );
     const newContent = svgContent.replace(new RegExp(searchValue, 'g'), replaceValue);
     await fs.promises.writeFile(filename, newContent);
   }
