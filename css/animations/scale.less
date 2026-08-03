@@ -1,51 +1,11 @@
-@-webkit-keyframes scale {
-    0% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
-      opacity: 1; 
-    }
-    
-    45% {
-      -webkit-transform: scale(0.1);
-      transform: scale(0.1);
-      opacity: 0.7; 
-    }
-    
-    80% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
-      opacity: 1;
-    }
-}
-  
-@keyframes scale {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        opacity: 1; 
-    }
-
-    45% {
-        -webkit-transform: scale(0.1);
-        transform: scale(0.1);
-        opacity: 0.7; 
-    }
-
-    80% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        opacity: 1;
-    }
+/* Animation avec changement d'opacité (renommée pour éviter le doublon) */
+@keyframes scaleUpDown {
+    0%  { transform: scale(1);   opacity: 1; }
+    45% { transform: scale(0.1); opacity: 0.7; }
+    80% { transform: scale(1);   opacity: 1; }
 }
 
 @keyframes scale {
-    30% {
-      -webkit-transform: scale(0.3);
-      transform: scale(0.3); 
-    }
-  
-    100% {
-      -webkit-transform: scale(1);
-      transform: scale(1); 
-    } 
+    30%  { transform: scale(0.3); }
+    100% { transform: scale(1); }
 }

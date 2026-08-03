@@ -11,25 +11,18 @@
 
 #settings-window #localisation-tab span {
 	display: block;
-	-webkit-user-select: initial;
-	-khtml-user-select: initial;
-	-moz-user-select: initial;
-	-o-user-select: initial;
-	user-select: initial;
+	.allow-select();
 	text-align: left;
 	margin-bottom: 0.5rem;
 }
 #map {
 	height: 420px;
+	border-radius: @radius-lg;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.10);
 }
 
 @media screen and (max-height: 1360px) {
-	#map {
-		height: 410px;
-	}	
-}
-
-@media screen and (max-height: 1359px) {
 	#map {
 		height: 285px;
 	}
