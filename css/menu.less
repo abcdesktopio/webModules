@@ -3,6 +3,8 @@
  * ----------------------------------------
  */
 
+@import "@{global}";
+
  #abcdesktop_control_bar_anchor {
     /* The anchor is needed to get z-stacking to work */
     position: fixed;
@@ -27,12 +29,10 @@
     background-color: @secondary;
     border-radius: 0 12px 12px 0;
 
-    user-select: none;
-    -webkit-user-select: none;
+    .no-select();
     -webkit-touch-callout: none; /* Disable iOS image long-press popup */
 }
 #abcdesktop_control_bar.abcdesktop_open {
-    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
     left: 0;
 }
 #abcdesktop_control_bar::before {
@@ -46,9 +46,6 @@
     transition: box-shadow 0.5s ease-in-out;
 }
 
-// #abcdesktop_control_bar.abcdesktop_open::before {
-//     box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
-// }
 .abcdesktop_right #abcdesktop_control_bar {
     left: 100%;
     border-radius: 12px 0 0 12px;
@@ -73,7 +70,6 @@
     background-color: @secondary;
     background-repeat: no-repeat;
     background-position: right;
-    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
 }
 #abcdesktop_control_bar_handle:after {
     content: "";
@@ -162,17 +158,12 @@
 }
 
 .abcdesktop_top #abcdesktop_control_bar.abcdesktop_open {
-    // box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.5);
     top: 0;
 }
 
 .abcdesktop_top #abcdesktop_control_bar::before {
   transition: none;
 }
-
-// .abcdesktop_top #abcdesktop_control_bar.abcdesktop_open::before {
-//     box-shadow: none;
-// }
 
 .abcdesktop_top #abcdesktop_control_bar > .abcdesktop_scroll {
     flex-direction: row;
@@ -192,7 +183,6 @@
     background-color: @secondary;
     background-repeat: no-repeat;
     background-position: bottom;  
-    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
 }
 
 .abcdesktop_top #abcdesktop_control_bar_handle:after {
@@ -788,7 +778,7 @@
   }
 
   #abcdesktop_control_bar div img.disabled {
-    opacity: 0.4;
+    opacity: @opacity-low;
     filter: opacity(40);
   }
   #abcdesktop_control_bar div ul {
@@ -866,8 +856,7 @@
   }
   
   #abcdesktop_control_bar #speakers .slider-active {
-    -webkit-border-radius: 5px 5px 5px 5px;
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px;
     background: @danger;
     height: 5px;
     width: 60px;

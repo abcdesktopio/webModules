@@ -13,6 +13,58 @@
 
 @import "@{global}";
 
+
+
+///
+
+#appstore-window p,
+#appstore-window span,
+#appstore-window td {
+  user-select: text !important;
+  -moz-user-select: text !important;
+}
+
+
+
+#appstore-window {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+div.appstore-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-height: 35px;
+  width: 100%;
+}
+
+div.appstore-title h5#appstore-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#appstore-window div.tab {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#appstore-window .tab {
+  height: 100%;
+}
+
+
+
+
+
+///
+
 .modal-open .modal {
   overflow-y: hidden !important;
 }
@@ -21,108 +73,224 @@ div.appstore-window .modal-body {
   padding: 0 !important;
 }
 
+/* Let the glass card fill the full-size dialog (see base.less window-dialog) */
 div.appstore-window .modal-dialog .modal-content {
   width: 100%;
-  height: 500px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  border-radius: 20px !important; /* preserve glassmorphism corners from base.css */
+  height: 100%;
+  overflow: hidden;
 }
 
 div.appstore-window div.content-apps {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: calc(100% - 35px);
-}
-
-div.appstore-window div.content-apps div#nav {
-  display: flex;
   flex-direction: row;
+  width: 100%;
+  height: 100%;
 }
 
-div.appstore-window div.content-apps div#nav .button {
-  display: block;
-  width: 17%;
-  height: 100%;
-  float: left;
+/* ============================================================
+   Sidebar navigation
+   ============================================================ */
+div.appstore-window div.content-apps #nav {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 96px;
+  gap: 4px;
+  padding: @spacing-md @spacing-xs;
+  background: rgba(255, 255, 255, 0.03);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+div.appstore-window div.content-apps #nav .button {
+  display: flex;
+  width: 100%;
+  height: auto;
+  float: none;
   color: @light;
   text-align: center;
-  font-size: 14px;
+  font-size: @font-size-md;
   cursor: pointer;
+  border-radius: @radius-xl;
+  opacity: 0.75;
+  transition: background 0.15s ease, opacity 0.15s ease;
 }
 
-div.appstore-window div.content-apps div#nav .button:hover {
-  opacity: 0.9;
+div.appstore-window div.content-apps #nav .button:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.06);
 }
 
-div.appstore-window div.content-apps div#nav .button:hover > img {
+div.appstore-window div.content-apps #nav .button:hover > img {
   width: 30px;
   margin-left: 8px;
   margin-top: 10px;
 }
 
-div.appstore-window div.content-apps div#nav div.button div {
-  margin: auto;
-}
-
-div.appstore-window div.content-apps div#nav div.button {
+div.appstore-window div.content-apps #nav div.button div {
   display: flex;
-  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: auto;
   padding-top: 10px;
   padding-bottom: 10px;
-}
-
-div.appstore-window div.content-apps div#nav div.button img {
-  height: 45px;
-  width: 45px;
   pointer-events: none;
 }
 
-div.appstore-window div.content-apps div#nav div.button p {
+div.appstore-window div.content-apps #nav .button.active {
+  opacity: 1;
+  background: rgba(255, 121, 0, 0.14);
+  box-shadow: inset 0 0 0 1px mix(@tertiary, transparent, 40%);
+}
+
+div.appstore-window div.content-apps #nav .button span.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  transition: transform 0.15s ease;
+}
+
+div.appstore-window div.content-apps #nav .button:hover span.nav-icon {
+  transform: scale(1.08);
+}
+
+div.appstore-window div.content-apps #nav div.button img {
+  height: 22px;
+  width: 22px;
+  pointer-events: none;
+}
+
+div.appstore-window div.content-apps #nav div.button p {
   margin: 0;
-  font-size: 15px;
+  font-size: @font-size-sm;
+  white-space: nowrap;
+}
+
+/* Soft per-category icon tint, kept subtle behind the glass style */
+div.appstore-window div.content-apps #nav #office span.nav-icon      { background: mix(@purple, transparent, 26%); }
+div.appstore-window div.content-apps #nav #games span.nav-icon       { background: mix(@danger, transparent, 26%); }
+div.appstore-window div.content-apps #nav #graphics span.nav-icon    { background: mix(@pink, transparent, 26%); }
+div.appstore-window div.content-apps #nav #utilities span.nav-icon   { background: mix(@tertiary, transparent, 26%); }
+div.appstore-window div.content-apps #nav #development span.nav-icon { background: mix(@success, transparent, 26%); }
+div.appstore-window div.content-apps #nav #education span.nav-icon   { background: mix(@purple, transparent, 26%); }
+
+/* ============================================================
+   Main panel: search toolbar + application grid
+   ============================================================ */
+div.appstore-window div.content-apps div.appstore-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+}
+
+div.appstore-window div.content-apps div.appstore-toolbar {
+  flex: 0 0 auto;
+  padding: @spacing-md @spacing-lg @spacing-sm;
+}
+
+div.appstore-window div.content-apps div.appstore-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 320px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: @radius-round;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+div.appstore-window div.content-apps div.appstore-search-wrap:focus-within {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: mix(@tertiary, transparent, 55%);
+}
+
+div.appstore-window div.content-apps svg.appstore-search-icon {
+  flex: 0 0 auto;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+div.appstore-window div.content-apps #appstore-search-placeholder {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: @light;
+  font-size: @font-size-base;
+}
+
+div.appstore-window div.content-apps #appstore-search-placeholder::placeholder {
+  color: rgba(255, 255, 255, 0.45);
 }
 
 div.appstore-window div.content-apps ul#appstore-applist {
-  overflow: auto;
-  padding: 0;
-  padding-top: 1%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: @spacing-sm;
+  align-content: start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 @spacing-lg @spacing-lg;
   margin: 0;
-  flex-wrap: wrap;
+  flex: 1 1 auto;
 }
 
 .appstore-item {
-  width: 10%;
-  display: inline-block;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   list-style: none;
   cursor: pointer;
-  padding-bottom: 1.5%;
-  padding-top: 1.5%;
-  overflow-y: hidden;
-  height: 127px;
+  padding: @spacing-sm 4px;
+  border-radius: @radius-xl;
+  border: 1px solid transparent;
+  position: relative;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
 }
 
-.tooltipTitle{
-  color: #6dc5ef;
+p.tooltipTitle {
+  font-size: x-small;
+}
+
+
+.tooltipTitle {
+  color: @tertiary;
+  font-size: x-small;
 }
 
 .tooltip-inner {
-  white-space: nowrap; 
+  white-space: nowrap;
   max-width: none;
   min-width: 0;
+  font-size: x-small;
 }
 
 div.appstore-window div.content-apps ul#appstore-applist li:hover {
-  background: @secondary;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.10);
+  transform: translateY(-2px);
 }
 
-div.appstore-window div.content-apps ul#appstore-applist li div {
-  margin: auto;
-  padding: 2%;
+div.appstore-window div.content-apps ul#appstore-applist li div.d-flex {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 8px;
+  border-radius: @radius-lg;
+  background: rgba(255, 255, 255, 0.06);
   cursor: pointer !important;
+  transition: background 0.15s ease;
+}
+
+div.appstore-window div.content-apps ul#appstore-applist li:hover div.d-flex {
+  background: rgba(255, 255, 255, 0.10);
 }
 
 div.appstore-window div.content-apps ul#appstore-applist li p {
@@ -130,14 +298,16 @@ div.appstore-window div.content-apps ul#appstore-applist li p {
   text-align: center;
   pointer-events: none;
   margin: 0;
-  font-size: 15px;
+  font-size: @font-size-sm;
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 div.appstore-window div.content-apps ul#appstore-applist li div img {
-  height: 45px;
-  width: 45px;
+  height: 34px;
+  width: 34px;
   pointer-events: none;
 }
 
@@ -153,25 +323,22 @@ div.appstore-window
 
 div.appstore-window div.content-apps ul#appstore-applist li div img.appLoader {
   position: relative;
-  top: -65px;
-  right: 25px;
+  top: -44px;
+  right: 0;
 }
 
-div.appstore-window div.content-apps div#nav div#office {
-  background: @purple;
+/* Lock badge overlaid on the bottom-right corner of the app icon */
+div.appstore-window div.content-apps ul#appstore-applist li img.app-lock-icon {
+  position: absolute;
+  top: 52px;
+  left: 50%;
+  bottom: unset;
+  transform: translate(14px, -8px);
+  width: 16px !important;
+  height: 16px !important;
+  padding: 2px;
+  border-radius: 50%;
+  background: @quaternary;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.30);
 }
-div.appstore-window div.content-apps div#nav div#games {
-  background: @danger;
-}
-div.appstore-window div.content-apps div#nav div#graphics {
-  background: @pink;
-}
-div.appstore-window div.content-apps div#nav div#utilities {
-  background: @tertiary;
-}
-div.appstore-window div.content-apps div#nav div#development {
-  background: @success;
-}
-div.appstore-window div.content-apps div#nav div#education {
-  background: @purple;
-}
+

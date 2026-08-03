@@ -107,6 +107,8 @@ div.window-dialog-small .modal-dialog {
 /* --- Shared: glass card surface --- */
 div.window-dialog div.modal-dialog div.modal-content,
 div.window-dialog-small div.modal-dialog div.modal-content {
+  display: flex;
+  flex-direction: column;
   color: @light;
   height: 100%;
   background: rgba(22, 24, 30, 0.80);
@@ -120,10 +122,17 @@ div.window-dialog-small div.modal-dialog div.modal-content {
   overflow: hidden;
 }
 
-/* --- Body height (full-size only) --- */
+/* --- Body height (full-size only) ---
+   Uses flex instead of a fixed calc() so the body always shrinks to leave
+   room for the modal-footer when one is present (e.g. the screenshot
+   dialog's "Download" button), instead of the footer being clipped by the
+   modal-content's overflow: hidden. */
 div.window-dialog div.modal-dialog div.modal-content div.modal-body,
 div.window-dialog-small div.modal-dialog div.modal-content div.modal-body {
-  height: calc(100% - 48px);
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow-y: auto;
 }
 
 div.window-dialog div.modal-dialog div.modal-content div.bootbox-body,
@@ -141,6 +150,7 @@ div.window-dialog-small .modal-content .modal-header {
   padding: 0.7rem 1.25rem;
   position: relative;
   min-height: 48px;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
 }
@@ -150,40 +160,10 @@ div.window-dialog-small .modal-content .modal-header h5 {
   width: 100%;
   text-align: center;
   font-size: 0.95rem;
-  font-weight: 600;
+  // font-weight: 600;
   letter-spacing: 0.04em;
   color: @tertiary;
   margin: 0 !important;
-}
-
-/* --- Close button (× / btn-close) --- */
-div.window-dialog .modal-content .modal-header .close,
-div.window-dialog .modal-content .modal-header .btn-close,
-div.window-dialog-small .modal-content .modal-header .close,
-div.window-dialog-small .modal-content .modal-header .btn-close {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.40) !important;
-  background-color: transparent !important;
-  filter: invert(1) grayscale(100%) brightness(200%) opacity(0.5);
-  border: none !important;
-  padding: 0.2rem 0.45rem;
-  font-size: 1.15rem;
-  line-height: 1;
-  opacity: 1;
-  cursor: pointer;
-  transition: color 0.15s ease, filter 0.15s ease;
-  margin: 0;
-}
-
-div.window-dialog .modal-content .modal-header .close:hover,
-div.window-dialog .modal-content .modal-header .btn-close:hover,
-div.window-dialog-small .modal-content .modal-header .close:hover,
-div.window-dialog-small .modal-content .modal-header .btn-close:hover {
-  color: @light !important;
-  filter: invert(1) grayscale(100%) brightness(300%) opacity(1);
 }
 
 /* --- Body --- */
@@ -203,6 +183,7 @@ div.window-dialog-small .modal-content .modal-footer {
   justify-content: center !important;
   gap: 0.75rem;
   padding: 0.8rem 1.25rem;
+  flex: 0 0 auto;
 }
 
 /* --- Generic footer buttons (cancel / secondary) --- */
@@ -276,7 +257,7 @@ div.window-dialog-small .modal-content .modal-footer .button-log-off:hover {
   position: absolute;
   background-color: @primary;
   color: @light;
-  font-size: 14px;
+  font-size: @font-size-md;
   margin-top: 24px;
   z-index: 1;
 }
@@ -332,8 +313,8 @@ input[type="text"] {
 }
 
 div.button {
-  height: 25px;
-  width: 85px;
+  height: @button-height;
+  width: @button-width;
   text-align: center;
   cursor: pointer;
 }
@@ -406,7 +387,7 @@ div.button {
 }
 
 #tooltip #tooltip-text {
-  font-size: 14px;
+  font-size: @font-size-md;
   white-space: nowrap;
 }
 
@@ -624,7 +605,7 @@ div.button {
   font-weight: bold;
   float: left;
   color: @light;
-  font-size: 14px;
+  font-size: @font-size-md;
   margin-left: 10px;
 }
 
@@ -648,8 +629,8 @@ div.button {
 .control .close,
 .control .reduce {
   background-size: 15px;
-  height: 25px;
-  width: 25px;
+  height: @icon-sm;
+  width: @icon-sm;
   position: absolute;
   top: 4px;
 }
@@ -657,7 +638,7 @@ div.button {
 .window-title {
   color: @primary;
   float: left;
-  font-size: 14px;
+  font-size: @font-size-md;
   font-weight: bold;
   height: 35px;
   width: 100%;
@@ -695,16 +676,14 @@ div.button {
   position: absolute;
   width: 100%;
   -webkit-filter: blur(20px);
-  -ms-filter: blur(5px);
-  -o-filter: blur(5px);
   filter: blur(5px);
   display: none;
   pointer-events: none;
 }
 
 .notification img {
-  width: 50px;
-  height: 50px;
+  width: @icon-lg;
+  height: @icon-lg;
 }
 
 .removeapp {
@@ -814,8 +793,11 @@ div.button {
 }
 
 img#screenImg {
-  max-height: 100%;
-  max-width: 100%;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   margin: 0 auto;
   display: block;
 }

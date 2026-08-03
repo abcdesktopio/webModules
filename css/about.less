@@ -158,10 +158,9 @@
 #about-window .content .about-buttons div {
   text-align: center;
   float: right;
-  width: 85px;
-  height: 23px;
-  -webkit-border-radius: 4px 4px 4px 4px;
-  border-radius: 4px 4px 4px 4px;
+  width: @button-width;
+  height: @button-height-sm;
+  border-radius: @radius-md;
   border: 1px solid @primary;
   margin-right: 8px;
   padding-top: 4px;
@@ -222,12 +221,10 @@
   margin-top: 10px;
   float: left;
   text-align: center;
+  margin-left: 10px;
 }
 #about-window .app:first-child {
-  margin-left: 0px;
-}
-#about-window .app {
-  margin-left: 10px;
+  margin-left: 0;
 }
 #about-window .app img {
   height: 40px;
@@ -248,11 +245,7 @@
   display: block;
   margin-left: 200px;
   margin-top: 10px;
-  -webkit-user-select: initial;
-  -khtml-user-select: initial;
-  -moz-user-select: initial;
-  -o-user-select: initial;
-  user-select: initial;
+  .allow-select();
 }
 
 #about-window #aboutTitle {
@@ -274,7 +267,7 @@
 #about-window #cg a:hover {
   color: @dark;
 }
-@media screen and (max-width: 700px) and (orientation: portrait) {
+@media screen and (max-width: @breakpoint-md) and (orientation: portrait) {
   #about-window {
     width: 300px;
     height: 430px;
@@ -312,7 +305,7 @@
   }
 }
 
-@media screen and (max-width: 700px) and (orientation: landscape) {
+@media screen and (max-width: @breakpoint-md) and (orientation: landscape) {
   #about-window {
     width: 300px;
     height: 230px;
