@@ -107,6 +107,8 @@ div.window-dialog-small .modal-dialog {
 /* --- Shared: glass card surface --- */
 div.window-dialog div.modal-dialog div.modal-content,
 div.window-dialog-small div.modal-dialog div.modal-content {
+  display: flex;
+  flex-direction: column;
   color: @light;
   height: 100%;
   background: rgba(22, 24, 30, 0.80);
@@ -120,10 +122,17 @@ div.window-dialog-small div.modal-dialog div.modal-content {
   overflow: hidden;
 }
 
-/* --- Body height (full-size only) --- */
+/* --- Body height (full-size only) ---
+   Uses flex instead of a fixed calc() so the body always shrinks to leave
+   room for the modal-footer when one is present (e.g. the screenshot
+   dialog's "Download" button), instead of the footer being clipped by the
+   modal-content's overflow: hidden. */
 div.window-dialog div.modal-dialog div.modal-content div.modal-body,
 div.window-dialog-small div.modal-dialog div.modal-content div.modal-body {
-  height: calc(100% - 48px);
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow-y: auto;
 }
 
 div.window-dialog div.modal-dialog div.modal-content div.bootbox-body,
@@ -141,6 +150,7 @@ div.window-dialog-small .modal-content .modal-header {
   padding: 0.7rem 1.25rem;
   position: relative;
   min-height: 48px;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
 }
@@ -173,6 +183,7 @@ div.window-dialog-small .modal-content .modal-footer {
   justify-content: center !important;
   gap: 0.75rem;
   padding: 0.8rem 1.25rem;
+  flex: 0 0 auto;
 }
 
 /* --- Generic footer buttons (cancel / secondary) --- */
@@ -782,8 +793,11 @@ div.button {
 }
 
 img#screenImg {
-  max-height: 100%;
-  max-width: 100%;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   margin: 0 auto;
   display: block;
 }
