@@ -84,6 +84,7 @@ export const logoffOpen = function () {
     title: logOffTitle || 'Logoff',
     message: templateLogOff.innerHTML,
     className: 'window-dialog-small',
+    closeButton: false, // Removes the top-right 'X' close button
     onEscape: true,
     backdrop: true,
     buttons,
@@ -234,7 +235,7 @@ const toggleControlbar = (e) => {
  * @param {boolean} show - Whether to show or hide the hints.
  * @param {boolean} [animate=true] - Whether to animate the transition.
  */
-const showControlbarHints = (show, animate=true) => {
+export const showControlbarHints = (show, animate=true) => {
   for (const hint of hints) {
     if (hint.id === `abcdesktop_${currentSnapping}_control_bar_hint`) {
       continue;
