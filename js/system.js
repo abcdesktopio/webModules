@@ -85,6 +85,52 @@ export function updateNbConnect(number) {
  * @returns {void}
  * @desc Take a screenshot and download it.
  */
+
+export function takeScreenshot() {
+  const canvas = document.getElementById('noVNC_canvas');
+  const title = document.querySelector('template#screenshot-window-title-template');
+  const screenShotTitle = languages.getTranslate('screen-shot-title');
+  const screenShotDownload = languages.getTranslate('screen-shot-download');
+  const message = document.querySelector('template#screenshot-window-template');
+
+  const bootboxScreenshot = bootbox.dialog({
+    title: title.innerHTML,
+    message: message.innerHTML,
+    className: 'window-dialog',
+    onEscape: true,
+    backdrop: true,
+    closeButton: false, // Removes the top-right 'X' close button
+    buttons: {
+      cancel: {
+        label: screenShotDownload || 'Download',
+        className: 'window-button',
+        callback: () => {
+          const date = new Date();
+          window.download(canvas.toDataURL('image/jpeg'), `desktop_${date.toISOString()}.jpg`, 'image/jpeg');
+        },
+      },
+    },
+    animate: false,
+  });
+  // languages.applyLanguage();
+
+  const close_btn = document.getElementById('screenshot-close-button');
+  if (close_btn) {
+    close_btn.addEventListener('click', ()=> {
+      bootboxScreenshot.modal('hide');
+    });
+  }
+
+  if (canvas) {
+    const img = document.getElementById('screenImg');
+    if (img) {
+      img.src = canvas.toDataURL('image/jpeg');
+    }
+  }
+}
+
+
+/*
 export function takeScreenshot() {
   const canvas = document.getElementById('noVNC_canvas');
   const screenShotTitle = languages.getTranslate('screen-shot-title');
@@ -116,6 +162,8 @@ export function takeScreenshot() {
     }
   }
 }
+*/
+
 
 /**
  * @function setUsername
