@@ -48,9 +48,11 @@
     <link rel="stylesheet" href="css/css-dist/screenRecord.css" type="text/css">
     <link rel="stylesheet" href="node_modules/@xterm/xterm/css/xterm.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/appstore.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/screenshot.css" type="text/css">
     <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css" type="text/css">
 	<!-- end of dedicated index page -->
     {{/isIndexPage}}
+   
 
     <link rel="stylesheet" href="css/css-dist/error.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/base.css" type="text/css">
@@ -67,7 +69,10 @@
     <link rel="stylesheet" href="css/css-dist/music.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/share.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css">
-    
+   
+   
+
+
     {{#isDemoPage}}
     <!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-VS25TGNTRZ"></script>
@@ -155,8 +160,7 @@
                 </div>
                 <div id="additionnalloginScreencontent">
                     <div class="highlight" id="welcomeinfo"></div>
-                </div>
-                <div class="login-brand__resources">
+                    <div class="login-brand__resources">
                     <div id="desktopfeatures">
                         <div class="form-group">
                             <label class="form-label login-brand__secondary-title" id="login-desktopfeatures" for="desktopfeaturesul">Desktop features</label>
@@ -164,6 +168,7 @@
                             <p class="form-comment" id="login-desktopfeatures-comment"></p>
                         </div>
                     </div>
+                </div>
                 </div>
                 <div class="login-brand__dots">
                     <span></span>
@@ -176,11 +181,10 @@
             <div class="login-separator"></div>
 
             <!-- Form panel (right) -->
-            <div id="loginScreenContent">
+            <div class="login-brand" id="loginScreenContent">
                 
-                <p id="statusText" class="login-brand__secondary-title">
-                <div class="login-brand__dots">
-                </div>
+                <p id="statusText" class="login-brand__p_statusText">
+                <!--<div class="login-brand__dots"></div>-->
                 </p>
                 
                 <div id="activeDirectory">
@@ -515,7 +519,7 @@
                     </li>
                     <li>
                         <div class="state" id='screenshot'></div>
-                        <p id="screen-shot-name" class="placestate">Screen shot</p>
+                        <p id="screen-shot-name" class="placestate">Screenshot</p>
                     </li>
                     <li>
                         <!-- <div class="state" id='record'></div> -->
@@ -556,6 +560,7 @@
         <div class="arrow-right"></div>
         <div id="tooltip-text"></div>
     </div>
+
     <div id="shareWindow" class="window">
         <div class="control">
             <div class="close"></div>
@@ -652,13 +657,10 @@
         </template>
         <template id='settings-window-title-template'>
             <div class="settings-title">
-                <div id="settings-back-button">
-			<img src="img/settings/back.svg" alt="back-icon" loading="lazy">
-		</div>
-                <h5 id="settings-title"></h5>
-                <div class="searchSection">
-                    <input id="input-search-section" class="d-sm-block d-none" type="text" aria-describedby="basic-addon1">
-                </div>
+                <div id="settings-back-button" class="settings-back-button">
+			        <img src="img/settings/back.svg" alt="back-icon" loading="lazy">
+		        </div>
+                <h5 id="settings-title" class="settings-title"></h5>
             </div>
         </template>
         <template id="settings-window-body-template" class="window">
@@ -723,17 +725,6 @@
                     </div>
                 </div>
                 {{/urlopensourceproject}}
-                <!-- removed in release 2.x
-                <div class="tab-header" tab="support-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/support_agent.svg">
-                        <span id="settings-support-title">Support</span>
-                        <span id="settings-support-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">
-                            Support links
-                        </span>
-                    </div>
-                </div>
-                -->
             </div>
             <!-- System tab start -->
             <div class="tab" id="system-tab">
@@ -742,11 +733,11 @@
                     <div id="system-tab-switch-buttons" class="d-flex justify-content-center max-size">
                         <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle" >
                             <input type="radio" class="btn-check" name="options" id="settings-system-btn-system-input" autocomplete="off" checked>
-                            <label id="settings-system-btn-system" class="btn btn-secondary btn-settings-active"  data-view="settings-system-view-infos-system" for="settings-system-btn-system-input">System</label>
+                            <label id="settings-system-btn-system" class="btn btn-settings btn-settings-active"  data-view="settings-system-view-infos-system" for="settings-system-btn-system-input">System</label>
                             <input type="radio" class="btn-check" name="options" id="settings-system-view-user-container-input" autocomplete="off">
-                            <label id="settings-system-btn-user-container" class="btn btn-secondary" data-view="settings-system-view-user-container" for="settings-system-view-user-container-input">Pod</label>
+                            <label id="settings-system-btn-user-container" class="btn btn-settings" data-view="settings-system-view-user-container" for="settings-system-view-user-container-input">Pod</label>
                             <input type="radio" class="btn-check" name="options" id="settings-system-btn-view-infos-input" autocomplete="off">
-                            <label id="settings-system-btn-view-infos"  class="btn btn-secondary" data-view="settings-system-view-display" for="settings-system-btn-view-infos-input">Display</label>
+                            <label id="settings-system-btn-view-infos"  class="btn btn-settings" data-view="settings-system-view-display" for="settings-system-btn-view-infos-input">Display</label>
                         </div>
                     </div>
  
@@ -882,10 +873,10 @@
                     <div id="user-tab-switch-buttons" class="d-flex justify-content-center max-size">
                         <div id="buttons-screen-user" class="d-flex btn-group btn-group-toggle">
                             <input type="radio" class="btn-check" name="options" id="settings-user-current-session-btn-input" autocomplete="off" checked>
-                            <label id="settings-user-current-session-btn" class="btn btn-secondary btn-settings-active" data-view="user-current-session" for="settings-user-current-session-btn-input">Current session</label>
+                            <label id="settings-user-current-session-btn" class="btn btn-settings btn-settings-active" data-view="user-current-session" for="settings-user-current-session-btn-input">Current session</label>
                    
                             <input type="radio" class="btn-check" name="options" id="settings-user-connection-history-input" autocomplete="off" >
-                            <label id="settings-user-connection-history" class="btn btn-secondary" data-view="user-connection-history" for="settings-user-connection-history-input">Connection history</label>
+                            <label id="settings-user-connection-history" class="btn btn-settings" data-view="user-connection-history" for="settings-user-connection-history-input">Connection history</label>
                         </div>
                     </div>
                     <div class="container">
@@ -1007,10 +998,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-100 d-flex justify-content-center">
-                            <br>
-                            <div id="map" class="col-10"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1021,9 +1008,9 @@
                 <div id="screenColor-tab-switch-buttons" class="d-flex justify-content-center max-size">
                     <div id="buttons-screen-background" class="d-flex btn-group btn-group-toggle" >
                         <input type="radio" class="btn-check" name="options" id="settings-screen-background-colors-btn-input" autocomplete="off" checked>
-                        <label id="settings-screen-background-colors-btn" class="btn btn-secondary btn-settings-active" data-view="panel_colors" for="settings-screen-background-colors-btn-input">Colors</label>
+                        <label id="settings-screen-background-colors-btn" class="btn btn-settings btn-settings-active" data-view="panel_colors" for="settings-screen-background-colors-btn-input">Colors</label>
                         <input type="radio" class="btn-check" name="options" id="settings-screen-background-pictures-btn-input" autocomplete="off">
-                        <label id="settings-screen-background-pictures-btn" class="btn btn-secondary" data-view="panel_picture" for="settings-screen-background-pictures-btn-input">Pictures</label>
+                        <label id="settings-screen-background-pictures-btn" class="btn btn-settings" data-view="panel_picture" for="settings-screen-background-pictures-btn-input">Pictures</label>
                     </div>
                 </div>
                 <br>
@@ -1095,47 +1082,83 @@
                 </div>
             </div>
         </template>
+        <template id='screenshot-window-title-template'>
+            <div class="screenshot-title">
+                <h5 id="screenshot-title" class="settings-title" >Screenshot</h5>
+                <div id="screenshot-close-button" class="settings-close-button">
+                    <img src="img/settings/close.svg" alt="close-icon" loading="lazy">
+                </div>
+            </div>
+        </template>
+        <template id="screenshot-window-template" class="window">
+            <div class="container w-100 h-100 d-flex justify-content-center flex-column">
+                <img id="screenImg" src="" alt="screenshot">
+            </div>
+        </template>
+        <template id='appstore-window-title-template'>
+            <div class="appstore-title">
+                <div id="appstore-back-button" class="settings-back-button">
+                    <img src="img/settings/back.svg" alt="back-icon" loading="lazy">
+                </div>
+                <h5 id="appstore-title" class="settings-title" >Applications</h5>
+                <div id="appstore-close-button" class="settings-close-button">
+                    <img src="img/settings/close.svg" alt="close-icon" loading="lazy">
+                </div>
+            </div>
+        </template>
         <template id="appstore-window-template" class="window">
             <div class="content-apps">
-                <div id="nav">
+                <nav id="nav">
                     <div id="office" class="button">
                         <div>
-                            <img src="img/appstore/doc.svg" alt="doc-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/doc.svg" alt="doc-icon" loading="lazy"></span>
                             <p id="appstore-office-title" class="app-type d-none d-sm-block">Office</p>
                         </div>
                     </div>
                     <div id="games" class="button">
                         <div>
-                            <img src="img/appstore/gamepad.svg" alt="gamepad-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/gamepad.svg" alt="gamepad-icon" loading="lazy"></span>
                             <p id="appstore-game-title" class="app-type d-none d-sm-block">Games</p>
                         </div>
                     </div>
                     <div id="graphics" class="button">
                         <div>
-                            <img src="img/appstore/design.svg" alt="design-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/design.svg" alt="design-icon" loading="lazy"></span>
                             <p id="appstore-graphics-title" class="app-type d-none d-sm-block">Graphics</p>
                         </div>
                     </div>
                     <div id="utilities" class="button">
                         <div>
-                            <img src="img/appstore/utils.svg" alt="utils-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/utils.svg" alt="utils-icon" loading="lazy"></span>
                             <p id="appstore-utilities-title" class="app-type d-none d-sm-block">Utilities</p>
                         </div>
                     </div>
                     <div id="development" class="button">
                         <div>
-                            <img src="img/appstore/dev.svg" alt="dev-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/dev.svg" alt="dev-icon" loading="lazy"></span>
                             <p id="appstore-dev-title" class="app-type d-none d-sm-block">Development</p>
                         </div>
                     </div>
                     <div id="education" class="button">
                         <div>
-                            <img src="img/appstore/education.svg" alt="education-icon" loading="lazy">
+                            <span class="nav-icon"><img src="img/appstore/education.svg" alt="education-icon" loading="lazy"></span>
                             <p id="appstore-education-title" class="app-type d-none d-sm-block">Education</p>
                         </div>
                     </div>
+                </nav>
+        
+                <div class="appstore-main">
+                    <div class="appstore-toolbar">
+                        <div class="appstore-search-wrap">
+                            <svg class="appstore-search-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/>
+                            </svg>
+                            <input id="appstore-search-placeholder" type="text" placeholder="Search apps..." autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                    <ul id='appstore-applist'></ul>
                 </div>
-                <ul id='appstore-applist'></ul>
+                
             </div>
         </template>
         <template id="authent-window-template" class="window">
@@ -1167,8 +1190,16 @@
                 </p>
             </div>
         </template>
+        <template id='log-off-window-title-template'>
+            <div class="log-off-title">
+                <h5 id="log-off-title" class="settings-title" >Log Off</h5>
+                <div id="log-off-close-button" class="settings-close-button">
+                    <img src="img/settings/close.svg" alt="close-icon" loading="lazy">
+                </div>
+            </div>
+        </template>
         <template id="log-off-window-template" class="window">
-            <div class=" container w-100">
+            <div class="container w-100">
                 <div class="row">
                   <div class="col-xl-2 col-lg-2 col-md-2 d-xl-block d-lg-block d-md-block d-none">
                     <img class="logoff-img-window" src="img/top/logout.svg" alt="logout-icon" loading="lazy">
