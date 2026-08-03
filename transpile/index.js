@@ -188,6 +188,7 @@ async function buildCss(colors = []) {
   for (const file of files) {
     if (file.includes('.less')) {
       const racine = file.split('.less')[0];
+      console.log( `Transpile ${file} to ${cssDistPath}/${racine}.css'` );
       const cmd = `lessc ${cssPath}/${file} --global-var="global='globale.less'" ${colorsParams} > '${cssDistPath}/${racine}.css'`;
       promisesCompileAndMinify.push(
         exec(cmd)
