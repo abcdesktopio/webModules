@@ -262,8 +262,72 @@ div.settings-title h5#settings-title {
   color: @light;
 }
 
-/** Home tab  **/
-@import "settings_parts/home.less";
+/* ============================================================
+   Settings tab switcher (#panel-settings): the grid of navigation
+   cards is a plain Bootstrap row/col-* layout (see index.mustache.html)
+   so the responsive column counts (2 / 3 / 4 / 6 per line) come for
+   free from bootstrap.min.css instead of a custom CSS grid + @media
+   rules here.
+   ============================================================ */
+#settings-window #panel-settings {
+  padding: 16px;
+}
+
+#settings-window #panel-settings .tab-header {
+  height: 130px;
+  width: auto;
+  float: none;
+  text-align: center;
+  font-size: 15px;
+  color: @light;
+  font-weight: bold;
+  border-radius: @radius-xl;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+#settings-window #panel-settings .tab-header:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+#settings-window #panel-settings .tab-header:hover span:nth-child(3) {
+  opacity: 1;
+}
+
+/* Bootstrap's .card-body defaults to padding: 1.25rem, which is too wide
+   for the compact square tab-header cards: reset it to fill the card and
+   keep the icon/title/description centered like the previous plain divs. */
+#settings-window #panel-settings .tab-header .card-body {
+  height: 100%;
+  width: 100%;
+  padding: 8px;
+  cursor: pointer;
+}
+
+#settings-window #panel-settings .tab-header div img {
+  height: 42px;
+  width: 100%;
+  margin-bottom: 8px;
+  pointer-events: none;
+}
+
+#settings-window #panel-settings .tab-header span {
+  font-size: 12px;
+}
+
+#settings-window #panel-settings .tab-header span:nth-child(3) {
+  font-size: 13px;
+  color: @tertiary;
+  font-weight: 100;
+  opacity: 0;
+  height: 15px;
+  pointer-events: none;
+  width: 100%;
+  transition: opacity 0.15s ease;
+}
 
 /** System tab **/
 @import "settings_parts/system.less";
