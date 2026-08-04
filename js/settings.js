@@ -48,7 +48,6 @@ export const open = function () {
 
   bootbox.dialog({
     title: templateTitle.innerHTML,
-    // message: `<div id="settings-window">${templateBody.innerHTML}</div>`,
     message : templateBody.innerHTML,
     className: 'window-dialog window-dialog-settings',
     animate: false,
