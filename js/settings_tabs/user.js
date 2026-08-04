@@ -13,8 +13,6 @@
 
 import * as system from '../system.js';
 import * as launcher from '../launcher.js';
-import * as whichBrowser from '../which-browser.js';
-
 import { settingsEvents } from '../settingsevents.js';
 import * as languages from '../languages.js';
 
@@ -214,10 +212,10 @@ async function setName() {
 function setOS(ua) {
   const objOS = ua.getOS();
   let url = '../img/welcome/anonymous_icon.svg'; // unknow icon
-  const OS = whichBrowser.getOSInfo();
+
   try {
-    if (OS && OS.name) {
-      url = osImg[OS.name];
+    if (objOS && objOS.name) {
+      url = osImg[objOS.name];
     }
   } catch (e) {
     console.log(`settings.js:setOS ${e}`);
@@ -251,12 +249,10 @@ function setOS(ua) {
  */
 function setBrowser(ua) {
   const objBrowser = ua.getBrowser();
-  const browser = whichBrowser.getBrowserInfo();
-
   let url = browserImg.default;
   let name = 'default';
   try {
-    name = browser.name;
+    name = objBrowser.name;
     url = browserImg[name];
   } catch (e) {
     console.log(`settings.js:setBrowser ${e}`);
@@ -350,6 +346,7 @@ export function init(home, user) {
   // set OS
   setOS(ua);
 
+  /*
   // get login history from collection history
   launcher.getCollection('loginHistory')
     .done((msg) => {
@@ -358,6 +355,7 @@ export function init(home, user) {
         buildHistoryList(history, user);
       }
     });
+  */
   system.show(user);
 }
 

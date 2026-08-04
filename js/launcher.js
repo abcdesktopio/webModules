@@ -240,13 +240,15 @@ export function getUserInfo() {
   return odApiClient.user.whoami();
 }
 
-/**
+/*
+
+ *
  * @function getLogs
  * @global
  * @params {callback} callback
  * @return {void}
  * @desc Get abcdesktop logs.
- */
+ *
 export function getLogs(callback) {
   return odApiClient.composer
     .getLogs()
@@ -260,6 +262,8 @@ export function getLogs(callback) {
       console.error(status, error);
     });
 }
+*/
+
 
 /**
  * @function listenableprinter
