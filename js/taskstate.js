@@ -120,22 +120,24 @@ export const update_applicationstatus = function () {
 };
 
 export const update_on_container_notification = function( container ) {
-	// console.log( container );
+
 	let reason = container.reason;
+	console.log( reason );
 	switch( reason ) {
-		case 'Patched':
 		case 'Created':
 		case 'Scheduled':
-		case 'PodInitializing':
 		case 'Pulling':
+		case 'Patched':
+		case 'PodInitializing':
 			add_task( container );
-                        break;
+            break;
+		case 'Patched':
+		case 'Pulled':
 		case 'Started':
 		case 'Running':
-		case 'Pulled':
 		case 'Completed':
 			remove_task( container );
-                        break;
+            break;
 		default:
 			remove_task( container );
 	}

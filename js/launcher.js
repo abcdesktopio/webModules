@@ -135,7 +135,7 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
   });
 
   source.addEventListener("message", (msg) => {
-    // console.log( msg );
+    console.log( msg );
     if (msg.id) {
       console.log(`Received event ${msg.id}`);
     }
