@@ -135,7 +135,10 @@ export const update_on_container_notification = function( container ) {
 		case 'Pulled':
 		case 'Started':
 		case 'Running':
+			remove_task( container );
+            break;
 		case 'Completed':
+			containerNotificationInfo( container );
 			remove_task( container );
             break;
 		default:
@@ -195,10 +198,12 @@ export const containerNotificationInfo = function (data) {
 	      }
               break;
 	}
-        case 'Completed':
-	      // stop bugging me 
-              // skip this event
-              break;
+    case 'Completed': {
+	    // stop bugging me 
+		// skip this event
+		notificationSystem.displayNotification(data.reason, data.message, 'Completed', icon, 15);
+		break;
+	}
 	case 'Running': 
 	case 'Started': {
 	      // stop bugging me 

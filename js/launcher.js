@@ -151,14 +151,16 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
        broadcastEvent.dispatchEvent(
             new CustomEvent('container', { detail: { container: parsedObj.message } } ),
           );
-
     } 
     else if (parsedObj.status == 200) {
        broadcastEvent.dispatchEvent(
             new CustomEvent('container', { detail: { container: parsedObj.message } } ),
           );
     }
-    else {
+    else if (parsedObj.status == 500) {
+       broadcastEvent.dispatchEvent(
+            new CustomEvent('container', { detail: { container: parsedObj.error } } ),
+          );
     }
   });
 
