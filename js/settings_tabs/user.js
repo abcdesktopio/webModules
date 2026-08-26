@@ -18,8 +18,6 @@ import * as whichBrowser from '../which-browser.js';
 import { settingsEvents } from '../settingsevents.js';
 import * as languages from '../languages.js';
 
-let firstAppear = true;
-
 const providerImg = {
   'facebook': '../img/welcome/facebook_icon.svg',
   'google': '../img/welcome/google_icon.svg',
@@ -332,11 +330,6 @@ function buildHistoryList(loginHistory, user) {
 
 export function init(home, user) {
   system.hide(home);
-  if (!firstAppear) {
-    system.show(user);
-    return;
-  }
-  firstAppear = false;
 
   const ua = new window.UAParser(navigator.userAgent);
   /* hide home and show user */
@@ -360,7 +353,3 @@ export function init(home, user) {
     });
   system.show(user);
 }
-
-settingsEvents.addEventListener('close', () => {
-  firstAppear = true;
-});

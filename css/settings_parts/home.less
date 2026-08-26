@@ -1,60 +1,16 @@
-@import "@{global}";
+/*
+* Software Name : abcdesktop.io
+* Version: 0.2
+* SPDX-FileCopyrightText: Copyright (c) 2020-2021 Orange
+* SPDX-License-Identifier: GPL-2.0-only
+*
+* This software is distributed under the GNU General Public License v2.0 only
+* see the "license.txt" file for more details.
+*
+* Author: abcdesktop.io team
+* Software description: cloud native desktop service
+*/
 
-#settings-window #panel-settings {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
-  align-content: start;
-  padding: 16px;
-}
-
-#settings-window #panel-settings .tab-header {
-  height: 130px;
-  width: auto;
-  float: none;
-  text-align: center;
-  font-size: 15px;
-  color: @light;
-  font-weight: bold;
-  border-radius: @radius-xl;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
-}
-
-#settings-window #panel-settings .tab-header:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.16);
-  transform: translateY(-2px);
-}
-
-#settings-window #panel-settings .tab-header:hover span:nth-child(3) {
-  opacity: 1;
-}
-
-#settings-window #panel-settings .tab-header div {
-  cursor: pointer;
-}
-
-#settings-window #panel-settings .tab-header div img {
-  height: 42px;
-  width: 100%;
-  margin-bottom: 8px;
-  pointer-events: none;
-}
-
-#settings-window #panel-settings .tab-header span {
-  font-size: 12px;
-}
-
-#settings-window #panel-settings .tab-header span:nth-child(3) {
-  font-size: 13px;
-  color: @tertiary;
-  font-weight: 100;
-  opacity: 0;
-  height: 15px;
-  pointer-events: none;
-  width: 100%;
-  transition: opacity 0.15s ease;
-}
+/* #panel-settings (settings tab switcher) styles have been moved to
+   settings.less, this file is intentionally left unused for now. */
 

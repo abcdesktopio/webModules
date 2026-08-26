@@ -41,6 +41,16 @@
     <!-- jquery css -->
     <link rel="stylesheet" href="node_modules/jquery-ui/dist/themes/ui-lightness/jquery-ui.css" type="text/css">
 
+    <!-- base/generic styles: must load before feature-specific overrides below
+         (settings/appstore/tipsinfo/... extend or override the generic
+         .window-dialog / .modal-content / .modal-header / .modal-footer rules
+         defined here, so the cascade order must put base.css first).
+         A "" query string is appended to every generated
+         css/css-dist/*.css file so browsers/proxies always fetch the fresh
+         file after a rebuild instead of serving a stale cached copy. -->
+    <link rel="stylesheet" href="css/css-dist/error.css" type="text/css">
+    <link rel="stylesheet" href="css/css-dist/base.css" type="text/css">
+        
     {{#isIndexPage}}
     <!-- this is an index page -->
     <link rel="stylesheet" href="css/css-dist/settings.css" type="text/css">
@@ -52,10 +62,10 @@
     <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css" type="text/css">
 	<!-- end of dedicated index page -->
     {{/isIndexPage}}
-   
 
-    <link rel="stylesheet" href="css/css-dist/error.css" type="text/css">
-    <link rel="stylesheet" href="css/css-dist/base.css" type="text/css">
+
+
+    
     <link rel="stylesheet" href="css/css-dist/welcome.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/about.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/loginScreen.css" type="text/css">
@@ -69,49 +79,10 @@
     <link rel="stylesheet" href="css/css-dist/music.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/share.css" type="text/css">
     <link rel="stylesheet" href="css/css-dist/quickSupport.css" type="text/css">
-   
-   
-
-
-    {{#isDemoPage}}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-VS25TGNTRZ"></script>
-	<script>
-  		window.dataLayer = window.dataLayer || [];
-  		function gtag(){dataLayer.push(arguments);}
-  		gtag('js', new Date());
-        gtag('config', 'G-VS25TGNTRZ');
-	</script>
-    <!-- end of Google Analytics -->
-    {{/isDemoPage}}
 
 </head>
 
 <body>
-
-{{#isDemoPage}}
-	<!-- cookie warning Consent -->
-	<div id="cookieConsent" class="fixed-bottom p-4">
-    	<div class="toast bg-dark text-white w-100 mw-100" role="alert" data-autohide="false">
-            <div class="toast-body p-4 d-flex flex-column">
-                <h4 id="cookietitle">Cookies policy</h4>
-                <p>
-                    To enhance your browsing experience, abcdesktop.io and partners use cookies. These help us personalise your experience by remembering your preferences so we can show you more of what you like. We also use them for statistical purposes, and to help make sure the website is working properly.
-                    With your agreement, we and our partners use cookies or similar technologies to store, access, and process personal data like your visit on this website. 
-                    By using this website, you automatically accept that we use cookies.
-                </p>
-                <div class="ml-auto">
-                        <button type="button" class="btn btn-outline-light mr-3" id="btnDeny">
-                                Deny
-                        </button>
-                        <button type="button" class="btn btn-light" id="btnAccept">
-                                Accept
-                        </button>
-                </div>
-            </div>
-    	</div>
-	</div>
- {{/isDemoPage}}
 
     <div id="overScreen">
         <p id="overScreenMessage">
@@ -243,108 +214,10 @@
                     </p>
                 </div>
 
-                {{^isDemoPage}}
+                
                 <div id="connectGP">
                     <ul id="connectGPList"></ul>
                 </div>
-                {{/isDemoPage}}
-
-                {{#isDemoPage}}
-                <div id="connectGP" class="container">
-                    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-                        <div class="col">
-                            <div class="card mb-4 shadow-sm">
-                                <div class="card-header">
-                                        <h4 class="my-0 fw-normal">
-                                            <!-- <span class="badge bg-primary rounded-pill">1</span>  -->
-					    <p style="color:white">OAuth 2.0</p>
-                                        </h4>
-                                </div> 
-                                <div class="card-body">
-                                    <div class="col">
-                                        <div id="connectOpenid">
-                                            <ul id="connectOpenidList">
-                                                
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="card mb-4 shadow-sm">
-                                <div id="alarm" class="card-header">
-                                    <h4 class="my-0 fw-normal">
-                                        <!--  <span class="badge bg-primary rounded-pill">2</span> -->
-                                        <p style="color:white">10 minutes to use</p>
-                                    </h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="col">
-                                        <img id="icon-alarm" src="img/alarm.svg" alt="alarm-icon" loading="lazy">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="card mb-4 shadow-sm">
-                                <div id="cleanup" class="card-header">
-                                    <h4 class="my-0 fw-normal">
-                                        <!-- <span class="badge bg-primary rounded-pill">3</span> -->
-                                        <p style="color:white">Garbage collector</p>
-                                    </h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="col">
-                                        <img id="icon-trash" src="img/trash.svg" alt="trash-icon" loading="lazy">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-light p-5 rounded" id="title-instance">
-                        <p class="lead">
-                            This abcdesktop instance is a quick example to illustrate how the abcdesktop.io project works.
-                        </p>
-                        <div class="list-group">
-                            <a href="#connectOpenid" class="list-group-item list-group-item-action flex-column align-items-start">
-                                <p class="mb-1">
-                                    <span class="badge bg-primary rounded-pill">1</span> 
-                                    Choose an OpenID Connect provider to sign-in
-                                </p>
-                                <small>LDAP authentification provider or Active Directory authentification provider is not defined for this instance</small>
-                            </a>
-
-                            <a href="#alarm" class="list-group-item list-group-item-action flex-column align-items-start">
-                                <p class="mb-2">
-                                    <span class="badge bg-primary rounded-pill">2</span> 
-                                    Your abcdesktop is ready to run for 10 minutes.
-                                </p>
-                                <p class="mb-1">
-                                    <img src="img/people-fill.svg" alt="people-fill-icon" loading="lazy">
-                    Using the same credentials (openid provider, user account), you can remotely access from multiple devices over the same abcdesktop.<br>
-                                    <img src="img/lock.svg" alt="lock-icon" loading="lazy">
-                    The security policy for Internet network prevents requests from your abcdesktop being allowed.
-                                </p>
-                                <small>To hear sound, just click on the sound icon.</small><br>
-                                <small>To printer a file on your local printer, select the default printer "Desktop_PDF_Printer".</small><br>
-                                <small>To upload a file just use a drag and drop into your web browser's  window.</small><br>
-                                <small>To download a file, start the filemanager, select your file, and choose "Download for Desktop" option.</small><br>
-                            </a>
-
-                            <a href="#cleanup" class="list-group-item list-group-item-action flex-column align-items-start">
-                                <p class="mb-1">
-                                    <span class="badge bg-primary rounded-pill">3</span> 
-                                    Garbage collector clean up all your datas desktop
-                                </p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {{/isDemoPage}}
-
             </div>
         </div>
     </div>
@@ -661,377 +534,229 @@
 			        <img src="img/settings/back.svg" alt="back-icon" loading="lazy">
 		        </div>
                 <h5 id="settings-title" class="settings-title"></h5>
+                <div id="settings-close-button" class="settings-close-button">
+			        <img src="img/settings/close.svg" alt="close-icon" loading="lazy">
+		        </div>
             </div>
         </template>
         <template id="settings-window-body-template" class="window">
-            <div class="tab" id="panel-settings">
-                <div class="tab-header" tab="system-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/information.svg" alt="information-icon" loading="lazy">
-                        <span id="settings-system-title">System </span>
-                        <span id="settings-system-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">System informations</span>
-                    </div>
-                </div>
-                <div class="tab-header" tab="user-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/whoami.svg" alt="whoami-icon" loading="lazy">
-                        <span id="settings-user-title">User </span>
-                        <span id="settings-user-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">User informations</span>
-                    </div>
-                </div>
-                <div class="tab-header" tab="localisation-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/whereami.svg" alt="whereami-icon" loading="lazy">
-                        <span id="settings-location-title">Location </span>
-                        <span id="settings-location-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Location informations</span>
-                    </div>
-                </div>
-                <div class="tab-header" tab="logs-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/logs.svg" alt="logs-icon" loading="lazy">
-                        <span id="settings-logs-title">Logs</span>
-                        <span id="settings-logs-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">System logs</span>
-                    </div>
-                </div>
-                <div class="tab-header" tab="speedtest-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/speedtest.svg" alt="speedtest-icon" loading="lazy">
-                        <span id="settings-speedTest-title">SpeedTest </span>
-                        <span id="settings-speedTest-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Network speed</span>
-                    </div>
-                </div>
-                <div class="tab-header" tab="screen-background-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/paint-palette.svg" alt="paint-palette-icon" loading="lazy">
-                        <span id="settings-background-title">Screen color</span>
-                        <span id="settings-background-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Color to use</span>
-                    </div>
-                </div>
-                <div class="tab-header" tab="container-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/docker.svg" alt="docker-icon" loading="lazy">
-                        <span id="settings-containers-title">Containers</span>
-                        <span id="settings-containers-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Tasks manager</span>
-                    </div>
-                </div>
-                {{#urlopensourceproject}}
-                <div class="tab-header" tab="opensource-tab">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                        <img src="img/settings/open-source.svg" alt="open-source-icon" loading="lazy">
-                        <span id="settings-about-title">Open Source</span>
-                        <span id="settings-about-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">
-                            {{{ projectName }}}
-                        </span>
-                    </div>
-                </div>
-                {{/urlopensourceproject}}
-            </div>
-            <!-- System tab start -->
-            <div class="tab" id="system-tab">
-                <br>
-                <div class="row">
-                    <div id="system-tab-switch-buttons" class="d-flex justify-content-center max-size">
-                        <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle" >
-                            <input type="radio" class="btn-check" name="options" id="settings-system-btn-system-input" autocomplete="off" checked>
-                            <label id="settings-system-btn-system" class="btn btn-settings btn-settings-active"  data-view="settings-system-view-infos-system" for="settings-system-btn-system-input">System</label>
-                            <input type="radio" class="btn-check" name="options" id="settings-system-view-user-container-input" autocomplete="off">
-                            <label id="settings-system-btn-user-container" class="btn btn-settings" data-view="settings-system-view-user-container" for="settings-system-view-user-container-input">Pod</label>
-                            <input type="radio" class="btn-check" name="options" id="settings-system-btn-view-infos-input" autocomplete="off">
-                            <label id="settings-system-btn-view-infos"  class="btn btn-settings" data-view="settings-system-view-display" for="settings-system-btn-view-infos-input">Display</label>
+            <div id="settings-window">
+                <div class="tab" id="panel-settings">
+                    <div class="row g-3">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="tab-header card" id="tab-header-system" tab="system-tab">
+                        <div class="card-body w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                            <img src="img/settings/information.svg" alt="information-icon" loading="lazy">
+                            <span id="settings-system-title">System </span>
+                            <span id="settings-system-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">System informations</span>
                         </div>
                     </div>
- 
-                    <div class="container" id="settings-system-view-infos-system">
-                        <div class="row col-12 settings-versions">
-                            <div class='card-container col-xl-4 col-lg-4'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 id="settings-system-view-infos-front" class="card-title">Special title treatment</h6>
-                                        <p>Date: </p>
-                                        <p>Version: </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='card-container col-xl-4 col-lg-4'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 id="settings-system-view-infos-back">ServerAPI</h6>
-                                        <p>Date: </p>
-                                        <p>Version: </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='card-container col-xl-4 col-lg-4'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 id="settings-system-view-infos-user-container">UserContainer</h6>
-                                        <p>Date: </p>
-                                        <p>Version: </p>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="tab-header card" id="tab-header-user" tab="user-tab">
+                        <div class="card-body w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                            <img src="img/settings/whoami.svg" alt="whoami-icon" loading="lazy">
+                            <span id="settings-user-title">User </span>
+                            <span id="settings-user-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">User informations</span>
                         </div>
                     </div>
-                    <div class="d-none container" id="settings-system-view-user-container">
-                        <div id="system-overview" class="row"></div>
                     </div>
-                    <div class="d-none container" id="settings-system-view-display">
-                        <div class="row">
-                            <div class='card-container col-12'>
-                                <div class="card">
-                                    <div class="card-body" style='overflow-x: auto;'>
-                                        <h6 id="settings-system-view-display-browser" class="card-title">Web browser</h6>
-                                        <h6 id="navigator-name" class="card-title"></h6>
-                                        <span id="user-agent"></span>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="tab-header card" id="tab-header-localisation" tab="localisation-tab">
+                        <div class="card-body w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                            <img src="img/settings/whereami.svg" alt="whereami-icon" loading="lazy">
+                            <span id="settings-location-title">Location </span>
+                            <span id="settings-location-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Location informations</span>
+                        </div>
+                    </div>
+                    </div>
+                    <!--
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="tab-header card" id="tab-header-logs" tab="logs-tab">
+                        <div class="card-body w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                            <img src="img/settings/logs.svg" alt="logs-icon" loading="lazy">
+                            <span id="settings-logs-title">Logs</span>
+                            <span id="settings-logs-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">System logs</span>
+                        </div>
+                    </div>
+                    </div>
+                    -->
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="tab-header card" id="tab-header-speedtest" tab="speedtest-tab">
+                        <div class="card-body w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                            <img src="img/settings/speedtest.svg" alt="speedtest-icon" loading="lazy">
+                            <span id="settings-speedTest-title">SpeedTest </span>
+                            <span id="settings-speedTest-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Network speed</span>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="tab-header card" id="tab-header-screen-background" tab="screen-background-tab">
+                        <div class="card-body w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                            <img src="img/settings/paint-palette.svg" alt="paint-palette-icon" loading="lazy">
+                            <span id="settings-background-title">Screen color</span>
+                            <span id="settings-background-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Color to use</span>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="tab-header card" id="tab-header-container" tab="container-tab">
+                        <div class="card-body w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                            <img src="img/settings/docker.svg" alt="docker-icon" loading="lazy">
+                            <span id="settings-containers-title">Containers</span>
+                            <span id="settings-containers-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">Tasks manager</span>
+                        </div>
+                    </div>
+                    </div>
 
-                            <div class='card-container col-12'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 id="settings-system-view-display-screen">Screen</h6>
-                                        <table class="w-100">
-                                            <tr>
-                                                <td class="w-50">
-                                                    <span id="settings-system-view-display-screen-width"
-                                                        class="key-info line-spacing">Screen.width</span>
-                                                    <span id="js-screen-width"></span>
-                                                </td>
-                                                <td class="w-50">
-                                                    <span id="settings-system-view-display-screen-height"
-                                                        class="key-info line-spacing">Screen.height</span>
-                                                    <span id="js-screen-height"></span>
-                                                </td>
-                                                
-                                            </tr>
-                                        </table>
+                    {{#urlopensourceproject}}
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="tab-header card" id="tab-header-opensource" tab="opensource-tab">
+                        <div class="card-body w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+                            <img src="img/settings/open-source.svg" alt="open-source-icon" loading="lazy">
+                            <span id="settings-about-title">Open Source</span>
+                            <span id="settings-about-title-desc" class="title-desc d-none d-xl-block d-lg-block d-md-block">
+                                {{{ projectName }}}
+                            </span>
+                        </div>
+                    </div>
+                    </div>
+                    {{/urlopensourceproject}}
+                    </div>
+                </div>
+            
+            
+                <!-- System tab start -->
+                <div class="tab" id="system-tab">
+                    <div class="row">
+                        <div id="system-tab-switch-buttons" class="d-flex justify-content-center max-size">
+                            <div id="buttons-screen-system" class="d-flex btn-group btn-group-toggle" >
+                                <input type="radio" class="btn-check" name="options" id="settings-system-btn-system-input" autocomplete="off" checked>
+                                <label id="settings-system-btn-system" class="btn btn-settings btn-settings-active"  data-view="settings-system-view-infos-system" for="settings-system-btn-system-input">System</label>
+                                <input type="radio" class="btn-check" name="options" id="settings-system-view-user-container-input" autocomplete="off">
+                                <label id="settings-system-btn-user-container" class="btn btn-settings" data-view="settings-system-view-user-container" for="settings-system-view-user-container-input">Pod</label>
+                                <input type="radio" class="btn-check" name="options" id="settings-system-btn-view-infos-input" autocomplete="off">
+                                <label id="settings-system-btn-view-infos"  class="btn btn-settings" data-view="settings-system-view-display" for="settings-system-btn-view-infos-input">Display</label>
+                            </div>
+                        </div>
+    
+                        <div class="container" id="settings-system-view-infos-system">
+                            <div class="row col-12 settings-versions">
+                                <div class='card-container col-xl-4 col-lg-4'>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 id="settings-system-view-infos-front" class="card-title">Special title treatment</h6>
+                                            <p>Date: </p>
+                                            <p>Version: </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='card-container col-xl-4 col-lg-4'>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 id="settings-system-view-infos-back">ServerAPI</h6>
+                                            <p>Date: </p>
+                                            <p>Version: </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='card-container col-xl-4 col-lg-4'>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 id="settings-system-view-infos-user-container">UserContainer</h6>
+                                            <p>Date: </p>
+                                            <p>Version: </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="d-none container" id="settings-system-view-user-container">
+                            <div id="system-overview" class="row"></div>
+                        </div>
+                        <div class="d-none container" id="settings-system-view-display">
+                            <div class="row">
+                                <div class='card-container col-12'>
+                                    <div class="card">
+                                        <div class="card-body" style='overflow-x: auto;'>
+                                            <h6 id="settings-system-view-display-browser" class="card-title">Web browser</h6>
+                                            <h6 id="navigator-name" class="card-title"></h6>
+                                            <span id="user-agent"></span>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class='card-container col-12'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 id="settings-system-view-display-inner-screen">Inner screen</h6>
-                                        <table class="w-100">
-                                            <tr>
-                                                <td class="w-50">
-                                                    <span id="settings-system-view-display-window-inner-width"
-                                                        class="key-info line-spacing">Window.innerWidth</span>
-                                                    <span id="js-window-innerWidth"></span>
-                                                </td>
-                                                <td class="w-50">
-                                                    <span id="settings-system-view-display-window-inner-height"
-                                                        class="key-info line-spacing">Window.innerHeight</span>
-                                                    <span id="js-window-innerHeight"></span>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                <div class='card-container col-12'>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 id="settings-system-view-display-screen">Screen</h6>
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="w-50">
+                                                        <span id="settings-system-view-display-screen-width"
+                                                            class="key-info line-spacing">Screen.width</span>
+                                                        <span id="js-screen-width"></span>
+                                                    </td>
+                                                    <td class="w-50">
+                                                        <span id="settings-system-view-display-screen-height"
+                                                            class="key-info line-spacing">Screen.height</span>
+                                                        <span id="js-screen-height"></span>
+                                                    </td>
+                                                    
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class='card-container col-12'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 id="settings-system-view-display-pixel-ratio">Pixel Ratio</h6>
-                                        <span id="settings-system-view-display-ratio" class="key-info">pixel-ratio</span>
-                                        <span id="js-pixel-ratio"></span>
+                                <div class='card-container col-12'>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 id="settings-system-view-display-inner-screen">Inner screen</h6>
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="w-50">
+                                                        <span id="settings-system-view-display-window-inner-width"
+                                                            class="key-info line-spacing">Window.innerWidth</span>
+                                                        <span id="js-window-innerWidth"></span>
+                                                    </td>
+                                                    <td class="w-50">
+                                                        <span id="settings-system-view-display-window-inner-height"
+                                                            class="key-info line-spacing">Window.innerHeight</span>
+                                                        <span id="js-window-innerHeight"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class='card-container col-12'>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 id="settings-system-view-display-misc">Misc</h6>
-                                        <table class="w-100">
-                                            <tr>
-                                                <td class="w-50">
-                                                    <span id="settings-system-view-display-root-font-size" class="key-info">Root font size</span>
-                                                    <span id="root-font-size"></span>
-                                                </td>
-                                                <td class="w-50">
-                                                    <span id="settings-system-view-display-" class="key-info">Orientation</span>
-                                                    <span id="device-orientation"></span>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                <div class='card-container col-12'>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 id="settings-system-view-display-pixel-ratio">Pixel Ratio</h6>
+                                            <span id="settings-system-view-display-ratio" class="key-info">pixel-ratio</span>
+                                            <span id="js-pixel-ratio"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- System tab end -->
-            <!-- User tab start -->
-            <div class="tab" id="user-tab">
-                <br>
-                <div class="row">
-                    <div id="user-tab-switch-buttons" class="d-flex justify-content-center max-size">
-                        <div id="buttons-screen-user" class="d-flex btn-group btn-group-toggle">
-                            <input type="radio" class="btn-check" name="options" id="settings-user-current-session-btn-input" autocomplete="off" checked>
-                            <label id="settings-user-current-session-btn" class="btn btn-settings btn-settings-active" data-view="user-current-session" for="settings-user-current-session-btn-input">Current session</label>
-                   
-                            <input type="radio" class="btn-check" name="options" id="settings-user-connection-history-input" autocomplete="off" >
-                            <label id="settings-user-connection-history" class="btn btn-settings" data-view="user-connection-history" for="settings-user-connection-history-input">Connection history</label>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <div id="user-current-session" class="row">
-                            <div id="settings-user-name" class="col-xl-6 col-lg-6 col-md-6 col-12"></div>
-                            <div id="settings-user-provider" class="col-xl-6 col-lg-6 col-md-6 col-12"></div>
-                            <div id="settings-user-browser" class="col-xl-6 col-lg-6 col-md-6 col-12"></div>
-                            <div id="settings-user-os" class="col-xl-6 col-lg-6 col-md-6 col-12"></div>
-                        </div>
-                    </div>
-                    <div id="user-connection-history" class="d-none container">
-                        <div id="historyblock" class="d-flex justify-content-center max-size">
-                            <table id="history" class="table table-striped table-dark">
-                                <thead>
-                                    <tr>
-                                        <th id="settings-user-connection-history-date" scope="col" data-field="date"
-                                            data-sortable="true">Date</th>
-                                        <th id="settings-user-connection-history-ip" scope="col" data-field="ipaddr"
-                                            data-sortable="true">Ip Address</th>
-                                        <th id="settings-user-connection-history-node" scope="col" data-field="node"
-                                            data-sortable="true">Node</th>
-                                        <th id="settings-user-connection-history-browser" scope="col" data-field="useragent"
-                                            data-sortable="true">Browser</th>
-                                        <th id="settings-user-connection-history-os" scope="col" data-field="os"
-                                            data-sortable="true">OS</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- User tab end -->
-            <!-- Logs tab start -->
-            <div class="tab" id="logs-tab"></div>
-            <!-- Logs tab end -->
-            <!-- speedtest tab start -->
-            <div class="tab" id="speedtest-tab">
-                <div class="container">
-                    <div id="test" class="row">
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="testArea">
-                                        <div id="settings-speedTest-download" class="testName">Download</div>
-                                        <canvas id="dlMeter" class="meter"></canvas>
-                                        <div id="dlText" class="meterText"></div>
-                                        <div id="settings-speedTest-unit-download" class="unit">Mbps</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="testArea">
-                                        <div id="settings-speedTest-upload" class="testName">Upload</div>
-                                        <canvas id="ulMeter" class="meter"></canvas>
-                                        <div id="ulText" class="meterText"></div>
-                                        <div class="unit">Mbps</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="testArea">
-                                        <div id="settings-speedTest-ping" class="testName">Ping</div>
-                                        <canvas id="pingMeter" class="meter"></canvas>
-                                        <div id="pingText" class="meterText"></div>
-                                        <div id="settings-speedTest-ping-unit" class="unit">ms</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
-                            <div class="card ">
-                                <div class="card-body">
-                                    <div class="testArea">
-                                        <div id="settings-speedTest-jitter" class="testName">Jitter</div>
-                                        <canvas id="jitMeter" class="meter"></canvas>
-                                        <div id="jitText" class="meterText"></div>
-                                        <div id="settings-speedTest-jitter-unit" class="unit">ms</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 card-container">
-                            <div id="ipArea">
-                                <span id="settings-speedTest-ip">ip addr</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="startStopBtn"></div>
-                </div>
-            </div>
-            <!-- speedtest tab end -->
-            <!-- location tab start -->
-            <div class="tab" id="localisation-tab">
-                <br>
-                <div id="location" class="d-flex justify-content-center">
-                    <div class="container">
-                        <div class="row w-100 writeSpaceNoWrap">
-                            <div id="userPosition" class="col-6 d-flex justify-content-center">
-                                <div class="card w-100" style="overflow-x: auto;">
-                                    <div class="card-body">
-                                        <h6 id="settings-location-user-location">User location</h6>
-                                        <div id="userxy" class="location"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="serverPosition" class="col-6 d-flex justify-content-center">
-                                <div class="card w-100" style="overflow-x: auto;">
-                                    <div class="card-body">
-                                        <h6 id="settings-location-server-location">Server location</h6>
-                                        <div id="serverxy" class="location"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Logs tab end -->
-            <!-- ScreenColor tab start -->
-            <div class="tab" id="screen-background-tab" data-first_show=1>
-                <br>
-                <div id="screenColor-tab-switch-buttons" class="d-flex justify-content-center max-size">
-                    <div id="buttons-screen-background" class="d-flex btn-group btn-group-toggle" >
-                        <input type="radio" class="btn-check" name="options" id="settings-screen-background-colors-btn-input" autocomplete="off" checked>
-                        <label id="settings-screen-background-colors-btn" class="btn btn-settings btn-settings-active" data-view="panel_colors" for="settings-screen-background-colors-btn-input">Colors</label>
-                        <input type="radio" class="btn-check" name="options" id="settings-screen-background-pictures-btn-input" autocomplete="off">
-                        <label id="settings-screen-background-pictures-btn" class="btn btn-settings" data-view="panel_picture" for="settings-screen-background-pictures-btn-input">Pictures</label>
-                    </div>
-                </div>
-                <br>
-                <div id="modes-screen">
-                    <div id="panel_colors">
-                        <div class="container h-100">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div id="color-list">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-none" id="panel_picture">
-                        <div class="container h-100">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div id="list_background_img" class="d-flex justify-content-center">
-                                        <div type="file" id="drop_background_div" class="pictures_blocks">
-                                            <img id="drop_background" title="Drag your image here." src="img/settings/add.svg" alt="add-icon" loading="lazy">
+
+                                <div class='card-container col-12'>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 id="settings-system-view-display-misc">Misc</h6>
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="w-50">
+                                                        <span id="settings-system-view-display-root-font-size" class="key-info">Root font size</span>
+                                                        <span id="root-font-size"></span>
+                                                    </td>
+                                                    <td class="w-50">
+                                                        <span id="settings-system-view-display-" class="key-info">Orientation</span>
+                                                        <span id="device-orientation"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -1039,46 +764,225 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="tab" id="container-tab">
-                <p id="settings-containers-not-found" class="message">No container found</p>
-                <div id="task-manager-container-list">
-                    <div class="wrap"></div>
-                </div>
-                <div id="task-manager-container-infos">
-                    <hr>
-                    <p id="task-manager-container-infos-current-container"></p>
-                    <div id="task-manager-container-logs"></div>
-                    <div id="task-manager-container-env">
-                    <table class="table table-striped"></table>
-                    </div>
-                </div>
-            </div>
-            <div class="tab" id="support-tab">
-                <div class="row">
-                    {{#urlusermanual}}
-                    <div class='card-container col-xl-6 col-lg-6 col-12'>
-                        <div class="card">
-                            <div class="card-body">
-                                <a href="{{{ urlusermanual }}}" target="_blank">
-                                    <h6 id="settings-system-view-display-user-manual" class="card-title">User Manual</h6>
-                                </a>
+                <!-- System tab end -->
+                <!-- User tab start -->
+                <div class="tab" id="user-tab">
+                    <br>
+                    <div class="row">
+                        <div id="user-tab-switch-buttons" class="d-flex justify-content-center max-size">
+                            <div id="buttons-screen-user" class="d-flex btn-group btn-group-toggle">
+                                <input type="radio" class="btn-check" name="options" id="settings-user-current-session-btn-input" autocomplete="off" checked>
+                                <label id="settings-user-current-session-btn" class="btn btn-settings btn-settings-active" data-view="user-current-session" for="settings-user-current-session-btn-input">Current session</label>
+                    
+                                <input type="radio" class="btn-check" name="options" id="settings-user-connection-history-input" autocomplete="off" >
+                                <label id="settings-user-connection-history" class="btn btn-settings" data-view="user-connection-history" for="settings-user-connection-history-input">Connection history</label>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div id="user-current-session" class="row">
+                                <div id="settings-user-name" class="col-xl-6 col-lg-6 col-md-6 col-12"></div>
+                                <div id="settings-user-provider" class="col-xl-6 col-lg-6 col-md-6 col-12"></div>
+                                <div id="settings-user-browser" class="col-xl-6 col-lg-6 col-md-6 col-12"></div>
+                                <div id="settings-user-os" class="col-xl-6 col-lg-6 col-md-6 col-12"></div>
+                            </div>
+                        </div>
+                        <div id="user-connection-history" class="d-none container">
+                            <div id="historyblock" class="d-flex justify-content-center max-size">
+                                <table id="history" class="table table-striped table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th id="settings-user-connection-history-date" scope="col" data-field="date"
+                                                data-sortable="true">Date</th>
+                                            <th id="settings-user-connection-history-ip" scope="col" data-field="ipaddr"
+                                                data-sortable="true">Ip Address</th>
+                                            <th id="settings-user-connection-history-node" scope="col" data-field="node"
+                                                data-sortable="true">Node</th>
+                                            <th id="settings-user-connection-history-browser" scope="col" data-field="useragent"
+                                                data-sortable="true">Browser</th>
+                                            <th id="settings-user-connection-history-os" scope="col" data-field="os"
+                                                data-sortable="true">OS</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    {{/urlusermanual}}
-                    {{#urlusersupport}}
-                    <div class='card-container col-xl-6 col-lg-6 col-12'>
-                        <div class="card">
-                            <div class="card-body">
-                                <a href="{{{ urlusersupport }}}" target="_blank">
-                                    <span id='hiden-span-for-url-support-global-value' class='hidden-span-for-global-value'>{{{ urlusersupport }}}</span>
-                                    <h6 id="settings-system-view-display-support" class="card-title">Abcdesktop support</h6>
-                                </a>
+                </div>
+                <!-- User tab end -->
+
+                <!-- Logs tab start -->
+                <!-- removed in release 5.0 -->
+                <!-- <div class="tab" id="logs-tab"></div> -->
+                <!-- Logs tab end -->
+
+
+                <!-- speedtest tab start -->
+                <div class="tab" id="speedtest-tab">
+                    <div class="container">
+                        <div id="test" class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="testArea">
+                                            <div id="settings-speedTest-download" class="testName">Download</div>
+                                            <canvas id="dlMeter" class="meter"></canvas>
+                                            <div id="dlText" class="meterText"></div>
+                                            <div id="settings-speedTest-unit-download" class="unit">Mbps</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="testArea">
+                                            <div id="settings-speedTest-upload" class="testName">Upload</div>
+                                            <canvas id="ulMeter" class="meter"></canvas>
+                                            <div id="ulText" class="meterText"></div>
+                                            <div class="unit">Mbps</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="testArea">
+                                            <div id="settings-speedTest-ping" class="testName">Ping</div>
+                                            <canvas id="pingMeter" class="meter"></canvas>
+                                            <div id="pingText" class="meterText"></div>
+                                            <div id="settings-speedTest-ping-unit" class="unit">ms</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-12 card-container">
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <div class="testArea">
+                                            <div id="settings-speedTest-jitter" class="testName">Jitter</div>
+                                            <canvas id="jitMeter" class="meter"></canvas>
+                                            <div id="jitText" class="meterText"></div>
+                                            <div id="settings-speedTest-jitter-unit" class="unit">ms</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 card-container">
+                                <div id="ipArea">
+                                    <span id="settings-speedTest-ip">ip addr</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="startStopBtn"></div>
+                    </div>
+                </div>
+                <!-- speedtest tab end -->
+                <!-- location tab start -->
+                <div class="tab" id="localisation-tab">
+                    <br>
+                    <div id="location" class="d-flex justify-content-center">
+                        <div class="container">
+                            <div class="row w-100 writeSpaceNoWrap">
+                                <div id="userPosition" class="col-6 d-flex justify-content-center">
+                                    <div class="card w-100" style="overflow-x: auto;">
+                                        <div class="card-body">
+                                            <h6 id="settings-location-user-location">User location</h6>
+                                            <div id="userxy" class="location"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="serverPosition" class="col-6 d-flex justify-content-center">
+                                    <div class="card w-100" style="overflow-x: auto;">
+                                        <div class="card-body">
+                                            <h6 id="settings-location-server-location">Server location</h6>
+                                            <div id="serverxy" class="location"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    {{/urlusersupport}}
+                </div>
+                <!-- Logs tab end -->
+                <!-- ScreenColor tab start -->
+                <div class="tab" id="screen-background-tab" data-first_show=1>
+                    <br>
+                    <div id="screenColor-tab-switch-buttons" class="d-flex justify-content-center max-size">
+                        <div id="buttons-screen-background" class="d-flex btn-group btn-group-toggle" >
+                            <input type="radio" class="btn-check" name="options" id="settings-screen-background-colors-btn-input" autocomplete="off" checked>
+                            <label id="settings-screen-background-colors-btn" class="btn btn-settings btn-settings-active" data-view="panel_colors" for="settings-screen-background-colors-btn-input">Colors</label>
+                            <input type="radio" class="btn-check" name="options" id="settings-screen-background-pictures-btn-input" autocomplete="off">
+                            <label id="settings-screen-background-pictures-btn" class="btn btn-settings" data-view="panel_picture" for="settings-screen-background-pictures-btn-input">Pictures</label>
+                        </div>
+                    </div>
+                    <br>
+                    <div id="modes-screen">
+                        <div id="panel_colors">
+                            <div class="container h-100">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="color-list">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-none" id="panel_picture">
+                            <div class="container h-100">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="list_background_img" class="d-flex justify-content-center">
+                                            <div type="file" id="drop_background_div" class="pictures_blocks">
+                                                <img id="drop_background" title="Drag your image here." src="img/settings/add.svg" alt="add-icon" loading="lazy">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab" id="container-tab">
+                    <p id="settings-containers-not-found" class="message">No container found</p>
+                    <div id="task-manager-container-list">
+                        <div class="wrap"></div>
+                    </div>
+                    <div id="task-manager-container-infos">
+                        <hr>
+                        <p id="task-manager-container-infos-current-container"></p>
+                        <div id="task-manager-container-logs"></div>
+                        <div id="task-manager-container-env">
+                        <table class="table table-striped"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab" id="support-tab">
+                    <div class="row">
+                        {{#urlusermanual}}
+                        <div class='card-container col-xl-6 col-lg-6 col-12'>
+                            <div class="card">
+                                <div class="card-body">
+                                    <a href="{{{ urlusermanual }}}" target="_blank">
+                                        <h6 id="settings-system-view-display-user-manual" class="card-title">User Manual</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{/urlusermanual}}
+                        {{#urlusersupport}}
+                        <div class='card-container col-xl-6 col-lg-6 col-12'>
+                            <div class="card">
+                                <div class="card-body">
+                                    <a href="{{{ urlusersupport }}}" target="_blank">
+                                        <span id='hiden-span-for-url-support-global-value' class='hidden-span-for-global-value'>{{{ urlusersupport }}}</span>
+                                        <h6 id="settings-system-view-display-support" class="card-title">Abcdesktop support</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{/urlusersupport}}
+                    </div>
                 </div>
             </div>
         </template>

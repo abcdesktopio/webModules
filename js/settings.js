@@ -23,7 +23,7 @@ import { settingsEvents } from './settingsevents.js';
 import * as systemStartTab from './settings_tabs/systemStart.js';
 import * as userTab from './settings_tabs/user.js';
 import * as localisationTab from './settings_tabs/localisation.js';
-import * as logsTab from './settings_tabs/logs.js';
+/* import * as logsTab from './settings_tabs/logs.js'; */
 import * as audioTab from './settings_tabs/audio.js';
 import * as printersTab from './settings_tabs/printer.js';
 import * as speedTestTab from './settings_tabs/speedTest.js';
@@ -48,13 +48,10 @@ export const open = function () {
 
   bootbox.dialog({
     title: templateTitle.innerHTML,
-    message: `
-      <div id="settings-window">
-        ${templateBody.innerHTML}
-      </div>
-    `,
+    message : templateBody.innerHTML,
     className: 'window-dialog window-dialog-settings',
     animate: false,
+    closeButton: false, // Removes the top-right 'X' close button
     onEscape: () => {
       settingsEvents.dispatchEvent(new CustomEvent('close'));
     },
@@ -95,10 +92,12 @@ export const open = function () {
           showFunction = printersTab.init;
           setTitleSuffix(languages.getTranslate('settings-printer-title'));
           break;
+        /* 
         case 'logs-tab':
           showFunction = logsTab.init;
           setTitleSuffix(languages.getTranslate('settings-logs-title'));
           break;
+        */
         case 'speedtest-tab':
           showFunction = speedTestTab.init;
           setTitleSuffix(languages.getTranslate('settings-speedTest-title'));
@@ -145,6 +144,14 @@ export const open = function () {
       showHome();
       setTitleSuffix();
       settingsEvents.dispatchEvent(new CustomEvent('back'));
+    });
+  }
+
+  const close_btn = document.querySelector('#settings-close-button');
+  if (close_btn) {
+    close_btn.addEventListener('click', () => {
+      // settingsEvents.dispatchEvent(new CustomEvent('close'));
+      bootbox.hideAll();
     });
   }
 

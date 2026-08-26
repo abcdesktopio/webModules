@@ -20,7 +20,6 @@ import * as system from '../system.js';
 import { broadcastEvent } from '../broadcastevent.js';
 import { settingsEvents } from '../settingsevents.js';
 
-let firstAppear = true;
 let acceptfileservice= false;
 let defaultColor = '#6ec6f0';
 
@@ -560,7 +559,6 @@ function disablePicturesSection() {
  * @desc Call all build function
  */
 function buildScreen() {
-  if (firstAppear) {
     buildColorsSection();
     launcher.getenv().then( (data) => {
       if (data.env) {
@@ -575,7 +573,6 @@ function buildScreen() {
       else 
         disablePicturesSection();
     });
-  }
 }
 
 /**
@@ -597,71 +594,6 @@ export function init(home, screenBackground) {
   buildScreen();
   system.hide(home);
   system.show(screenBackground);
-  firstAppear = false;
   acceptfileservice = false;
 }
 
-settingsEvents.addEventListener('close', () => {
-  firstAppear = true;
-});
-
-/*
-broadcastEvent.addEventListener(
-  'display.setBackgroundBorderColor',
-  ({ detail: { color } }) => setBackgroundBorderColor(color),
-);
-*/
-/*
- *
-// describe code usage 
-let idTimeout;
-const handlerResize = () => {
-  clearTimeout(idTimeout);
-  idTimeout = setTimeout(async () => {
-    try {
-      const { result: backgroundType } = await launcher.get('backgroundType');
-      if (backgroundType === 'img') {
-        await setCurrentImage();
-      }
-    } catch (e) {
-      if (e.status === 404)
-	// nothing to do 
-     	return;
-      if (e.status != 200)
-      	console.error(e);
-    }
-  }, 200);
-};
-
-// window.addEventListener('resize', handlerResize);
-
-document.addEventListener('broadway.connected', async () => {
-  window.addEventListener('resize', handlerResize);
-  try {
-    const backgroundType = await getBackgroundType();
-    if (backgroundType.status === 200) {
-      if (!backgroundType.result) {
-        // nothing to do empty data
-        return;
-      }
-      if (backgroundType.result === 'color') {
-        const { code, data: currentColor } = await launcher.getDesktop(
-          'currentColor',
-        );
-        const color = code === 200 ? (defaultColor = currentColor) : defaultColor;
-        if (color !== '') {
-          await setBackgroundColor(color);
-        }
-      } else {
-        await setCurrentImage();
-      }
-    }
-  } catch (e) {
-    // console.log(e);
-  }
-});
-
-document.addEventListener('broadway.disconnected', () => {
-  window.removeEventListener('resize', handlerResize);
-});
-*/

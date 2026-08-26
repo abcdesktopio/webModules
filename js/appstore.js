@@ -17,6 +17,7 @@ import * as secrets from './secrets.js';
 import * as launcher from './launcher.js';
 import * as webshell from './webshell.js';
 
+let appstore_dialog;
 let draggedApp;
 
 /**
@@ -48,7 +49,8 @@ function openTab(tabId) {
   ) {
 
     if (typeof cat !== 'string') {
-      continue;
+      // continue;
+      cat = 'Office';
     }
 
     const catParts = cat.split(',');
@@ -83,9 +85,10 @@ function openTab(tabId) {
 
       li.setAttribute('data-bs-toggle', 'tooltip');
       li.setAttribute('data-bs-html', 'true');
-      li.setAttribute('data-bs-title', `<b class="tooltipTitle">Launch :</b> ${launch}<br>
-                                        <b class="tooltipTitle">ID :</b> ${sha_id}<br>
-                                        <b class="tooltipTitle">Created :</b> ${created}`);
+      li.setAttribute('data-bs-title', 
+        `<p class="tooltipTitle"><b class="tooltipTitle">Launch :</b> ${launch}<br>
+        <b class="tooltipTitle">ID :</b> ${sha_id}<br>
+        <b class="tooltipTitle">Created :</b> ${created}</p>`);
 
       li.appendChild(wrapperIcon);
       li.appendChild(p);
@@ -97,7 +100,7 @@ function openTab(tabId) {
   }
 
   parentAppList.replaceChild(clone, appListContainer);
-  enableDrag();
+
   addListener();
 
    // Initialize Bootstrap tooltips
@@ -105,30 +108,6 @@ function openTab(tabId) {
    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
      new bootstrap.Tooltip(tooltipTriggerEl);
    });
-}
-
-/**
- * @function enableDrag
- * @returns {void}
- * @desc Make app element draggable to the dock.
- */
-function enableDrag() {
-  /*
-    * Make application draggable
-    */
-  $('#appstore-applist li').draggable({
-    opacity: 0.5,
-    helper: 'clone',
-    connectToSortable: '#dock ul',
-    delay: 100,
-    scroll: false,
-    start(event, ui) {
-      draggedApp = ui.helper[0].parentElement;
-    },
-    stop() {
-      draggedApp = undefined;
-    },
-  });
 }
 
 /**
@@ -193,27 +172,21 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
   if (myapptolaunch) {
     if (myapptolaunch.execmode === 'builtin') {
       launcher.launch(myapptolaunch.launch, '', clickedApp);
-      system.addAppLoader(clickedApp);
-      clickedApp.setAttribute('state', 'started');
-      $(clickedApp).find('img.appLoader')
-        .addClass('appLoaderDock');
     } else
       if (myapptolaunch.execmode === 'frontendjs') {
-      switch (clickedApp.attributes.launch.value) {
-        // case 'frontendjs.phone':
-        // phone.open();
-        //  break;
-        case 'frontendjs.webshell':
-          webshell.open();
-          break;
-        default:
-          errorMessage.open();
-          break;
-      }
+        switch (clickedApp.attributes.launch.value) {
+          case 'frontendjs.webshell':
+            webshell.open();
+            break;
+          default:
+            errorMessage.open();
+            break;
+        }
     } else {
       // This myapptolaunch is a docker image
       if (clickedApp.getAttribute('locked') === 'false') {
         launchDockerApplication();
+        
       } else {
         secrets.runAuthentication(launchDockerApplication);
       }
@@ -223,13 +196,37 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
  function launchDockerApplication() {
     const runDict = { image: myapptolaunch.id, args: '' };
     launcher.ocrun(runDict, clickedApp, onAppIsRunning);
-    system.addAppLoader(clickedApp);
-    clickedApp.setAttribute('state', 'started');
-    $(clickedApp).find('img.appLoader')
-      .addClass('appLoaderDock');
-    // speaker.letsPlaySound();
+    close();
   }
 };
+
+
+/**
+ * @function filterAppList
+ * @param {string} query Text typed in the search input.
+ * @returns {void}
+ * @desc Show/hide the currently displayed apps that match the search query.
+ */
+function filterAppList(query) {
+  const needle = query.trim().toLowerCase();
+  $('#appstore-applist > li').each(function () {
+    const name = this.querySelector('p.appname');
+    const match = !needle || (name && name.innerText.toLowerCase().includes(needle));
+    this.style.display = match ? '' : 'none';
+  });
+}
+
+/**
+ * @function close
+ * @returns {void}
+ * @desc Close the window
+ */
+export const close = function () {
+  if (appstore_dialog) {
+    appstore_dialog.modal('hide');  
+  }
+}
+
 
 
 /**
@@ -238,29 +235,46 @@ export const handleMenuClick = function (clickedApp, onAppIsRunning = () => {}) 
  * @desc Open the window
  */
 export const open = function () {
+  const applicationtemplateTitle = document.querySelector('template#appstore-window-title-template');
   const template = document.querySelector('template#appstore-window-template');
   const applicationTitle = languages.getTranslate('appstore-title');
 
-  bootbox.dialog({
-    title: applicationTitle || 'Applications',
+  appstore_dialog = bootbox.dialog({
+    title: applicationtemplateTitle.innerHTML,
     message: template.innerHTML,
     className: 'window-dialog appstore-window',
+    closeButton: false, // Removes the top-right 'X' close button
     onEscape: true,
     animate: false,
   });
 
-  openTab('office');
   $('.appstore-window .content-apps .button').click(function() {
     openTab(this.id);
   });
-  languages.applyLanguage();
-};
 
-/**
- * @function getDraggedApp
- * @returns {object} draggedApp
- * @desc Make app element draggable to the dock.
- */
-export const getDraggedApp = function () {
-  return draggedApp;
-};
+  const tabButtons = appstore_dialog.find('.content-apps .button');
+  const searchInput = appstore_dialog.find('#appstore-search-placeholder');
+
+  tabButtons.filter('#office').addClass('active');
+  tabButtons.on('click', function () {
+    tabButtons.removeClass('active');
+    $(this).addClass('active');
+    searchInput.val('');
+    filterAppList('');
+  });
+
+  searchInput.on('input', function () {
+    filterAppList(this.value);
+  });
+
+  languages.applyLanguage();
+
+  const close_btn = document.getElementById('appstore-close-button');
+  if (close_btn) {
+    close_btn.addEventListener('click', close );
+  }
+  
+  openTab('office'); // default tab to open when the appstore is opened
+
+  };
+

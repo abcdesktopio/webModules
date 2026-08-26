@@ -16,8 +16,6 @@ import * as system from '../system.js';
 import { settingsEvents } from '../settingsevents.js';
 import * as languages from '../languages.js';
 
-let firstAppear = true;
-
 let isRunning = false;
 
 let dlColor = '';
@@ -205,8 +203,7 @@ export function init(home, speedtest) {
   system.show(speedtest);
 
   applyColors('#6EC6F0');
-  if (firstAppear) {
-    fetch('/transpile/config/ui.json')
+  fetch('/transpile/config/ui.json')
       .then(system.checkError)
       .then((res) => res.json())
       .then((conf) => {
@@ -219,17 +216,14 @@ export function init(home, speedtest) {
       .catch((e) => {
         console.error(e);
       });
-    firstAppear = false;
     const startStopBtn = speedtest.querySelector('#startStopBtn');
     if (startStopBtn) {
       startStopBtn.addEventListener('click', startStop);
     }
     initUI();
-  }
 }
 
 function handlingStop() {
-  firstAppear = true;
   if (isRunning) {
     startStop();
   }
