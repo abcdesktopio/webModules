@@ -126,8 +126,6 @@ export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
         notificationSystem.displayNotification('Application', 'Unknow error', 'error');
         return;
       }
-      // dispatchEvent ocrun.done
-      document.dispatchEvent( new CustomEvent("ocrun.done", result.result) );
       onAppIsRunning();
       document.getElementById('noVNC_canvas').focus();
       // if (element && result.result) {

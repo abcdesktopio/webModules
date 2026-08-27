@@ -825,7 +825,7 @@ function setupZoomValueChange(){
 
 
 
-function launchmyapp( myapptolaunch ) {
+export function launchmyapp( myapptolaunch ) {
   if (myapptolaunch) {
     // this application is inside oc.user image 
     if (myapptolaunch.execmode === 'builtin') {
@@ -858,6 +858,6 @@ function launchmyapp( myapptolaunch ) {
   }
 }
 
-broadcastEvent.addEventListener('ocrun',  ( { detail: { data_dict } } ) => launchmyapp( data_dict ) );
+// broadcastEvent.addEventListener('ocrun',  ( { detail: { data_dict } } ) => launchmyapp( data_dict ) );
 
 
