@@ -3,8 +3,6 @@
  * ----------------------------------------
  */
 
-@import "@{global}";
-
  #abcdesktop_control_bar_anchor {
     /* The anchor is needed to get z-stacking to work */
     position: fixed;
@@ -26,13 +24,15 @@
     left: -100%;
 
     transition: 0.5s ease-in-out;
-    background-color: @secondary;
+    background-color: fade(@secondary, 67%);
     border-radius: 0 12px 12px 0;
 
-    .no-select();
+    user-select: none;
+    -webkit-user-select: none;
     -webkit-touch-callout: none; /* Disable iOS image long-press popup */
 }
 #abcdesktop_control_bar.abcdesktop_open {
+    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
     left: 0;
 }
 #abcdesktop_control_bar::before {
@@ -46,6 +46,9 @@
     transition: box-shadow 0.5s ease-in-out;
 }
 
+// #abcdesktop_control_bar.abcdesktop_open::before {
+//     box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+// }
 .abcdesktop_right #abcdesktop_control_bar {
     left: 100%;
     border-radius: 12px 0 0 12px;
@@ -59,17 +62,18 @@
 
 #abcdesktop_control_bar_handle {
     position: absolute;
-    left: -15px;
+    left: 41.5px;
     top: 0;
-    width: calc(100% + 30px);
+    width: calc(100% + -26px);
     height: 50px;
     z-index: -1;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 0 6px 6px 0;
     background-image: url(../../../img/top/handle_bg_side.svg);
-    background-color: @secondary;
+    background-color: fade(@secondary, 67%);
     background-repeat: no-repeat;
     background-position: right;
+    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
 }
 #abcdesktop_control_bar_handle:after {
     content: "";
@@ -88,6 +92,8 @@
 
 .abcdesktop_right #abcdesktop_control_bar_handle {
     background-position: left;
+    left: -15.5px;
+    border-radius: 6px 0 0 6px;
 }
 .abcdesktop_right #abcdesktop_control_bar_handle:after {
     left: 5px;
@@ -158,12 +164,17 @@
 }
 
 .abcdesktop_top #abcdesktop_control_bar.abcdesktop_open {
+    // box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.5);
     top: 0;
 }
 
 .abcdesktop_top #abcdesktop_control_bar::before {
   transition: none;
 }
+
+// .abcdesktop_top #abcdesktop_control_bar.abcdesktop_open::before {
+//     box-shadow: none;
+// }
 
 .abcdesktop_top #abcdesktop_control_bar > .abcdesktop_scroll {
     flex-direction: row;
@@ -172,17 +183,18 @@
 
 .abcdesktop_top #abcdesktop_control_bar_handle {
     position: absolute;
-    top: -15px;           
+    top: 42px;           
     left: 0; 
-    width: 50px;         
-    height: calc(100% + 30px);
+    width: 52px;         
+    height: calc(100% + -26px);
     z-index: -1;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 0px 0px 6px 6px;
     background-image: url(../../../img/top/handle_bg_top.svg);
-    background-color: @secondary;
+    background-color: fade(@secondary, 67%);
     background-repeat: no-repeat;
     background-position: bottom;  
+    // box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
 }
 
 .abcdesktop_top #abcdesktop_control_bar_handle:after {
@@ -190,9 +202,9 @@
     transition:  0.5s ease-in-out;  /* ← changed: all */
     background-image: url(../../../img/top/handle_top.svg);
     position: absolute;
-    top: 62px;
+    top: 6px;
     right: 0;
-    left: 22px;     
+    left: 23px;     
     bottom: 5px;     
     width: 6px;   
     height: 5px;    
@@ -240,6 +252,19 @@
     background-color: transparent;
     margin: 5px auto;
 }
+
+#abcdesktop_control_bar .abcdesktop_button:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+    background-color: @secondary;
+    cursor: pointer;
+}
+
+#abcdesktop_control_bar .abcdesktop_button:active {
+    border-color: rgba(0, 0, 0, 0.8);
+    background-color: darken(@secondary, 10%);
+    cursor: pointer;
+}
+
 #abcdesktop_control_bar .abcdesktop_button.abcdesktop_selected {
     border-color: rgba(0, 0, 0, 0.8);
     background-color: rgba(0, 0, 0, 0.5);
@@ -778,7 +803,7 @@
   }
 
   #abcdesktop_control_bar div img.disabled {
-    opacity: @opacity-low;
+    opacity: 0.4;
     filter: opacity(40);
   }
   #abcdesktop_control_bar div ul {
@@ -856,7 +881,8 @@
   }
   
   #abcdesktop_control_bar #speakers .slider-active {
-    border-radius: 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
     background: @danger;
     height: 5px;
     width: 60px;
