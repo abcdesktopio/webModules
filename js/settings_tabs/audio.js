@@ -16,18 +16,11 @@ import * as speaker from '../speaker/main.js';
 
 import { settingsEvents } from '../settingsevents.js';
 
-let firstAppear = true;
 
 let playTestIsrunning = false;
 
 export function init(home, audio) {
   system.hide(home);
-
-  if (!firstAppear) {
-    system.show(audio);
-    return;
-  }
-  firstAppear = false;
 
   const slideraudioBufferTimeout = new Slider('#slideraudioBufferTimeout', {
     tooltip: 'always',
@@ -115,6 +108,3 @@ export function init(home, audio) {
   system.show(audio);
 }
 
-settingsEvents.addEventListener('close', () => {
-  firstAppear = true;
-});

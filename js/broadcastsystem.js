@@ -20,7 +20,10 @@ import { broadcastEvent } from './broadcastevent.js';
 import * as launcher from './launcher.js';
 import { checkError } from './system.js';
 import * as notificationSystem from './notificationsystem.js';
-let wsbroadcast;
+import { launchmyapp } from './scripts.js';
+
+
+let wsbroadcast; // the broadcast websocket 
 
 /**
  * @function open
@@ -121,7 +124,7 @@ export const connect = () => {
 
 export const process_event = ( msg ) => {
 
-  // console.debug(`broadcastSystem:msgevent: ${msg.method}`);
+  console.debug(`broadcastSystem:msgevent: ${msg.method}`);
 
   if (msg.method === 'snapshot') {
 	  notificationSystem.displayNotification( msg.method, msg.data, 'info');
@@ -162,6 +165,7 @@ export const process_event = ( msg ) => {
   if (msg.method === 'keepalive') {
     // Nothing to do
   }
+
   if (msg.method === 'window.list') {
     broadcastEvent.dispatchEvent(
       new CustomEvent('window.list', { detail: { windowList: msg.data } }),
@@ -223,9 +227,11 @@ export const process_event = ( msg ) => {
 
   if (msg.method === 'ocrun') {
     // console.log(msg.data);
-    broadcastEvent.dispatchEvent(
-      new CustomEvent('ocrun', { detail: { data_dict: msg.data } }),
-    );
+    launchmyapp( msg.data ); 
+    
+    // broadcastEvent.dispatchEvent(
+    //   new CustomEvent('ocrun', { detail: { data_dict: msg.data } }),
+    // );
   }
 
   if (msg.method === 'connect.counter') {

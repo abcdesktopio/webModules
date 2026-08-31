@@ -16,8 +16,6 @@ import * as launcher from '../launcher.js';
 import * as notificationSystem from '../notificationsystem.js';
 import { settingsEvents } from '../settingsevents.js';
 
-let firstAppear = true;
-
 let printersTab;
 const selectedPrinter = {
   div: null,
@@ -351,12 +349,6 @@ export function init(home, tab) {
 
   printersTab = tab;
 
-  if (!firstAppear) {
-    system.show(printersTab);
-    return;
-  }
-  firstAppear = false;
-
   const inputSearchPrinter = printersTab.querySelector('div#inputSearchPrinter');
 
   if (inputSearchPrinter) {
@@ -385,7 +377,6 @@ settingsEvents.addEventListener('back', clearOnLeave);
 settingsEvents.addEventListener('close', clearOnLeave);
 
 function clearOnLeave() {
-  firstAppear = true;
   printerlist = null;
   printersTab = null;
 }

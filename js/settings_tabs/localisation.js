@@ -16,16 +16,8 @@ import * as launcher from '../launcher.js';
 
 import { settingsEvents } from '../settingsevents.js';
 
-let firstAppear = true;
-
 export function init(home, localisation) {
   system.hide(home);
-
-  if (!firstAppear) {
-    system.show(localisation);
-    return;
-  }
-  firstAppear = false;
 
   system.removeAllChilds(document.getElementById('userxy'));
   document.getElementById('serverxy').innerText = '';
@@ -100,6 +92,3 @@ export function init(home, localisation) {
   system.show(localisation);
 }
 
-settingsEvents.addEventListener('close', () => {
-  firstAppear = true;
-});

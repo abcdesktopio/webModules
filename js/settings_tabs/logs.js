@@ -16,16 +16,8 @@ import * as launcher from '../launcher.js';
 
 import { settingsEvents } from '../settingsevents.js';
 
-let firstAppear = true;
-
 export function init(home, logs) {
   system.hide(home);
-
-  if (!firstAppear) {
-    system.show(logs);
-    return;
-  }
-  firstAppear = false;
 
   launcher.getLogs((data) => {
     const logsTab = system.removeAllChilds(document.getElementById('logs-tab'));
@@ -54,7 +46,3 @@ export function init(home, logs) {
   });
   system.show(logs);
 }
-
-settingsEvents.addEventListener('close', () => {
-  firstAppear = true;
-});

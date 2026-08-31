@@ -127,10 +127,6 @@ export const init = function () {
       // Add an event listener for close , logoff and cancel buttons to the menu
     }
   );
-  const controlBar = document.getElementById("abcdesktop_control_bar");
-  setTimeout(() => {
-    controlBar.classList.remove("abcdesktop_open");
-  }, 5000);
 };
 
 // Code adapted from : https://github.com/novnc/noVNC
