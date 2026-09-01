@@ -609,25 +609,17 @@
 #loginScreen #connectGP ul {
   padding: 0;
   margin: 0;
-  overflow: hidden;
   list-style: none;
 }
 
-#loginScreen #connectGP li {
+#loginScreen #connectGP li  {
   float: none;
-  display: none;
-  list-style: none;
-  height: auto;
-  width: 100%;
-  overflow: hidden;
-  margin: 7px 0;
-}
-
-#loginScreen #connectGP li a {
   display: flex;
+  list-style: none;
   align-items: center;
   width: 100%;
-  padding: 0.7rem 1rem;
+  padding: 0.4rem 1rem;
+  margin: 7px 0;
   height: auto;
   line-height: 1.4;
   text-decoration: none;
@@ -635,10 +627,15 @@
   font-size: 0.875rem;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  color: @light;
+  color: #FFFFFF;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+#loginScreen #connectGP li:hover {
+  background: rgba(101, 174, 205, 0.12);
+  border-color: rgba(101, 174, 205, 0.35);
+  transform: translateX(4px);
 }
 
 #loginScreen #connectGP li a:hover {
