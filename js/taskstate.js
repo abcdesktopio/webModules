@@ -128,15 +128,16 @@ export const update_on_container_notification = function( container ) {
 		case 'Scheduled':
 		case 'Pulling':
 		case 'Patched':
+		case 'AddedInterface':
 		case 'PodInitializing':
 			add_task( container );
-            break;
+            		break;
 		case 'Patched':
 		case 'Pulled':
 		case 'Started':
 		case 'Running':
 			remove_task( container );
-            break;
+            		break;
 		case 'Completed':
 			containerNotificationInfo( container );
 			remove_task( container );
