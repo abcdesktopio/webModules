@@ -194,6 +194,19 @@ export const calculateControlBarHandlePositioning = () => {
   }
 }
 
+// The control bar's size can change asynchronously after the initial layout
+// (menu entries enabled/disabled once menuconfig is fetched, printer/speaker
+// icons toggled once available, images finishing loading, window resize...).
+// Rather than trying to guess every moment where a manual recalculation call
+// is needed, observe the control bar itself and re-center the handle any
+// time its actual rendered size changes.
+if (controlBar && controlBarHandle) {
+  const controlBarResizeObserver = new ResizeObserver(() => {
+    calculateControlBarHandlePositioning();
+  });
+  controlBarResizeObserver.observe(controlBar);
+}
+
 /**
  * Opens the control bar by adding the "abcdesktop_open" class to the element.
  * @param {Element} e - The element to add the class to.
@@ -357,21 +370,8 @@ document.addEventListener('broadway.connected', () => {
           $('#speakers').css('display', 'block');
         }
       }
-      calculateControlBarHandlePositioning();
     });
 });
-
-document.addEventListener('printer.available', async ({ detail: { available } })  => {
-  if (available){
-    calculateControlBarHandlePositioning();
-  }
-})
-
-document.addEventListener('speaker.available', async ({ detail: { available } })  => {
-  if (available){
-    calculateControlBarHandlePositioning();
-  }
-})
 
 
 //Start (mouse down / touch start)
