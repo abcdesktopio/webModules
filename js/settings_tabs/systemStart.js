@@ -16,7 +16,6 @@ import * as launcher from '../launcher.js';
 
 import { settingsEvents } from '../settingsevents.js';
 
-let firstAppear = true;
 
 function getScreenInfos() {
   const navigatorName = document.getElementById('navigator-name');
@@ -51,13 +50,6 @@ function getScreenInfos() {
 
 export function init(home, tab) {
   system.hide(home);
-
-  if (!firstAppear) {
-    system.show(tab);
-    return;
-  }
-
-  firstAppear = false;
 
   const systemoverview = document.getElementById('system-overview');
   if (systemoverview) {
@@ -220,7 +212,3 @@ export function init(home, tab) {
 }
 
 window.addEventListener('resize', getScreenInfos);
-
-settingsEvents.addEventListener('close', () => {
-  firstAppear = true;
-});
