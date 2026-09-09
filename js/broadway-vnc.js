@@ -322,11 +322,9 @@ function keyEvent(keysym, code, down) {
      * @desc Connect user to VNC Server.
      */
   this.connect = function () {
-    let password;
     let path;
     let url;
     let port;
-    password = window.od.currentUser.vncpassword;
 
     if (isTouchDevice) {
       // if the user is using a touch device, reset the virtual keyboard
@@ -358,9 +356,12 @@ function keyEvent(keysym, code, down) {
       
 
       rfb = new RFB( noVNC_container, url,
-	      {	repeaterID: WebUtil.getConfigVar('repeaterID', ''),
+	{	repeaterID: WebUtil.getConfigVar('repeaterID', ''),
         	shared: WebUtil.getConfigVar('shared', true),
-        	credentials: { password },
+        	credentials: { 
+			'username': window.od.currentUser.userid, 
+			'password': window.od.currentUser.vncpassword 
+		}
       	}
       );
       
