@@ -290,12 +290,23 @@ function keyEvent(keysym, code, down) {
     }
   }
 
+  function handleBeforeUnload(e) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+
   this.connected = function () {
     sendevent('broadway.connected');
+    if (window.od.currentUser.providertype === 'anonymous') {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    }
   };
 
   this.disconnected = function (e) {
     sendevent('broadway.disconnected');
+    if (window.od.currentUser.providertype === 'anonymous') {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
 
     // This is only to write log
     if (e instanceof Event) {
