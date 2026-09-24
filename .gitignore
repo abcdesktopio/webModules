@@ -42,6 +42,16 @@ index.session.mustache.html
 
 demo.html
 
+img/pwa-icon.svg
+img/pwa-icon-192.png
+img/pwa-icon-512.png
+img/abcdesktop32x32.ico
+img/abcdesktop48x48.ico
+img/abcdesktop64x64.ico
+img/abcdesktop128x128.ico
+img/abcdesktop256x256.ico
+img/abcdesktop.png
+
 transpile/.env
 
 **/package-lock.json
