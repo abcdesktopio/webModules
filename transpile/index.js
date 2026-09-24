@@ -17,6 +17,7 @@ import fs from 'fs';
 import { promisify } from 'util';
 import path from 'path';
 import Mustache from 'mustache';
+import { Resvg } from '@resvg/resvg-js';
 
 import {
   clean,
@@ -61,6 +62,12 @@ const pathIndexMustacheHtmlFile = path.resolve(path.join('..', 'index.mustache.h
 const pathDescriptionMustacheHtmlFile = path.resolve(path.join('..', 'description.mustache.html'));
 const pathI18nDirectory = path.resolve(path.join('..', 'i18n'));
 const pathImg = path.resolve(path.join('..', 'img'));
+const pathPwaIconMustacheSvgFile = path.join(pathImg, 'pwa-icon.mustache.svg');
+const pathPwaIconSvgFile = path.join(pathImg, 'pwa-icon.svg');
+const pwaIconPngSizes = [192, 512];
+const faviconIcoSizes = [32, 48, 64, 128, 256];
+const pathAppleTouchIconPngFile = path.join(pathImg, 'abcdesktop.png');
+const appleTouchIconSize = 180;
 
 const patternNamei18nFiles = /\.mustache\.json$/i;
 
@@ -200,6 +207,96 @@ async function buildCss(colors = []) {
 // #endregion css
 
 // #region userInterface
+
+/**
+ *
+ * @param {string} svg
+ * @param {number} size
+ * @returns {Promise<void>}
+ * @desc Rasterize the given svg string to a square PNG file of the given size.
+ * Used to keep the static pwa-icon-*.png files (installed app / desktop shortcut icon)
+ * in sync with the dynamically colored svg, since not every OS/browser uses the
+ * svg icon declared in manifest.json for installed app icons.
+ */
+function renderSvgToPng(svg, size) {
+  const resvg = new Resvg(svg, {
+    fitTo: { mode: 'width', value: size },
+  });
+  return resvg.render().asPng();
+}
+
+async function writePwaIconPng(svg, size) {
+  const pngBuffer = renderSvgToPng(svg, size);
+  const pathPwaIconPngFile = path.join(pathImg, `pwa-icon-${size}.png`);
+  await fs.promises.writeFile(pathPwaIconPngFile, pngBuffer);
+}
+
+/**
+ *
+ * @param {Buffer} pngBuffer a square PNG image buffer
+ * @param {number} size width/height in pixels of the PNG image (max 256)
+ * @returns {Buffer}
+ * @desc Wrap a single PNG image into a minimal valid .ico container (ICONDIR + one
+ * ICONDIRENTRY followed by the raw PNG bytes). Embedding PNG data in .ico files
+ * has been supported by every major browser/OS since Windows Vista, so there is
+ * no need for a BMP-based ico encoding library/dependency.
+ */
+function pngToIco(pngBuffer, size) {
+  const header = Buffer.alloc(6 + 16);
+  // ICONDIR
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // type: 1 = icon
+  header.writeUInt16LE(1, 4); // number of images
+  // ICONDIRENTRY
+  header.writeUInt8(size >= 256 ? 0 : size, 6); // width (0 means 256)
+  header.writeUInt8(size >= 256 ? 0 : size, 7); // height (0 means 256)
+  header.writeUInt8(0, 8); // color count (0 = no palette)
+  header.writeUInt8(0, 9); // reserved
+  header.writeUInt16LE(1, 10); // color planes
+  header.writeUInt16LE(32, 12); // bits per pixel
+  header.writeUInt32LE(pngBuffer.length, 14); // size of image data
+  header.writeUInt32LE(header.length, 18); // offset of image data
+  return Buffer.concat([header, pngBuffer]);
+}
+
+async function writeFaviconIco(svg, size) {
+  const pngBuffer = renderSvgToPng(svg, size);
+  const icoBuffer = pngToIco(pngBuffer, size);
+  const pathFaviconIcoFile = path.join(pathImg, `abcdesktop${size}x${size}.ico`);
+  await fs.promises.writeFile(pathFaviconIcoFile, icoBuffer);
+}
+
+async function writeAppleTouchIconPng(svg) {
+  const pngBuffer = renderSvgToPng(svg, appleTouchIconSize);
+  await fs.promises.writeFile(pathAppleTouchIconPngFile, pngBuffer);
+}
+
+/**
+ *
+ * @param {Object[]} colors
+ * @returns {Promise<void>}
+ * @desc Render the PWA icon svg template using the @tertiary color defined in ui.json,
+ * so the manifest.json icons, the favicon/shortcut .ico files and the apple-touch-icon
+ * (declared in index.mustache.html) always match the current theme color.
+ */
+async function buildPwaIcon(colors = []) {
+  console.time('Build pwa icon');
+  const color = colors.find((c) => c.name === '@tertiary');
+  if (!color) {
+    throw new Error('Color @tertiary doesn\'t exist, make sure this color exists in your conf.json');
+  }
+
+  const mustacheFile = await fs.promises.readFile(pathPwaIconMustacheSvgFile, 'utf8');
+  const svg = Mustache.render(mustacheFile, { tertiary: color.value });
+  await Promise.all([
+    fs.promises.writeFile(pathPwaIconSvgFile, svg),
+    ...pwaIconPngSizes.map((size) => writePwaIconPng(svg, size)),
+    ...faviconIcoSizes.map((size) => writeFaviconIco(svg, size)),
+    writeAppleTouchIconPng(svg),
+  ]);
+  console.timeEnd('Build pwa icon');
+}
+
 async function userInterface() {
   console.time('Apply userInterface conf');
   const awaitingUIConf = fs.promises.readFile(pathUIConf, 'utf8')
@@ -222,6 +319,7 @@ async function userInterface() {
     applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false, false),
     applyConfToMustacheHtmlFile(uiConf, modulesConf, pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false, false),
     applyConfToMustacheJsonFiles(uiConf),
+    buildPwaIcon(uiConf.colors),
   ]);
   console.timeEnd('Apply userInterface conf');
 }
