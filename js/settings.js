@@ -115,7 +115,7 @@ export const open = function () {
           setTitleSuffix(languages.getTranslate('settings-containers-title'));
           break;
         case 'opensource-tab':
-	        let strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+	  let strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
           window.open("https://www.abcdesktop.io", "abcdesktop.io", strWindowFeatures );
           return;
         case 'support-tab':
@@ -150,7 +150,7 @@ export const open = function () {
   const close_btn = document.querySelector('#settings-close-button');
   if (close_btn) {
     close_btn.addEventListener('click', () => {
-      // settingsEvents.dispatchEvent(new CustomEvent('close'));
+      settingsEvents.dispatchEvent(new CustomEvent('close'));
       bootbox.hideAll();
     });
   }
