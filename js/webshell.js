@@ -232,7 +232,7 @@ function createTerminal() {
     cursorBlink: false,
     cols: 80,
     rows: 24,
-    scrollback: 0
+    scrollback: 800 
   } );
 
 
