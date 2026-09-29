@@ -23,7 +23,7 @@ import * as notificationSystem from './notificationsystem.js';
 import { launchmyapp } from './scripts.js';
 
 
-let wsbroadcast; // the broadcast websocket 
+let wsbroadcast=null; // the broadcast websocket 
 
 /**
  * @function open
@@ -35,18 +35,25 @@ let wsbroadcast; // the broadcast websocket
 function open(jsonParameters, callback = () => { }) {
   const path = `/broadcast?jwt_token=${window.od.currentUser.authorization}`;
   const broadcasturl = window.od.net.getwsurl(path);
+
+  // safe close if open
+  if (wsbroadcast && wsbroadcast.readyState == 1)
+	wsbroadcast.close();
+
   // Create WebSocket connection to broadcasturl
   wsbroadcast = new WebSocket(broadcasturl);
-  // Change binary type from "blob" to "arraybuffer"
-  // wsbroadcast.binaryType = "arraybuffer";
   
   wsbroadcast.onerror = () => {
     console.error('Failed to connect to broadcast service');
   };
 
   wsbroadcast.onopen = () => {
-    // console.log('wsbroadcast.open');
-    // console.log(jsonParameters);
+    window.addEventListener('beforeunload', () => {
+    	if ( wsbroadcast && wsbroadcast.readyState === WebSocket.OPEN) {
+       	  wsbroadcast.close(1000, 'Page closed');
+          console.log('ws broadcast is closed');
+    	}
+    });
     wsbroadcast.send(jsonParameters);
   };
 
@@ -120,6 +127,7 @@ export const connect = () => {
       console.error( 'Missing event type-> ' + typeof(msgevent.data) );
 
   });
+
 };
 
 export const process_event = ( msg ) => {
