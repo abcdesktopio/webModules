@@ -120,21 +120,28 @@ export const update_applicationstatus = function () {
 };
 
 export const update_on_container_notification = function( container ) {
-	// console.log( container );
+
 	let reason = container.reason;
+	console.log( reason );
 	switch( reason ) {
 		case 'Created':
 		case 'Scheduled':
-		case 'PodInitializing':
 		case 'Pulling':
+		case 'Patched':
+		case 'AddedInterface':
+		case 'PodInitializing':
 			add_task( container );
-                        break;
+            		break;
+		case 'Patched':
+		case 'Pulled':
 		case 'Started':
 		case 'Running':
-		case 'Pulled':
-		case 'Completed':
 			remove_task( container );
-                        break;
+            		break;
+		case 'Completed':
+			containerNotificationInfo( container );
+			remove_task( container );
+            break;
 		default:
 			remove_task( container );
 	}
@@ -192,10 +199,12 @@ export const containerNotificationInfo = function (data) {
 	      }
               break;
 	}
-        case 'Completed':
-	      // stop bugging me 
-              // skip this event
-              break;
+    case 'Completed': {
+	    // stop bugging me 
+		// skip this event
+		notificationSystem.displayNotification(data.reason, data.message, 'Completed', icon, 15);
+		break;
+	}
 	case 'Running': 
 	case 'Started': {
 	      // stop bugging me 

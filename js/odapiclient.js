@@ -205,10 +205,12 @@ const odApiClient = new (class ODApiClient {
       getAppList() {
         return client.sendRequest('composer/getapplist');
       }
-
+     
+      /*
       getLogs() {
         return client.sendRequest('composer/getlogs');
       }
+      */
 
       stopcontainer(podname, containerid) {
         return client.sendRequest('composer/stopcontainer', { podname, containerid });

@@ -2232,9 +2232,9 @@ export default class RFB extends EventTargetMixin {
         encs.push(encodings.encodingCopyRect);
         // Only supported with full depth support
         if (this._fbDepth == 24) {
-            if (supportsWebCodecsH264Decode) {
-                encs.push(encodings.encodingH264);
-            }
+            //if (supportsWebCodecsH264Decode) {
+            //    encs.push(encodings.encodingH264);
+            //}
             encs.push(encodings.encodingTight);
             encs.push(encodings.encodingTightPNG);
             encs.push(encodings.encodingZRLE);

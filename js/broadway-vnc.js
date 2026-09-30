@@ -333,11 +333,9 @@ function keyEvent(keysym, code, down) {
      * @desc Connect user to VNC Server.
      */
   this.connect = function () {
-    let password;
     let path;
     let url;
     let port;
-    password = window.od.currentUser.vncpassword;
 
     if (isTouchDevice) {
       // if the user is using a touch device, reset the virtual keyboard
@@ -369,9 +367,12 @@ function keyEvent(keysym, code, down) {
       
 
       rfb = new RFB( noVNC_container, url,
-	      {	repeaterID: WebUtil.getConfigVar('repeaterID', ''),
+	{	repeaterID: WebUtil.getConfigVar('repeaterID', ''),
         	shared: WebUtil.getConfigVar('shared', true),
-        	credentials: { password },
+        	credentials: { 
+			'username': window.od.currentUser.userid, 
+			'password': window.od.currentUser.vncpassword 
+		}
       	}
       );
       
@@ -382,16 +383,6 @@ function keyEvent(keysym, code, down) {
       // 
       // set default background by reading value from body 
       rfb._screen.style.background = window.getComputedStyle(document.body).getPropertyValue('background-color');
-      
-      /*
-      rfb._screenSize = function () {
-        const h = this._screen.offsetHeight - getTopAndDockHeight();
-        return {
-          w: this._screen.offsetWidth,
-          h,
-        };
-      };
-      */
 
       // Is a boolean indicating if the remote session should be clipped to its container. 
       // When disabled scrollbars will be shown to handle the resulting overflow. Disabled by default.
