@@ -226,7 +226,7 @@ function initZoom() {
       if (msg && msg.id && msg.id) {
         let zoom = msg.id;
         if ( !isNaN(zoom)) {
-          console.log('document.body.style.zoom is ', zoom);
+          // console.log('document.body.style.zoom is ', zoom);
           document.body.style.zoom = zoom;
         }
       }

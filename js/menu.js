@@ -373,7 +373,6 @@ document.addEventListener('broadway.connected', () => {
     });
 });
 
-
 //Start (mouse down / touch start)
 controlBarHandle.addEventListener(events[deviceType].down, (e) => {
   const ptr = !isTouchDevice() ? e : e.touches[0];

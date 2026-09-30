@@ -346,7 +346,7 @@ export function init(home, user) {
   // set OS
   setOS(ua);
 
-  /*
+  
   // get login history from collection history
   launcher.getCollection('loginHistory')
     .done((msg) => {
@@ -355,7 +355,7 @@ export function init(home, user) {
         buildHistoryList(history, user);
       }
     });
-  */
+  
   system.show(user);
 }
 
