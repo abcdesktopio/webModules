@@ -150,7 +150,7 @@ export const open = function () {
   const close_btn = document.querySelector('#settings-close-button');
   if (close_btn) {
     close_btn.addEventListener('click', () => {
-      // settingsEvents.dispatchEvent(new CustomEvent('close'));
+      settingsEvents.dispatchEvent(new CustomEvent('close'));
       bootbox.hideAll();
     });
   }
