@@ -370,9 +370,9 @@ function keyEvent(keysym, code, down) {
 	{	repeaterID: WebUtil.getConfigVar('repeaterID', ''),
         	shared: WebUtil.getConfigVar('shared', true),
         	credentials: { 
-			'username': window.od.currentUser.userid, 
-			'password': window.od.currentUser.vncpassword 
-		}
+            'username': window.od.currentUser.userid, 
+			      'password': window.od.currentUser.vncpassword 
+		      }
       	}
       );
       
