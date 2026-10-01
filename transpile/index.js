@@ -146,7 +146,6 @@ async function* walkSvgImages(root = '') {
  */
 async function buildSvg(colors = []) {
   console.time('Build svg');
-  console.log(`Build svg readfile ${pathCache}`);
   const cache = JSON.parse(await fs.promises.readFile(pathCache, 'utf8'));
   const { currentSvgColor } = cache;
 
@@ -193,9 +192,8 @@ async function buildCss(colors = []) {
   const files = await fs.promises.readdir(cssPath);
   const promisesCompileAndMinify = [];
   for (const file of files) {
-    if (file.endsWith('.less')) {
-      const racine = file.slice(0, -'.less'.length);
-      console.log( `Transpile ${file} to ${cssDistPath}/${racine}.css'` );
+    if (file.includes('.less')) {
+      const racine = file.split('.less')[0];
       const cmd = `lessc ${cssPath}/${file} --global-var="global='globale.less'" ${colorsParams} > '${cssDistPath}/${racine}.css'`;
       promisesCompileAndMinify.push(
         exec(cmd)
@@ -307,23 +305,19 @@ async function userInterface() {
   const awaitingModulesConf = fs.promises.readFile(pathModules, 'utf8')
     .then((jsonFile) => JSON.parse(jsonFile));
 
-  const awaitingVersion = fs.promises.readFile(pathVersionFile, 'utf8')
-    .then((jsonFile) => JSON.parse(jsonFile).version)
-    .catch(() => Date.now().toString());
-
-  const [uiConf, modulesConf, version] = await Promise.all([awaitingUIConf, awaitingModulesConf, awaitingVersion]);
+  const [uiConf, modulesConf] = await Promise.all([awaitingUIConf, awaitingModulesConf]);
 
   console.log( uiConf );
   // isIndexPage, isDemoPage, isLoginSessionPage)
   await Promise.all([
 
     // demo page is 
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true, false, version),
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexSessionHtmlFile, true, false, true, version),
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false, false, version),
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppSessionHtmlFile, false, false, true, version),
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false, false, version),
-    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false, false, version),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathDemoHtmlFile, true, true, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexSessionHtmlFile, true, false, true),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppHtmlFile, false, false, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathAppSessionHtmlFile, false, false, true),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathIndexMustacheHtmlFile, pathIndexHtmlFile, true, false, false),
+    applyConfToMustacheHtmlFile(uiConf, modulesConf, pathDescriptionMustacheHtmlFile, pathDescriptionHtmlFile, false, false, false),
     applyConfToMustacheJsonFiles(uiConf),
     buildPwaIcon(uiConf.colors),
   ]);
@@ -337,7 +331,7 @@ async function userInterface() {
  * @param {string} pathHtmlFile
  * @param {boolean} isIndexPage
  */
-async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile, pathHtmlFile, isIndexPage, isDemoPage, isLoginSessionPage, version) {
+async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile, pathHtmlFile, isIndexPage, isDemoPage, isLoginSessionPage) {
   const mapper = (item) => ({
     ...item,
     defer: item.defer ? 'defer' : '',
@@ -370,8 +364,7 @@ async function applyConfToMustacheHtmlFile(uiConf, modulesConf, pathMustacheFile
     refresh_timeout: "{{ refresh_timeout }}",
     isIndexPage,
     isDemoPage,
-    isLoginSessionPage,
-    version,
+    isLoginSessionPage
   };
 
   console.log( 'create html page ' + pathHtmlFile );
