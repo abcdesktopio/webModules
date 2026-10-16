@@ -220,15 +220,17 @@
 #loginScreen #projectNameSplitedStageb,
 #loginScreen #projectNameSplitedStagec {
   color: @tertiary;
+  opacity: 0.45;
 }
 
 #loginScreen #projectNameSplitedStaged {
   color: @light;
+  opacity: 0.45;
 }
 
 /* Letter animation class set by JS */
 .abccreatedesktopstatus {
-  opacity: 0.45;
+  opacity: 1 !important;
   transition: opacity 0.3s ease;
 }
 
@@ -358,6 +360,10 @@
   vertical-align: middle;
 }
 
+#loginScreen p #spantextstatusImg {
+  margin-right: 8px;
+}
+
 #loginScreen p span {
   vertical-align: bottom;
 }
@@ -422,6 +428,54 @@
 .login-input-wrap:focus-within .login-input-icon {
   color: @tertiary;
 }
+
+/* Keyboard settings dropdowns (layout/variant/model) — compact, not a floating-label input */
+#loginScreen .form-control-keyboard {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 8px;
+  color: @light;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  height: 32px;
+  max-width: none;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Accordions (keyboard settings, desktop features, ...) — dark theme override
+   of Bootstrap's default (light) accordion */
+#loginScreen .accordion-item {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#loginScreen .accordion-button {
+  background: rgba(255, 255, 255, 0.06);
+  color: @light;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  padding: 0.6rem 1rem;
+  box-shadow: none;
+}
+
+#loginScreen .accordion-button:not(.collapsed) {
+  background: rgba(255, 255, 255, 0.1);
+  color: @light;
+  box-shadow: none;
+}
+
+#loginScreen .accordion-button::after {
+  filter: invert(1) grayscale(1) brightness(2);
+}
+
+#loginScreen .accordion-body {
+  background: transparent;
+  padding: 1rem;
+}
+
 
 /* Input */
 #loginScreen .form-control {

@@ -162,19 +162,18 @@ const welcomeSystem = (function () {
       spantextstatusText.innerText = message;
       // spantextstatusText.innerHTML = message + '<br>' + spantextstatusText.innerHTML;
       
-      let imgsrc='img/ring.svg';
       let ringstatusimg = document.getElementById('spantextstatusImg');
       if (!ringstatusimg) {
-        ringstatusimg = document.createElement('img');
-        ringstatusimg.src = window.od.net.urlrewrite(imgsrc);
+        ringstatusimg = document.createElement('div');
         ringstatusimg.id = 'spantextstatusImg';
+        ringstatusimg.classList.add('spinner-border', 'spinner-border-sm');
+        ringstatusimg.setAttribute('role', 'status');
+        const visuallyHidden = document.createElement('span');
+        visuallyHidden.classList.add('visually-hidden');
+        visuallyHidden.innerText = 'Loading...';
+        ringstatusimg.appendChild(visuallyHidden);
         statusText.prepend(ringstatusimg);
       }
-
-      // test for futur usage
-      if (!ringstatusimg.src)
-          // repaint for futur usage
-          ringstatusimg.setAttribute("src",  window.od.net.urlrewrite(imgsrc) );
 
     }
 

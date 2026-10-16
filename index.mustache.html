@@ -25,8 +25,10 @@
     <meta name="apple-mobile-web-app-title" content="{{ projectName }}">
 
     <!-- PWA: manifest + theme color, required for installability -->
+     <!--
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#474B55">
+    -->
 
     <!-- shortcut ico favicon -->
     <link rel="shortcut icon" href="/img/abcdesktop32x32.ico">
@@ -39,7 +41,10 @@
     <link rel="icon" href="/img/abcdesktop128x128.ico" sizes="128x128">
     <link rel="icon" href="/img/abcdesktop256x256.ico" sizes="256x256">
     
+    <!-- 
     <link rel="manifest" href="/manifest.json">
+    -->
+
     <meta name="theme-color" content="#474B55">
 
     <!-- bootstrap css-->
@@ -139,15 +144,27 @@
                 <div id="additionnalloginScreencontent">
                     <div class="highlight" id="welcomeinfo"></div>
                     <div class="login-brand__resources">
-                    <div id="desktopfeatures">
-                        <div class="form-group">
-                            <label class="form-label login-brand__secondary-title" id="login-desktopfeatures" for="desktopfeaturesul">Desktop features</label>
-                            <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-1 shadow-sm" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);" id="desktopfeaturesul"></ul>
-                            <p class="form-comment" id="login-desktopfeatures-comment"></p>
+                        <div id="desktopfeatures">
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" id="login-desktopfeatures" data-bs-toggle="collapse" data-bs-target="#desktopfeatures-collapse" aria-expanded="false" aria-controls="desktopfeatures-collapse">Desktop features</button>
+                                    </h2>
+                                    <div id="desktopfeatures-collapse" class="accordion-collapse collapse" aria-labelledby="login-desktopfeatures">
+                                        <div class="accordion-body">
+                                            <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-1 shadow-sm" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);" id="desktopfeaturesul"></ul>
+                                            <p class="form-comment" id="login-desktopfeatures-comment"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <br>
+                    <div id="keyboardSettings">
+                    </div>
                 </div>
-                </div>
+                
                 <div class="login-brand__dots">
                     <span></span>
                     <span></span>
@@ -221,10 +238,10 @@
                     </p>
                 </div>
 
-                
                 <div id="connectGP">
                     <ul id="connectGPList"></ul>
                 </div>
+
             </div>
         </div>
     </div>

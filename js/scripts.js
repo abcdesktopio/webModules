@@ -37,6 +37,7 @@ import * as settings from './settings.js';
 import * as tipsinfo from './tipsinfo.js';
 import * as welcomeinfo from './welcomeinfo.js';
 import * as desktopfeatures from './desktopfeatures.js';
+import * as keyboardSettings from './keyboardSettings.js';
 import * as languages from './languages.js';
 import * as snapshot from './snapshot.js';
 import * as taskstate from './taskstate.js';
@@ -91,6 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // init desktopfeatures to show
   desktopfeatures.init();
+
+  // init keyboard layout/variant/model dropdowns to show
+  keyboardSettings.init();
 
   // Init basic event click for welcome window THEN call init
   welcomeSystem.init().always( () => {

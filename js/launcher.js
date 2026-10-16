@@ -18,6 +18,7 @@ import odApiClient from './odapiclient.js';
 import userGeolocation from './geolocation.js';
 import { SSE } from "../node_modules/sse.js/lib/sse.js";
 import { broadcastEvent } from './broadcastevent.js';
+import { detectKeyboardLayout, detectKeyboardModel } from './keyboardLayout.js';
 
 // JWT will be refreshed when 3/4 of the expire time is reached
 // e.g. if expire_in is 3600 seconds, the token will be refreshed after 2700 seconds
@@ -114,13 +115,17 @@ export function logout(data_dict) {
  * @return {void}
  * @desc Launch an application container
  */
-export function ocrun(data_dict, element, onAppIsRunning = () => {}) {
+export async function ocrun(data_dict, element, onAppIsRunning = () => {}) {
   // Play Icon animation
   // Add code here
   // getSecrets();
   const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
   data_dict.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  
+  const { xkbLayout, xkbVariant } = await detectKeyboardLayout();
+  data_dict.xkb_layout = xkbLayout;
+  data_dict.xkb_variant = xkbVariant;
+  data_dict.xkb_model = await detectKeyboardModel();
+
   const url = '/API/composer/ocrun';
   var source = new SSE(url, {
     start: false,
@@ -602,13 +607,23 @@ export function runAppsOrDesktop() {
   return launchDesktop();
 }
 
-export function launchDesktop(args) {
+export async function launchDesktop(args) {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const abcdesktop_jwt_user_token = localStorage.getItem('abcdesktop_jwt_user_token');
   const width = getScreenWidth();
   const height = getScreenHeight();
   const hostname = location.hostname;
-  const desktopbody = { width, height, hostname, timezone, args };
+  // Physical keyboard layout (e.g. 'fr', 'ch(de)'), never derived from navigator.language:
+  // a user can have an AZERTY keyboard with an English OS language and vice versa.
+  const { xkbLayout, xkbVariant } = await detectKeyboardLayout();
+  const xkbModel = await detectKeyboardModel();
+  console.log(`Detected keyboard layout: ${xkbLayout}, variant: ${xkbVariant} keyboard model: ${xkbModel}`);
+  const desktopbody = {
+    width, height, hostname, timezone, args,
+    xkb_layout: xkbLayout,
+    xkb_variant: xkbVariant,
+    xkb_model: xkbModel,
+  };
 
   const url = '/API/composer/launchdesktop';
   var source = new SSE(url, {
@@ -661,7 +676,7 @@ export function launchDesktop(args) {
     if (source.lastEventId) {
       console.log(`Reconnected, resuming from event ${source.lastEventId}`);
     }
-    welcomeSystem.showStatus( 'Launch desktop' );
+    welcomeSystem.showStatus( 'b.Launch desktop' );
   });
 
   source.addEventListener("error", (e) => {
@@ -681,7 +696,7 @@ export function launchDesktop(args) {
 
   source.addEventListener("abort", (e) => {
     console.log('abort');
-    welcomeSystem.showStatus( 'abort' );
+    welcomeSystem.showStatus( 'e.abort' );
   });
   
   // ... later on
