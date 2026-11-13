@@ -26,10 +26,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
-
+          # fetch-depth:0 for the command line git rev-list --count HEAD
+          fetch-depth: 0
+          
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
