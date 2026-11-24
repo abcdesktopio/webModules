@@ -37,5 +37,6 @@ FROM nginx:alpine-slim
 RUN apk update && apk upgrade --no-cache
 COPY --from=builder /var/webModules /usr/share/nginx/html
 RUN sed -i 's/listen       80;/listen       8000;/g' /etc/nginx/conf.d/default.conf
+RUN mkdir -p /var/cache/nginx/client_temp && chown nginx:root/var/cache/nginx/client_temp
 USER nginx
 EXPOSE 8000
