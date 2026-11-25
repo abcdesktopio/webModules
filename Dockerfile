@@ -31,7 +31,6 @@ RUN npm update
 RUN make removebuildtools
 RUN chmod -R 555 *
 
-
 # --- START Build image ---
 FROM nginx:alpine-slim
 RUN apk update && apk upgrade --no-cache
