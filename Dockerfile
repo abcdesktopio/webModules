@@ -34,8 +34,9 @@ RUN chmod -R 555 *
 
 # --- START Build image ---
 FROM nginx:alpine-slim
-# buildkit
-# COPY --from=builder --chmod=555 /var/webModules /usr/share/nginx/html
 RUN apk update && apk upgrade --no-cache
 COPY --from=builder /var/webModules /usr/share/nginx/html
-EXPOSE 80 
+RUN sed -i 's/listen       80;/listen       8000;/g' /etc/nginx/conf.d/default.conf
+RUN mkdir -p /var/cache/nginx/client_temp && chown nginx:root /var/cache/nginx/client_temp
+USER nginx
+EXPOSE 8000
