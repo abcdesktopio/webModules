@@ -54,6 +54,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - && \
 #
 COPY . /var/webModules
 
+# remove config file for the running container
+RUN rm -rf /var/webModules/etc
+
 #
 # run makefile step by step 
 # to get troubleshooting info
