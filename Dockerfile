@@ -37,6 +37,7 @@ RUN apk update && apk upgrade --no-cache
 COPY --from=builder /var/webModules /usr/share/nginx/html
 # same config with listen port 8000
 COPY etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-RUN mkdir -p /var/cache/nginx/client_temp && chown nginx:root /var/cache/nginx/client_temp
+RUN mkdir -p /var/cache/nginx/client_temp /var/log/nginx /var/cache/nginx /var/run && \
+    chown nginx:root /var/cache/nginx/client_temp /var/log/nginx /var/cache/nginx /var/run
 USER nginx
 EXPOSE 8000
